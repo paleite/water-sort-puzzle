@@ -6,7 +6,6 @@ const VIAL_COUNT = 14;
 const COLORS_PER_VIAL = 4;
 const EMPTY_VIALS = 2;
 const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
-const MIN_SHUFFLE_MOVES = 40;
 const MAX_GENERATION_ATTEMPTS = 10;
 const GENERATION_TIMEOUT_MS = 10000;
 
@@ -34,7 +33,17 @@ class SeededRandom {
     const result = [...array];
     for (let i = result.length - 1; i > 0; i--) {
       const j = this.nextInt(0, i + 1);
-      [result[i], result[j]] = [result[j], result[i]];
+      // Ensure we're within bounds to satisfy TypeScript
+      if (i < result.length && j < result.length) {
+        // Use a different approach to avoid type errors with possible undefined
+        const itemI = result[i];
+        const itemJ = result[j];
+
+        if (itemI !== undefined && itemJ !== undefined) {
+          result[i] = itemJ;
+          result[j] = itemI;
+        }
+      }
     }
     return result;
   }
@@ -112,7 +121,6 @@ const WaterSortGame = () => {
   const generationTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
-  const solvedState = useRef<VialState | null>(null);
   const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
@@ -139,24 +147,6 @@ const WaterSortGame = () => {
 
     // A puzzle is solved when all vials are sorted
     return sortedVials === VIAL_COUNT;
-  }, []);
-
-  // Create initial solved state
-  const createSolvedState = useCallback((): VialState => {
-    const solved: VialState = [];
-
-    // Create vials with single colors (solved state)
-    for (let i = 0; i < FILLED_VIALS; i++) {
-      const colorIndex = i % COLORS.length;
-      solved.push(Array(COLORS_PER_VIAL).fill(COLORS[colorIndex]));
-    }
-
-    // Add empty vials
-    for (let i = 0; i < EMPTY_VIALS; i++) {
-      solved.push([]);
-    }
-
-    return solved;
   }, []);
 
   // Validate vials state to ensure it has correct color counts and is solvable
@@ -210,44 +200,39 @@ const WaterSortGame = () => {
   // Check if a move is valid
   const isValidMove = useCallback(
     (fromIndex: number, toIndex: number, vialState: VialState): boolean => {
+      // Check valid indices
+      if (
+        fromIndex < 0 ||
+        fromIndex >= vialState.length ||
+        toIndex < 0 ||
+        toIndex >= vialState.length
+      ) {
+        return false;
+      }
+
+      const fromVial = vialState[fromIndex];
+      const toVial = vialState[toIndex];
+
+      if (!fromVial || !toVial) return false;
+
       // Can't move from an empty vial
-      if (vialState[fromIndex].length === 0) return false;
+      if (fromVial.length === 0) return false;
 
       // Can't move to a full vial
-      if (vialState[toIndex].length >= COLORS_PER_VIAL) return false;
+      if (toVial.length >= COLORS_PER_VIAL) return false;
 
       // Can move to an empty vial
-      if (vialState[toIndex].length === 0) return true;
+      if (toVial.length === 0) return true;
 
       // Check if the top colors match
-      const fromColor = vialState[fromIndex][vialState[fromIndex].length - 1];
-      const toColor = vialState[toIndex][vialState[toIndex].length - 1];
+      const fromColor = fromVial[fromVial.length - 1];
+      const toColor = toVial[toVial.length - 1];
+
+      if (fromColor === undefined || toColor === undefined) return false;
 
       return fromColor === toColor;
     },
     [],
-  );
-
-  // Find all valid moves for a given vial state
-  const findAllValidMoves = useCallback(
-    (vialState: VialState): [number, number][] => {
-      const validMoves: [number, number][] = [];
-
-      for (let fromIndex = 0; fromIndex < vialState.length; fromIndex++) {
-        if (vialState[fromIndex].length === 0) continue;
-
-        for (let toIndex = 0; toIndex < vialState.length; toIndex++) {
-          if (fromIndex === toIndex) continue;
-
-          if (isValidMove(fromIndex, toIndex, vialState)) {
-            validMoves.push([fromIndex, toIndex]);
-          }
-        }
-      }
-
-      return validMoves;
-    },
-    [isValidMove],
   );
 
   // Execute a move between vials (pour liquid)
@@ -263,11 +248,29 @@ const WaterSortGame = () => {
 
       // Create a deep copy of vials
       const newVialState = JSON.parse(JSON.stringify(vialState)) as VialState;
+
+      // Check indices are valid
+      if (
+        fromIndex < 0 ||
+        fromIndex >= newVialState.length ||
+        toIndex < 0 ||
+        toIndex >= newVialState.length
+      ) {
+        return null;
+      }
+
       const fromVial = newVialState[fromIndex];
       const toVial = newVialState[toIndex];
 
+      if (!fromVial || !toVial || fromVial.length === 0) {
+        return null;
+      }
+
       // Get the color to move
       const colorToMove = fromVial[fromVial.length - 1];
+      if (colorToMove === undefined) {
+        return null;
+      }
 
       // Count consecutive same colors from top
       let colorCount = 0;
@@ -317,7 +320,13 @@ const WaterSortGame = () => {
 
         // Add 4 of each color to the pool
         for (let j = 0; j < COLORS_PER_VIAL; j++) {
-          colorPool.push(COLORS[colorIndex]);
+          // Make sure we have a valid index
+          if (colorIndex >= 0 && colorIndex < COLORS.length) {
+            const color = COLORS[colorIndex];
+            if (color !== undefined) {
+              colorPool.push(color);
+            }
+          }
         }
       }
 
@@ -333,7 +342,10 @@ const WaterSortGame = () => {
         for (let j = 0; j < COLORS_PER_VIAL; j++) {
           // Get a color from our shuffled pool
           if (shuffledColors.length > 0) {
-            vial.push(shuffledColors.pop()!);
+            const color = shuffledColors.pop();
+            if (color !== undefined) {
+              vial.push(color);
+            }
           }
         }
         scrambledState.push(vial);
@@ -364,15 +376,35 @@ const WaterSortGame = () => {
             const sourceIndex = random.nextInt(0, validSourceVials.length);
             const targetIndex = random.nextInt(0, validTargetVials.length);
 
-            const source = validSourceVials[sourceIndex];
-            const target = validTargetVials[targetIndex];
+            // Check if indices are valid
+            if (
+              sourceIndex >= 0 &&
+              sourceIndex < validSourceVials.length &&
+              targetIndex >= 0 &&
+              targetIndex < validTargetVials.length
+            ) {
+              const source = validSourceVials[sourceIndex];
+              const target = validTargetVials[targetIndex];
 
-            // Only move if they are different vials
-            if (source.index !== target.index) {
-              // Take one color from source and add to target
-              const color = scrambledState[source.index].pop();
-              if (color) {
-                scrambledState[target.index].push(color);
+              if (source && target && source.index !== target.index) {
+                // Check if the source vial exists in scrambledState
+                if (
+                  source.index >= 0 &&
+                  source.index < scrambledState.length &&
+                  target.index >= 0 &&
+                  target.index < scrambledState.length
+                ) {
+                  // Take one color from source and add to target
+                  const sourceVial = scrambledState[source.index];
+                  const targetVial = scrambledState[target.index];
+
+                  if (sourceVial && sourceVial.length > 0) {
+                    const color = sourceVial.pop();
+                    if (color && targetVial) {
+                      targetVial.push(color);
+                    }
+                  }
+                }
               }
             }
           }
@@ -506,6 +538,24 @@ const WaterSortGame = () => {
   // Start pouring animation
   const startPouringAnimation = useCallback(
     (fromIndex: number, toIndex: number): void => {
+      // Check indices are valid
+      if (
+        fromIndex < 0 ||
+        fromIndex >= vials.length ||
+        toIndex < 0 ||
+        toIndex >= vials.length
+      ) {
+        return;
+      }
+
+      // Get the vials
+      const fromVial = vials[fromIndex];
+      const toVial = vials[toIndex];
+
+      if (!fromVial || !toVial || fromVial.length === 0) {
+        return;
+      }
+
       // Set animation state - but don't block game play
       // Just track that an animation is happening visually
       setAnimationState(ANIMATION_STATE.POURING);
@@ -513,8 +563,11 @@ const WaterSortGame = () => {
       setAnimatingTo(toIndex);
 
       // Get the color that will be poured
-      const fromVial = vials[fromIndex];
       const colorToPour = fromVial[fromVial.length - 1];
+      if (colorToPour === undefined) {
+        return;
+      }
+
       setAnimatingColor(colorToPour);
 
       // Count how many of the same color will be poured
@@ -528,7 +581,6 @@ const WaterSortGame = () => {
       }
 
       // Calculate how many can be moved based on destination space
-      const toVial = vials[toIndex];
       const maxAccept = COLORS_PER_VIAL - toVial.length;
       const countToPour = Math.min(colorCount, maxAccept);
       setAnimatingCount(countToPour);
@@ -549,12 +601,6 @@ const WaterSortGame = () => {
     [vials],
   );
 
-  // We no longer need this function since we update state immediately
-  const finishPouringAnimation = useCallback((): void => {
-    // This function is now empty as the game state is updated immediately
-    // keeping it as a placeholder in case we need it later
-  }, []);
-
   // Handle vial selection and moves
   const handleVialClick = useCallback(
     (index: number): void => {
@@ -567,9 +613,19 @@ const WaterSortGame = () => {
         return;
       }
 
+      // Check if index is valid
+      if (index < 0 || index >= vials.length) {
+        return;
+      }
+
+      const targetVial = vials[index];
+      if (!targetVial) {
+        return;
+      }
+
       if (selectedVialIndex === null) {
         // Select a vial if it's not empty
-        if (vials[index].length > 0) {
+        if (targetVial.length > 0) {
           setSelectedVialIndex(index);
         }
       } else if (index === selectedVialIndex) {
@@ -602,7 +658,7 @@ const WaterSortGame = () => {
             setMoves(moves + 1);
             setSelectedVialIndex(null);
           }
-        } else if (vials[index].length > 0) {
+        } else if (targetVial.length > 0) {
           // If move is invalid, select the new vial if not empty
           setSelectedVialIndex(index);
         } else {
@@ -629,11 +685,15 @@ const WaterSortGame = () => {
       moveHistory.length > 0 &&
       (gameState === GAME_STATE.PLAYING || gameState === GAME_STATE.READY)
     ) {
-      const lastState = moveHistory[moveHistory.length - 1];
-      setVials(lastState);
-      setMoveHistory(moveHistory.slice(0, -1));
-      setSelectedVialIndex(null);
-      setMoves(moves - 1);
+      if (moveHistory.length > 0) {
+        const lastState = moveHistory[moveHistory.length - 1];
+        if (lastState) {
+          setVials(lastState);
+          setMoveHistory(moveHistory.slice(0, -1));
+          setSelectedVialIndex(null);
+          setMoves(Math.max(0, moves - 1));
+        }
+      }
     }
   }, [moveHistory, moves, gameState]);
 
@@ -676,15 +736,21 @@ const WaterSortGame = () => {
     const toRow = Math.floor(animatingTo / vialsPerRow);
     const toCol = animatingTo % vialsPerRow;
 
-    // Get container dimensions
-    const containerWidth = vialsPerRow * (vialWidth + vialGap);
-    const containerHeight = Math.max(fromRow, toRow) * (160 + vialGap) + 160; // 160px height for each vial
-
     // Calculate center points of the vials
     const fromX = fromCol * (vialWidth + vialGap) + vialWidth / 2;
     const fromY = fromRow * (160 + vialGap) + 20;
     const toX = toCol * (vialWidth + vialGap) + vialWidth / 2;
-    const toY = toRow * (160 + vialGap) + 20 + vials[animatingTo].length * 40;
+
+    // Safely access the target vial length
+    let toVialLength = 0;
+    if (animatingTo >= 0 && animatingTo < vials.length) {
+      const toVial = vials[animatingTo];
+      if (toVial) {
+        toVialLength = toVial.length;
+      }
+    }
+
+    const toY = toRow * (160 + vialGap) + 20 + toVialLength * 40;
 
     // First determine the path control points
     const midY = Math.min(fromY, toY) - 40; // Arc height
