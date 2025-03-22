@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { RefreshCw, Undo, Award, AlertCircle } from "lucide-react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -90,7 +91,7 @@ const COLORS = [
   "#9966FF", // purple
 ];
 
-const WaterSortGame = () => {
+function WaterSortGame() {
   // Game state
   const [vials, setVials] = useState<VialState>([]);
   const [selectedVialIndex, setSelectedVialIndex] = useState<number | null>(
@@ -136,7 +137,7 @@ const WaterSortGame = () => {
         sortedVials++;
       } else if (vial.length === COLORS_PER_VIAL) {
         // Check if all colors in this vial are the same
-        const firstColor = vial[0];
+        const [firstColor] = vial;
         const allSameColor = vial.every((color) => color === firstColor);
 
         if (allSameColor) {
@@ -157,7 +158,7 @@ const WaterSortGame = () => {
 
     vialState.forEach((vial) => {
       vial.forEach((color) => {
-        colorCounts[color] = (colorCounts[color] || 0) + 1;
+        colorCounts[color] = (colorCounts[color] ?? 0) + 1;
         totalSegments++;
       });
     });
@@ -213,22 +214,32 @@ const WaterSortGame = () => {
       const fromVial = vialState[fromIndex];
       const toVial = vialState[toIndex];
 
-      if (!fromVial || !toVial) return false;
+      if (!fromVial || !toVial) {
+        return false;
+      }
 
       // Can't move from an empty vial
-      if (fromVial.length === 0) return false;
+      if (fromVial.length === 0) {
+        return false;
+      }
 
       // Can't move to a full vial
-      if (toVial.length >= COLORS_PER_VIAL) return false;
+      if (toVial.length >= COLORS_PER_VIAL) {
+        return false;
+      }
 
       // Can move to an empty vial
-      if (toVial.length === 0) return true;
+      if (toVial.length === 0) {
+        return true;
+      }
 
       // Check if the top colors match
       const fromColor = fromVial[fromVial.length - 1];
       const toColor = toVial[toVial.length - 1];
 
-      if (fromColor === undefined || toColor === undefined) return false;
+      if (fromColor === undefined || toColor === undefined) {
+        return false;
+      }
 
       return fromColor === toColor;
     },
@@ -412,9 +423,7 @@ const WaterSortGame = () => {
       }
 
       // Clear the timeout as we've finished
-      if (generationTimeout.current) {
-        clearTimeout(generationTimeout.current);
-      }
+      clearTimeout(generationTimeout.current);
 
       // Verify the scrambled state isn't already solved
       if (isSolvedState(scrambledState)) {
@@ -511,12 +520,8 @@ const WaterSortGame = () => {
   // Clean up timeouts on unmount
   useEffect(() => {
     return () => {
-      if (generationTimeout.current) {
-        clearTimeout(generationTimeout.current);
-      }
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
+      clearTimeout(generationTimeout.current);
+      clearTimeout(animationTimeoutRef.current);
     };
   }, []);
 
@@ -586,9 +591,7 @@ const WaterSortGame = () => {
       setAnimatingCount(countToPour);
 
       // Set a timeout to finish the animation visually
-      if (animationTimeoutRef.current) {
-        clearTimeout(animationTimeoutRef.current);
-      }
+      clearTimeout(animationTimeoutRef.current);
       animationTimeoutRef.current = setTimeout(() => {
         // Reset animation state when animation completes
         setAnimationState(ANIMATION_STATE.IDLE);
@@ -754,7 +757,7 @@ const WaterSortGame = () => {
 
     // First determine the path control points
     const midY = Math.min(fromY, toY) - 40; // Arc height
-    const path = `M${fromX},${fromY} Q${(fromX + toX) / 2},${midY} ${toX},${toY}`;
+    const path = `M${String(fromX)},${String(fromY)} Q${String((fromX + toX) / 2)},${String(midY)} ${String(toX)},${String(toY)}`;
 
     // We'll create multiple droplets along the path for a more fluid effect
     const droplets: React.ReactNode[] = [];
@@ -766,21 +769,21 @@ const WaterSortGame = () => {
       const animationDelay = i * 0.12; // Stagger the droplets
 
       droplets.push(
-        <g key={`droplet-${i}`}>
-          <circle r={dropletRadius} fill={animatingColor} opacity={0.9}>
+        <g key={`droplet-${String(i)}`}>
+          <circle fill={animatingColor} opacity={0.9} r={dropletRadius}>
             <animateMotion
-              path={path}
-              begin={`${animationDelay}s`}
+              begin={`${String(animationDelay)}s`}
+              calcMode="linear"
               dur="0.7s"
               fill="freeze"
-              calcMode="linear"
+              path={path}
             />
             <animate
               attributeName="r"
-              values={`${dropletRadius * 0.8};${dropletRadius};${dropletRadius * 0.8}`}
+              begin={`${String(animationDelay)}s`}
               dur="0.5s"
               repeatCount="1"
-              begin={`${animationDelay}s`}
+              values={`${String(dropletRadius * 0.8)};${String(dropletRadius)};${String(dropletRadius * 0.8)}`}
             />
           </circle>
         </g>,
@@ -790,20 +793,26 @@ const WaterSortGame = () => {
     // Create a splash effect at the destination
     const splash = (
       <g key="splash">
-        <circle cx={toX} cy={toY} r={0} fill={animatingColor} opacity={0.7}>
+        <circle
+          cx={String(toX)}
+          cy={String(toY)}
+          fill={animatingColor}
+          opacity={0.7}
+          r={0}
+        >
           <animate
             attributeName="r"
-            values="0;12"
-            dur="0.4s"
             begin="0.5s"
+            dur="0.4s"
             fill="freeze"
+            values="0;12"
           />
           <animate
             attributeName="opacity"
-            values="0.7;0"
-            dur="0.4s"
             begin="0.5s"
+            dur="0.4s"
             fill="freeze"
+            values="0.7;0"
           />
         </circle>
       </g>
@@ -848,7 +857,11 @@ const WaterSortGame = () => {
                 ? "border-green-500 shadow-md"
                 : "border-gray-400"
           }`}
-          onClick={() => isInteractive && handleVialClick(index)}
+          onClick={() => {
+            if (isInteractive) {
+              handleVialClick(index);
+            }
+          }}
         >
           {/* Liquid layers */}
           {vial.map((color, layerIndex) => {
@@ -950,21 +963,22 @@ const WaterSortGame = () => {
           <div className="flex items-center">
             <button
               className={`mr-2 flex items-center rounded-full p-2 ${currentLevel <= 1 ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-              onClick={prevLevel}
               disabled={
                 currentLevel <= 1 || gameState === GAME_STATE.INITIALIZING
               }
+              type="button"
+              onClick={prevLevel}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
                 fill="none"
+                height="18"
                 stroke="currentColor"
-                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
@@ -976,22 +990,23 @@ const WaterSortGame = () => {
 
             <button
               className={`ml-2 flex items-center rounded-full p-2 ${gameState === GAME_STATE.INITIALIZING ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-              onClick={nextLevel}
               disabled={
                 gameState === GAME_STATE.INITIALIZING ||
                 (currentLevel >= highestLevel && gameState !== GAME_STATE.WIN)
               }
+              type="button"
+              onClick={nextLevel}
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
                 fill="none"
+                height="18"
                 stroke="currentColor"
-                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -1002,7 +1017,7 @@ const WaterSortGame = () => {
           <div className="flex items-center">
             {gameState === GAME_STATE.INITIALIZING && (
               <div className="flex items-center font-medium text-blue-600">
-                <RefreshCw size={16} className="mr-2 animate-spin" />
+                <RefreshCw className="mr-2 animate-spin" size={16} />
                 Generating...
               </div>
             )}
@@ -1022,8 +1037,8 @@ const WaterSortGame = () => {
 
             {gameState === GAME_STATE.ERROR && (
               <div className="flex items-center font-medium text-red-600">
-                <AlertCircle size={16} className="mr-1" />
-                {error || "Error"}
+                <AlertCircle className="mr-1" size={16} />
+                {error ?? "Error"}
               </div>
             )}
           </div>
@@ -1038,12 +1053,13 @@ const WaterSortGame = () => {
                   ? "cursor-not-allowed bg-gray-300 text-gray-500"
                   : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
-              onClick={undoMove}
               disabled={
                 moveHistory.length === 0 ||
                 gameState === GAME_STATE.INITIALIZING ||
                 gameState === GAME_STATE.WIN
               }
+              type="button"
+              onClick={undoMove}
             >
               <Undo size={18} />
             </button>
@@ -1054,14 +1070,15 @@ const WaterSortGame = () => {
                   ? "cursor-not-allowed bg-gray-300 text-gray-500"
                   : "bg-green-500 text-white hover:bg-green-600"
               }`}
-              onClick={startNewGame}
               disabled={gameState === GAME_STATE.INITIALIZING}
+              type="button"
+              onClick={startNewGame}
             >
               <RefreshCw
-                size={18}
                 className={
                   gameState === GAME_STATE.INITIALIZING ? "animate-spin" : ""
                 }
+                size={18}
               />
             </button>
           </div>
@@ -1071,7 +1088,7 @@ const WaterSortGame = () => {
         {gameState === GAME_STATE.WIN && (
           <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
             <div className="flex items-center">
-              <Award size={20} className="mr-2 text-yellow-500" />
+              <Award className="mr-2 text-yellow-500" size={20} />
               <div className="font-bold">
                 Level {currentLevel} solved in {moves} moves!
               </div>
@@ -1079,20 +1096,21 @@ const WaterSortGame = () => {
 
             <button
               className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
+              type="button"
               onClick={nextLevel}
             >
               Next Level
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
+                className="ml-1"
                 fill="none"
+                height="18"
                 stroke="currentColor"
-                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="ml-1"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -1111,6 +1129,6 @@ const WaterSortGame = () => {
       </div>
     </div>
   );
-};
+}
 
-export default WaterSortGame;
+export { WaterSortGame };
