@@ -3,6 +3,16 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
 
 import { useGameStore } from "@/lib/store";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -105,6 +115,7 @@ function WaterSortGame() {
     GAME_STATE.INITIALIZING,
   );
   const [error, setError] = useState<string | null>(null);
+  const [showNewGameDialog, setShowNewGameDialog] = useState(false);
 
   // Level system - using zustand store with persistence
   const { currentLevel, highestLevel, setCurrentLevel, incrementHighestLevel } =
@@ -494,6 +505,7 @@ function WaterSortGame() {
 
   // Start a new game (alias for restarting current level)
   const startNewGame = useCallback((): void => {
+    setShowNewGameDialog(false);
     startLevel(currentLevel);
   }, [currentLevel, startLevel]);
 
@@ -1011,6 +1023,50 @@ function WaterSortGame() {
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>
+
+            <Dialog
+              open={showNewGameDialog}
+              onOpenChange={setShowNewGameDialog}
+            >
+              <DialogTrigger asChild>
+                <button
+                  className={`flex items-center rounded-full p-2 ${
+                    gameState === GAME_STATE.INITIALIZING
+                      ? "cursor-not-allowed bg-gray-300 text-gray-500"
+                      : "bg-green-500 text-white hover:bg-green-600"
+                  }`}
+                  disabled={gameState === GAME_STATE.INITIALIZING}
+                  type="button"
+                >
+                  <RefreshCw
+                    className={
+                      gameState === GAME_STATE.INITIALIZING
+                        ? "animate-spin"
+                        : ""
+                    }
+                    size={18}
+                  />
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Start New Game</DialogTitle>
+                  <DialogDescription>
+                    Are you sure you want to restart the current level? This
+                    will reset all your moves.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowNewGameDialog(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button onClick={startNewGame}>Start New Game</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
 
           {/* Status */}
@@ -1062,24 +1118,6 @@ function WaterSortGame() {
               onClick={undoMove}
             >
               <Undo size={18} />
-            </button>
-
-            <button
-              className={`flex items-center rounded-full p-2 ${
-                gameState === GAME_STATE.INITIALIZING
-                  ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                  : "bg-green-500 text-white hover:bg-green-600"
-              }`}
-              disabled={gameState === GAME_STATE.INITIALIZING}
-              type="button"
-              onClick={startNewGame}
-            >
-              <RefreshCw
-                className={
-                  gameState === GAME_STATE.INITIALIZING ? "animate-spin" : ""
-                }
-                size={18}
-              />
             </button>
           </div>
         </div>
