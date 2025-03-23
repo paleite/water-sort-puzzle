@@ -973,7 +973,7 @@ function WaterSortGame() {
   );
 
   return (
-    <div className="grid h-screen w-full grid-rows-[auto_1fr] bg-gray-100">
+    <div className="grid h-dvh w-full grid-rows-[auto_1fr] bg-gray-100">
       {/* HUD/Controls - Top section */}
       <div className="flex flex-col items-center bg-white p-3 shadow-md">
         {/* Game status and controls in single row */}
