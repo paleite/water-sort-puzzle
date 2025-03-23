@@ -61,7 +61,7 @@ export default function RootLayout({
         <meta content="#ffffff" name="theme-color" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} touch-none overflow-hidden antialiased`}
       >
         {children}
       </body>
