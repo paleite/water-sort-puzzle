@@ -1,6 +1,8 @@
 // This is the service worker for the Water Sort Puzzle PWA
 
-const CACHE_NAME = "water-sort-puzzle-v1";
+// Cache version - change this value whenever you update your app
+const CACHE_VERSION = new Date().toISOString();
+const CACHE_NAME = `water-sort-puzzle-${CACHE_VERSION}`;
 const BASE_PATH = "/water-sort-puzzle";
 const urlsToCache = [
   `${BASE_PATH}/`,
