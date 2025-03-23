@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
+
 import { useGameStore } from "@/lib/store";
 
 // Game constants
