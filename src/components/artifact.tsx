@@ -989,7 +989,7 @@ function WaterSortGame() {
             </div>
 
             <button
-              className={`ml-2 flex items-center rounded-full p-2 ${gameState === GAME_STATE.INITIALIZING ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+              className={`ml-2 flex items-center rounded-full p-2 ${gameState === GAME_STATE.INITIALIZING || (currentLevel >= highestLevel && gameState !== GAME_STATE.WIN) ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
               disabled={
                 gameState === GAME_STATE.INITIALIZING ||
                 (currentLevel >= highestLevel && gameState !== GAME_STATE.WIN)
