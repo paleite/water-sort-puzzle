@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Water Sort Puzzle",
   description: "A fun puzzle game about sorting colored liquids",
-  manifest: "/manifest.json",
+  manifest: "/water-sort-puzzle/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -41,19 +41,19 @@ export default function RootLayout({
         <link
           rel="apple-touch-icon"
           sizes="180x180"
-          href="/apple-touch-icon.png"
+          href="/water-sort-puzzle/apple-touch-icon.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href="/favicon-32x32.png"
+          href="/water-sort-puzzle/favicon-32x32.png"
         />
         <link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href="/favicon-16x16.png"
+          href="/water-sort-puzzle/favicon-16x16.png"
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />

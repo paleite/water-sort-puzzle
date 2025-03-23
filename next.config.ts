@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
 
   output: "export",
 
+  // Set basePath for GitHub Pages
+  basePath: process.env.NODE_ENV === "production" ? "/water-sort-puzzle" : "",
+
   // PWA Configuration
   headers: async () => {
     return [
