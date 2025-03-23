@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
+import { useGameStore } from "@/lib/store";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -104,9 +105,9 @@ function WaterSortGame() {
   );
   const [error, setError] = useState<string | null>(null);
 
-  // Level system
-  const [currentLevel, setCurrentLevel] = useState<number>(1);
-  const [highestLevel, setHighestLevel] = useState<number>(1);
+  // Level system - using zustand store with persistence
+  const { currentLevel, highestLevel, setCurrentLevel, incrementHighestLevel } =
+    useGameStore();
 
   // Animation state
   const [animationState, setAnimationState] = useState<AnimationStateType>(
@@ -498,12 +499,12 @@ function WaterSortGame() {
   // Go to next level
   const nextLevel = useCallback((): void => {
     const nextLevelNum = currentLevel + 1;
-    // Update highest level if needed
+    // Update highest level if needed through zustand store
     if (nextLevelNum > highestLevel) {
-      setHighestLevel(nextLevelNum);
+      incrementHighestLevel();
     }
     startLevel(nextLevelNum);
-  }, [currentLevel, highestLevel, startLevel]);
+  }, [currentLevel, highestLevel, incrementHighestLevel, startLevel]);
 
   // Go to previous level (if available)
   const prevLevel = useCallback((): void => {
@@ -532,10 +533,8 @@ function WaterSortGame() {
         // Level completed!
         setGameState(GAME_STATE.WIN);
 
-        // Update highest level if needed
-        if (currentLevel + 1 > highestLevel) {
-          setHighestLevel(currentLevel + 1);
-        }
+        // Update highest level if needed through zustand store
+        incrementHighestLevel();
       }
     }
   }, [vials, gameState, isSolvedState, currentLevel, highestLevel]);
