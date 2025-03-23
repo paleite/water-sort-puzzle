@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
 
   // Set basePath for GitHub Pages
   basePath: process.env.NODE_ENV === "production" ? "/water-sort-puzzle" : "",
+
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;

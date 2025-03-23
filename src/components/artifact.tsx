@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
+import { AlertCircle, ArrowRight, Award, RefreshCw, Undo } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useGameStore } from "@/lib/store";
+import { cn } from "@/lib/utils";
+import { NextLevel } from "@/generated/icons";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -103,6 +105,54 @@ const COLORS = [
   "#9966FF", // purple
 ];
 
+function UndoButton({
+  isDisabled,
+  onClick,
+}: {
+  isDisabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className={cn(
+        "flex h-12 items-center rounded-full p-2 transition-all duration-300",
+        isDisabled
+          ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-0"
+          : "bg-blue-500 text-white hover:bg-blue-600",
+      )}
+      disabled={isDisabled}
+      type="button"
+      onClick={onClick}
+    >
+      <Undo className="size-8" />
+    </button>
+  );
+}
+
+function ResetButton({
+  isDisabled,
+  onClick,
+}: {
+  isDisabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className={cn(
+        "flex h-12 items-center rounded-full p-2 transition-all duration-300",
+        isDisabled
+          ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-0"
+          : "bg-blue-500 text-white hover:bg-blue-600",
+      )}
+      disabled={isDisabled}
+      type="button"
+      onClick={onClick}
+    >
+      <RefreshCw className="size-8" />
+    </button>
+  );
+}
+
 function WaterSortGame() {
   // Game state
   const [vials, setVials] = useState<VialState>([]);
@@ -121,14 +171,14 @@ function WaterSortGame() {
   const { currentLevel, highestLevel, setCurrentLevel, incrementHighestLevel } =
     useGameStore();
 
-  // Animation state
-  const [animationState, setAnimationState] = useState<AnimationStateType>(
-    ANIMATION_STATE.IDLE,
-  );
-  const [animatingFrom, setAnimatingFrom] = useState<number | null>(null);
-  const [animatingTo, setAnimatingTo] = useState<number | null>(null);
-  const [animatingColor, setAnimatingColor] = useState<string | null>(null);
-  const [animatingCount, setAnimatingCount] = useState<number>(0);
+  // // Animation state
+  // const [animationState, setAnimationState] = useState<AnimationStateType>(
+  //   ANIMATION_STATE.IDLE,
+  // );
+  // const [animatingFrom, setAnimatingFrom] = useState<number | null>(null);
+  // const [animatingTo, setAnimatingTo] = useState<number | null>(null);
+  // const [animatingColor, setAnimatingColor] = useState<string | null>(null);
+  // const [animatingCount, setAnimatingCount] = useState<number>(0);
 
   // Refs
   const generationAttempts = useRef<number>(0);
@@ -478,12 +528,12 @@ function WaterSortGame() {
       setError(null);
       setCurrentLevel(level);
 
-      // Reset animation state
-      setAnimationState(ANIMATION_STATE.IDLE);
-      setAnimatingFrom(null);
-      setAnimatingTo(null);
-      setAnimatingColor(null);
-      setAnimatingCount(0);
+      // // Reset animation state
+      // setAnimationState(ANIMATION_STATE.IDLE);
+      // setAnimatingFrom(null);
+      // setAnimatingTo(null);
+      // setAnimatingColor(null);
+      // setAnimatingCount(0);
 
       // Use setTimeout to ensure the UI updates before the generation starts
       setTimeout(() => {
@@ -582,9 +632,9 @@ function WaterSortGame() {
 
       // Set animation state - but don't block game play
       // Just track that an animation is happening visually
-      setAnimationState(ANIMATION_STATE.POURING);
-      setAnimatingFrom(fromIndex);
-      setAnimatingTo(toIndex);
+      // setAnimationState(ANIMATION_STATE.POURING);
+      // setAnimatingFrom(fromIndex);
+      // setAnimatingTo(toIndex);
 
       // Get the color that will be poured
       const colorToPour = fromVial[fromVial.length - 1];
@@ -592,7 +642,7 @@ function WaterSortGame() {
         return;
       }
 
-      setAnimatingColor(colorToPour);
+      // setAnimatingColor(colorToPour);
 
       // Count how many of the same color will be poured
       let colorCount = 0;
@@ -607,18 +657,18 @@ function WaterSortGame() {
       // Calculate how many can be moved based on destination space
       const maxAccept = COLORS_PER_VIAL - toVial.length;
       const countToPour = Math.min(colorCount, maxAccept);
-      setAnimatingCount(countToPour);
+      // setAnimatingCount(countToPour);
 
       // Set a timeout to finish the animation visually
-      clearTimeout(animationTimeoutRef.current);
-      animationTimeoutRef.current = setTimeout(() => {
-        // Reset animation state when animation completes
-        setAnimationState(ANIMATION_STATE.IDLE);
-        setAnimatingFrom(null);
-        setAnimatingTo(null);
-        setAnimatingColor(null);
-        setAnimatingCount(0);
-      }, 800); // Animation duration
+      // clearTimeout(animationTimeoutRef.current);
+      // animationTimeoutRef.current = setTimeout(() => {
+      //   // Reset animation state when animation completes
+      //   setAnimationState(ANIMATION_STATE.IDLE);
+      //   setAnimatingFrom(null);
+      //   setAnimatingTo(null);
+      //   setAnimatingColor(null);
+      //   setAnimatingCount(0);
+      // }, 800); // Animation duration
     },
     [vials],
   );
@@ -736,117 +786,117 @@ function WaterSortGame() {
   }, []);
 
   // Render the liquid animation as an SVG path
-  const renderLiquidAnimation = useCallback((): React.ReactNode => {
-    if (
-      animationState !== ANIMATION_STATE.POURING ||
-      animatingFrom === null ||
-      animatingTo === null ||
-      animatingColor === null
-    ) {
-      return null;
-    }
+  // const renderLiquidAnimation = useCallback((): React.ReactNode => {
+  //   if (
+  //     animationState !== ANIMATION_STATE.POURING ||
+  //     animatingFrom === null ||
+  //     animatingTo === null ||
+  //     animatingColor === null
+  //   ) {
+  //     return null;
+  //   }
 
-    // Calculate vial positions in the grid
-    // Adjust sizes for responsive layout
-    const vialWidth = 40; // Smaller for mobile (w-10)
-    const vialGap = 4; // gap-1 in grid
-    const vialsPerRow = window.innerWidth < 640 ? 5 : 7; // Based on sm:grid-cols-5 / grid-cols-7
+  //   // Calculate vial positions in the grid
+  //   // Adjust sizes for responsive layout
+  //   const vialWidth = 40; // Smaller for mobile (w-10)
+  //   const vialGap = 4; // gap-1 in grid
+  //   const vialsPerRow = window.innerWidth < 640 ? 5 : 7; // Based on sm:grid-cols-5 / grid-cols-7
 
-    // Calculate from and to positions
-    const fromRow = Math.floor(animatingFrom / vialsPerRow);
-    const fromCol = animatingFrom % vialsPerRow;
-    const toRow = Math.floor(animatingTo / vialsPerRow);
-    const toCol = animatingTo % vialsPerRow;
+  //   // Calculate from and to positions
+  //   const fromRow = Math.floor(animatingFrom / vialsPerRow);
+  //   const fromCol = animatingFrom % vialsPerRow;
+  //   const toRow = Math.floor(animatingTo / vialsPerRow);
+  //   const toCol = animatingTo % vialsPerRow;
 
-    // Calculate center points of the vials
-    const fromX = fromCol * (vialWidth + vialGap) + vialWidth / 2;
-    const fromY = fromRow * (160 + vialGap) + 20;
-    const toX = toCol * (vialWidth + vialGap) + vialWidth / 2;
+  //   // Calculate center points of the vials
+  //   const fromX = fromCol * (vialWidth + vialGap) + vialWidth / 2;
+  //   const fromY = fromRow * (160 + vialGap) + 20;
+  //   const toX = toCol * (vialWidth + vialGap) + vialWidth / 2;
 
-    // Safely access the target vial length
-    let toVialLength = 0;
-    if (animatingTo >= 0 && animatingTo < vials.length) {
-      const toVial = vials[animatingTo];
-      if (toVial) {
-        toVialLength = toVial.length;
-      }
-    }
+  //   // Safely access the target vial length
+  //   let toVialLength = 0;
+  //   if (animatingTo >= 0 && animatingTo < vials.length) {
+  //     const toVial = vials[animatingTo];
+  //     if (toVial) {
+  //       toVialLength = toVial.length;
+  //     }
+  //   }
 
-    const toY = toRow * (160 + vialGap) + 20 + toVialLength * 40;
+  //   const toY = toRow * (160 + vialGap) + 20 + toVialLength * 40;
 
-    // First determine the path control points
-    const midY = Math.min(fromY, toY) - 40; // Arc height
-    const path = `M${String(fromX)},${String(fromY)} Q${String((fromX + toX) / 2)},${String(midY)} ${String(toX)},${String(toY)}`;
+  //   // First determine the path control points
+  //   const midY = Math.min(fromY, toY) - 40; // Arc height
+  //   const path = `M${String(fromX)},${String(fromY)} Q${String((fromX + toX) / 2)},${String(midY)} ${String(toX)},${String(toY)}`;
 
-    // We'll create multiple droplets along the path for a more fluid effect
-    const droplets: React.ReactNode[] = [];
-    const dropletCount = 5; // Number of droplets in the animation
-    const dropletRadius = 6; // Smaller droplets for mobile
+  //   // We'll create multiple droplets along the path for a more fluid effect
+  //   const droplets: React.ReactNode[] = [];
+  //   const dropletCount = 5; // Number of droplets in the animation
+  //   const dropletRadius = 6; // Smaller droplets for mobile
 
-    for (let i = 0; i < dropletCount; i++) {
-      // Calculate the animation delay for each droplet
-      const animationDelay = i * 0.12; // Stagger the droplets
+  //   for (let i = 0; i < dropletCount; i++) {
+  //     // Calculate the animation delay for each droplet
+  //     const animationDelay = i * 0.12; // Stagger the droplets
 
-      droplets.push(
-        <g key={`droplet-${String(i)}`}>
-          <circle fill={animatingColor} opacity={0.9} r={dropletRadius}>
-            <animateMotion
-              begin={`${String(animationDelay)}s`}
-              calcMode="linear"
-              dur="0.7s"
-              fill="freeze"
-              path={path}
-            />
-            <animate
-              attributeName="r"
-              begin={`${String(animationDelay)}s`}
-              dur="0.5s"
-              repeatCount="1"
-              values={`${String(dropletRadius * 0.8)};${String(dropletRadius)};${String(dropletRadius * 0.8)}`}
-            />
-          </circle>
-        </g>,
-      );
-    }
+  //     droplets.push(
+  //       <g key={`droplet-${String(i)}`}>
+  //         <circle fill={animatingColor} opacity={0.9} r={dropletRadius}>
+  //           <animateMotion
+  //             begin={`${String(animationDelay)}s`}
+  //             calcMode="linear"
+  //             dur="0.7s"
+  //             fill="freeze"
+  //             path={path}
+  //           />
+  //           <animate
+  //             attributeName="r"
+  //             begin={`${String(animationDelay)}s`}
+  //             dur="0.5s"
+  //             repeatCount="1"
+  //             values={`${String(dropletRadius * 0.8)};${String(dropletRadius)};${String(dropletRadius * 0.8)}`}
+  //           />
+  //         </circle>
+  //       </g>,
+  //     );
+  //   }
 
-    // Create a splash effect at the destination
-    const splash = (
-      <g key="splash">
-        <circle
-          cx={String(toX)}
-          cy={String(toY)}
-          fill={animatingColor}
-          opacity={0.7}
-          r={0}
-        >
-          <animate
-            attributeName="r"
-            begin="0.5s"
-            dur="0.4s"
-            fill="freeze"
-            values="0;12"
-          />
-          <animate
-            attributeName="opacity"
-            begin="0.5s"
-            dur="0.4s"
-            fill="freeze"
-            values="0.7;0"
-          />
-        </circle>
-      </g>
-    );
+  //   // Create a splash effect at the destination
+  //   const splash = (
+  //     <g key="splash">
+  //       <circle
+  //         cx={String(toX)}
+  //         cy={String(toY)}
+  //         fill={animatingColor}
+  //         opacity={0.7}
+  //         r={0}
+  //       >
+  //         <animate
+  //           attributeName="r"
+  //           begin="0.5s"
+  //           dur="0.4s"
+  //           fill="freeze"
+  //           values="0;12"
+  //         />
+  //         <animate
+  //           attributeName="opacity"
+  //           begin="0.5s"
+  //           dur="0.4s"
+  //           fill="freeze"
+  //           values="0.7;0"
+  //         />
+  //       </circle>
+  //     </g>
+  //   );
 
-    return (
-      <svg className="pointer-events-none absolute left-0 top-0 z-20 h-full w-full">
-        {/* Droplets */}
-        {droplets}
+  //   return (
+  //     <svg className="pointer-events-none absolute left-0 top-0 z-20 h-full w-full">
+  //       {/* Droplets */}
+  //       {droplets}
 
-        {/* Splash effect */}
-        {splash}
-      </svg>
-    );
-  }, [animationState, animatingFrom, animatingTo, animatingColor, vials]);
+  //       {/* Splash effect */}
+  //       {splash}
+  //     </svg>
+  //   );
+  // }, [animationState, animatingFrom, animatingTo, animatingColor, vials]);
 
   // Render a vial with its contents
   const renderVial = useCallback(
@@ -862,20 +912,22 @@ function WaterSortGame() {
         isValidMove(selectedVialIndex, index, vials);
 
       // Animation states
-      const isPouring = animationState === ANIMATION_STATE.POURING;
-      const isPouringSource = isPouring && animatingFrom === index;
-      const isPouringTarget = isPouring && animatingTo === index;
+      // const isPouring = animationState === ANIMATION_STATE.POURING;
+      // const isPouringSource = isPouring && animatingFrom === index;
+      // const isPouringTarget = isPouring && animatingTo === index;
 
       return (
         <div
           key={index}
-          className={`relative flex h-40 w-10 flex-col-reverse overflow-hidden rounded-b-xl sm:h-48 sm:w-12 ${isInteractive ? "cursor-pointer" : "cursor-default"} border-2 bg-gray-200 ${
+          className={cn(
+            "relative flex h-40 w-10 flex-col-reverse overflow-hidden rounded-b-xl border-2 bg-purple-900 sm:h-48 sm:w-12",
+            isInteractive ? "cursor-pointer" : "cursor-default",
             isSelected
-              ? "border-blue-500 shadow-lg"
+              ? "border-blue-500"
               : isValidTarget
-                ? "border-green-500 shadow-md"
-                : "border-gray-400"
-          }`}
+                ? "border-green-500"
+                : "border-gray-400",
+          )}
           onClick={() => {
             if (isInteractive) {
               handleVialClick(index);
@@ -885,14 +937,14 @@ function WaterSortGame() {
           {/* Liquid layers */}
           {vial.map((color, layerIndex) => {
             // Skip rendering the top layers that are being poured out
-            if (
-              isPouringSource &&
-              layerIndex >= vial.length - animatingCount &&
-              animatingColor !== null &&
-              color === animatingColor
-            ) {
-              return null;
-            }
+            // if (
+            //   isPouringSource &&
+            //   layerIndex >= vial.length - animatingCount &&
+            //   animatingColor !== null &&
+            //   color === animatingColor
+            // ) {
+            //   return null;
+            // }
 
             // Add a pattern or texture to each color to help distinguish them
             const addPattern = (
@@ -939,9 +991,8 @@ function WaterSortGame() {
           </div>
 
           {/* Animation effects for the target vial */}
-          {isPouringTarget && animatingColor !== null && (
+          {/* {isPouringTarget && animatingColor !== null && (
             <div className="pointer-events-none absolute bottom-0 left-0 right-0">
-              {/* Show ripple effect when liquid lands */}
               <div
                 className="absolute left-1/2 top-0 h-1 w-6 -translate-x-1/2 rounded-full opacity-70"
                 style={{
@@ -951,7 +1002,7 @@ function WaterSortGame() {
                 }}
               />
             </div>
-          )}
+          )} */}
 
           {/* Empty space */}
           <div className="flex-grow" />
@@ -964,217 +1015,173 @@ function WaterSortGame() {
       vials,
       isValidMove,
       handleVialClick,
-      animationState,
-      animatingFrom,
-      animatingTo,
-      animatingColor,
-      animatingCount,
+      // animationState,
+      // animatingFrom,
+      // animatingTo,
+      // animatingColor,
+      // animatingCount,
     ],
   );
 
   return (
-    <div className="grid h-dvh w-full grid-rows-[auto_1fr] bg-gray-100">
-      {/* HUD/Controls - Top section */}
-      <div className="flex flex-col items-center bg-white p-3 shadow-md">
-        {/* Game status and controls in single row */}
-        <div className="flex w-full items-center justify-between">
-          {/* Left: Level info and prev/next controls */}
-          <div className="flex items-center">
-            <button
-              className={`mr-2 flex items-center rounded-full p-2 ${currentLevel <= 1 ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-              disabled={
-                currentLevel <= 1 || gameState === GAME_STATE.INITIALIZING
-              }
-              type="button"
-              onClick={prevLevel}
-            >
-              <svg
-                fill="none"
-                height="18"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
+    // <div className="grid h-dvh w-full grid-rows-[auto_1fr] bg-purple-950">
+    <>
+      {/* <div className="absolute -z-10 block h-dvh w-full bg-[#221337]">
+        <Image alt="Top" className="absolute top-0" src={top} />
+        <Image alt="Bottom" className="absolute bottom-0" src={bottom} />
+      </div> */}
+      <div className="grid h-dvh w-full max-w-md grid-rows-[auto_1fr] bg-[#221337]">
+        <div>
+          {/* HUD/Controls - Top section */}
+          <div className="flex flex-col items-center bg-[#060d1f] p-3">
+            {/* Game status and controls in single row */}
+            <div className="flex w-full items-center justify-between">
+              {/* Left: Level info and prev/next controls */}
+              <div className="text-3xl font-medium text-[#654373]">
+                Level {currentLevel}
+              </div>
+
+              <Dialog
+                open={showNewGameDialog}
+                onOpenChange={setShowNewGameDialog}
               >
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-            </button>
-
-            <div className="font-medium text-gray-800">
-              Level <span className="font-bold">{currentLevel}</span>
-            </div>
-
-            <button
-              className={`ml-2 flex items-center rounded-full p-2 ${gameState === GAME_STATE.INITIALIZING || (currentLevel >= highestLevel && gameState !== GAME_STATE.WIN) ? "cursor-not-allowed bg-gray-300 text-gray-500" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-              disabled={
-                gameState === GAME_STATE.INITIALIZING ||
-                (currentLevel >= highestLevel && gameState !== GAME_STATE.WIN)
-              }
-              type="button"
-              onClick={nextLevel}
-            >
-              <svg
-                fill="none"
-                height="18"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-
-            <Dialog
-              open={showNewGameDialog}
-              onOpenChange={setShowNewGameDialog}
-            >
-              <DialogTrigger asChild>
-                <button
-                  className={`flex items-center rounded-full p-2 ${
-                    gameState === GAME_STATE.INITIALIZING
-                      ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                      : "bg-green-500 text-white hover:bg-green-600"
-                  }`}
-                  disabled={gameState === GAME_STATE.INITIALIZING}
-                  type="button"
-                >
-                  <RefreshCw
-                    className={
-                      gameState === GAME_STATE.INITIALIZING
-                        ? "animate-spin"
-                        : ""
+                <DialogTrigger asChild>
+                  <ResetButton
+                    isDisabled={
+                      gameState === GAME_STATE.INITIALIZING ||
+                      moveHistory.length === 0
                     }
-                    size={18}
-                  />
-                </button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Start New Game</DialogTitle>
-                  <DialogDescription>
-                    Are you sure you want to restart the current level? This
-                    will reset all your moves.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button
-                    variant="outline"
                     onClick={() => {
-                      setShowNewGameDialog(false);
+                      setShowNewGameDialog(true);
                     }}
-                  >
-                    Cancel
-                  </Button>
-                  <Button onClick={startNewGame}>Start New Game</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                  />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Restart Level {currentLevel}</DialogTitle>
+                    <DialogDescription>
+                      Are you sure you want to restart the current level? This
+                      will reset all your moves.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        setShowNewGameDialog(false);
+                      }}
+                    >
+                      No, FIXME
+                    </Button>
+                    <Button onClick={startNewGame}>Yes, FIXME</Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
+              {/* Status */}
+              <div className="flex hidden items-center">
+                {gameState === GAME_STATE.INITIALIZING && (
+                  <div className="flex items-center font-medium text-blue-600">
+                    <RefreshCw className="mr-2 animate-spin" size={16} />
+                    Generating...
+                  </div>
+                )}
+
+                {gameState === GAME_STATE.READY && (
+                  <div className="font-medium text-green-600">
+                    Ready! Make a move
+                  </div>
+                )}
+
+                {(gameState === GAME_STATE.PLAYING ||
+                  gameState === GAME_STATE.ANIMATING) && (
+                  <div className="text-gray-700">
+                    Moves: <span className="font-bold">{moves}</span>
+                  </div>
+                )}
+
+                {gameState === GAME_STATE.ERROR && (
+                  <div className="flex items-center font-medium text-red-600">
+                    <AlertCircle className="mr-1" size={16} />
+                    {error ?? "Error"}
+                  </div>
+                )}
+              </div>
+
+              {/* Controls */}
+              <div className="flex hidden items-center space-x-2">
+                <button
+                  className={cn(
+                    "flex items-center rounded-full p-2",
+                    moveHistory.length === 0 ||
+                      gameState === GAME_STATE.INITIALIZING ||
+                      gameState === GAME_STATE.WIN
+                      ? "cursor-not-allowed bg-gray-300 text-gray-500"
+                      : "bg-blue-500 text-white hover:bg-blue-600",
+                  )}
+                  disabled={
+                    moveHistory.length === 0 ||
+                    gameState === GAME_STATE.INITIALIZING ||
+                    gameState === GAME_STATE.WIN
+                  }
+                  type="button"
+                  onClick={undoMove}
+                >
+                  <Undo size={18} />
+                </button>
+              </div>
+            </div>
+
+            {/* Win message overlay */}
+            {gameState === GAME_STATE.WIN && (
+              <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
+                <div className="flex items-center">
+                  <Award className="mr-2 text-yellow-500" size={20} />
+                  <div className="font-bold">
+                    Level {currentLevel} solved in {moves} moves!
+                  </div>
+                </div>
+
+                <button
+                  className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
+                  type="button"
+                  onClick={nextLevel}
+                >
+                  Next Level
+                  <ArrowRight size={18} />
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Status */}
-          <div className="flex items-center">
-            {gameState === GAME_STATE.INITIALIZING && (
-              <div className="flex items-center font-medium text-blue-600">
-                <RefreshCw className="mr-2 animate-spin" size={16} />
-                Generating...
-              </div>
-            )}
+          {/* <Image alt="Top divider" className="-mb-[190px]" src={topDivider} /> */}
+        </div>
 
-            {gameState === GAME_STATE.READY && (
-              <div className="font-medium text-green-600">
-                Ready! Make a move
-              </div>
-            )}
-
-            {(gameState === GAME_STATE.PLAYING ||
-              gameState === GAME_STATE.ANIMATING) && (
-              <div className="text-gray-700">
-                Moves: <span className="font-bold">{moves}</span>
-              </div>
-            )}
-
-            {gameState === GAME_STATE.ERROR && (
-              <div className="flex items-center font-medium text-red-600">
-                <AlertCircle className="mr-1" size={16} />
-                {error ?? "Error"}
-              </div>
-            )}
+        {/* Game board - Fills remaining space */}
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden p-1">
+          {/* Responsive grid for vials */}
+          <div className="relative grid max-h-full grid-cols-7 place-items-center gap-1 sm:grid-cols-5 md:grid-cols-7">
+            {vials.map((vial, index) => renderVial(vial, index))}
+            {/* {renderLiquidAnimation()} */}
           </div>
+        </div>
 
-          {/* Controls */}
-          <div className="flex items-center space-x-2">
-            <button
-              className={`flex items-center rounded-full p-2 ${
-                moveHistory.length === 0 ||
-                gameState === GAME_STATE.INITIALIZING ||
-                gameState === GAME_STATE.WIN
-                  ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
-              }`}
-              disabled={
+        {/* HUD/Controls - Bottom section */}
+        <div>
+          {/* <Image alt="Bottom divider" className="-mt-[190px]" src={bottomDivider} /> */}
+          <div className="flex w-full items-center justify-end bg-[#060d1f] p-4">
+            <UndoButton
+              isDisabled={
                 moveHistory.length === 0 ||
                 gameState === GAME_STATE.INITIALIZING ||
                 gameState === GAME_STATE.WIN
               }
-              type="button"
               onClick={undoMove}
-            >
-              <Undo size={18} />
-            </button>
+            />
           </div>
         </div>
-
-        {/* Win message overlay */}
-        {gameState === GAME_STATE.WIN && (
-          <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
-            <div className="flex items-center">
-              <Award className="mr-2 text-yellow-500" size={20} />
-              <div className="font-bold">
-                Level {currentLevel} solved in {moves} moves!
-              </div>
-            </div>
-
-            <button
-              className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
-              type="button"
-              onClick={nextLevel}
-            >
-              Next Level
-              <svg
-                className="ml-1"
-                fill="none"
-                height="18"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        )}
       </div>
-
-      {/* Game board - Fills remaining space */}
-      <div className="relative flex h-full w-full items-center justify-center overflow-hidden p-1">
-        {/* Responsive grid for vials */}
-        <div className="relative grid max-h-full grid-cols-7 place-items-center gap-1 sm:grid-cols-5 md:grid-cols-7">
-          {vials.map((vial, index) => renderVial(vial, index))}
-          {renderLiquidAnimation()}
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
 
