@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+
 import dynamic from "next/dynamic";
+
 import { registerServiceWorker } from "./sw-register";
 
 const Artifact = dynamic(

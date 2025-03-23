@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { AlertCircle, Award, RefreshCw, Undo } from "lucide-react";
 
-import { useGameStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { useGameStore } from "@/lib/store";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -500,7 +500,7 @@ function WaterSortGame() {
         }
       }, 100);
     },
-    [generatePuzzle],
+    [generatePuzzle, setCurrentLevel],
   );
 
   // Start a new game (alias for restarting current level)
@@ -550,7 +550,14 @@ function WaterSortGame() {
         incrementHighestLevel();
       }
     }
-  }, [vials, gameState, isSolvedState, currentLevel, highestLevel]);
+  }, [
+    vials,
+    gameState,
+    isSolvedState,
+    currentLevel,
+    highestLevel,
+    incrementHighestLevel,
+  ]);
 
   // Start pouring animation
   const startPouringAnimation = useCallback(
@@ -1059,7 +1066,9 @@ function WaterSortGame() {
                 <DialogFooter>
                   <Button
                     variant="outline"
-                    onClick={() => setShowNewGameDialog(false)}
+                    onClick={() => {
+                      setShowNewGameDialog(false);
+                    }}
                   >
                     Cancel
                   </Button>

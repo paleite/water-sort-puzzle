@@ -33,6 +33,9 @@ const nextConfig = {
 };
 
 export default tsEslintConfig(
+  {
+    ignores: ["dist/**", "src/components/ui/*.tsx"],
+  },
   nextConfig,
   {
     ignores: ["dist/**"],
