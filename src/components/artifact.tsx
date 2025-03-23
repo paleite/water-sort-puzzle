@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
-import { AlertCircle, ArrowRight, Award, RefreshCw, Undo } from "lucide-react";
+// import Image from "next/image";
+import { ArrowRight, Award, RefreshCw, Undo } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +16,8 @@ import {
 } from "@/components/ui/dialog";
 import { useGameStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import { NextLevel } from "@/generated/icons";
+
+// import Game from "./background/game.jpg";
 
 // Game constants
 const VIAL_COUNT = 14;
@@ -23,6 +26,55 @@ const EMPTY_VIALS = 2;
 const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
 const MAX_GENERATION_ATTEMPTS = 10;
 const GENERATION_TIMEOUT_MS = 10000;
+
+// Define types
+type Vial = string[]; // A vial is an array of colors (strings)
+type VialState = Vial[]; // The game state is an array of vials
+
+// Game state enum
+const GAME_STATE = {
+  INITIALIZING: "initializing",
+  READY: "ready",
+  PLAYING: "playing",
+  WIN: "win",
+  ERROR: "error",
+} as const;
+
+type GameStateType = (typeof GAME_STATE)[keyof typeof GAME_STATE];
+
+// Define colors for our liquid layers (12 distinct colors with improved contrast)
+const COLORS = [
+  "#FF3030", // bright red
+  "#3AE12E", // lime green
+  "#347BFF", // bright blue
+  "#FFD700", // gold
+  "#E02DF3", // magenta
+  "#FF7F00", // orange
+  "#964B00", // brown
+  "#00FFFF", // cyan
+  "#FF1493", // deep pink
+  "#48D1CC", // turquoise
+  "#ADFF2F", // yellow-green
+  "#9966FF", // purple
+] as const;
+
+const EMOJIS = {
+  "#FF3030": "😀", // grinning face
+  "#3AE12E": "🚀", // rocket
+  "#347BFF": "🐶", // dog
+  "#FFD700": "🏀", // basketball
+  "#E02DF3": "🎸", // guitar
+  "#FF7F00": "📚", // books
+  "#964B00": "⚡", // high voltage
+  "#00FFFF": "🛸", // flying saucer
+  "#FF1493": "🎨", // palette
+  "#48D1CC": "🌍", // globe
+  "#ADFF2F": "🍕", // pizza
+  "#9966FF": "⏰", // alarm clock
+  // 11: "⏰", // alarm clock
+  // 12: "🎲", // game die
+  // 13: "💡", // light bulb
+} as const;
 
 // Simple seeded random number generator for deterministic level generation
 class SeededRandom {
@@ -64,46 +116,323 @@ class SeededRandom {
   }
 }
 
-// Animation states
-const ANIMATION_STATE = {
-  IDLE: "idle",
-  POURING: "pouring",
-} as const;
+// =================== PURE FUNCTIONS ===================
 
-// Game states
-const GAME_STATE = {
-  INITIALIZING: "initializing",
-  READY: "ready",
-  PLAYING: "playing",
-  ANIMATING: "animating",
-  WIN: "win",
-  ERROR: "error",
-} as const;
+/**
+ * Check if the puzzle is solved
+ */
+function isSolvedState(vialState: VialState): boolean {
+  // Count how many vials are properly sorted (single color or empty)
+  let sortedVials = 0;
 
-// Define types
-type AnimationStateType =
-  (typeof ANIMATION_STATE)[keyof typeof ANIMATION_STATE];
-type GameStateType = (typeof GAME_STATE)[keyof typeof GAME_STATE];
+  for (const vial of vialState) {
+    if (vial.length === 0) {
+      // Empty vials count as sorted
+      sortedVials++;
+    } else if (vial.length === COLORS_PER_VIAL) {
+      // Check if all colors in this vial are the same
+      const [firstColor] = vial;
+      const allSameColor = vial.every((color) => color === firstColor);
 
-// Define a vial as an array of colors (strings)
-type Vial = string[];
-type VialState = Vial[];
+      if (allSameColor) {
+        sortedVials++;
+      }
+    }
+  }
 
-// Define colors for our liquid layers (12 distinct colors with improved contrast)
-const COLORS = [
-  "#FF3030", // bright red
-  "#3AE12E", // lime green
-  "#347BFF", // bright blue
-  "#FFD700", // gold
-  "#E02DF3", // magenta
-  "#FF7F00", // orange
-  "#964B00", // brown
-  "#00FFFF", // cyan
-  "#FF1493", // deep pink
-  "#48D1CC", // turquoise
-  "#ADFF2F", // yellow-green
-  "#9966FF", // purple
-];
+  // A puzzle is solved when all vials are sorted
+  return sortedVials === VIAL_COUNT;
+}
+
+/**
+ * Validate that a vial state has correct color counts and is solvable
+ */
+function validateVials(vialState: VialState): boolean {
+  // Count colors
+  const colorCounts: Record<string, number> = {};
+  let totalSegments = 0;
+
+  vialState.forEach((vial) => {
+    vial.forEach((color) => {
+      colorCounts[color] = (colorCounts[color] ?? 0) + 1;
+      totalSegments++;
+    });
+  });
+
+  // Check total segments
+  if (totalSegments !== FILLED_VIALS * COLORS_PER_VIAL) {
+    return false;
+  }
+
+  // Check each color has exactly 4 segments
+  for (const color in colorCounts) {
+    if (colorCounts[color] !== COLORS_PER_VIAL) {
+      return false;
+    }
+  }
+
+  // Check that it's not already sorted
+  // Count how many vials are already single-color or empty
+  let sortedVialCount = 0;
+  vialState.forEach((vial) => {
+    if (vial.length === 0) {
+      sortedVialCount++;
+    } else if (vial.length === COLORS_PER_VIAL) {
+      // Check if all elements in this vial are the same
+      if (vial.every((color) => color === vial[0])) {
+        sortedVialCount++;
+      }
+    }
+  });
+
+  // If all vials are sorted, the puzzle is already solved - we don't want that
+  // But allow some sorted vials (up to 4) to make the puzzle easier to understand
+  if (sortedVialCount === VIAL_COUNT) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Check if a move is valid
+ */
+function isValidMove(
+  fromIndex: number,
+  toIndex: number,
+  vialState: VialState,
+): boolean {
+  // Check valid indices
+  if (
+    fromIndex < 0 ||
+    fromIndex >= vialState.length ||
+    toIndex < 0 ||
+    toIndex >= vialState.length
+  ) {
+    return false;
+  }
+
+  const fromVial = vialState[fromIndex];
+  const toVial = vialState[toIndex];
+
+  if (!fromVial || !toVial) {
+    return false;
+  }
+
+  // Can't move from an empty vial
+  if (fromVial.length === 0) {
+    return false;
+  }
+
+  // Can't move to a full vial
+  if (toVial.length >= COLORS_PER_VIAL) {
+    return false;
+  }
+
+  // Can move to an empty vial
+  if (toVial.length === 0) {
+    return true;
+  }
+
+  // Check if the top colors match
+  const fromColor = fromVial[fromVial.length - 1];
+  const toColor = toVial[toVial.length - 1];
+
+  if (fromColor === undefined || toColor === undefined) {
+    return false;
+  }
+
+  return fromColor === toColor;
+}
+
+/**
+ * Execute a move between vials (pour liquid)
+ * Returns a new vial state or null if the move is invalid
+ */
+function executeMove(
+  fromIndex: number,
+  toIndex: number,
+  vialState: VialState,
+): VialState | null {
+  if (!isValidMove(fromIndex, toIndex, vialState)) {
+    return null;
+  }
+
+  // Create a deep copy of vials
+  const newVialState = JSON.parse(JSON.stringify(vialState)) as VialState;
+
+  // Check indices are valid
+  if (
+    fromIndex < 0 ||
+    fromIndex >= newVialState.length ||
+    toIndex < 0 ||
+    toIndex >= newVialState.length
+  ) {
+    return null;
+  }
+
+  const fromVial = newVialState[fromIndex];
+  const toVial = newVialState[toIndex];
+
+  if (!fromVial || !toVial || fromVial.length === 0) {
+    return null;
+  }
+
+  // Get the color to move
+  const colorToMove = fromVial[fromVial.length - 1];
+  if (colorToMove === undefined) {
+    return null;
+  }
+
+  // Count consecutive same colors from top
+  let colorCount = 0;
+  for (let i = fromVial.length - 1; i >= 0; i--) {
+    if (fromVial[i] === colorToMove) {
+      colorCount++;
+    } else {
+      break;
+    }
+  }
+
+  // Calculate how many can be moved (limited by space in destination)
+  const maxAccept = COLORS_PER_VIAL - toVial.length;
+  const countToMove = Math.min(colorCount, maxAccept);
+
+  // Execute the move
+  const colorsToMove = fromVial.splice(fromVial.length - countToMove);
+  toVial.push(...colorsToMove);
+
+  return newVialState;
+}
+
+/**
+ * Generate a scrambled puzzle state using a deterministic approach with level as seed
+ */
+function generatePuzzle(level: number, attempts: number = 0): VialState | null {
+  // Check for too many attempts
+  if (attempts >= MAX_GENERATION_ATTEMPTS) {
+    return null;
+  }
+
+  // Create a seeded random generator for deterministic generation
+  const random = new SeededRandom(level);
+
+  // Create a pool of all color segments we need
+  const colorPool: string[] = [];
+  for (let i = 0; i < FILLED_VIALS; i++) {
+    // Different levels can have slightly different color sets
+    // This creates a sense of progression
+    const colorOffset = Math.floor(level / 5) % COLORS.length; // Change colors every 5 levels
+    const colorIndex = (i + colorOffset) % COLORS.length;
+
+    // Add 4 of each color to the pool
+    for (let j = 0; j < COLORS_PER_VIAL; j++) {
+      // Make sure we have a valid index
+      if (colorIndex >= 0 && colorIndex < COLORS.length) {
+        const color = COLORS[colorIndex];
+        if (color !== undefined) {
+          colorPool.push(color);
+        }
+      }
+    }
+  }
+
+  // Shuffle the color pool using our seeded random generator
+  const shuffledColors = random.shuffle(colorPool);
+
+  // Create a puzzle with distributed colors
+  const scrambledState: VialState = [];
+
+  // Fill the first 12 vials with random colors from our pool
+  for (let i = 0; i < FILLED_VIALS; i++) {
+    const vial: Vial = [];
+    for (let j = 0; j < COLORS_PER_VIAL; j++) {
+      // Get a color from our shuffled pool
+      if (shuffledColors.length > 0) {
+        const color = shuffledColors.pop();
+        if (color !== undefined) {
+          vial.push(color);
+        }
+      }
+    }
+    scrambledState.push(vial);
+  }
+
+  // Add the empty vials
+  for (let i = 0; i < EMPTY_VIALS; i++) {
+    scrambledState.push([]);
+  }
+
+  // For higher levels, add an additional challenge: perform more shuffling operations
+  // The higher the level, the more complex the puzzle
+  if (level > 1) {
+    const additionalShuffles = Math.min(Math.floor(level / 2), 10); // Cap at 10 extra shuffles
+
+    for (let i = 0; i < additionalShuffles; i++) {
+      // Find vials with some space and some content
+      const validSourceVials = scrambledState
+        .map((vial, index) => ({ vial, index }))
+        .filter(({ vial }) => vial.length > 0);
+
+      const validTargetVials = scrambledState
+        .map((vial, index) => ({ vial, index }))
+        .filter(({ vial }) => vial.length < COLORS_PER_VIAL);
+
+      if (validSourceVials.length > 0 && validTargetVials.length > 0) {
+        // Select random source and target
+        const sourceIndex = random.nextInt(0, validSourceVials.length);
+        const targetIndex = random.nextInt(0, validTargetVials.length);
+
+        // Check if indices are valid
+        if (
+          sourceIndex >= 0 &&
+          sourceIndex < validSourceVials.length &&
+          targetIndex >= 0 &&
+          targetIndex < validTargetVials.length
+        ) {
+          const source = validSourceVials[sourceIndex];
+          const target = validTargetVials[targetIndex];
+
+          if (source && target && source.index !== target.index) {
+            // Check if the source vial exists in scrambledState
+            if (
+              source.index >= 0 &&
+              source.index < scrambledState.length &&
+              target.index >= 0 &&
+              target.index < scrambledState.length
+            ) {
+              // Take one color from source and add to target
+              const sourceVial = scrambledState[source.index];
+              const targetVial = scrambledState[target.index];
+
+              if (sourceVial && sourceVial.length > 0) {
+                const color = sourceVial.pop();
+                if (color && targetVial) {
+                  targetVial.push(color);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Verify the scrambled state isn't already solved
+  if (isSolvedState(scrambledState)) {
+    // Very unlikely with seeded generation, but try again if it is
+    return generatePuzzle(level, attempts + 1);
+  }
+
+  // Ensure the puzzle is actually solvable by verifying color counts
+  if (!validateVials(scrambledState)) {
+    return generatePuzzle(level, attempts + 1);
+  }
+
+  return scrambledState;
+}
+
+// =================== UI COMPONENTS ===================
 
 function UndoButton({
   isDisabled,
@@ -153,6 +482,109 @@ function ResetButton({
   );
 }
 
+/**
+ * Render a vial with its contents
+ */
+function renderVial(
+  vial: Vial,
+  index: number,
+  selectedVialIndex: number | null,
+  gameState: GameStateType,
+  vials: VialState,
+  handleVialClick: (index: number) => void,
+): React.ReactNode {
+  const isSelected = selectedVialIndex === index;
+  const isAnySelected = selectedVialIndex !== null;
+  const isInteractive =
+    gameState === GAME_STATE.READY || gameState === GAME_STATE.PLAYING;
+  const isValidTarget =
+    selectedVialIndex !== null &&
+    selectedVialIndex !== index &&
+    isValidMove(selectedVialIndex, index, vials);
+
+  const vialType = isSelected
+    ? "source"
+    : isValidTarget
+      ? "target"
+      : isAnySelected
+        ? "invalid"
+        : "default";
+
+  return (
+    <div
+      key={index}
+      className={cn(
+        "relative flex h-48 w-full flex-col-reverse overflow-hidden rounded-b-full border-4 bg-purple-900 pt-6",
+        isInteractive ? "cursor-pointer" : "cursor-default",
+        vialType === "source" && "border-blue-500",
+        vialType === "target" && "border-green-500",
+        vialType === "invalid" && "border-gray-400 opacity-50",
+        vialType === "default" && "border-gray-400",
+      )}
+      onClick={() => {
+        if (isInteractive) {
+          handleVialClick(index);
+        }
+      }}
+    >
+      {/* Liquid layers */}
+      {vial.map((color, layerIndex) => {
+        const colorKey = color as keyof typeof EMOJIS;
+        // Add a pattern or texture to each color to help distinguish them
+        const addPattern = (
+          <div
+            key={layerIndex}
+            className="relative h-10 w-full"
+            style={{ backgroundColor: colorKey }}
+          >
+            {/* Subtle diagonal stripes or pattern based on color index */}
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                background:
+                  COLORS.indexOf(colorKey) % 4 === 0
+                    ? "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+                    : COLORS.indexOf(colorKey) % 4 === 1
+                      ? "repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+                      : COLORS.indexOf(colorKey) % 4 === 2
+                        ? "radial-gradient(circle, transparent 30%, rgba(255,255,255,0.3) 70%)"
+                        : "repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px)",
+              }}
+            />
+            <div className="absolute inset-0 flex items-center justify-center text-3xl opacity-20">
+              {EMOJIS[colorKey]}
+            </div>
+
+            {/* Add highlight/shadow to create depth */}
+            <div
+              className="absolute inset-0 opacity-20"
+              style={{
+                background:
+                  "linear-gradient(to bottom, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%)",
+              }}
+            />
+
+            {/* Border between layers */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-black opacity-10" />
+          </div>
+        );
+
+        return addPattern;
+      })}
+
+      {/* Glass reflection effect */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-0 right-0 top-0 h-10 bg-gradient-to-b from-white to-transparent opacity-20" />
+      </div>
+
+      {/* Empty space */}
+      <div className="flex-grow" />
+    </div>
+  );
+}
+
+// =================== MAIN GAME COMPONENT ===================
+
 function WaterSortGame() {
   // Game state
   const [vials, setVials] = useState<VialState>([]);
@@ -164,358 +596,15 @@ function WaterSortGame() {
   const [gameState, setGameState] = useState<GameStateType>(
     GAME_STATE.INITIALIZING,
   );
-  const [error, setError] = useState<string | null>(null);
   const [showNewGameDialog, setShowNewGameDialog] = useState(false);
 
   // Level system - using zustand store with persistence
   const { currentLevel, highestLevel, setCurrentLevel, incrementHighestLevel } =
     useGameStore();
 
-  // // Animation state
-  // const [animationState, setAnimationState] = useState<AnimationStateType>(
-  //   ANIMATION_STATE.IDLE,
-  // );
-  // const [animatingFrom, setAnimatingFrom] = useState<number | null>(null);
-  // const [animatingTo, setAnimatingTo] = useState<number | null>(null);
-  // const [animatingColor, setAnimatingColor] = useState<string | null>(null);
-  // const [animatingCount, setAnimatingCount] = useState<number>(0);
-
-  // Refs
-  const generationAttempts = useRef<number>(0);
+  // Refs for timeout handling
   const generationTimeout = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
-  );
-  const animationTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
-
-  // Check if a state is solved
-  const isSolvedState = useCallback((vialState: VialState): boolean => {
-    // Count how many vials are properly sorted (single color or empty)
-    let sortedVials = 0;
-
-    for (const vial of vialState) {
-      if (vial.length === 0) {
-        // Empty vials count as sorted
-        sortedVials++;
-      } else if (vial.length === COLORS_PER_VIAL) {
-        // Check if all colors in this vial are the same
-        const [firstColor] = vial;
-        const allSameColor = vial.every((color) => color === firstColor);
-
-        if (allSameColor) {
-          sortedVials++;
-        }
-      }
-    }
-
-    // A puzzle is solved when all vials are sorted
-    return sortedVials === VIAL_COUNT;
-  }, []);
-
-  // Validate vials state to ensure it has correct color counts and is solvable
-  const validateVials = useCallback((vialState: VialState): boolean => {
-    // Count colors
-    const colorCounts: Record<string, number> = {};
-    let totalSegments = 0;
-
-    vialState.forEach((vial) => {
-      vial.forEach((color) => {
-        colorCounts[color] = (colorCounts[color] ?? 0) + 1;
-        totalSegments++;
-      });
-    });
-
-    // Check total segments
-    if (totalSegments !== FILLED_VIALS * COLORS_PER_VIAL) {
-      return false;
-    }
-
-    // Check each color has exactly 4 segments
-    for (const color in colorCounts) {
-      if (colorCounts[color] !== COLORS_PER_VIAL) {
-        return false;
-      }
-    }
-
-    // Check that it's not already sorted
-    // Count how many vials are already single-color or empty
-    let sortedVialCount = 0;
-    vialState.forEach((vial) => {
-      if (vial.length === 0) {
-        sortedVialCount++;
-      } else if (vial.length === COLORS_PER_VIAL) {
-        // Check if all elements in this vial are the same
-        if (vial.every((color) => color === vial[0])) {
-          sortedVialCount++;
-        }
-      }
-    });
-
-    // If all vials are sorted, the puzzle is already solved - we don't want that
-    // But allow some sorted vials (up to 4) to make the puzzle easier to understand
-    if (sortedVialCount === VIAL_COUNT) {
-      return false;
-    }
-
-    return true;
-  }, []);
-
-  // Check if a move is valid
-  const isValidMove = useCallback(
-    (fromIndex: number, toIndex: number, vialState: VialState): boolean => {
-      // Check valid indices
-      if (
-        fromIndex < 0 ||
-        fromIndex >= vialState.length ||
-        toIndex < 0 ||
-        toIndex >= vialState.length
-      ) {
-        return false;
-      }
-
-      const fromVial = vialState[fromIndex];
-      const toVial = vialState[toIndex];
-
-      if (!fromVial || !toVial) {
-        return false;
-      }
-
-      // Can't move from an empty vial
-      if (fromVial.length === 0) {
-        return false;
-      }
-
-      // Can't move to a full vial
-      if (toVial.length >= COLORS_PER_VIAL) {
-        return false;
-      }
-
-      // Can move to an empty vial
-      if (toVial.length === 0) {
-        return true;
-      }
-
-      // Check if the top colors match
-      const fromColor = fromVial[fromVial.length - 1];
-      const toColor = toVial[toVial.length - 1];
-
-      if (fromColor === undefined || toColor === undefined) {
-        return false;
-      }
-
-      return fromColor === toColor;
-    },
-    [],
-  );
-
-  // Execute a move between vials (pour liquid)
-  const executeMove = useCallback(
-    (
-      fromIndex: number,
-      toIndex: number,
-      vialState: VialState,
-    ): VialState | null => {
-      if (!isValidMove(fromIndex, toIndex, vialState)) {
-        return null;
-      }
-
-      // Create a deep copy of vials
-      const newVialState = JSON.parse(JSON.stringify(vialState)) as VialState;
-
-      // Check indices are valid
-      if (
-        fromIndex < 0 ||
-        fromIndex >= newVialState.length ||
-        toIndex < 0 ||
-        toIndex >= newVialState.length
-      ) {
-        return null;
-      }
-
-      const fromVial = newVialState[fromIndex];
-      const toVial = newVialState[toIndex];
-
-      if (!fromVial || !toVial || fromVial.length === 0) {
-        return null;
-      }
-
-      // Get the color to move
-      const colorToMove = fromVial[fromVial.length - 1];
-      if (colorToMove === undefined) {
-        return null;
-      }
-
-      // Count consecutive same colors from top
-      let colorCount = 0;
-      for (let i = fromVial.length - 1; i >= 0; i--) {
-        if (fromVial[i] === colorToMove) {
-          colorCount++;
-        } else {
-          break;
-        }
-      }
-
-      // Calculate how many can be moved (limited by space in destination)
-      const maxAccept = COLORS_PER_VIAL - toVial.length;
-      const countToMove = Math.min(colorCount, maxAccept);
-
-      // Execute the move
-      const colorsToMove = fromVial.splice(fromVial.length - countToMove);
-      toVial.push(...colorsToMove);
-
-      return newVialState;
-    },
-    [isValidMove],
-  );
-
-  // Generate a scrambled puzzle state using a deterministic approach with level as seed
-  const generatePuzzle = useCallback(
-    (level: number): VialState | null => {
-      // Create a seeded random generator for deterministic generation
-      const random = new SeededRandom(level);
-
-      // Clear timeout to prevent infinite loops
-      if (generationTimeout.current) {
-        clearTimeout(generationTimeout.current);
-      }
-      generationTimeout.current = setTimeout(() => {
-        setError("Puzzle generation timed out. Please try again.");
-        setGameState(GAME_STATE.ERROR);
-      }, GENERATION_TIMEOUT_MS);
-
-      // Create a pool of all color segments we need
-      const colorPool: string[] = [];
-      for (let i = 0; i < FILLED_VIALS; i++) {
-        // Different levels can have slightly different color sets
-        // This creates a sense of progression
-        const colorOffset = Math.floor(level / 5) % COLORS.length; // Change colors every 5 levels
-        const colorIndex = (i + colorOffset) % COLORS.length;
-
-        // Add 4 of each color to the pool
-        for (let j = 0; j < COLORS_PER_VIAL; j++) {
-          // Make sure we have a valid index
-          if (colorIndex >= 0 && colorIndex < COLORS.length) {
-            const color = COLORS[colorIndex];
-            if (color !== undefined) {
-              colorPool.push(color);
-            }
-          }
-        }
-      }
-
-      // Shuffle the color pool using our seeded random generator
-      const shuffledColors = random.shuffle(colorPool);
-
-      // Create a puzzle with distributed colors
-      const scrambledState: VialState = [];
-
-      // Fill the first 12 vials with random colors from our pool
-      for (let i = 0; i < FILLED_VIALS; i++) {
-        const vial: Vial = [];
-        for (let j = 0; j < COLORS_PER_VIAL; j++) {
-          // Get a color from our shuffled pool
-          if (shuffledColors.length > 0) {
-            const color = shuffledColors.pop();
-            if (color !== undefined) {
-              vial.push(color);
-            }
-          }
-        }
-        scrambledState.push(vial);
-      }
-
-      // Add the empty vials
-      for (let i = 0; i < EMPTY_VIALS; i++) {
-        scrambledState.push([]);
-      }
-
-      // For higher levels, add an additional challenge: perform more shuffling operations
-      // The higher the level, the more complex the puzzle
-      if (level > 1) {
-        const additionalShuffles = Math.min(Math.floor(level / 2), 10); // Cap at 10 extra shuffles
-
-        for (let i = 0; i < additionalShuffles; i++) {
-          // Find vials with some space and some content
-          const validSourceVials = scrambledState
-            .map((vial, index) => ({ vial, index }))
-            .filter(({ vial }) => vial.length > 0);
-
-          const validTargetVials = scrambledState
-            .map((vial, index) => ({ vial, index }))
-            .filter(({ vial }) => vial.length < COLORS_PER_VIAL);
-
-          if (validSourceVials.length > 0 && validTargetVials.length > 0) {
-            // Select random source and target
-            const sourceIndex = random.nextInt(0, validSourceVials.length);
-            const targetIndex = random.nextInt(0, validTargetVials.length);
-
-            // Check if indices are valid
-            if (
-              sourceIndex >= 0 &&
-              sourceIndex < validSourceVials.length &&
-              targetIndex >= 0 &&
-              targetIndex < validTargetVials.length
-            ) {
-              const source = validSourceVials[sourceIndex];
-              const target = validTargetVials[targetIndex];
-
-              if (source && target && source.index !== target.index) {
-                // Check if the source vial exists in scrambledState
-                if (
-                  source.index >= 0 &&
-                  source.index < scrambledState.length &&
-                  target.index >= 0 &&
-                  target.index < scrambledState.length
-                ) {
-                  // Take one color from source and add to target
-                  const sourceVial = scrambledState[source.index];
-                  const targetVial = scrambledState[target.index];
-
-                  if (sourceVial && sourceVial.length > 0) {
-                    const color = sourceVial.pop();
-                    if (color && targetVial) {
-                      targetVial.push(color);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Clear the timeout as we've finished
-      clearTimeout(generationTimeout.current);
-
-      // Verify the scrambled state isn't already solved
-      if (isSolvedState(scrambledState)) {
-        // Very unlikely with seeded generation, but try again if it is
-        generationAttempts.current++;
-        if (generationAttempts.current >= MAX_GENERATION_ATTEMPTS) {
-          setError("Failed to generate an unsolved puzzle for this level.");
-          setGameState(GAME_STATE.ERROR);
-          return null;
-        }
-        return generatePuzzle(level);
-      }
-
-      // Ensure the puzzle is actually solvable by verifying color counts
-      if (!validateVials(scrambledState)) {
-        generationAttempts.current++;
-        if (generationAttempts.current >= MAX_GENERATION_ATTEMPTS) {
-          setError("Failed to generate a valid puzzle configuration.");
-          setGameState(GAME_STATE.ERROR);
-          return null;
-        }
-        return generatePuzzle(level);
-      }
-
-      // Reset attempts counter and return the valid scrambled state
-      generationAttempts.current = 0;
-      return scrambledState;
-    },
-    [validateVials, isSolvedState],
   );
 
   // Start a specific level
@@ -525,32 +614,42 @@ function WaterSortGame() {
       setSelectedVialIndex(null);
       setMoveHistory([]);
       setMoves(0);
-      setError(null);
+      toast.error(null);
       setCurrentLevel(level);
-
-      // // Reset animation state
-      // setAnimationState(ANIMATION_STATE.IDLE);
-      // setAnimatingFrom(null);
-      // setAnimatingTo(null);
-      // setAnimatingColor(null);
-      // setAnimatingCount(0);
 
       // Use setTimeout to ensure the UI updates before the generation starts
       setTimeout(() => {
         try {
+          // Clear timeout to prevent infinite loops
+          if (generationTimeout.current) {
+            clearTimeout(generationTimeout.current);
+          }
+
+          generationTimeout.current = setTimeout(() => {
+            toast.error("Puzzle generation timed out. Please try again.");
+            setGameState(GAME_STATE.ERROR);
+          }, GENERATION_TIMEOUT_MS);
+
           const scrambledPuzzle = generatePuzzle(level);
+
+          // Clear the timeout as we've finished
+          clearTimeout(generationTimeout.current);
+
           if (scrambledPuzzle) {
             setVials(scrambledPuzzle);
             setGameState(GAME_STATE.READY);
+          } else {
+            toast.error("Failed to generate a valid puzzle configuration.");
+            setGameState(GAME_STATE.ERROR);
           }
         } catch (err) {
           console.error("Error generating puzzle:", err);
-          setError("An unexpected error occurred. Please try again.");
+          toast.error("An unexpected error occurred. Please try again.");
           setGameState(GAME_STATE.ERROR);
         }
       }, 100);
     },
-    [generatePuzzle, setCurrentLevel],
+    [setCurrentLevel],
   );
 
   // Start a new game (alias for restarting current level)
@@ -569,119 +668,11 @@ function WaterSortGame() {
     startLevel(nextLevelNum);
   }, [currentLevel, highestLevel, incrementHighestLevel, startLevel]);
 
-  // Go to previous level (if available)
-  const prevLevel = useCallback((): void => {
-    if (currentLevel > 1) {
-      startLevel(currentLevel - 1);
-    }
-  }, [currentLevel, startLevel]);
-
-  // Initialize the game on first load
-  useEffect(() => {
-    startNewGame();
-  }, [startNewGame]);
-
-  // Clean up timeouts on unmount
-  useEffect(() => {
-    return () => {
-      clearTimeout(generationTimeout.current);
-      clearTimeout(animationTimeoutRef.current);
-    };
-  }, []);
-
-  // Check if the current state is a win
-  useEffect(() => {
-    if (gameState === GAME_STATE.PLAYING && vials.length > 0) {
-      if (isSolvedState(vials)) {
-        // Level completed!
-        setGameState(GAME_STATE.WIN);
-
-        // Update highest level if needed through zustand store
-        incrementHighestLevel();
-      }
-    }
-  }, [
-    vials,
-    gameState,
-    isSolvedState,
-    currentLevel,
-    highestLevel,
-    incrementHighestLevel,
-  ]);
-
-  // Start pouring animation
-  const startPouringAnimation = useCallback(
-    (fromIndex: number, toIndex: number): void => {
-      // Check indices are valid
-      if (
-        fromIndex < 0 ||
-        fromIndex >= vials.length ||
-        toIndex < 0 ||
-        toIndex >= vials.length
-      ) {
-        return;
-      }
-
-      // Get the vials
-      const fromVial = vials[fromIndex];
-      const toVial = vials[toIndex];
-
-      if (!fromVial || !toVial || fromVial.length === 0) {
-        return;
-      }
-
-      // Set animation state - but don't block game play
-      // Just track that an animation is happening visually
-      // setAnimationState(ANIMATION_STATE.POURING);
-      // setAnimatingFrom(fromIndex);
-      // setAnimatingTo(toIndex);
-
-      // Get the color that will be poured
-      const colorToPour = fromVial[fromVial.length - 1];
-      if (colorToPour === undefined) {
-        return;
-      }
-
-      // setAnimatingColor(colorToPour);
-
-      // Count how many of the same color will be poured
-      let colorCount = 0;
-      for (let i = fromVial.length - 1; i >= 0; i--) {
-        if (fromVial[i] === colorToPour) {
-          colorCount++;
-        } else {
-          break;
-        }
-      }
-
-      // Calculate how many can be moved based on destination space
-      const maxAccept = COLORS_PER_VIAL - toVial.length;
-      const countToPour = Math.min(colorCount, maxAccept);
-      // setAnimatingCount(countToPour);
-
-      // Set a timeout to finish the animation visually
-      // clearTimeout(animationTimeoutRef.current);
-      // animationTimeoutRef.current = setTimeout(() => {
-      //   // Reset animation state when animation completes
-      //   setAnimationState(ANIMATION_STATE.IDLE);
-      //   setAnimatingFrom(null);
-      //   setAnimatingTo(null);
-      //   setAnimatingColor(null);
-      //   setAnimatingCount(0);
-      // }, 800); // Animation duration
-    },
-    [vials],
-  );
-
   // Handle vial selection and moves
   const handleVialClick = useCallback(
     (index: number): void => {
-      // Only allow interaction in READY or PLAYING states (and now during animations)
-      if (
-        gameState !== GAME_STATE.READY &&
-        gameState !== GAME_STATE.PLAYING &&
-        gameState !== GAME_STATE.ANIMATING
-      ) {
+      // Only allow interaction in READY or PLAYING states
+      if (gameState !== GAME_STATE.READY && gameState !== GAME_STATE.PLAYING) {
         return;
       }
 
@@ -714,18 +705,13 @@ function WaterSortGame() {
           // Save current state for undo
           setMoveHistory([...moveHistory, JSON.parse(JSON.stringify(vials))]);
 
-          // Start animation but immediately update the game state
-          // This makes the animation purely visual without blocking gameplay
           const fromIndex = selectedVialIndex;
           const toIndex = index;
 
           // Execute the move immediately
           const newVials = executeMove(fromIndex, toIndex, vials);
           if (newVials) {
-            // Start animation visually
-            startPouringAnimation(fromIndex, toIndex);
-
-            // But update the state immediately
+            // Update the state immediately
             setVials(newVials);
             setMoves(moves + 1);
             setSelectedVialIndex(null);
@@ -739,16 +725,7 @@ function WaterSortGame() {
         }
       }
     },
-    [
-      selectedVialIndex,
-      vials,
-      moveHistory,
-      moves,
-      gameState,
-      isValidMove,
-      executeMove,
-      startPouringAnimation,
-    ],
+    [selectedVialIndex, vials, moveHistory, moves, gameState],
   );
 
   // Undo the last move
@@ -769,419 +746,138 @@ function WaterSortGame() {
     }
   }, [moveHistory, moves, gameState]);
 
+  // Initialize the game on first load
   useEffect(() => {
-    // Add ripple animation for water effect
-    const style = document.createElement("style");
-    style.innerHTML = `
-      @keyframes ripple {
-        0% { transform: scale(0); opacity: 0.7; }
-        100% { transform: scale(3); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
+    startNewGame();
+  }, [startNewGame]);
 
+  // Clean up timeouts on unmount
+  useEffect(() => {
     return () => {
-      document.head.removeChild(style);
+      clearTimeout(generationTimeout.current);
     };
   }, []);
 
-  // Render the liquid animation as an SVG path
-  // const renderLiquidAnimation = useCallback((): React.ReactNode => {
-  //   if (
-  //     animationState !== ANIMATION_STATE.POURING ||
-  //     animatingFrom === null ||
-  //     animatingTo === null ||
-  //     animatingColor === null
-  //   ) {
-  //     return null;
-  //   }
+  // Check if the current state is a win
+  useEffect(() => {
+    if (gameState === GAME_STATE.PLAYING && vials.length > 0) {
+      if (isSolvedState(vials)) {
+        // Level completed!
+        setGameState(GAME_STATE.WIN);
 
-  //   // Calculate vial positions in the grid
-  //   // Adjust sizes for responsive layout
-  //   const vialWidth = 40; // Smaller for mobile (w-10)
-  //   const vialGap = 4; // gap-1 in grid
-  //   const vialsPerRow = window.innerWidth < 640 ? 5 : 7; // Based on sm:grid-cols-5 / grid-cols-7
-
-  //   // Calculate from and to positions
-  //   const fromRow = Math.floor(animatingFrom / vialsPerRow);
-  //   const fromCol = animatingFrom % vialsPerRow;
-  //   const toRow = Math.floor(animatingTo / vialsPerRow);
-  //   const toCol = animatingTo % vialsPerRow;
-
-  //   // Calculate center points of the vials
-  //   const fromX = fromCol * (vialWidth + vialGap) + vialWidth / 2;
-  //   const fromY = fromRow * (160 + vialGap) + 20;
-  //   const toX = toCol * (vialWidth + vialGap) + vialWidth / 2;
-
-  //   // Safely access the target vial length
-  //   let toVialLength = 0;
-  //   if (animatingTo >= 0 && animatingTo < vials.length) {
-  //     const toVial = vials[animatingTo];
-  //     if (toVial) {
-  //       toVialLength = toVial.length;
-  //     }
-  //   }
-
-  //   const toY = toRow * (160 + vialGap) + 20 + toVialLength * 40;
-
-  //   // First determine the path control points
-  //   const midY = Math.min(fromY, toY) - 40; // Arc height
-  //   const path = `M${String(fromX)},${String(fromY)} Q${String((fromX + toX) / 2)},${String(midY)} ${String(toX)},${String(toY)}`;
-
-  //   // We'll create multiple droplets along the path for a more fluid effect
-  //   const droplets: React.ReactNode[] = [];
-  //   const dropletCount = 5; // Number of droplets in the animation
-  //   const dropletRadius = 6; // Smaller droplets for mobile
-
-  //   for (let i = 0; i < dropletCount; i++) {
-  //     // Calculate the animation delay for each droplet
-  //     const animationDelay = i * 0.12; // Stagger the droplets
-
-  //     droplets.push(
-  //       <g key={`droplet-${String(i)}`}>
-  //         <circle fill={animatingColor} opacity={0.9} r={dropletRadius}>
-  //           <animateMotion
-  //             begin={`${String(animationDelay)}s`}
-  //             calcMode="linear"
-  //             dur="0.7s"
-  //             fill="freeze"
-  //             path={path}
-  //           />
-  //           <animate
-  //             attributeName="r"
-  //             begin={`${String(animationDelay)}s`}
-  //             dur="0.5s"
-  //             repeatCount="1"
-  //             values={`${String(dropletRadius * 0.8)};${String(dropletRadius)};${String(dropletRadius * 0.8)}`}
-  //           />
-  //         </circle>
-  //       </g>,
-  //     );
-  //   }
-
-  //   // Create a splash effect at the destination
-  //   const splash = (
-  //     <g key="splash">
-  //       <circle
-  //         cx={String(toX)}
-  //         cy={String(toY)}
-  //         fill={animatingColor}
-  //         opacity={0.7}
-  //         r={0}
-  //       >
-  //         <animate
-  //           attributeName="r"
-  //           begin="0.5s"
-  //           dur="0.4s"
-  //           fill="freeze"
-  //           values="0;12"
-  //         />
-  //         <animate
-  //           attributeName="opacity"
-  //           begin="0.5s"
-  //           dur="0.4s"
-  //           fill="freeze"
-  //           values="0.7;0"
-  //         />
-  //       </circle>
-  //     </g>
-  //   );
-
-  //   return (
-  //     <svg className="pointer-events-none absolute left-0 top-0 z-20 h-full w-full">
-  //       {/* Droplets */}
-  //       {droplets}
-
-  //       {/* Splash effect */}
-  //       {splash}
-  //     </svg>
-  //   );
-  // }, [animationState, animatingFrom, animatingTo, animatingColor, vials]);
-
-  // Render a vial with its contents
-  const renderVial = useCallback(
-    (vial: Vial, index: number): React.ReactNode => {
-      const isSelected = selectedVialIndex === index;
-      const isInteractive =
-        gameState === GAME_STATE.READY ||
-        gameState === GAME_STATE.PLAYING ||
-        gameState === GAME_STATE.ANIMATING;
-      const isValidTarget =
-        selectedVialIndex !== null &&
-        selectedVialIndex !== index &&
-        isValidMove(selectedVialIndex, index, vials);
-
-      // Animation states
-      // const isPouring = animationState === ANIMATION_STATE.POURING;
-      // const isPouringSource = isPouring && animatingFrom === index;
-      // const isPouringTarget = isPouring && animatingTo === index;
-
-      return (
-        <div
-          key={index}
-          className={cn(
-            "relative flex h-40 w-10 flex-col-reverse overflow-hidden rounded-b-xl border-2 bg-purple-900 sm:h-48 sm:w-12",
-            isInteractive ? "cursor-pointer" : "cursor-default",
-            isSelected
-              ? "border-blue-500"
-              : isValidTarget
-                ? "border-green-500"
-                : "border-gray-400",
-          )}
-          onClick={() => {
-            if (isInteractive) {
-              handleVialClick(index);
-            }
-          }}
-        >
-          {/* Liquid layers */}
-          {vial.map((color, layerIndex) => {
-            // Skip rendering the top layers that are being poured out
-            // if (
-            //   isPouringSource &&
-            //   layerIndex >= vial.length - animatingCount &&
-            //   animatingColor !== null &&
-            //   color === animatingColor
-            // ) {
-            //   return null;
-            // }
-
-            // Add a pattern or texture to each color to help distinguish them
-            const addPattern = (
-              <div
-                key={layerIndex}
-                className="relative h-10 w-full sm:h-12"
-                style={{ backgroundColor: color }}
-              >
-                {/* Subtle diagonal stripes or pattern based on color index */}
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    background:
-                      COLORS.indexOf(color) % 4 === 0
-                        ? "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
-                        : COLORS.indexOf(color) % 4 === 1
-                          ? "repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
-                          : COLORS.indexOf(color) % 4 === 2
-                            ? "radial-gradient(circle, transparent 30%, rgba(255,255,255,0.3) 70%)"
-                            : "repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px)",
-                  }}
-                />
-
-                {/* Add highlight/shadow to create depth */}
-                <div
-                  className="absolute inset-0 opacity-20"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%)",
-                  }}
-                />
-
-                {/* Border between layers */}
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-black opacity-10" />
-              </div>
-            );
-
-            return addPattern;
-          })}
-
-          {/* Glass reflection effect */}
-          <div className="pointer-events-none absolute inset-0">
-            <div className="absolute left-0 right-0 top-0 h-10 bg-gradient-to-b from-white to-transparent opacity-20" />
-          </div>
-
-          {/* Animation effects for the target vial */}
-          {/* {isPouringTarget && animatingColor !== null && (
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0">
-              <div
-                className="absolute left-1/2 top-0 h-1 w-6 -translate-x-1/2 rounded-full opacity-70"
-                style={{
-                  backgroundColor: animatingColor,
-                  animation: "ripple 0.8s ease-out",
-                  animationDelay: "0.3s",
-                }}
-              />
-            </div>
-          )} */}
-
-          {/* Empty space */}
-          <div className="flex-grow" />
-        </div>
-      );
-    },
-    [
-      selectedVialIndex,
-      gameState,
-      vials,
-      isValidMove,
-      handleVialClick,
-      // animationState,
-      // animatingFrom,
-      // animatingTo,
-      // animatingColor,
-      // animatingCount,
-    ],
-  );
+        // Update highest level if needed through zustand store
+        incrementHighestLevel();
+      }
+    }
+  }, [vials, gameState, currentLevel, highestLevel, incrementHighestLevel]);
 
   return (
-    // <div className="grid h-dvh w-full grid-rows-[auto_1fr] bg-purple-950">
-    <>
-      {/* <div className="absolute -z-10 block h-dvh w-full bg-[#221337]">
-        <Image alt="Top" className="absolute top-0" src={top} />
-        <Image alt="Bottom" className="absolute bottom-0" src={bottom} />
-      </div> */}
-      <div className="grid h-dvh w-full max-w-md grid-rows-[auto_1fr] bg-[#221337]">
-        <div>
-          {/* HUD/Controls - Top section */}
-          <div className="flex flex-col items-center bg-[#060d1f] p-3">
-            {/* Game status and controls in single row */}
-            <div className="flex w-full items-center justify-between">
-              {/* Left: Level info and prev/next controls */}
-              <div className="text-3xl font-medium text-[#654373]">
-                Level {currentLevel}
-              </div>
-
-              <Dialog
-                open={showNewGameDialog}
-                onOpenChange={setShowNewGameDialog}
-              >
-                <DialogTrigger asChild>
-                  <ResetButton
-                    isDisabled={
-                      gameState === GAME_STATE.INITIALIZING ||
-                      moveHistory.length === 0
-                    }
-                    onClick={() => {
-                      setShowNewGameDialog(true);
-                    }}
-                  />
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Restart Level {currentLevel}</DialogTitle>
-                    <DialogDescription>
-                      Are you sure you want to restart the current level? This
-                      will reset all your moves.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <Button
-                      variant="outline"
-                      onClick={() => {
-                        setShowNewGameDialog(false);
-                      }}
-                    >
-                      No, FIXME
-                    </Button>
-                    <Button onClick={startNewGame}>Yes, FIXME</Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-
-              {/* Status */}
-              <div className="flex hidden items-center">
-                {gameState === GAME_STATE.INITIALIZING && (
-                  <div className="flex items-center font-medium text-blue-600">
-                    <RefreshCw className="mr-2 animate-spin" size={16} />
-                    Generating...
-                  </div>
-                )}
-
-                {gameState === GAME_STATE.READY && (
-                  <div className="font-medium text-green-600">
-                    Ready! Make a move
-                  </div>
-                )}
-
-                {(gameState === GAME_STATE.PLAYING ||
-                  gameState === GAME_STATE.ANIMATING) && (
-                  <div className="text-gray-700">
-                    Moves: <span className="font-bold">{moves}</span>
-                  </div>
-                )}
-
-                {gameState === GAME_STATE.ERROR && (
-                  <div className="flex items-center font-medium text-red-600">
-                    <AlertCircle className="mr-1" size={16} />
-                    {error ?? "Error"}
-                  </div>
-                )}
-              </div>
-
-              {/* Controls */}
-              <div className="flex hidden items-center space-x-2">
-                <button
-                  className={cn(
-                    "flex items-center rounded-full p-2",
-                    moveHistory.length === 0 ||
-                      gameState === GAME_STATE.INITIALIZING ||
-                      gameState === GAME_STATE.WIN
-                      ? "cursor-not-allowed bg-gray-300 text-gray-500"
-                      : "bg-blue-500 text-white hover:bg-blue-600",
-                  )}
-                  disabled={
-                    moveHistory.length === 0 ||
-                    gameState === GAME_STATE.INITIALIZING ||
-                    gameState === GAME_STATE.WIN
-                  }
-                  type="button"
-                  onClick={undoMove}
-                >
-                  <Undo size={18} />
-                </button>
-              </div>
+    <div className="grid h-dvh w-full max-w-md grid-rows-[auto_1fr] bg-[#221337]">
+      <div>
+        {/* HUD/Controls - Top section */}
+        <div className="flex flex-col items-center bg-[#060d1f] p-3">
+          {/* Game status and controls in single row */}
+          <div className="flex w-full items-center justify-between">
+            {/* Left: Level info and prev/next controls */}
+            <div className="text-3xl font-medium text-[#654373]">
+              Level {currentLevel}
             </div>
 
-            {/* Win message overlay */}
-            {gameState === GAME_STATE.WIN && (
-              <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
-                <div className="flex items-center">
-                  <Award className="mr-2 text-yellow-500" size={20} />
-                  <div className="font-bold">
-                    Level {currentLevel} solved in {moves} moves!
-                  </div>
+            <Dialog
+              open={showNewGameDialog}
+              onOpenChange={setShowNewGameDialog}
+            >
+              <DialogTrigger asChild>
+                <ResetButton
+                  isDisabled={
+                    gameState === GAME_STATE.INITIALIZING ||
+                    moveHistory.length === 0
+                  }
+                  onClick={() => {
+                    setShowNewGameDialog(true);
+                  }}
+                />
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Restart Level {currentLevel}</DialogTitle>
+                  <DialogDescription>
+                    Are you sure you want to restart the current level? This
+                    will reset all your moves.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setShowNewGameDialog(false);
+                    }}
+                  >
+                    No, keep playing
+                  </Button>
+                  <Button onClick={startNewGame}>Yes, restart</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div>
+
+          {/* Win message overlay */}
+          {gameState === GAME_STATE.WIN && (
+            <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
+              <div className="flex items-center">
+                <Award className="mr-2 text-yellow-500" size={20} />
+                <div className="font-bold">
+                  Level {currentLevel} solved in {moves} moves!
                 </div>
-
-                <button
-                  className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
-                  type="button"
-                  onClick={nextLevel}
-                >
-                  Next Level
-                  <ArrowRight size={18} />
-                </button>
               </div>
-            )}
-          </div>
 
-          {/* <Image alt="Top divider" className="-mb-[190px]" src={topDivider} /> */}
-        </div>
-
-        {/* Game board - Fills remaining space */}
-        <div className="relative flex h-full w-full items-center justify-center overflow-hidden p-1">
-          {/* Responsive grid for vials */}
-          <div className="relative grid max-h-full grid-cols-7 place-items-center gap-1 sm:grid-cols-5 md:grid-cols-7">
-            {vials.map((vial, index) => renderVial(vial, index))}
-            {/* {renderLiquidAnimation()} */}
-          </div>
-        </div>
-
-        {/* HUD/Controls - Bottom section */}
-        <div>
-          {/* <Image alt="Bottom divider" className="-mt-[190px]" src={bottomDivider} /> */}
-          <div className="flex w-full items-center justify-end bg-[#060d1f] p-4">
-            <UndoButton
-              isDisabled={
-                moveHistory.length === 0 ||
-                gameState === GAME_STATE.INITIALIZING ||
-                gameState === GAME_STATE.WIN
-              }
-              onClick={undoMove}
-            />
-          </div>
+              <button
+                className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
+                type="button"
+                onClick={nextLevel}
+              >
+                Next Level
+                <ArrowRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
-    </>
+
+      {/* Game board - Fills remaining space */}
+      <div className="relative flex h-full w-full items-center justify-between overflow-hidden p-2.5">
+        {/* Responsive grid for vials */}
+        <div className="relative grid max-h-full w-full grid-cols-7 place-items-center gap-x-2.5 gap-y-10">
+          {vials.map((vial, index) =>
+            renderVial(
+              vial,
+              index,
+              selectedVialIndex,
+              gameState,
+              vials,
+              handleVialClick,
+            ),
+          )}
+        </div>
+      </div>
+
+      {/* HUD/Controls - Bottom section */}
+      <div>
+        <div className="flex w-full items-center justify-end bg-[#060d1f] p-4">
+          <UndoButton
+            isDisabled={
+              moveHistory.length === 0 ||
+              gameState === GAME_STATE.INITIALIZING ||
+              gameState === GAME_STATE.WIN
+            }
+            onClick={undoMove}
+          />
+        </div>
+      </div>
+      {/* <div className="pointer-events-none absolute inset-0 touch-none opacity-10">
+        <Image alt="Game" className="h-full w-full" src={Game} />
+      </div> */}
+    </div>
   );
 }
 
