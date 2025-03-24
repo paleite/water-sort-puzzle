@@ -511,7 +511,7 @@ function renderVial(
     <div
       key={index}
       className={cn(
-        "relative flex h-56 w-11 flex-col-reverse overflow-hidden rounded-b-full border-4 bg-purple-900 pt-6",
+        "relative flex h-48 w-11 flex-col-reverse overflow-hidden rounded-b-full border-4 bg-purple-900 pt-6",
         isInteractive ? "cursor-pointer" : "cursor-default",
         vialType === "source" && "border-blue-500",
         vialType === "target" && "border-green-500",
