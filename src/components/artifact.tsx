@@ -14,9 +14,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { isDev } from "@/lib/env";
 import { useGameStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
-import { isDev } from "@/lib/env";
 
 // import Game from "./background/game.jpg";
 
@@ -511,7 +511,7 @@ function renderVial(
     <div
       key={index}
       className={cn(
-        "relative flex h-48 w-full flex-col-reverse overflow-hidden rounded-b-full border-4 bg-purple-900 pt-6",
+        "relative flex h-56 w-11 flex-col-reverse overflow-hidden rounded-b-full border-4 bg-purple-900 pt-6",
         isInteractive ? "cursor-pointer" : "cursor-default",
         vialType === "source" && "border-blue-500",
         vialType === "target" && "border-green-500",
@@ -537,18 +537,18 @@ function renderVial(
             {/* Subtle diagonal stripes or pattern based on color index */}
             <div
               className="absolute inset-0 opacity-20"
-              style={{
-                background:
-                  COLORS.indexOf(colorKey) % 4 === 0
-                    ? "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
-                    : COLORS.indexOf(colorKey) % 4 === 1
-                      ? "repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
-                      : COLORS.indexOf(colorKey) % 4 === 2
-                        ? "radial-gradient(circle, transparent 30%, rgba(255,255,255,0.3) 70%)"
-                        : "repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px)",
-              }}
+              // style={{
+              //   background:
+              //     COLORS.indexOf(colorKey) % 4 === 0
+              //       ? "repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+              //       : COLORS.indexOf(colorKey) % 4 === 1
+              //         ? "repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255,255,255,0.5) 5px, rgba(255,255,255,0.5) 10px)"
+              //         : COLORS.indexOf(colorKey) % 4 === 2
+              //           ? "radial-gradient(circle, transparent 30%, rgba(255,255,255,0.3) 70%)"
+              //           : "repeating-linear-gradient(90deg, transparent, transparent 5px, rgba(255,255,255,0.3) 5px, rgba(255,255,255,0.3) 10px)",
+              // }}
             />
-            <div className="absolute inset-0 flex items-center justify-center text-3xl opacity-20">
+            <div className="absolute inset-0 flex items-center justify-center text-3xl opacity-100 mix-blend-luminosity">
               {EMOJIS[colorKey]}
             </div>
 
@@ -872,21 +872,7 @@ function WaterSortGame() {
       </div> */}
 
       {isDev && (
-        <>
-          <div className="pointer-events-none absolute inset-0 touch-none border-x-[16px] border-y-[24px] border-red-500/50 opacity-50" />
-          <button
-            className="fixed bottom-8 right-4 hidden h-14 w-14 rounded-full bg-red-500/50 text-white opacity-50 shadow-lg"
-            type="button"
-          >
-            +
-          </button>
-          <button
-            className="absolute right-4 top-4 hidden h-12 w-12 rounded-md bg-white/80 text-black opacity-50 shadow-md backdrop-blur-md"
-            type="button"
-          >
-            ✕
-          </button>
-        </>
+        <div className="pointer-events-none absolute inset-0 touch-none border-x-[16px] border-y-[24px] border-red-500/50 opacity-50" />
       )}
     </div>
   );
