@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { useGameStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
+import { isDev } from "@/lib/env";
 
 // import Game from "./background/game.jpg";
 
@@ -444,16 +445,14 @@ function UndoButton({
   return (
     <button
       className={cn(
-        "flex h-12 items-center rounded-full p-2 transition-all duration-300",
-        isDisabled
-          ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-0"
-          : "bg-blue-500 text-white hover:bg-blue-600",
+        "flex size-14 items-center rounded-full bg-amber-500 p-2 text-white transition-all duration-300 hover:bg-amber-600",
+        isDisabled && (isDev ? "opacity-50" : "opacity-0"),
       )}
       disabled={isDisabled}
       type="button"
       onClick={onClick}
     >
-      <Undo className="size-8" />
+      <Undo className="h-full w-auto" />
     </button>
   );
 }
@@ -468,16 +467,14 @@ function ResetButton({
   return (
     <button
       className={cn(
-        "flex h-12 items-center rounded-full p-2 transition-all duration-300",
-        isDisabled
-          ? "cursor-not-allowed bg-gray-300 text-gray-500 opacity-0"
-          : "bg-blue-500 text-white hover:bg-blue-600",
+        "flex size-12 items-center rounded-full bg-amber-500 p-2 text-white transition-all duration-300 hover:bg-amber-600",
+        isDisabled && (isDev ? "opacity-50" : "opacity-0"),
       )}
       disabled={isDisabled}
       type="button"
       onClick={onClick}
     >
-      <RefreshCw className="size-8" />
+      <RefreshCw className="h-full w-auto" />
     </button>
   );
 }
@@ -773,75 +770,73 @@ function WaterSortGame() {
 
   return (
     <div className="grid h-dvh w-full max-w-md grid-rows-[auto_1fr] bg-[#221337]">
-      <div>
-        {/* HUD/Controls - Top section */}
-        <div className="flex flex-col items-center bg-[#060d1f] p-3">
-          {/* Game status and controls in single row */}
-          <div className="flex w-full items-center justify-between">
-            {/* Left: Level info and prev/next controls */}
-            <div className="text-3xl font-medium text-[#654373]">
-              Level {currentLevel}
-            </div>
-
-            <Dialog
-              open={showNewGameDialog}
-              onOpenChange={setShowNewGameDialog}
-            >
-              <DialogTrigger asChild>
-                <ResetButton
-                  isDisabled={
-                    gameState === GAME_STATE.INITIALIZING ||
-                    moveHistory.length === 0
-                  }
-                  onClick={() => {
-                    setShowNewGameDialog(true);
-                  }}
-                />
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Restart Level {currentLevel}</DialogTitle>
-                  <DialogDescription>
-                    Are you sure you want to restart the current level? This
-                    will reset all your moves.
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setShowNewGameDialog(false);
-                    }}
-                  >
-                    No, keep playing
-                  </Button>
-                  <Button onClick={startNewGame}>Yes, restart</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+      {/* HUD/Controls - Top section */}
+      <div className="flex flex-col items-center bg-[#060d1f]">
+        {/* Game status and controls in single row */}
+        <div className="flex h-20 w-full items-center justify-between overflow-hidden p-4">
+          {/* Left: Level info and prev/next controls */}
+          <div className="text-3xl font-medium text-[#654373]">
+            Level {currentLevel}
           </div>
 
-          {/* Win message overlay */}
-          {gameState === GAME_STATE.WIN && (
-            <div className="mt-2 flex w-full items-center justify-between rounded-lg border-2 border-yellow-400 bg-yellow-100 p-2">
-              <div className="flex items-center">
-                <Award className="mr-2 text-yellow-500" size={20} />
-                <div className="font-bold">
-                  Level {currentLevel} solved in {moves} moves!
-                </div>
-              </div>
-
-              <button
-                className="flex items-center rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
-                type="button"
-                onClick={nextLevel}
-              >
-                Next Level
-                <ArrowRight size={18} />
-              </button>
-            </div>
-          )}
+          <Dialog open={showNewGameDialog} onOpenChange={setShowNewGameDialog}>
+            <DialogTrigger asChild>
+              <ResetButton
+                isDisabled={
+                  gameState === GAME_STATE.INITIALIZING ||
+                  moveHistory.length === 0
+                }
+                onClick={() => {
+                  setShowNewGameDialog(true);
+                }}
+              />
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Restart Level {currentLevel}</DialogTitle>
+                <DialogDescription>
+                  Are you sure you want to restart the current level? This will
+                  reset all your moves.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowNewGameDialog(false);
+                  }}
+                >
+                  No, keep playing
+                </Button>
+                <Button onClick={startNewGame}>Yes, restart</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
+
+        {/* Win message overlay */}
+        {gameState === GAME_STATE.WIN && (
+          <Dialog open={true}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center">
+                  <Award className="mr-2 text-yellow-500" size={20} />
+                  Level {currentLevel} Solved!
+                </DialogTitle>
+                <DialogDescription>
+                  Congratulations! You completed level {currentLevel} in {moves}{" "}
+                  moves.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button className="flex items-center" onClick={nextLevel}>
+                  Next Level
+                  <ArrowRight className="ml-2" size={18} />
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
 
       {/* Game board - Fills remaining space */}
@@ -862,21 +857,37 @@ function WaterSortGame() {
       </div>
 
       {/* HUD/Controls - Bottom section */}
-      <div>
-        <div className="flex w-full items-center justify-end bg-[#060d1f] p-4">
-          <UndoButton
-            isDisabled={
-              moveHistory.length === 0 ||
-              gameState === GAME_STATE.INITIALIZING ||
-              gameState === GAME_STATE.WIN
-            }
-            onClick={undoMove}
-          />
-        </div>
+      <div className="flex w-full items-center justify-end bg-[#060d1f] p-4 pb-6">
+        <UndoButton
+          isDisabled={
+            moveHistory.length === 0 ||
+            gameState === GAME_STATE.INITIALIZING ||
+            gameState === GAME_STATE.WIN
+          }
+          onClick={undoMove}
+        />
       </div>
       {/* <div className="pointer-events-none absolute inset-0 touch-none opacity-10">
         <Image alt="Game" className="h-full w-full" src={Game} />
       </div> */}
+
+      {isDev && (
+        <>
+          <div className="pointer-events-none absolute inset-0 touch-none border-x-[16px] border-y-[24px] border-red-500/50 opacity-50" />
+          <button
+            className="fixed bottom-8 right-4 hidden h-14 w-14 rounded-full bg-red-500/50 text-white opacity-50 shadow-lg"
+            type="button"
+          >
+            +
+          </button>
+          <button
+            className="absolute right-4 top-4 hidden h-12 w-12 rounded-md bg-white/80 text-black opacity-50 shadow-md backdrop-blur-md"
+            type="button"
+          >
+            ✕
+          </button>
+        </>
+      )}
     </div>
   );
 }

@@ -57,8 +57,11 @@ export default function RootLayout({
           type="image/png"
         />
         <meta content="yes" name="apple-mobile-web-app-capable" />
-        <meta content="default" name="apple-mobile-web-app-status-bar-style" />
-        <meta content="#ffffff" name="theme-color" />
+        <meta
+          content="black-translucent"
+          name="apple-mobile-web-app-status-bar-style"
+        />
+        <meta content="#060d1f" name="theme-color" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} h-dvh touch-none overflow-hidden antialiased`}

@@ -4,8 +4,8 @@
   "description": "A fun puzzle game about sorting colored liquids",
   "start_url": "/water-sort-puzzle/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#060d1f",
+  "theme_color": "#060d1f",
   "icons": [
     {
       "src": "/water-sort-puzzle/icon-192x192.png",
