@@ -223,8 +223,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@types/bun':
-        specifier: ^1.2.5
-        version: 1.2.8
+        specifier: 1.2.7
+        version: 1.2.7
       '@types/node':
         specifier: ^20
         version: 20.17.19
@@ -1880,8 +1880,8 @@ packages:
   '@tybys/wasm-util@0.9.0':
     resolution: {integrity: sha512-6+7nlbMVX/PVDCwaIQ8nTOPveOcFLSt8GcXdx8hD0bt39uWxYT88uXzqTd4fTvqta7oeUJqudepapKNt2DYJFw==}
 
-  '@types/bun@1.2.8':
-    resolution: {integrity: sha512-t8L1RvJVUghW5V+M/fL3Thbxcs0HwNsXsnTEBEfEVqGteiJToOlZ/fyOEaR1kZsNqnu+3XA4RI/qmnX4w6+S+w==}
+  '@types/bun@1.2.7':
+    resolution: {integrity: sha512-Xf/nkx1V03GvWEzWrYsOGB1VUvWVtU5p6jHalCxixhhfLgsJN59iT7CRvfBXyEBnYoGCa2orzWj6car/QfTjxw==}
 
   '@types/d3-array@3.2.1':
     resolution: {integrity: sha512-Y2Jn2idRrLzUfAKV2LyRImR+y4oa2AntrgID95SHJxuMUrkNXmanDSed71sRNZysveJVt1hLLemQZIady0FpEg==}
@@ -7180,7 +7180,7 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@types/bun@1.2.8':
+  '@types/bun@1.2.7':
     dependencies:
       bun-types: 1.2.7
 
