@@ -21,16 +21,16 @@ import { cn } from "@/lib/utils";
 // import Game from "./background/game.jpg";
 
 // Game constants
-const VIAL_COUNT = 14;
-const COLORS_PER_VIAL = 4;
-const EMPTY_VIALS = 2;
-const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
-const MAX_GENERATION_ATTEMPTS = 10;
-const GENERATION_TIMEOUT_MS = 10000;
+export const VIAL_COUNT = 14;
+export const COLORS_PER_VIAL = 4;
+export const EMPTY_VIALS = 2;
+export const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
+export const MAX_GENERATION_ATTEMPTS = 10;
+export const GENERATION_TIMEOUT_MS = 10000;
 
 // Define types
-type Vial = string[]; // A vial is an array of colors (strings)
-type VialState = Vial[]; // The game state is an array of vials
+export type Vial = string[]; // A vial is an array of colors (strings)
+export type VialState = Vial[]; // The game state is an array of vials
 
 // Game state enum
 const GAME_STATE = {
@@ -44,7 +44,7 @@ const GAME_STATE = {
 type GameStateType = (typeof GAME_STATE)[keyof typeof GAME_STATE];
 
 // Define colors for our liquid layers (12 distinct colors with improved contrast)
-const COLORS = [
+export const COLORS = [
   "#FF3030", // bright red
   "#3AE12E", // lime green
   "#347BFF", // bright blue
@@ -78,7 +78,7 @@ const EMOJIS = {
 } as const;
 
 // Simple seeded random number generator for deterministic level generation
-class SeededRandom {
+export class SeededRandom {
   seed: number;
 
   constructor(seed: number) {
@@ -122,7 +122,7 @@ class SeededRandom {
 /**
  * Check if the puzzle is solved
  */
-function isSolvedState(vialState: VialState): boolean {
+export function isSolvedState(vialState: VialState): boolean {
   // Count how many vials are properly sorted (single color or empty)
   let sortedVials = 0;
 
@@ -148,7 +148,7 @@ function isSolvedState(vialState: VialState): boolean {
 /**
  * Validate that a vial state has correct color counts and is solvable
  */
-function validateVials(vialState: VialState): boolean {
+export function validateVials(vialState: VialState): boolean {
   // Count colors
   const colorCounts: Record<string, number> = {};
   let totalSegments = 0;
@@ -198,7 +198,7 @@ function validateVials(vialState: VialState): boolean {
 /**
  * Check if a move is valid
  */
-function isValidMove(
+export function isValidMove(
   fromIndex: number,
   toIndex: number,
   vialState: VialState,
@@ -250,7 +250,7 @@ function isValidMove(
  * Execute a move between vials (pour liquid)
  * Returns a new vial state or null if the move is invalid
  */
-function executeMove(
+export function executeMove(
   fromIndex: number,
   toIndex: number,
   vialState: VialState,
@@ -309,7 +309,10 @@ function executeMove(
 /**
  * Generate a scrambled puzzle state using a deterministic approach with level as seed
  */
-function generatePuzzle(level: number, attempts: number = 0): VialState | null {
+export function generatePuzzle(
+  level: number,
+  attempts: number = 0,
+): VialState | null {
   // Check for too many attempts
   if (attempts >= MAX_GENERATION_ATTEMPTS) {
     return null;
@@ -364,57 +367,74 @@ function generatePuzzle(level: number, attempts: number = 0): VialState | null {
     scrambledState.push([]);
   }
 
-  // For higher levels, add an additional challenge: perform more shuffling operations
-  // The higher the level, the more complex the puzzle
+  // For higher levels, add an additional challenge by mixing colors
+  // in completely new vials instead of individual transfers
   if (level > 1) {
-    const additionalShuffles = Math.min(Math.floor(level / 2), 10); // Cap at 10 extra shuffles
+    // Higher levels mix more vials
+    // For level 2: we mix 1 vial, level 4: 2 vials, etc.
+    const vialMixCount = Math.min(Math.floor(level / 2), FILLED_VIALS - 1);
 
-    for (let i = 0; i < additionalShuffles; i++) {
-      // Find vials with some space and some content
-      const validSourceVials = scrambledState
-        .map((vial, index) => ({ vial, index }))
-        .filter(({ vial }) => vial.length > 0);
+    // Create a temporary array to use for mixing
+    const allVials = [...scrambledState];
 
-      const validTargetVials = scrambledState
-        .map((vial, index) => ({ vial, index }))
-        .filter(({ vial }) => vial.length < COLORS_PER_VIAL);
+    // Get random indices for the vials to mix
+    const vialIndicesToMix: number[] = [];
+    while (
+      vialIndicesToMix.length < vialMixCount &&
+      vialIndicesToMix.length < FILLED_VIALS
+    ) {
+      const randomIndex = random.nextInt(0, FILLED_VIALS);
+      if (!vialIndicesToMix.includes(randomIndex)) {
+        vialIndicesToMix.push(randomIndex);
+      }
+    }
 
-      if (validSourceVials.length > 0 && validTargetVials.length > 0) {
-        // Select random source and target
-        const sourceIndex = random.nextInt(0, validSourceVials.length);
-        const targetIndex = random.nextInt(0, validTargetVials.length);
+    // For each selected vial, mix it with another vial
+    for (const vialIndex of vialIndicesToMix) {
+      let otherVialIndex: number;
+      do {
+        otherVialIndex = random.nextInt(0, FILLED_VIALS);
+      } while (
+        otherVialIndex === vialIndex ||
+        vialIndicesToMix.includes(otherVialIndex)
+      );
 
-        // Check if indices are valid
-        if (
-          sourceIndex >= 0 &&
-          sourceIndex < validSourceVials.length &&
-          targetIndex >= 0 &&
-          targetIndex < validTargetVials.length
-        ) {
-          const source = validSourceVials[sourceIndex];
-          const target = validTargetVials[targetIndex];
+      // Get the two vials to mix
+      const vial1 = allVials[vialIndex];
+      const vial2 = allVials[otherVialIndex];
 
-          if (source && target && source.index !== target.index) {
-            // Check if the source vial exists in scrambledState
-            if (
-              source.index >= 0 &&
-              source.index < scrambledState.length &&
-              target.index >= 0 &&
-              target.index < scrambledState.length
-            ) {
-              // Take one color from source and add to target
-              const sourceVial = scrambledState[source.index];
-              const targetVial = scrambledState[target.index];
+      if (
+        vial1 &&
+        vial2 &&
+        vial1.length === COLORS_PER_VIAL &&
+        vial2.length === COLORS_PER_VIAL
+      ) {
+        // Take half of each vial and swap them
+        const half1 = vial1.splice(0, COLORS_PER_VIAL / 2);
+        const half2 = vial2.splice(0, COLORS_PER_VIAL / 2);
 
-              if (sourceVial && sourceVial.length > 0) {
-                const color = sourceVial.pop();
-                if (color && targetVial) {
-                  targetVial.push(color);
-                }
-              }
-            }
-          }
-        }
+        vial1.unshift(...half2);
+        vial2.unshift(...half1);
+      }
+    }
+
+    // Now perform some random complete vial swaps to further mix the puzzle
+    const swapCount = Math.min(Math.floor(level / 3), FILLED_VIALS / 2);
+    for (let i = 0; i < swapCount; i++) {
+      const index1 = random.nextInt(0, FILLED_VIALS);
+      let index2: number;
+      do {
+        index2 = random.nextInt(0, FILLED_VIALS);
+      } while (index2 === index1);
+
+      // Swap two vials completely
+      const vial1 = allVials[index1];
+      const vial2 = allVials[index2];
+
+      if (vial1 && vial2) {
+        const temp = [...vial1];
+        allVials[index1] = [...vial2];
+        allVials[index2] = temp;
       }
     }
   }
@@ -434,6 +454,43 @@ function generatePuzzle(level: number, attempts: number = 0): VialState | null {
 }
 
 // =================== UI COMPONENTS ===================
+
+function DevLevelJumper({
+  startLevel,
+}: {
+  startLevel: (level: number) => void;
+}) {
+  const { currentLevel } = useGameStore();
+  const [levelInput, setLevelInput] = useState<number>(currentLevel);
+
+  useEffect(() => {
+    // Update level input when current level changes
+    setLevelInput(currentLevel);
+  }, [currentLevel]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLevel = parseInt(e.target.value);
+    if (!isNaN(newLevel) && newLevel > 0) {
+      setLevelInput(newLevel);
+      startLevel(newLevel);
+    }
+  };
+
+  return (
+    <div className="flex items-center space-x-2">
+      <span className="text-xs text-gray-400">Level:</span>
+      <input
+        type="number"
+        min={1}
+        max={100}
+        value={levelInput}
+        onChange={handleChange}
+        className="w-16 rounded bg-purple-900 p-2 text-white"
+        aria-label="Jump to level"
+      />
+    </div>
+  );
+}
 
 function UndoButton({
   isDisabled,
@@ -857,7 +914,12 @@ function WaterSortGame() {
       </div>
 
       {/* HUD/Controls - Bottom section */}
-      <div className="flex w-full items-center justify-end bg-[#060d1f] p-4 pb-6">
+      <div className="flex w-full items-center justify-between bg-[#060d1f] p-4 pb-6">
+        {isDev && (
+          <div className="flex items-center space-x-2">
+            <DevLevelJumper startLevel={startLevel} />
+          </div>
+        )}
         <UndoButton
           isDisabled={
             moveHistory.length === 0 ||
