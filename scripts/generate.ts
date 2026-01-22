@@ -34,6 +34,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -52,6 +53,7 @@ function isLegalMove(from: Vial, to: Vial): boolean {
   if (to.length === 0) {
     return true;
   }
+
   return to[to.length - 1] === from[from.length - 1];
 }
 
@@ -75,6 +77,7 @@ function performMove(
   if (color) {
     to.push(color);
   }
+
   return true;
 }
 
@@ -89,6 +92,7 @@ function calculateEntropy(vials: Vial[]): number {
         entropy++;
       }
     }
+
     return entropy;
   }, 0);
 }

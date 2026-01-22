@@ -96,8 +96,8 @@ export const reducer = (state: State, action: Action): State => {
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
-        state.toasts.forEach((toast) => {
-          addToRemoveQueue(toast.id);
+        state.toasts.forEach((toastItem) => {
+          addToRemoveQueue(toastItem.id);
         });
       }
 
@@ -141,13 +141,13 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">;
 
-function toast({ ...props }: Toast) {
+function createToast({ ...props }: Toast) {
   const id = genId();
 
-  const update = (props: ToasterToast) => {
+  const update = (toastProps: ToasterToast) => {
     dispatch({
       type: "UPDATE_TOAST",
-      toast: { ...props, id },
+      toast: { ...toastProps, id },
     });
   };
   const dismiss = () => {
@@ -191,11 +191,11 @@ function useToast() {
 
   return {
     ...state,
-    toast,
+    toast: createToast,
     dismiss: (toastId?: string) => {
       dispatch({ type: "DISMISS_TOAST", ...(toastId ? { toastId } : {}) });
     },
   };
 }
 
-export { toast, useToast };
+export { createToast as toast, useToast };

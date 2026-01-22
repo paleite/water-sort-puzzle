@@ -6,7 +6,7 @@
 
 import fs from "fs";
 import path from "path";
-import { expect, describe, test, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, test } from "vitest";
 
 // Define color type
 type Color = string;
@@ -15,6 +15,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -59,10 +60,15 @@ class Vial {
   }
 
   isComplete(): boolean {
-    if (this.isEmpty()) return true;
-    if (!this.isFull()) return false;
+    if (this.isEmpty()) {
+      return true;
+    }
+    if (!this.isFull()) {
+      return false;
+    }
 
     const firstColor = this.segments[0];
+
     return this.segments.every((segment) => segment === firstColor);
   }
 }
@@ -123,7 +129,9 @@ function validateState(state: any, vialCapacity: number): void {
 function validateInitialState(state: any, vialCapacity: number): void {
   // Each vial in the initial state should have all same-color segments
   for (const vial of state.vials) {
-    if (vial.segments.length === 0) continue;
+    if (vial.segments.length === 0) {
+      continue;
+    }
 
     const segments = vial.segments as Color[];
     const color = segments[0];
@@ -135,7 +143,9 @@ function validateInitialState(state: any, vialCapacity: number): void {
 function validateNoPartialVials(vials: any[]): void {
   // Each vial should be either completely full or completely empty
   for (const vial of vials) {
-    if (vial.segments.length === 0) continue;
+    if (vial.segments.length === 0) {
+      continue;
+    }
 
     // Create mock vial to use isComplete method
     const mockVial = new Vial(vial.segments.length);
@@ -148,7 +158,9 @@ function validateNoPartialVials(vials: any[]): void {
 function validateNoSolvedVials(vials: any[]): void {
   // No vial in the shuffled state should be complete
   for (const vial of vials) {
-    if (vial.segments.length === 0) continue;
+    if (vial.segments.length === 0) {
+      continue;
+    }
 
     // Create mock vial to use isComplete method
     const mockVial = new Vial(vial.segments.length);
@@ -168,6 +180,7 @@ function applySolution(levelData: any): boolean {
   const vials: Vial[] = levelData.shuffledState.vials.map((vialData: any) => {
     const vial = new Vial(levelData.metadata.vialCapacity);
     vial.segments = [...vialData.segments];
+
     return vial;
   });
 
@@ -183,11 +196,15 @@ function applySolution(levelData: any): boolean {
     );
 
     // Check move is valid
-    if (sourceVial.isEmpty()) return false;
+    if (sourceVial.isEmpty()) {
+      return false;
+    }
 
     const topColor = sourceVial.segments[sourceVial.segments.length - 1];
 
-    if (targetVial.isFull()) return false;
+    if (targetVial.isFull()) {
+      return false;
+    }
     if (
       !targetVial.isEmpty() &&
       targetVial.segments[targetVial.segments.length - 1] !== topColor
@@ -197,7 +214,9 @@ function applySolution(levelData: any): boolean {
 
     // Apply move
     for (let i = 0; i < move.amount; i++) {
-      if (sourceVial.isEmpty()) return false;
+      if (sourceVial.isEmpty()) {
+        return false;
+      }
       const color = sourceVial.segments.pop() as Color;
       targetVial.segments.push(color);
     }

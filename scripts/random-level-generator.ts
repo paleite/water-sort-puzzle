@@ -26,6 +26,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -108,6 +109,7 @@ function generateRandomLevelCandidate(
     stateWithEmptyVials,
     "Expected state with empty vials to be generated.",
   );
+
   return {
     state: finalState,
     solutionMoves: solutionResult?.solved ? solutionResult.path : null,
@@ -297,6 +299,7 @@ function generateLevelFilename(): string {
     if (!match?.[1]) {
       return 0;
     }
+
     return parseInt(match[1], 10);
   });
 
@@ -360,6 +363,7 @@ export default function generateRandomLevel(
 
   if (!result) {
     console.error("Failed to generate a valid level after multiple attempts");
+
     return null;
   }
 

@@ -22,6 +22,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -55,6 +56,7 @@ class Vial {
 
     // Check if all segments are the same color
     const firstColor = this.segments[0];
+
     return this.segments.every((segment) => segment === firstColor);
   }
 
@@ -66,6 +68,7 @@ class Vial {
     if (topColor === undefined) {
       throw new TypeError("Expected a top segment color in a non-empty vial.");
     }
+
     return topColor;
   }
 
@@ -76,12 +79,14 @@ class Vial {
     if (this.isEmpty()) {
       return true;
     }
+
     return this.getTopColor() === color;
   }
 
   clone(): Vial {
     const newVial = new Vial(this.capacity);
     newVial.segments = [...this.segments];
+
     return newVial;
   }
 }
@@ -207,6 +212,7 @@ class GameState {
 
   clone(): GameState {
     const newVials = this.vials.map((vial) => vial.clone());
+
     return new GameState(newVials, this.colorCount, this.emptyVialCount);
   }
 }
@@ -223,6 +229,7 @@ function countTopSegmentsOfSameColor(vial: Vial, color: Color): number {
       break;
     }
   }
+
   return count;
 }
 
@@ -412,6 +419,7 @@ function filterToUniqueResultStates(
   return moves.filter((move) => {
     const resultState = applyReverseMove(currentState, move);
     const stateHash = resultState.getStateHash();
+
     return !visitedStates.has(stateHash);
   });
 }
@@ -508,6 +516,7 @@ function selectOptimalReverseMove(
     scoredMoves[randomIndex],
     `Expected scored move at index ${randomIndex}.`,
   );
+
   return chosenMove.move;
 }
 
@@ -1353,6 +1362,7 @@ function generateLevelFilename(): string {
     if (!match?.[1]) {
       return 0;
     }
+
     return parseInt(match[1], 10);
   });
 

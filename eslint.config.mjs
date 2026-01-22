@@ -5,11 +5,11 @@ import { defineConfig } from "eslint/config";
 import prettier from "eslint-config-prettier";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import { importX } from "eslint-plugin-import-x";
-import jestDom from "eslint-plugin-jest-dom";
 import jest from "eslint-plugin-jest";
+import jestDom from "eslint-plugin-jest-dom";
 import pluginPromise from "eslint-plugin-promise";
 import reactPlugin from "eslint-plugin-react";
-import { default as reactHooks } from "eslint-plugin-react-hooks";
+import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import testingLibrary from "eslint-plugin-testing-library";
@@ -30,6 +30,7 @@ export default defineConfig([
       "**/node_modules/**",
       "**/out-tsc/**",
       "**/test-output/**",
+      "test-level*.js",
       "**/vite.config.*.timestamp*",
       "**/vitest.config.*.timestamp*",
     ],
@@ -45,11 +46,7 @@ export default defineConfig([
     languageOptions: {
       parserOptions: {
         projectService: {
-          allowDefaultProject: [
-            "*.config.{js,cjs,mjs,ts}",
-            "scripts/*.{js,cjs,mjs,ts}",
-            "vitest.workspace.ts",
-          ],
+          allowDefaultProject: ["*.config.{cjs,mjs}", "scripts/*.{cjs,mjs}"],
         },
         tsconfigRootDir: import.meta.dirname,
         tsconfig: "tsconfig.json",
@@ -59,7 +56,7 @@ export default defineConfig([
 
   // React recommended + JSX runtime (for React 17+)
   {
-    files: ["**/*.{jsx,tsx}"],
+    files: ["**/*.tsx"],
     ...reactPlugin.configs.flat.recommended,
     languageOptions: {
       ...reactPlugin.configs.flat.recommended.languageOptions,
@@ -132,7 +129,7 @@ export default defineConfig([
 
   // NOTE: eslint-plugin-promise is not properly typed, so the member access is
   // seen as unsafe, even though the member exists.
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
   pluginPromise.configs["flat/recommended"],
 
   {
@@ -147,7 +144,7 @@ export default defineConfig([
 
   // Next.js specific rules
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ["**/*.{mjs,cjs,ts,tsx}"],
     plugins: {
       "@next/next": nextPlugin,
     },
@@ -191,7 +188,7 @@ export default defineConfig([
   // Jest configuration
   {
     ...jest.configs["flat/recommended"],
-    files: ["**/*.{test,spec}.{ts,tsx,js,jsx}"],
+    files: ["**/*.{test,spec}.{ts,tsx,js}"],
     rules: {
       "jest/no-focused-tests": "error",
     },
@@ -200,7 +197,7 @@ export default defineConfig([
   // Testing Library configuration
   {
     ...testingLibrary.configs["flat/react"],
-    files: ["**/*.{test,spec}.{ts,tsx,js,jsx}"],
+    files: ["**/*.{test,spec}.{ts,tsx,js}"],
     rules: {
       "testing-library/no-debugging-utils": "warn",
     },
@@ -209,12 +206,13 @@ export default defineConfig([
   // jest-dom configuration
   {
     ...jestDom.configs["flat/recommended"],
-    files: ["**/*.{test,spec}.{ts,tsx,js,jsx}"],
+    files: ["**/*.{test,spec}.{ts,tsx,js}"],
   },
 
   // React Refresh configuration (JSX files only)
   {
-    files: ["**/*.{jsx,tsx}"],
+    files: ["**/*.tsx"],
+    ignores: ["src/components/artifact.tsx", "src/components/ui/**/*.tsx"],
     ...reactRefresh.configs.next,
     rules: {
       ...reactRefresh.configs.next.rules,
@@ -246,7 +244,8 @@ export default defineConfig([
 
   // React Hooks configuration
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ["**/*.{mjs,cjs,ts,tsx}"],
+    ignores: ["src/components/ui/**/*.{mjs,cjs,ts,tsx}"],
     plugins: {
       "react-hooks": reactHooks,
     },
@@ -261,7 +260,7 @@ export default defineConfig([
 
   // Custom rules AFTER Prettier
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ["**/*.{mjs,cjs,ts,tsx}"],
     rules: {
       curly: ["warn", "all"],
       eqeqeq: "error",
@@ -280,7 +279,7 @@ export default defineConfig([
 
   // TS-only rules that need type info
   {
-    files: ["**/*.{ts,mts,cts,tsx}"],
+    files: ["**/*.{ts,tsx}"],
     rules: {
       "@typescript-eslint/consistent-type-imports": "warn",
       "no-shadow": "off",
@@ -295,9 +294,23 @@ export default defineConfig([
     },
   },
 
+  // Scripts and tooling (relax strict unsafe rules)
+  {
+    files: ["scripts/**/*.{ts}", "*.config.{cjs,mjs,ts}"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+    },
+  },
+
   // Tests
   {
-    files: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    files: ["**/*.{test,spec}.{mjs,cjs,ts,tsx}"],
     rules: {
       "import-x/first": "off",
     },
@@ -305,7 +318,7 @@ export default defineConfig([
 
   // Config files
   {
-    files: ["**/*.config.{js,mjs,cjs,ts,mts,cts}", "scripts/**/*.{ts,js}"],
+    files: ["**/*.config.{mjs,cjs,ts}", "scripts/**/*.{ts,js}"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
       "import-x/no-default-export": "off",
