@@ -22,10 +22,17 @@ import { SeededRandom } from "../src/lib/seeded-random";
 import type { Move } from "../src/lib/types/puzzle-types";
 import { Vial } from "../src/lib/vial";
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 /**
  * Generate a random level and verify its solvability with BFS
  */
-function generateRandomLevel(
+function generateRandomLevelCandidate(
   seed: number | string,
   colorCount: number,
   vialHeight: number,
@@ -50,7 +57,7 @@ function generateRandomLevel(
   // Start with just 1 empty vial
   let currentEmptyVials = 1;
   let solutionResult = null;
-  let stateWithEmptyVials = null;
+  let stateWithEmptyVials: GameState | undefined;
 
   console.log(
     `Trying to generate level with seed: ${seed}, colors: ${colorCount}`,
@@ -86,15 +93,23 @@ function generateRandomLevel(
 
   // Calculate metrics if we found a solution
   if (solutionResult && solutionResult.solved && solutionResult.path) {
-    metrics = evaluateLevel(stateWithEmptyVials, solutionResult.path);
+    const solvedState = assertDefined(
+      stateWithEmptyVials,
+      "Expected state with empty vials when computing metrics.",
+    );
+    metrics = evaluateLevel(solvedState, solutionResult.path);
     console.log(
       `Level metrics: Entropy: ${metrics.entropy}, Fragmentation: ${metrics.fragmentation}, Difficulty: ${metrics.difficulty}`,
     );
   }
 
   // Return the state, solution, and number of empty vials used
+  const finalState = assertDefined(
+    stateWithEmptyVials,
+    "Expected state with empty vials to be generated.",
+  );
   return {
-    state: stateWithEmptyVials,
+    state: finalState,
     solutionMoves: solutionResult?.solved ? solutionResult.path : null,
     emptyVials: currentEmptyVials,
     metrics,
@@ -127,7 +142,7 @@ function generateBestLevel(
     const seed = `${baseSeed}-${i}`;
 
     // Generate a random level
-    const result = generateRandomLevel(
+    const result = generateRandomLevelCandidate(
       seed,
       colorCount,
       vialHeight,
@@ -136,7 +151,7 @@ function generateBestLevel(
     );
 
     // If a valid solution was found, evaluate the level
-    if (result.solutionMoves) {
+    if (result.solutionMoves && result.metrics) {
       // Store the candidate if it meets our criteria
       if (result.metrics.isValid && hasDesirableProperties(result.state)) {
         candidates.push({
@@ -168,10 +183,14 @@ function generateBestLevel(
   // Sort candidates by difficulty (higher is better)
   candidates.sort((a, b) => b.metrics.difficulty - a.metrics.difficulty);
 
-  console.log(`Best candidate difficulty: ${candidates[0].metrics.difficulty}`);
+  const bestCandidate = assertDefined(
+    candidates[0],
+    "Expected at least one candidate after sorting.",
+  );
+  console.log(`Best candidate difficulty: ${bestCandidate.metrics.difficulty}`);
 
   // Return the best candidate
-  return candidates[0];
+  return bestCandidate;
 }
 
 /**
@@ -195,7 +214,11 @@ function serializeLevel(
 
   // Create the sorted state with one vial per color
   const sortedVials: Vial[] = [];
-  const vialHeight = state.vials[0].capacity;
+  const firstVial = assertDefined(
+    state.vials[0],
+    "Expected at least one vial in state.",
+  );
+  const vialHeight = firstVial.capacity;
 
   // Add one sorted vial per color
   for (const color of colorSet) {
@@ -245,7 +268,10 @@ function serializeLevel(
 
     // Metadata
     metadata: {
-      vialCapacity: state.vials[0].capacity,
+      vialCapacity: assertDefined(
+        state.vials[0],
+        "Expected at least one vial in state.",
+      ).capacity,
       totalVials: state.totalVials,
       difficulty: metrics.difficulty,
       entropy: metrics.entropy,
@@ -266,9 +292,12 @@ function generateLevelFilename(): string {
   const existingLevels = glob.sync("levels/level-*.json");
 
   // Extract numbers from filenames
-  const levelNumbers = existingLevels.map((filename) => {
+  const levelNumbers = existingLevels.map((filename: string) => {
     const match = filename.match(/level-(\d+)\.json/);
-    return match ? parseInt(match[1], 10) : 0;
+    if (!match?.[1]) {
+      return 0;
+    }
+    return parseInt(match[1], 10);
   });
 
   // Find the highest number
@@ -358,7 +387,7 @@ export default function generateRandomLevel(
 if (import.meta.main) {
   // Generate a very simple level (4 colors) with longer timeout
   console.log("Generating very simple level...");
-  const verySimpleFilename = generateRandomLevel({
+  generateRandomLevel({
     seed: "very-simple-level",
     colorCount: 4,
     vialHeight: 3,
@@ -369,7 +398,7 @@ if (import.meta.main) {
 
   // Generate a simple level (5 colors) with longer timeout
   console.log("\nGenerating simple level...");
-  const simpleFilename = generateRandomLevel({
+  generateRandomLevel({
     seed: "simple-level",
     colorCount: 5,
     vialHeight: 4,

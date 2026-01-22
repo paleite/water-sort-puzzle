@@ -30,6 +30,13 @@ const NUMBER_OF_COLORS = 4;
 const EMPTY_VIALS = 2;
 const COLORS = ["red", "blue", "green", "yellow"];
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 function cloneVials(vials: Vial[]): Vial[] {
   return vials.map((vial) => [...vial]);
 }
@@ -53,8 +60,14 @@ function performMove(
   fromIndex: number,
   toIndex: number,
 ): boolean {
-  const from = vials[fromIndex];
-  const to = vials[toIndex];
+  const from = assertDefined(
+    vials[fromIndex],
+    `Expected source vial at index ${fromIndex}.`,
+  );
+  const to = assertDefined(
+    vials[toIndex],
+    `Expected target vial at index ${toIndex}.`,
+  );
   if (!isLegalMove(from, to)) {
     return false;
   }

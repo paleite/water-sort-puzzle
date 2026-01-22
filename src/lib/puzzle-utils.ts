@@ -3,6 +3,13 @@ import type { SeededRandom } from "./seeded-random";
 import type { Color, Move } from "./types/puzzle-types";
 import { Vial } from "./vial";
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 /**
  * Counts the number of segments of the same color at the top of a vial
  */
@@ -58,13 +65,14 @@ export function createInitialState(
   // Create completely filled vials, each with a unique color
   for (let i = 0; i < colorCount; i++) {
     const vial = new Vial(vialHeight);
-    const color = colorPalette[i];
+    const color = assertDefined(
+      colorPalette[i],
+      `Expected color palette entry at index ${i}.`,
+    );
 
     // Fill vial with the same color
     for (let j = 0; j < vialHeight; j++) {
-      if (color) {
-        vial.segments.push(color);
-      }
+      vial.segments.push(color);
     }
 
     vials.push(vial);
@@ -87,8 +95,11 @@ export function randomizeVials(state: GameState, rng: SeededRandom): GameState {
 
   // Identify vials with colors (non-empty vials)
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
-    if (vial && !vial.isEmpty()) {
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
+    if (!vial.isEmpty()) {
       filledVialIndices.push(i);
     }
   }
@@ -96,11 +107,12 @@ export function randomizeVials(state: GameState, rng: SeededRandom): GameState {
   // Flatten all color segments from filled vials
   const allSegments: Color[] = [];
   for (const index of filledVialIndices) {
-    const vial = newState.vials[index];
-    if (vial) {
-      allSegments.push(...vial.segments);
-      vial.segments = [];
-    }
+    const vial = assertDefined(
+      newState.vials[index],
+      `Expected vial at index ${index}.`,
+    );
+    allSegments.push(...vial.segments);
+    vial.segments = [];
   }
 
   // Shuffle the segments using the seeded RNG
@@ -109,21 +121,23 @@ export function randomizeVials(state: GameState, rng: SeededRandom): GameState {
   // Redistribute the segments to the original filled vials
   let segmentIndex = 0;
   for (const vialIndex of filledVialIndices) {
-    const vial = newState.vials[vialIndex];
+    const vial = assertDefined(
+      newState.vials[vialIndex],
+      `Expected vial at index ${vialIndex}.`,
+    );
 
     // Fill each vial to capacity
-    if (vial) {
-      for (
-        let i = 0;
-        i < vial.capacity && segmentIndex < shuffledSegments.length;
-        i++
-      ) {
-        const segment = shuffledSegments[segmentIndex];
-        if (segment) {
-          vial.segments.push(segment);
-        }
-        segmentIndex++;
-      }
+    for (
+      let i = 0;
+      i < vial.capacity && segmentIndex < shuffledSegments.length;
+      i++
+    ) {
+      const segment = assertDefined(
+        shuffledSegments[segmentIndex],
+        `Expected shuffled segment at index ${segmentIndex}.`,
+      );
+      vial.segments.push(segment);
+      segmentIndex++;
     }
   }
 
@@ -149,11 +163,15 @@ export function addEmptyVials(
 
   // Add more empty vials if needed
   const vialCountToAdd = emptyVialCount - currentEmptyVials;
-  if (newState.vials.length > 0 && newState.vials[0]) {
-    const vialCapacity = newState.vials[0].capacity;
-    for (let i = 0; i < vialCountToAdd; i++) {
-      newState.vials.push(new Vial(vialCapacity));
-    }
+  if (newState.vials.length === 0) {
+    throw new TypeError("Expected at least one vial to derive capacity.");
+  }
+  const vialCapacity = assertDefined(
+    newState.vials[0],
+    "Expected first vial to derive capacity.",
+  ).capacity;
+  for (let i = 0; i < vialCountToAdd; i++) {
+    newState.vials.push(new Vial(vialCapacity));
   }
 
   // Update state properties
@@ -167,12 +185,14 @@ export function addEmptyVials(
  * Check if a move would complete a vial
  */
 export function wouldCompleteVial(state: GameState, move: Move): boolean {
-  const sourceVial = state.vials[move.sourceVialIndex];
-  const targetVial = state.vials[move.targetVialIndex];
-
-  if (!sourceVial || !targetVial) {
-    return false;
-  }
+  const sourceVial = assertDefined(
+    state.vials[move.sourceVialIndex],
+    `Expected source vial at index ${move.sourceVialIndex}.`,
+  );
+  const targetVial = assertDefined(
+    state.vials[move.targetVialIndex],
+    `Expected target vial at index ${move.targetVialIndex}.`,
+  );
 
   const topColor = sourceVial.getTopColor();
   if (topColor === null) {
@@ -207,12 +227,14 @@ export function prioritizeMoves(moves: Move[], state: GameState): Move[] {
   const scoredMoves = moves.map((move) => {
     let score = 0;
 
-    const sourceVial = state.vials[move.sourceVialIndex];
-    const targetVial = state.vials[move.targetVialIndex];
-
-    if (!sourceVial || !targetVial) {
-      return { move, score: -999 };
-    } // Deprioritize invalid moves
+    const sourceVial = assertDefined(
+      state.vials[move.sourceVialIndex],
+      `Expected source vial at index ${move.sourceVialIndex}.`,
+    );
+    const targetVial = assertDefined(
+      state.vials[move.targetVialIndex],
+      `Expected target vial at index ${move.targetVialIndex}.`,
+    );
 
     // Prefer moves that complete a vial (either by filling with same color or emptying)
     if (wouldCompleteVial(state, move)) {
@@ -329,7 +351,10 @@ export function calculateFragmentation(state: GameState): number {
 
   // Populate the map
   for (let vialIndex = 0; vialIndex < state.vials.length; vialIndex++) {
-    const vial = state.vials[vialIndex];
+    const vial = assertDefined(
+      state.vials[vialIndex],
+      `Expected vial at index ${vialIndex}.`,
+    );
 
     for (
       let segmentIndex = 0;

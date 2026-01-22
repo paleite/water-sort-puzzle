@@ -18,6 +18,13 @@ const DEFAULT_EMPTY_VIALS = 2;
 const DEFAULT_COLORS = 6;
 const DEFAULT_SHUFFLE_MOVES = 25;
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 /**
  * Represents a single vial in the puzzle
  */
@@ -55,7 +62,11 @@ class Vial {
     if (this.isEmpty()) {
       return null;
     }
-    return this.segments[this.segments.length - 1];
+    const topColor = this.segments[this.segments.length - 1];
+    if (topColor === undefined) {
+      throw new TypeError("Expected a top segment color in a non-empty vial.");
+    }
+    return topColor;
   }
 
   canReceive(color: Color): boolean {
@@ -109,7 +120,10 @@ class GameState {
 
     // For each vial
     for (let i = 0; i < this.totalVials; i++) {
-      const sourceVial = this.vials[i];
+      const sourceVial = assertDefined(
+        this.vials[i],
+        `Expected source vial at index ${i}.`,
+      );
 
       // Skip empty vials as source
       if (sourceVial.isEmpty()) {
@@ -125,7 +139,10 @@ class GameState {
           continue;
         }
 
-        const targetVial = this.vials[j];
+        const targetVial = assertDefined(
+          this.vials[j],
+          `Expected target vial at index ${j}.`,
+        );
 
         // Move is valid if target can receive the color
         if (targetVial.canReceive(topColor)) {
@@ -158,8 +175,14 @@ class GameState {
   applyMove(move: Move): GameState {
     const newState = this.clone();
 
-    const sourceVial = newState.vials[move.sourceVialIndex];
-    const targetVial = newState.vials[move.targetVialIndex];
+    const sourceVial = assertDefined(
+      newState.vials[move.sourceVialIndex],
+      `Expected source vial at index ${move.sourceVialIndex}.`,
+    );
+    const targetVial = assertDefined(
+      newState.vials[move.targetVialIndex],
+      `Expected target vial at index ${move.targetVialIndex}.`,
+    );
 
     // Get the color to pour
     const colorToPour = sourceVial.getTopColor() as Color;
@@ -239,7 +262,10 @@ function initializeGenerator(
   // Create completely filled vials, each with a unique color
   for (let i = 0; i < colorCount; i++) {
     const vial = new Vial(vialHeight);
-    const color = colorPalette[i];
+    const color = assertDefined(
+      colorPalette[i],
+      `Expected color palette entry at index ${i}.`,
+    );
 
     // Fill vial with the same color
     for (let j = 0; j < vialHeight; j++) {
@@ -260,7 +286,7 @@ function initializeGenerator(
 /**
  * Generates a level by applying reverse moves to a solved state
  */
-function generateLevel(
+function generateShuffledLevel(
   initialSolvedState: GameState,
   targetShuffleMoves: number,
 ): {
@@ -321,7 +347,10 @@ function getValidReverseMoves(state: GameState): Move[] {
 
   // For each vial
   for (let i = 0; i < state.totalVials; i++) {
-    const sourceVial = state.vials[i];
+    const sourceVial = assertDefined(
+      state.vials[i],
+      `Expected source vial at index ${i}.`,
+    );
 
     // Skip empty vials as source
     if (sourceVial.isEmpty()) {
@@ -337,7 +366,10 @@ function getValidReverseMoves(state: GameState): Move[] {
         continue;
       }
 
-      const targetVial = state.vials[j];
+      const targetVial = assertDefined(
+        state.vials[j],
+        `Expected target vial at index ${j}.`,
+      );
 
       // Reverse move is valid if:
       // 1. Target is not full
@@ -391,8 +423,14 @@ function applyReverseMove(state: GameState, move: Move): GameState {
   // Create a deep copy of the state
   const newState = state.clone();
 
-  const sourceVial = newState.vials[move.sourceVialIndex];
-  const targetVial = newState.vials[move.targetVialIndex];
+  const sourceVial = assertDefined(
+    newState.vials[move.sourceVialIndex],
+    `Expected source vial at index ${move.sourceVialIndex}.`,
+  );
+  const targetVial = assertDefined(
+    newState.vials[move.targetVialIndex],
+    `Expected target vial at index ${move.targetVialIndex}.`,
+  );
 
   // Get the color to pour
   const colorToPour = sourceVial.getTopColor() as Color;
@@ -466,14 +504,21 @@ function selectOptimalReverseMove(
   const randomIndex = Math.floor(
     Math.random() * Math.min(3, scoredMoves.length),
   );
-  return scoredMoves[randomIndex].move;
+  const chosenMove = assertDefined(
+    scoredMoves[randomIndex],
+    `Expected scored move at index ${randomIndex}.`,
+  );
+  return chosenMove.move;
 }
 
 /**
  * Evaluates whether a move breaks up a sorted vial
  */
 function evaluateBreaksSortedVial(move: Move, state: GameState): number {
-  const sourceVial = state.vials[move.sourceVialIndex];
+  const sourceVial = assertDefined(
+    state.vials[move.sourceVialIndex],
+    `Expected source vial at index ${move.sourceVialIndex}.`,
+  );
 
   // If the source vial has only one color, breaking it up is good
   const colors = new Set(sourceVial.segments);
@@ -488,8 +533,14 @@ function evaluateBreaksSortedVial(move: Move, state: GameState): number {
  * Evaluates whether a move mixes different colors in the target vial
  */
 function evaluateMixesDifferentColors(move: Move, state: GameState): number {
-  const sourceVial = state.vials[move.sourceVialIndex];
-  const targetVial = state.vials[move.targetVialIndex];
+  const sourceVial = assertDefined(
+    state.vials[move.sourceVialIndex],
+    `Expected source vial at index ${move.sourceVialIndex}.`,
+  );
+  const targetVial = assertDefined(
+    state.vials[move.targetVialIndex],
+    `Expected target vial at index ${move.targetVialIndex}.`,
+  );
 
   // If target is empty, no mixing occurs
   if (targetVial.isEmpty()) {
@@ -511,7 +562,10 @@ function evaluateMixesDifferentColors(move: Move, state: GameState): number {
  * Evaluates whether a move distributes a color that's currently concentrated
  */
 function evaluateDistributesColor(move: Move, state: GameState): number {
-  const sourceVial = state.vials[move.sourceVialIndex];
+  const sourceVial = assertDefined(
+    state.vials[move.sourceVialIndex],
+    `Expected source vial at index ${move.sourceVialIndex}.`,
+  );
   const color = sourceVial.getTopColor() as Color;
 
   // Count how many segments of this color are in the source vial
@@ -591,14 +645,20 @@ function calculateFragmentation(state: GameState): number {
 
   // Populate the map
   for (let vialIndex = 0; vialIndex < state.vials.length; vialIndex++) {
-    const vial = state.vials[vialIndex];
+    const vial = assertDefined(
+      state.vials[vialIndex],
+      `Expected vial at index ${vialIndex}.`,
+    );
 
     for (
       let segmentIndex = 0;
       segmentIndex < vial.segments.length;
       segmentIndex++
     ) {
-      const color = vial.segments[segmentIndex];
+      const color = assertDefined(
+        vial.segments[segmentIndex],
+        `Expected segment color in vial ${vialIndex} at index ${segmentIndex}.`,
+      );
 
       if (!colorLocations.has(color)) {
         colorLocations.set(color, []);
@@ -657,7 +717,10 @@ function breakUpSortedVials(state: GameState): GameState {
   // Find all completely sorted vials
   const sortedVialIndices: number[] = [];
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
 
     // Skip empty vials
     if (vial.isEmpty()) {
@@ -686,7 +749,11 @@ function breakUpSortedVials(state: GameState): GameState {
   // Find empty vials
   const emptyVialIndices: number[] = [];
   for (let i = 0; i < newState.vials.length; i++) {
-    if (newState.vials[i].isEmpty()) {
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
+    if (vial.isEmpty()) {
       emptyVialIndices.push(i);
     }
   }
@@ -696,10 +763,6 @@ function breakUpSortedVials(state: GameState): GameState {
     return newState;
   }
 
-  // Collect all the sorted vials for shuffling
-  const sortedVials = sortedVialIndices.map((i) => newState.vials[i]);
-  const emptyVial = newState.vials[emptyVialIndices[0]];
-
   // Create a more varied distribution using different patterns
 
   // Group vials by 3 for more complex patterns
@@ -708,11 +771,31 @@ function breakUpSortedVials(state: GameState): GameState {
     if (i + 2 >= sortedVialIndices.length) {
       // Process remaining vials in pairs with varied patterns
       for (let j = i; j < sortedVialIndices.length - 1; j += 2) {
-        const vialA = newState.vials[sortedVialIndices[j]];
-        const vialB = newState.vials[sortedVialIndices[j + 1]];
+        const vialAIndex = assertDefined(
+          sortedVialIndices[j],
+          `Expected sorted vial index at position ${j}.`,
+        );
+        const vialBIndex = assertDefined(
+          sortedVialIndices[j + 1],
+          `Expected sorted vial index at position ${j + 1}.`,
+        );
+        const vialA = assertDefined(
+          newState.vials[vialAIndex],
+          `Expected vial at index ${vialAIndex}.`,
+        );
+        const vialB = assertDefined(
+          newState.vials[vialBIndex],
+          `Expected vial at index ${vialBIndex}.`,
+        );
 
-        const colorA = vialA.segments[0];
-        const colorB = vialB.segments[0];
+        const colorA = assertDefined(
+          vialA.segments[0],
+          `Expected top color in vial ${vialAIndex}.`,
+        );
+        const colorB = assertDefined(
+          vialB.segments[0],
+          `Expected top color in vial ${vialBIndex}.`,
+        );
 
         // Use a random pattern: 1+3, 3+1, or 2+2 with randomized order
         const patternType = Math.floor(Math.random() * 3);
@@ -774,13 +857,43 @@ function breakUpSortedVials(state: GameState): GameState {
     }
 
     // Process 3 vials together for more complex patterns
-    const vialA = newState.vials[sortedVialIndices[i]];
-    const vialB = newState.vials[sortedVialIndices[i + 1]];
-    const vialC = newState.vials[sortedVialIndices[i + 2]];
+    const vialAIndex = assertDefined(
+      sortedVialIndices[i],
+      `Expected sorted vial index at position ${i}.`,
+    );
+    const vialBIndex = assertDefined(
+      sortedVialIndices[i + 1],
+      `Expected sorted vial index at position ${i + 1}.`,
+    );
+    const vialCIndex = assertDefined(
+      sortedVialIndices[i + 2],
+      `Expected sorted vial index at position ${i + 2}.`,
+    );
+    const vialA = assertDefined(
+      newState.vials[vialAIndex],
+      `Expected vial at index ${vialAIndex}.`,
+    );
+    const vialB = assertDefined(
+      newState.vials[vialBIndex],
+      `Expected vial at index ${vialBIndex}.`,
+    );
+    const vialC = assertDefined(
+      newState.vials[vialCIndex],
+      `Expected vial at index ${vialCIndex}.`,
+    );
 
-    const colorA = vialA.segments[0];
-    const colorB = vialB.segments[0];
-    const colorC = vialC.segments[0];
+    const colorA = assertDefined(
+      vialA.segments[0],
+      `Expected top color in vial ${vialAIndex}.`,
+    );
+    const colorB = assertDefined(
+      vialB.segments[0],
+      `Expected top color in vial ${vialBIndex}.`,
+    );
+    const colorC = assertDefined(
+      vialC.segments[0],
+      `Expected top color in vial ${vialCIndex}.`,
+    );
 
     // Use a random complex pattern
     const patternType = Math.floor(Math.random() * 3);
@@ -849,7 +962,10 @@ function breakUpSortedVials(state: GameState): GameState {
 
   // Ensure we don't accidentally have sorted vials
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
     if (vial.isEmpty() || !vial.isFull()) {
       continue;
     }
@@ -864,10 +980,14 @@ function breakUpSortedVials(state: GameState): GameState {
         // Find another non-empty vial
         let otherVialIndex = -1;
         for (let j = 0; j < newState.vials.length; j++) {
+          const candidateVial = assertDefined(
+            newState.vials[j],
+            `Expected vial at index ${j}.`,
+          );
           if (
             j !== i &&
-            !newState.vials[j].isEmpty() &&
-            !newState.vials[j].isComplete()
+            !candidateVial.isEmpty() &&
+            !candidateVial.isComplete()
           ) {
             otherVialIndex = j;
             break;
@@ -876,14 +996,20 @@ function breakUpSortedVials(state: GameState): GameState {
 
         if (otherVialIndex >= 0) {
           // Swap segments to break up the sorted vial
-          const otherVial = newState.vials[otherVialIndex];
-          const targetColor = vial.segments[0];
-          const otherColor = otherVial.segments[0];
+          const otherVial = assertDefined(
+            newState.vials[otherVialIndex],
+            `Expected vial at index ${otherVialIndex}.`,
+          );
+          const targetColor = assertDefined(
+            vial.segments[0],
+            `Expected top color in vial ${i}.`,
+          );
+          const otherColor = assertDefined(
+            otherVial.segments[0],
+            `Expected top color in vial ${otherVialIndex}.`,
+          );
 
           // Clear and rebuild the vials with mixed colors
-          const vialSegments = [...vial.segments];
-          const otherSegments = [...otherVial.segments];
-
           vial.segments = [];
           vial.segments.push(targetColor);
           vial.segments.push(targetColor);
@@ -909,7 +1035,10 @@ function breakUpSortedVials(state: GameState): GameState {
 
   // Final check to ensure no vial exceeds capacity
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
     if (vial.segments.length > vial.capacity) {
       // Fix by removing excess segments
       while (vial.segments.length > vial.capacity) {
@@ -931,7 +1060,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
 
   // First, check for any vials exceeding capacity
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
     if (vial.segments.length > vial.capacity) {
       // Fix by removing excess segments
       while (vial.segments.length > vial.capacity) {
@@ -947,7 +1079,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
 
     // Find partially filled vials
     for (let i = 0; i < newState.vials.length; i++) {
-      const vial = newState.vials[i];
+      const vial = assertDefined(
+        newState.vials[i],
+        `Expected vial at index ${i}.`,
+      );
 
       // Skip empty or full vials
       if (vial.isEmpty() || vial.isFull()) {
@@ -968,7 +1103,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
           continue;
         }
 
-        const targetVial = newState.vials[j];
+        const targetVial = assertDefined(
+          newState.vials[j],
+          `Expected target vial at index ${j}.`,
+        );
         if (targetVial.isEmpty()) {
           // Pour all segments of this color to the empty vial
           for (let k = 0; k < topCount; k++) {
@@ -987,7 +1125,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
             continue;
           }
 
-          const targetVial = newState.vials[j];
+          const targetVial = assertDefined(
+            newState.vials[j],
+            `Expected target vial at index ${j}.`,
+          );
           if (!targetVial.isFull() && targetVial.getTopColor() === topColor) {
             // Calculate how many can be poured based on capacity
             const maxPour = Math.min(
@@ -1020,7 +1161,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
             continue;
           }
 
-          const targetVial = newState.vials[j];
+          const targetVial = assertDefined(
+            newState.vials[j],
+            `Expected target vial at index ${j}.`,
+          );
           if (targetVial.isEmpty()) {
             // Move all remaining segments to this empty vial
             while (vial.segments.length > 0) {
@@ -1047,7 +1191,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
                 continue;
               }
 
-              const targetVial = newState.vials[j];
+              const targetVial = assertDefined(
+                newState.vials[j],
+                `Expected target vial at index ${j}.`,
+              );
               if (
                 !targetVial.isFull() &&
                 (targetVial.isEmpty() || targetVial.getTopColor() === segment)
@@ -1078,7 +1225,10 @@ function ensureNoPartiallyFilledVials(state: GameState): GameState {
 
   // Final capacity check
   for (let i = 0; i < newState.vials.length; i++) {
-    const vial = newState.vials[i];
+    const vial = assertDefined(
+      newState.vials[i],
+      `Expected vial at index ${i}.`,
+    );
     if (vial.segments.length > vial.capacity) {
       // Fix by removing excess segments
       while (vial.segments.length > vial.capacity) {
@@ -1174,7 +1324,10 @@ function serializeLevel(
 
     // Metadata
     metadata: {
-      vialCapacity: initialState.vials[0].capacity,
+      vialCapacity: assertDefined(
+        initialState.vials[0],
+        "Expected at least one vial in initial state.",
+      ).capacity,
       totalVials: initialState.totalVials,
       difficulty: estimateDifficulty(shuffledState),
       entropy: calculateEntropy(shuffledState),
@@ -1195,9 +1348,12 @@ function generateLevelFilename(): string {
   const existingLevels = glob.sync("levels/level-*.json");
 
   // Extract numbers from filenames
-  const levelNumbers = existingLevels.map((filename) => {
+  const levelNumbers = existingLevels.map((filename: string) => {
     const match = filename.match(/level-(\d+)\.json/);
-    return match ? parseInt(match[1], 10) : 0;
+    if (!match?.[1]) {
+      return 0;
+    }
+    return parseInt(match[1], 10);
   });
 
   // Find the highest number
@@ -1240,7 +1396,7 @@ export default function generateLevel(options: GenerateLevelOptions): string {
   const initialState = initializeGenerator(colorCount, vialHeight, emptyVials);
 
   // Generate the shuffled state and record the moves
-  const { shuffledState, shuffleMoves } = generateLevel(
+  const { shuffledState, shuffleMoves } = generateShuffledLevel(
     initialState,
     targetShuffleMoves,
   );
@@ -1271,7 +1427,7 @@ export default function generateLevel(options: GenerateLevelOptions): string {
 if (import.meta.main) {
   // Generate a standard level
   console.log("Generating standard level...");
-  const standardFilename = generateLevel({
+  generateLevel({
     colorCount: 6,
     vialHeight: 4,
     emptyVials: 2,
@@ -1280,7 +1436,7 @@ if (import.meta.main) {
 
   // Generate a harder level
   console.log("\nGenerating harder level...");
-  const hardFilename = generateLevel({
+  generateLevel({
     colorCount: 8,
     vialHeight: 4,
     emptyVials: 2,

@@ -2,6 +2,13 @@ import { countTopSegmentsOfSameColor } from "./puzzle-utils";
 import type { Move } from "./types/puzzle-types";
 import type { Vial } from "./vial";
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 /**
  * Represents the entire game state
  */
@@ -27,10 +34,10 @@ export class GameState {
 
     // For each vial
     for (let i = 0; i < this.totalVials; i++) {
-      const sourceVial = this.vials[i];
-      if (!sourceVial) {
-        continue;
-      }
+      const sourceVial = assertDefined(
+        this.vials[i],
+        `Expected source vial at index ${i}.`,
+      );
 
       // Skip empty vials as source
       if (sourceVial.isEmpty()) {
@@ -49,10 +56,10 @@ export class GameState {
           continue;
         }
 
-        const targetVial = this.vials[j];
-        if (!targetVial) {
-          continue;
-        }
+        const targetVial = assertDefined(
+          this.vials[j],
+          `Expected target vial at index ${j}.`,
+        );
 
         // Move is valid if target can receive the color
         if (targetVial.canReceive(topColor)) {
@@ -85,12 +92,14 @@ export class GameState {
   applyMove(move: Move): GameState {
     const newState = this.clone();
 
-    const sourceVial = newState.vials[move.sourceVialIndex];
-    const targetVial = newState.vials[move.targetVialIndex];
-
-    if (!sourceVial || !targetVial) {
-      return newState; // Return unchanged state if vials don't exist
-    }
+    const sourceVial = assertDefined(
+      newState.vials[move.sourceVialIndex],
+      `Expected source vial at index ${move.sourceVialIndex}.`,
+    );
+    const targetVial = assertDefined(
+      newState.vials[move.targetVialIndex],
+      `Expected target vial at index ${move.targetVialIndex}.`,
+    );
 
     // Get the color to pour
     const colorToPour = sourceVial.getTopColor();

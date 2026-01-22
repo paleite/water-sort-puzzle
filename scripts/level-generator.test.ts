@@ -11,6 +11,13 @@ import { expect, describe, test, beforeEach, afterEach } from "vitest";
 // Define color type
 type Color = string;
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 // Temp directory for test output
 const TEST_OUTPUT_DIR = "test-levels";
 
@@ -118,9 +125,10 @@ function validateInitialState(state: any, vialCapacity: number): void {
   for (const vial of state.vials) {
     if (vial.segments.length === 0) continue;
 
-    const color = vial.segments[0];
-    expect(vial.segments.every((segment) => segment === color)).toBe(true);
-    expect(vial.segments.length).toBe(vialCapacity);
+    const segments = vial.segments as Color[];
+    const color = segments[0];
+    expect(segments.every((segment: Color) => segment === color)).toBe(true);
+    expect(segments.length).toBe(vialCapacity);
   }
 }
 
@@ -131,7 +139,7 @@ function validateNoPartialVials(vials: any[]): void {
 
     // Create mock vial to use isComplete method
     const mockVial = new Vial(vial.segments.length);
-    mockVial.segments = [...vial.segments];
+    mockVial.segments = [...(vial.segments as Color[])];
 
     expect(mockVial.isEmpty() || mockVial.isFull()).toBe(true);
   }
@@ -148,7 +156,7 @@ function validateNoSolvedVials(vials: any[]): void {
 
     // Vial should not be complete (all same color)
     const allSameColor = mockVial.segments.every(
-      (segment) => segment === mockVial.segments[0],
+      (segment: Color) => segment === mockVial.segments[0],
     );
     expect(allSameColor && mockVial.isFull()).toBe(false);
   }
@@ -157,7 +165,7 @@ function validateNoSolvedVials(vials: any[]): void {
 // Applies a solution to the shuffled state to verify it works
 function applySolution(levelData: any): boolean {
   // Create vials from shuffled state
-  const vials = levelData.shuffledState.vials.map((vialData: any) => {
+  const vials: Vial[] = levelData.shuffledState.vials.map((vialData: any) => {
     const vial = new Vial(levelData.metadata.vialCapacity);
     vial.segments = [...vialData.segments];
     return vial;
@@ -165,8 +173,14 @@ function applySolution(levelData: any): boolean {
 
   // Apply each move in the solution
   for (const move of levelData.solutionMoves) {
-    const sourceVial = vials[move.source];
-    const targetVial = vials[move.target];
+    const sourceVial = assertDefined(
+      vials[move.source],
+      `Expected source vial at index ${move.source}.`,
+    );
+    const targetVial = assertDefined(
+      vials[move.target],
+      `Expected target vial at index ${move.target}.`,
+    );
 
     // Check move is valid
     if (sourceVial.isEmpty()) return false;

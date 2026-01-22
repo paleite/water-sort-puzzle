@@ -17,6 +17,13 @@ import { SeededRandom } from "./seeded-random";
 import type { Color, Move } from "./types/puzzle-types";
 import { Vial } from "./vial";
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 describe("countTopSegmentsOfSameColor", () => {
   it("counts consecutive same-color segments from the top", () => {
     const vial = new Vial(4);
@@ -67,7 +74,10 @@ describe("createInitialState", () => {
 
     // Check first three vials are filled with unique colors
     for (let i = 0; i < colorCount; i++) {
-      const vial = state.vials[i];
+      const vial = assertDefined(
+        state.vials[i],
+        `Expected vial at index ${i}.`,
+      );
 
       // Should be filled to capacity
       expect(vial.segments.length).toBe(vialHeight);
@@ -79,13 +89,20 @@ describe("createInitialState", () => {
 
     // Check the colors are different across vials
     const uniqueColors = new Set(
-      state.vials.slice(0, colorCount).map((vial) => vial.segments[0]),
+      state.vials
+        .slice(0, colorCount)
+        .map((vial, index) =>
+          assertDefined(vial.segments[0], `Expected color in vial ${index}.`),
+        ),
     );
     expect(uniqueColors.size).toBe(colorCount);
 
     // Check empty vials
     for (let i = colorCount; i < state.vials.length; i++) {
-      const vial = state.vials[i];
+      const vial = assertDefined(
+        state.vials[i],
+        `Expected vial at index ${i}.`,
+      );
       expect(vial.segments.length).toBe(0);
     }
   });
@@ -109,8 +126,16 @@ describe("randomizeVials", () => {
     const randomizedState = randomizeVials(initialState, rng);
 
     // Empty vials should still be empty
-    expect(randomizedState.vials[3]?.isEmpty()).toBe(true);
-    expect(randomizedState.vials[4]?.isEmpty()).toBe(true);
+    const vial3 = assertDefined(
+      randomizedState.vials[3],
+      "Expected vial at index 3.",
+    );
+    const vial4 = assertDefined(
+      randomizedState.vials[4],
+      "Expected vial at index 4.",
+    );
+    expect(vial3.isEmpty()).toBe(true);
+    expect(vial4.isEmpty()).toBe(true);
   });
 
   it("shuffles segments across non-empty vials", () => {
@@ -131,8 +156,14 @@ describe("randomizeVials", () => {
     // But the original arrangement should be different
     let isDifferent = false;
     for (let i = 0; i < initialState.vials.length; i++) {
-      const initialVial = initialState.vials[i];
-      const randomizedVial = randomizedState.vials[i];
+      const initialVial = assertDefined(
+        initialState.vials[i],
+        `Expected vial at index ${i}.`,
+      );
+      const randomizedVial = assertDefined(
+        randomizedState.vials[i],
+        `Expected vial at index ${i}.`,
+      );
       if (
         JSON.stringify(initialVial.segments) !==
         JSON.stringify(randomizedVial.segments)
@@ -159,10 +190,12 @@ describe("randomizeVials", () => {
     // Original state should be unchanged
     // Check each vial that we recorded
     Object.entries(originalVials).forEach(([index, segments]) => {
-      const vial = initialState.vials[Number(index)];
-      if (vial) {
-        expect(vial.segments).toEqual(segments);
-      }
+      const vialIndex = Number(index);
+      const vial = assertDefined(
+        initialState.vials[vialIndex],
+        `Expected vial at index ${vialIndex}.`,
+      );
+      expect(vial.segments).toEqual(segments);
     });
   });
 });
@@ -179,8 +212,10 @@ describe("addEmptyVials", () => {
     expect(newState.emptyVialCount).toBe(targetEmptyVials);
 
     // Check that new vials are empty
-    expect(newState.vials[4]?.isEmpty()).toBe(true);
-    expect(newState.vials[5]?.isEmpty()).toBe(true);
+    const vial4 = assertDefined(newState.vials[4], "Expected vial at index 4.");
+    const vial5 = assertDefined(newState.vials[5], "Expected vial at index 5.");
+    expect(vial4.isEmpty()).toBe(true);
+    expect(vial5.isEmpty()).toBe(true);
   });
 
   it("doesn't add vials if target is already met", () => {
@@ -201,8 +236,10 @@ describe("addEmptyVials", () => {
     const newState = addEmptyVials(initialState, targetEmptyVials);
 
     // New vials should have the same capacity
-    expect(newState.vials[4]?.capacity).toBe(vialHeight);
-    expect(newState.vials[5]?.capacity).toBe(vialHeight);
+    const vial4 = assertDefined(newState.vials[4], "Expected vial at index 4.");
+    const vial5 = assertDefined(newState.vials[5], "Expected vial at index 5.");
+    expect(vial4.capacity).toBe(vialHeight);
+    expect(vial5.capacity).toBe(vialHeight);
   });
 
   it("returns a new state without modifying the original", () => {

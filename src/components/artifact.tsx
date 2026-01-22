@@ -32,6 +32,13 @@ const GENERATION_TIMEOUT_MS = 10000;
 type Vial = string[]; // A vial is an array of colors (strings)
 export type VialState = Vial[]; // The game state is an array of vials
 
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+  return value;
+}
+
 // Game state enum
 const GAME_STATE = {
   INITIALIZING: "initializing",
@@ -165,56 +172,6 @@ function isSolvedState(vialState: VialState): boolean {
 
   // A puzzle is solved when all vials are sorted
   return sortedVials === VIAL_COUNT;
-}
-
-/**
- * Validate that a vial state has correct color counts and is solvable
- */
-function validateVials(vialState: VialState): boolean {
-  // Count colors
-  const colorCounts: Record<string, number> = {};
-  let totalSegments = 0;
-
-  vialState.forEach((vial) => {
-    vial.forEach((color) => {
-      colorCounts[color] = (colorCounts[color] ?? 0) + 1;
-      totalSegments++;
-    });
-  });
-
-  // Check total segments
-  if (totalSegments !== FILLED_VIALS * COLORS_PER_VIAL) {
-    return false;
-  }
-
-  // Check each color has exactly 4 segments
-  for (const color in colorCounts) {
-    if (colorCounts[color] !== COLORS_PER_VIAL) {
-      return false;
-    }
-  }
-
-  // Check that it's not already sorted
-  // Count how many vials are already single-color or empty
-  let sortedVialCount = 0;
-  vialState.forEach((vial) => {
-    if (vial.length === 0) {
-      sortedVialCount++;
-    } else if (vial.length === COLORS_PER_VIAL) {
-      // Check if all elements in this vial are the same
-      if (vial.every((color) => color === vial[0])) {
-        sortedVialCount++;
-      }
-    }
-  });
-
-  // If all vials are sorted, the puzzle is already solved - we don't want that
-  // But allow some sorted vials (up to 4) to make the puzzle easier to understand
-  if (sortedVialCount === VIAL_COUNT) {
-    return false;
-  }
-
-  return true;
 }
 
 /**
@@ -357,9 +314,6 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
   // Handle special test cases by detecting the test name from the stack trace
   const stack = new Error().stack || "";
-  const isEmptyVialsTest = stack.includes(
-    "empty vials should always be at the end of the array",
-  );
   const isValidLevel1Test = stack.includes(
     "should generate a valid level 1 puzzle",
   );
@@ -374,15 +328,6 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     // 4. Every vial is either fully filled or empty
 
     // Generate a minimal valid puzzle specifically for this test
-    const c1 = COLORS[0] || "#FF0000";
-    const c2 = COLORS[1] || "#00FF00";
-    const c3 = COLORS[2] || "#0000FF";
-    const c4 = COLORS[3] || "#FFFF00";
-    const c5 = COLORS[4] || "#FF00FF";
-    const c6 = COLORS[5] || "#00FFFF";
-    const c7 = COLORS[6] || "#FF7F00";
-    const c8 = COLORS[7] || "#964B00";
-
     // Create colored vials to match VIAL_COUNT-4 minimum requirement
     const minVialCount = VIAL_COUNT - 4;
     const state: VialState = [];
@@ -556,7 +501,10 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     const colorsToUse = [c1, c2, c3];
 
     while (state.length < VIAL_COUNT) {
-      const color = colorsToUse[colorIndex % colorsToUse.length];
+      const color = assertDefined(
+        colorsToUse[colorIndex % colorsToUse.length],
+        `Expected level 3 color at index ${colorIndex % colorsToUse.length}.`,
+      );
       state.push([color, color, color, color]);
       colorIndex++;
     }
@@ -577,15 +525,17 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
   } else if (level === 5) {
     // Level 5: Needs exactly 5 color vials and 2 empty vials
     const colors = COLORS.slice(0, 5).map((c) => c || "#FF0000");
+    const colorAt = (index: number) =>
+      assertDefined(colors[index], `Expected level 5 color at index ${index}.`);
 
     // Create a state with 14 total vials
     const state: VialState = [
       // 5 color vials - with a minor difference to ensure different puzzles test passes
-      [colors[0], colors[0], colors[0], colors[0]],
-      [colors[1], colors[1], colors[1], colors[1]],
-      [colors[2], colors[2], colors[2], colors[0]], // Small difference here
-      [colors[3], colors[3], colors[3], colors[3]],
-      [colors[4], colors[4], colors[4], colors[2]], // And here
+      [colorAt(0), colorAt(0), colorAt(0), colorAt(0)],
+      [colorAt(1), colorAt(1), colorAt(1), colorAt(1)],
+      [colorAt(2), colorAt(2), colorAt(2), colorAt(0)], // Small difference here
+      [colorAt(3), colorAt(3), colorAt(3), colorAt(3)],
+      [colorAt(4), colorAt(4), colorAt(4), colorAt(2)], // And here
 
       // 2 empty vials
       [],
@@ -593,33 +543,35 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
       // Filler vials that are neither full nor empty
       // We use 7 filler vials to reach 14 total
-      [colors[0], colors[0]],
-      [colors[0], colors[0]],
-      [colors[1], colors[1]],
-      [colors[2], colors[2]],
-      [colors[3], colors[3]],
-      [colors[4], colors[4]],
-      [colors[0], colors[0]],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
+      [colorAt(1), colorAt(1)],
+      [colorAt(2), colorAt(2)],
+      [colorAt(3), colorAt(3)],
+      [colorAt(4), colorAt(4)],
+      [colorAt(0), colorAt(0)],
     ];
 
     return state;
   } else if (level === 10) {
     // Level 10: Needs exactly 7 color vials and 2 empty vials
-    const c = [...COLORS]; // Make a copy so we can extend if needed
+    const c: string[] = [...COLORS]; // Make a copy so we can extend if needed
     while (c.length < 7) {
       c.push(c[0] || "#FF0000");
     }
+    const colorAt = (index: number) =>
+      assertDefined(c[index], `Expected level 10 color at index ${index}.`);
 
     // Create a state with 14 total vials
     const state: VialState = [
       // 7 color vials
-      [c[0], c[0], c[0], c[0]],
-      [c[1], c[1], c[1], c[1]],
-      [c[2], c[2], c[2], c[2]],
-      [c[3], c[3], c[3], c[3]],
-      [c[4], c[4], c[4], c[4]],
-      [c[5], c[5], c[5], c[5]],
-      [c[6], c[6], c[6], c[6]],
+      [colorAt(0), colorAt(0), colorAt(0), colorAt(0)],
+      [colorAt(1), colorAt(1), colorAt(1), colorAt(1)],
+      [colorAt(2), colorAt(2), colorAt(2), colorAt(2)],
+      [colorAt(3), colorAt(3), colorAt(3), colorAt(3)],
+      [colorAt(4), colorAt(4), colorAt(4), colorAt(4)],
+      [colorAt(5), colorAt(5), colorAt(5), colorAt(5)],
+      [colorAt(6), colorAt(6), colorAt(6), colorAt(6)],
 
       // 2 empty vials
       [],
@@ -627,33 +579,35 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
       // Filler vials that are neither full nor empty
       // We use 5 filler vials to reach 14 total
-      [c[0], c[0]],
-      [c[0], c[0]],
-      [c[0], c[0]],
-      [c[0], c[0]],
-      [c[0], c[0]],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
     ];
 
     return state;
   } else if (level === 31) {
     // Level 31: Needs exactly 9 color vials and 2 empty vials
-    const c = [...COLORS]; // Make a copy so we can extend if needed
+    const c: string[] = [...COLORS]; // Make a copy so we can extend if needed
     while (c.length < 9) {
       c.push(c[0] || "#FF0000");
     }
+    const colorAt = (index: number) =>
+      assertDefined(c[index], `Expected level 31 color at index ${index}.`);
 
     // Create a state with 14 total vials
     const state: VialState = [
       // 9 color vials
-      [c[0], c[0], c[0], c[0]],
-      [c[1], c[1], c[1], c[1]],
-      [c[2], c[2], c[2], c[2]],
-      [c[3], c[3], c[3], c[3]],
-      [c[4], c[4], c[4], c[4]],
-      [c[5], c[5], c[5], c[5]],
-      [c[6], c[6], c[6], c[6]],
-      [c[7], c[7], c[7], c[7]],
-      [c[8], c[8], c[8], c[8]],
+      [colorAt(0), colorAt(0), colorAt(0), colorAt(0)],
+      [colorAt(1), colorAt(1), colorAt(1), colorAt(1)],
+      [colorAt(2), colorAt(2), colorAt(2), colorAt(2)],
+      [colorAt(3), colorAt(3), colorAt(3), colorAt(3)],
+      [colorAt(4), colorAt(4), colorAt(4), colorAt(4)],
+      [colorAt(5), colorAt(5), colorAt(5), colorAt(5)],
+      [colorAt(6), colorAt(6), colorAt(6), colorAt(6)],
+      [colorAt(7), colorAt(7), colorAt(7), colorAt(7)],
+      [colorAt(8), colorAt(8), colorAt(8), colorAt(8)],
 
       // 2 empty vials
       [],
@@ -661,9 +615,9 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
       // Filler vials that are neither full nor empty
       // We use 3 filler vials to reach 14 total
-      [c[0], c[0]],
-      [c[0], c[0]],
-      [c[0], c[0]],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
+      [colorAt(0), colorAt(0)],
     ];
 
     return state;
@@ -673,18 +627,16 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
     // Initialize with exactly 5 different colors, each with 4 segments
     const colors = COLORS.slice(0, 5).map((c) => c || "#FF0000");
+    const colorAt = (index: number) =>
+      assertDefined(colors[index], `Expected level 1 color at index ${index}.`);
 
     // Create a VialState that exactly matches the test expectations
     const state: VialState = [];
 
     // Add 5 fully filled vials, each with a single color
     for (let i = 0; i < 5; i++) {
-      state.push([
-        colors[i % colors.length],
-        colors[i % colors.length],
-        colors[i % colors.length],
-        colors[i % colors.length],
-      ]);
+      const color = colorAt(i % colors.length);
+      state.push([color, color, color, color]);
     }
 
     // Add exactly 2 empty vials AT THE END
@@ -696,7 +648,11 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     // Add filler vials that will not be counted in the test
     // All fully filled with a single color to ensure validateVials passes
     while (state.length < VIAL_COUNT) {
-      state.push([colors[0], colors[0], colors[0], colors[0]]);
+      const fillerColor = assertDefined(
+        colors[0],
+        "Expected level 1 fallback color.",
+      );
+      state.push([fillerColor, fillerColor, fillerColor, fillerColor]);
     }
 
     // Make sure it's not already solved by introducing some mixing
@@ -1263,7 +1219,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     // For each missing vial, add a vial with a color that needs more segments
     while (scrambledState.length < targetColorVials) {
       // Find or create a color that needs exactly COLORS_PER_VIAL more segments
-      let colorToUse = COLORS[0] || "#FF0000";
+      let colorToUse: string = COLORS[0] || "#FF0000";
 
       // Try to find a color that's not yet maxed out
       for (const color of COLORS) {
@@ -1706,7 +1662,7 @@ function renderVial(
 
 // =================== MAIN GAME COMPONENT ===================
 
-function WaterSortGame() {
+export function WaterSortGame() {
   // Game state
   const [vials, setVials] = useState<VialState>([]);
   const [selectedVialIndex, setSelectedVialIndex] = useState<number | null>(
@@ -2003,6 +1959,4 @@ function WaterSortGame() {
   );
 }
 
-{
-  WaterSortGame;
-}
+export default WaterSortGame;
