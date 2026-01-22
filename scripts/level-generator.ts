@@ -550,6 +550,7 @@ function breakUpSortedVials(state: GameState): GameState {
       const isComplete = vial.segments.every(
         (segment) => segment === firstColor,
       );
+
       return isComplete ? [index] : [];
     });
 

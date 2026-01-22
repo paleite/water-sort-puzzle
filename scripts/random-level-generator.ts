@@ -100,6 +100,7 @@ function forceMixSolvedVials(state: GameState): GameState {
     if (vial.isEmpty() || !vial.isFull()) {
       return [];
     }
+
     return [index];
   });
 
@@ -112,6 +113,7 @@ function forceMixSolvedVials(state: GameState): GameState {
       nextState.vials[index],
       `Expected vial at index ${index}.`,
     );
+
     return vial.segments.at(-1);
   });
 
@@ -327,8 +329,10 @@ function generateBestLevel(
   if (candidates.length === 0) {
     if (fallbackCandidate) {
       console.log("Falling back to first solvable candidate.");
+
       return fallbackCandidate;
     }
+
     return null;
   }
 
