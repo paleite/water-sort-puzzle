@@ -4,8 +4,9 @@
  * Tests both the reverse-shuffling and random generation approaches.
  */
 
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
+
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 
 // Define color type

@@ -242,7 +242,7 @@ function executeMove(
   }
 
   // Create a deep copy of vials
-  const newVialState = JSON.parse(JSON.stringify(vialState)) as VialState;
+  const newVialState = structuredClone(vialState);
 
   // Check indices are valid
   if (
@@ -1023,7 +1023,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
   for (let i = 0; i < scrambledState.length; i++) {
     const vial = scrambledState[i];
     // Only consider full vials
-    if (vial && vial.length === COLORS_PER_VIAL) {
+    if (vial?.length === COLORS_PER_VIAL) {
       // Check if all colors in the vial are the same
       const firstColor = vial[0];
       if (firstColor && vial.every((color) => color === firstColor)) {
@@ -1070,7 +1070,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
       i--
     ) {
       const vial = scrambledState[i];
-      if (vial && vial.length === 0) {
+      if (vial?.length === 0) {
         scrambledState.splice(i, 1);
         emptyRemoved++;
       }
@@ -1270,7 +1270,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
       const vialIndicesWithColor = [];
       for (let i = 0; i < state.length; i++) {
         const vial = state[i];
-        if (vial && vial.some((c) => c === color)) {
+        if (vial?.some((c) => c === color)) {
           vialIndicesWithColor.push(i);
         }
       }
@@ -1421,7 +1421,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     // First gather all full vials of the same color
     for (let i = 0; i < state.length; i++) {
       const vial = state[i];
-      if (vial && vial.length === COLORS_PER_VIAL) {
+      if (vial?.length === COLORS_PER_VIAL) {
         const color = vial[0];
         if (color && vial.every((c) => c === color)) {
           fullVials.push({ index: i, color });
@@ -1509,7 +1509,7 @@ function DevLevelJumper({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newLevel = parseInt(e.target.value);
-    if (!isNaN(newLevel) && newLevel > 0) {
+    if (!Number.isNaN(newLevel) && newLevel > 0) {
       setLevelInput(newLevel);
       startLevel(newLevel);
     }
@@ -1792,7 +1792,7 @@ export function WaterSortGame() {
           }
 
           // Save current state for undo
-          setMoveHistory([...moveHistory, JSON.parse(JSON.stringify(vials))]);
+          setMoveHistory([...moveHistory, structuredClone(vials)]);
 
           const fromIndex = selectedVialIndex;
           const toIndex = index;

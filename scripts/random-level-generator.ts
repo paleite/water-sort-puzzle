@@ -5,9 +5,10 @@
  * seeded random generator and a breadth-first search (BFS) solver.
  */
 
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
+
 import { glob } from "glob";
-import path from "path";
 
 import { GameState } from "../src/lib/game-state";
 import { solvePuzzle } from "../src/lib/puzzle-solver";
@@ -293,14 +294,12 @@ function generateBestLevel(
 
     // If a valid solution was found, evaluate the level
     if (result.solutionMoves && result.metrics) {
-      if (!fallbackCandidate) {
-        fallbackCandidate = {
-          state: result.state,
-          solutionMoves: result.solutionMoves,
-          metrics: result.metrics,
-          emptyVials: result.emptyVials,
-        };
-      }
+      fallbackCandidate ??= {
+        state: result.state,
+        solutionMoves: result.solutionMoves,
+        metrics: result.metrics,
+        emptyVials: result.emptyVials,
+      };
 
       // Store the candidate if it meets our criteria
       if (result.metrics.isValid && hasDesirableProperties(result.state)) {

@@ -5,7 +5,7 @@ import { solvePuzzle } from "./puzzle-solver";
 import { Vial } from "./vial";
 
 describe("solvePuzzle", () => {
-  it.skip("solves a simple puzzle with two vials", () => {
+  it("solves a simple puzzle with two vials", () => {
     // Create a simple puzzle with two vials
     const vial1 = new Vial(2);
     vial1.segments = ["red", "blue"]; // Just two colors

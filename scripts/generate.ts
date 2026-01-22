@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 /**
  * Represents a single move in the puzzle.
@@ -122,8 +122,7 @@ function generateSolvablePuzzle(): PuzzleData {
         continue;
       }
       if (
-        lastMove &&
-        lastMove.fromVialIndex === toIndex &&
+        lastMove?.fromVialIndex === toIndex &&
         lastMove.toVialIndex === fromIndex
       ) {
         continue;

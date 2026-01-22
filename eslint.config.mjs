@@ -5,7 +5,6 @@ import { defineConfig } from "eslint/config";
 import prettier from "eslint-config-prettier";
 import { createTypeScriptImportResolver } from "eslint-import-resolver-typescript";
 import { importX } from "eslint-plugin-import-x";
-import jest from "eslint-plugin-jest";
 import jestDom from "eslint-plugin-jest-dom";
 import pluginPromise from "eslint-plugin-promise";
 import reactPlugin from "eslint-plugin-react";
@@ -14,6 +13,7 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import testingLibrary from "eslint-plugin-testing-library";
 import unusedImports from "eslint-plugin-unused-imports";
+import vitest from "eslint-plugin-vitest";
 import globals from "globals";
 import { configs as tseslintConfigs } from "typescript-eslint";
 
@@ -185,20 +185,23 @@ export default defineConfig([
     },
   },
 
-  // Jest configuration
+  // Vitest configuration (scoped to apps/web/)
   {
-    ...jest.configs["flat/recommended"],
-    files: ["**/*.{test,spec}.{ts,tsx,js}"],
+    ...vitest.configs.recommended,
+    files: ["apps/web/**/*.{test,spec}.{ts,tsx,js,jsx}"],
     rules: {
-      "jest/no-focused-tests": "error",
+      ...vitest.configs.recommended.rules,
+      // Optional local tweaks
+      "vitest/no-focused-tests": "error",
     },
   },
 
   // Testing Library configuration
   {
     ...testingLibrary.configs["flat/react"],
-    files: ["**/*.{test,spec}.{ts,tsx,js}"],
+    files: ["**/*.{test,spec}.{ts,tsx}"],
     rules: {
+      ...testingLibrary.configs["flat/react"].rules,
       "testing-library/no-debugging-utils": "warn",
     },
   },
@@ -206,7 +209,7 @@ export default defineConfig([
   // jest-dom configuration
   {
     ...jestDom.configs["flat/recommended"],
-    files: ["**/*.{test,spec}.{ts,tsx,js}"],
+    files: ["**/*.{test,spec}.{ts,tsx}"],
   },
 
   // React Refresh configuration (JSX files only)

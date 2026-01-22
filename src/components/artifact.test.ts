@@ -45,7 +45,7 @@ describe("Vial sort order", () => {
     );
   });
 
-  test.skip("empty vials should be at the end with generated puzzle", () => {
+  test("empty vials should be at the end with generated puzzle", () => {
     const puzzle = generatePuzzle(2);
 
     expect(indexOfFirstEmptyVialInPuzzle(puzzle)).toBe(
@@ -91,7 +91,7 @@ describe("level size calculation", () => {
   });
 });
 
-describe.skip("Level Size", () => {
+describe("Level Size", () => {
   test("level 2 should have 2 color vials and 1 empty vial", () => {
     const puzzle = generatePuzzle(2);
 

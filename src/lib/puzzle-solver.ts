@@ -186,7 +186,7 @@ export function solvePuzzle(
         // skip this to avoid exploring symmetric states
         for (let i = 0; i < move.targetVialIndex; i++) {
           const vial = state.vials[i];
-          if (vial && vial.isEmpty()) {
+          if (vial?.isEmpty()) {
             statesPruned++;
             hasAnotherEmptyTarget = true;
             break;

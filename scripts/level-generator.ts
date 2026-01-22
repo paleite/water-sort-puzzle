@@ -5,9 +5,10 @@
  * It starts from a solved state, applies random moves in reverse, then ensures the level meets quality standards.
  */
 
-import fs from "fs";
+import fs from "node:fs";
+import path from "node:path";
+
 import { glob } from "glob";
-import path from "path";
 
 import { GameState } from "../src/lib/game-state";
 import { solvePuzzle } from "../src/lib/puzzle-solver";
