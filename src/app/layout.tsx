@@ -13,10 +13,34 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const basePath =
+  process.env.NODE_ENV === "production" ? "/water-sort-puzzle" : "";
+
 export const metadata: Metadata = {
   title: "Water Sort Puzzle",
   description: "A fun puzzle game about sorting colored liquids",
-  manifest: "/water-sort-puzzle/manifest.json",
+  manifest: `${basePath}/manifest.json`,
+  icons: {
+    icon: [
+      {
+        url: `${basePath}/favicon-32x32.png`,
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: `${basePath}/favicon-16x16.png`,
+        type: "image/png",
+        sizes: "16x16",
+      },
+    ],
+    apple: [
+      {
+        url: `${basePath}/apple-touch-icon.png`,
+        type: "image/png",
+        sizes: "180x180",
+      },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -39,23 +63,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link
-          href="/water-sort-puzzle/apple-touch-icon.png"
-          rel="apple-touch-icon"
-          sizes="180x180"
-        />
-        <link
-          href="/water-sort-puzzle/favicon-32x32.png"
-          rel="icon"
-          sizes="32x32"
-          type="image/png"
-        />
-        <link
-          href="/water-sort-puzzle/favicon-16x16.png"
-          rel="icon"
-          sizes="16x16"
-          type="image/png"
-        />
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta
           content="black-translucent"
