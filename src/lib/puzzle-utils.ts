@@ -1,4 +1,11 @@
 import { GameState } from "./game-state";
+import {
+  EMPTY_TOKEN,
+  solveShortestBfs,
+  type State,
+  type Vial,
+} from "./water-sort-canonical";
+import { solvePuzzle } from "./puzzle-solver";
 import type { SeededRandom } from "./seeded-random";
 import type { Color, Move } from "./types/puzzle-types";
 import { Vial } from "./vial";
@@ -420,14 +427,24 @@ export function evaluateLevel(
   );
 
   // Calculate composite difficulty score
-  const difficulty =
-    entropy * 0.4 + fragmentation * 0.4 + solutionPath.length * 0.2;
+  let solutionSteps = solutionPath.length;
+  if (solutionSteps === 0 && !state.isComplete()) {
+    const canonicalState = toCanonicalState(state);
+    if (canonicalState) {
+      const result = solveShortestBfs(canonicalState);
+      if (result.ok) {
+        solutionSteps = result.moveCount;
+      }
+    }
+  }
+
+  const difficulty = entropy * 0.4 + fragmentation * 0.4 + solutionSteps * 0.2;
 
   return {
     difficulty,
     entropy,
     fragmentation,
-    solutionSteps: solutionPath.length,
+    solutionSteps,
     isValid: !hasPartialVials && !hasSolvedVials,
   };
 }
@@ -446,11 +463,37 @@ export function hasDesirableProperties(state: GameState): boolean {
     (vial) => !vial.isEmpty() && !vial.isFull(),
   );
 
-  // Has sufficient "entropy" (intermingled colors)
-  const entropy = calculateEntropy(state);
-  const sufficientEntropy = entropy > state.colorCount * 0.8;
+  return !hasSolvedVials && !hasPartialVials;
+}
 
-  return !hasSolvedVials && !hasPartialVials && sufficientEntropy;
+function toCanonicalState(state: GameState): State | null {
+  const capacity = state.vials[0]?.capacity;
+  if (capacity !== 4) {
+    return null;
+  }
+
+  const canonicalVials: Vial[] = state.vials.map((vial) => {
+    const slots: Array<string | typeof EMPTY_TOKEN> = [
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+    ];
+
+    for (let i = 0; i < vial.segments.length; i++) {
+      const segment = vial.segments[i];
+      if (!segment) {
+        continue;
+      }
+
+      const targetIndex = 3 - i;
+      slots[targetIndex] = segment;
+    }
+
+    return [slots[0], slots[1], slots[2], slots[3]];
+  });
+
+  return canonicalVials;
 }
 
 // Import shuffleArray from seeded-random

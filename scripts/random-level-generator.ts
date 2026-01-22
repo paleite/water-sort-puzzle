@@ -53,7 +53,17 @@ function generateRandomLevelCandidate(
   const initialState = createInitialState(colorCount, vialHeight, 0);
 
   // Randomize only the filled vials (not changing empty vial positions)
-  const randomizedState = randomizeVials(initialState, rng);
+  let randomizedState = randomizeVials(initialState, rng);
+
+  for (let i = 0; i < 5; i++) {
+    const hasSolvedVials = randomizedState.vials.some(
+      (vial) => !vial.isEmpty() && vial.isComplete(),
+    );
+    if (!hasSolvedVials) {
+      break;
+    }
+    randomizedState = randomizeVials(initialState, rng);
+  }
 
   // Start with just 1 empty vial
   let currentEmptyVials = 1;

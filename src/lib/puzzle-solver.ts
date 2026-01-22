@@ -1,6 +1,90 @@
 import type { GameState } from "./game-state";
-import { prioritizeMoves, wouldCompleteVial } from "./puzzle-utils";
+import {
+  countTopSegmentsOfSameColor,
+  prioritizeMoves,
+  wouldCompleteVial,
+} from "./puzzle-utils";
 import type { Move } from "./types/puzzle-types";
+import {
+  EMPTY_TOKEN,
+  solveShortestBfs,
+  type MoveList,
+  type State,
+  type Vial,
+} from "./water-sort-canonical";
+
+function assertDefined<T>(value: T | undefined, message: string): T {
+  if (value === undefined) {
+    throw new TypeError(message);
+  }
+
+  return value;
+}
+
+function toCanonicalState(state: GameState): State | null {
+  const capacity = state.vials[0]?.capacity;
+  if (capacity !== 4) {
+    return null;
+  }
+
+  const canonicalVials: Vial[] = state.vials.map((vial) => {
+    const slots: Array<string | typeof EMPTY_TOKEN> = [
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+      EMPTY_TOKEN,
+    ];
+
+    for (let i = 0; i < vial.segments.length; i++) {
+      const segment = vial.segments[i];
+      if (segment === undefined) {
+        continue;
+      }
+
+      const targetIndex = 3 - i;
+      slots[targetIndex] = segment;
+    }
+
+    return [slots[0], slots[1], slots[2], slots[3]];
+  });
+
+  return canonicalVials;
+}
+
+function canonicalMovesToMoves(state: GameState, moves: MoveList): Move[] {
+  const workingState = state.clone();
+  const converted: Move[] = [];
+
+  for (const [sourceIndex, targetIndex] of moves) {
+    const sourceVial = assertDefined(
+      workingState.vials[sourceIndex],
+      `Expected source vial at index ${sourceIndex}.`,
+    );
+    const targetVial = assertDefined(
+      workingState.vials[targetIndex],
+      `Expected target vial at index ${targetIndex}.`,
+    );
+    const topColor = sourceVial.getTopColor();
+    if (topColor === null) {
+      throw new Error("Expected a non-empty source vial for canonical move.");
+    }
+
+    const colorsToPour = Math.min(
+      countTopSegmentsOfSameColor(sourceVial, topColor),
+      targetVial.capacity - targetVial.segments.length,
+    );
+
+    const move: Move = {
+      sourceVialIndex: sourceIndex,
+      targetVialIndex: targetIndex,
+      colorsToPour,
+    };
+    converted.push(move);
+    workingState.applyMove(move);
+  }
+
+  return converted;
+}
 
 /**
  * Use BFS to find a solution path, with optimizations
@@ -14,6 +98,15 @@ export function solvePuzzle(
   path: Move[] | null;
   timedOut: boolean;
 } {
+  const canonicalState = toCanonicalState(initialState);
+  if (canonicalState) {
+    const solveResult = solveShortestBfs(canonicalState);
+    if (solveResult.ok) {
+      const path = canonicalMovesToMoves(initialState, solveResult.moves);
+      return { solved: true, path, timedOut: false };
+    }
+  }
+
   const startTime = Date.now();
 
   // Initialize BFS queue with the initial state
