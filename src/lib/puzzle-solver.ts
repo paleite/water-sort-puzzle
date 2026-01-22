@@ -7,8 +7,10 @@ import {
 import type { Move } from "./types/puzzle-types";
 import {
   EMPTY_TOKEN,
-  solveShortestBfs,
+  isColorToken,
   type MoveList,
+  type SlotToken,
+  solveShortestBfs,
   type State,
   type Vial,
 } from "./water-sort-canonical";
@@ -28,7 +30,7 @@ function toCanonicalState(state: GameState): State | null {
   }
 
   const canonicalVials: Vial[] = state.vials.map((vial) => {
-    const slots: Array<string | typeof EMPTY_TOKEN> = [
+    const slots: SlotToken[] = [
       EMPTY_TOKEN,
       EMPTY_TOKEN,
       EMPTY_TOKEN,
@@ -37,15 +39,22 @@ function toCanonicalState(state: GameState): State | null {
 
     for (let i = 0; i < vial.segments.length; i++) {
       const segment = vial.segments[i];
-      if (segment === undefined) {
+      if (segment === undefined || segment === EMPTY_TOKEN) {
         continue;
       }
 
-      const targetIndex = 3 - i;
-      slots[targetIndex] = segment;
+      if (isColorToken(segment)) {
+        const targetIndex = 3 - i;
+        slots[targetIndex] = segment;
+      }
     }
 
-    return [slots[0], slots[1], slots[2], slots[3]];
+    return [
+      slots[0] ?? EMPTY_TOKEN,
+      slots[1] ?? EMPTY_TOKEN,
+      slots[2] ?? EMPTY_TOKEN,
+      slots[3] ?? EMPTY_TOKEN,
+    ];
   });
 
   return canonicalVials;
@@ -103,6 +112,7 @@ export function solvePuzzle(
     const solveResult = solveShortestBfs(canonicalState);
     if (solveResult.ok) {
       const path = canonicalMovesToMoves(initialState, solveResult.moves);
+
       return { solved: true, path, timedOut: false };
     }
   }

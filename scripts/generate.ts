@@ -54,7 +54,7 @@ function isLegalMove(from: Vial, to: Vial): boolean {
     return true;
   }
 
-  return to[to.length - 1] === from[from.length - 1];
+  return to.at(-1) === from.at(-1);
 }
 
 function performMove(

@@ -200,15 +200,12 @@ function applySolution(levelData: any): boolean {
       return false;
     }
 
-    const topColor = sourceVial.segments[sourceVial.segments.length - 1];
+    const topColor = sourceVial.segments.at(-1);
 
     if (targetVial.isFull()) {
       return false;
     }
-    if (
-      !targetVial.isEmpty() &&
-      targetVial.segments[targetVial.segments.length - 1] !== topColor
-    ) {
+    if (!targetVial.isEmpty() && targetVial.segments.at(-1) !== topColor) {
       return false;
     }
 

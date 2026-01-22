@@ -7,6 +7,7 @@ import {
   isSolved,
   parsePuzzleJsonToState,
   serializeStateToPuzzleJson,
+  type SlotToken,
   SOLUTION_40_MOVES,
   solveShortestBfs,
   STARTING_PUZZLE_JSON,
@@ -15,11 +16,11 @@ import {
 } from "./water-sort-canonical";
 
 const makeVial = (
-  a: string,
-  b: string,
-  c: string,
-  d: string,
-): [string, string, string, string] => [a, b, c, d];
+  a: SlotToken,
+  b: SlotToken,
+  c: SlotToken,
+  d: SlotToken,
+): [SlotToken, SlotToken, SlotToken, SlotToken] => [a, b, c, d];
 
 describe("water-sort-canonical", () => {
   it("parses and serializes the starting puzzle", () => {
@@ -41,7 +42,7 @@ describe("water-sort-canonical", () => {
   it("applies maximal pours", () => {
     const state = [
       makeVial("EMPTY", "red", "red", "red"),
-      makeVial("EMPTY", "EMPTY", "blue", "blue"),
+      makeVial("EMPTY", "EMPTY", "light_blue", "light_blue"),
       makeVial("EMPTY", "EMPTY", "EMPTY", "EMPTY"),
     ] as const;
 
@@ -60,7 +61,7 @@ describe("water-sort-canonical", () => {
     ] as const;
 
     const unsolvedState = [
-      makeVial("EMPTY", "red", "red", "blue"),
+      makeVial("EMPTY", "red", "red", "light_blue"),
       makeVial("EMPTY", "EMPTY", "EMPTY", "EMPTY"),
     ] as const;
 
@@ -103,9 +104,9 @@ describe("water-sort-canonical", () => {
   it("finds the shortest path on a one-move puzzle", () => {
     const state = [
       makeVial("red", "red", "red", "red"),
-      makeVial("EMPTY", "EMPTY", "blue", "blue"),
+      makeVial("EMPTY", "EMPTY", "light_blue", "light_blue"),
       makeVial("EMPTY", "EMPTY", "EMPTY", "EMPTY"),
-      makeVial("EMPTY", "EMPTY", "blue", "blue"),
+      makeVial("EMPTY", "EMPTY", "light_blue", "light_blue"),
     ] as const;
 
     const result = solveShortestBfs(state);

@@ -1,14 +1,15 @@
 import { GameState } from "./game-state";
-import {
-  EMPTY_TOKEN,
-  solveShortestBfs,
-  type State,
-  type Vial,
-} from "./water-sort-canonical";
-import { solvePuzzle } from "./puzzle-solver";
 import type { SeededRandom } from "./seeded-random";
 import type { Color, Move } from "./types/puzzle-types";
 import { Vial } from "./vial";
+import {
+  EMPTY_TOKEN,
+  isColorToken,
+  type SlotToken,
+  solveShortestBfs,
+  type State,
+  type Vial as CanonicalVial,
+} from "./water-sort-canonical";
 
 function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
@@ -472,8 +473,8 @@ function toCanonicalState(state: GameState): State | null {
     return null;
   }
 
-  const canonicalVials: Vial[] = state.vials.map((vial) => {
-    const slots: Array<string | typeof EMPTY_TOKEN> = [
+  const canonicalVials: CanonicalVial[] = state.vials.map((vial) => {
+    const slots: SlotToken[] = [
       EMPTY_TOKEN,
       EMPTY_TOKEN,
       EMPTY_TOKEN,
@@ -482,15 +483,22 @@ function toCanonicalState(state: GameState): State | null {
 
     for (let i = 0; i < vial.segments.length; i++) {
       const segment = vial.segments[i];
-      if (!segment) {
+      if (segment === undefined || segment === EMPTY_TOKEN) {
         continue;
       }
 
-      const targetIndex = 3 - i;
-      slots[targetIndex] = segment;
+      if (isColorToken(segment)) {
+        const targetIndex = 3 - i;
+        slots[targetIndex] = segment;
+      }
     }
 
-    return [slots[0], slots[1], slots[2], slots[3]];
+    return [
+      slots[0] ?? EMPTY_TOKEN,
+      slots[1] ?? EMPTY_TOKEN,
+      slots[2] ?? EMPTY_TOKEN,
+      slots[3] ?? EMPTY_TOKEN,
+    ];
   });
 
   return canonicalVials;

@@ -218,8 +218,8 @@ function isValidMove(
   }
 
   // Check if the top colors match
-  const fromColor = fromVial[fromVial.length - 1];
-  const toColor = toVial[toVial.length - 1];
+  const fromColor = fromVial.at(-1);
+  const toColor = toVial.at(-1);
 
   if (fromColor === undefined || toColor === undefined) {
     return false;
@@ -262,7 +262,7 @@ function executeMove(
   }
 
   // Get the color to move
-  const colorToMove = fromVial[fromVial.length - 1];
+  const colorToMove = fromVial.at(-1);
   if (colorToMove === undefined) {
     return null;
   }
@@ -1824,7 +1824,7 @@ export function WaterSortGame() {
       (gameState === GAME_STATE.PLAYING || gameState === GAME_STATE.READY)
     ) {
       if (moveHistory.length > 0) {
-        const lastState = moveHistory[moveHistory.length - 1];
+        const lastState = moveHistory.at(-1);
         if (lastState) {
           setVials(lastState);
           setMoveHistory(moveHistory.slice(0, -1));

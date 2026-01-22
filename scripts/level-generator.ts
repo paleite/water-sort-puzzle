@@ -581,7 +581,7 @@ function breakUpSortedVials(state: GameState): GameState {
         if (!candidate.isFull()) {
           continue;
         }
-        const candidateTop = candidate.segments[candidate.segments.length - 1];
+        const candidateTop = candidate.segments.at(-1);
         if (candidateTop && candidateTop !== sortedColor) {
           partnerIndex = i;
           break;

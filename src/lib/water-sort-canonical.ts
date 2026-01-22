@@ -1,8 +1,29 @@
+export const COLORS = [
+  "brown",
+  "dark_blue",
+  "dark_green",
+  "gray",
+  "light_blue",
+  "light_green",
+  "olive_green",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "yellow",
+] as const;
+
 export type EmptyToken = "EMPTY";
 export const EMPTY_TOKEN: EmptyToken = "EMPTY";
 
-export type ColorToken = string;
+export type ColorToken = (typeof COLORS)[number];
 export type SlotToken = ColorToken | EmptyToken;
+
+export const COLOR_SET = new Set<string>(COLORS);
+
+export function isColorToken(value: string): value is ColorToken {
+  return COLOR_SET.has(value);
+}
 
 export type Capacity = 4;
 
@@ -154,6 +175,7 @@ export function findTopNonEmptyIndex(vial: Vial): number | null {
       return i;
     }
   }
+
   return null;
 }
 
@@ -193,6 +215,7 @@ export function countEmptySlotsAtTop(vial: Vial): number {
       break;
     }
   }
+
   return count;
 }
 
@@ -304,6 +327,7 @@ export function applyPour(
         newDestination[3] ?? EMPTY_TOKEN,
       ] as const;
     }
+
     return vial;
   });
 
@@ -345,6 +369,7 @@ export function generateLegalMoves(state: State): Move[] {
       }
     }
   }
+
   return moves;
 }
 
@@ -414,7 +439,7 @@ export function verifyMoveList(
     return {
       ok: false,
       failedAtStepIndex: moves.length,
-      move: moves[moves.length - 1] ?? ([0, 0] as const),
+      move: moves.at(-1) ?? ([0, 0] as const),
       reason: "All moves legal but final state is not solved",
       stateBefore: state,
     };
@@ -476,6 +501,7 @@ export function solveShortestBfs(startState: State): SolveResult {
 
       if (isSolved(nextState)) {
         const moves = reconstructMoves(parentKeyByKey, moveByKey, nextKey);
+
         return { ok: true, moves, moveCount: moves.length };
       }
     }
@@ -503,6 +529,7 @@ function reconstructMoves(
   }
 
   reversed.reverse();
+
   return reversed;
 }
 
@@ -520,6 +547,7 @@ export function formatMovesDebug(moves: MoveList): string {
   return moves
     .map((move, index) => {
       const [src, dst] = move;
+
       return `${index + 1}. move: Move = [${src}, ${dst}]`;
     })
     .join("\n");

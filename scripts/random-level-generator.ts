@@ -30,6 +30,114 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   return value;
 }
 
+function hasSolvedVials(state: GameState): boolean {
+  return state.vials.some((vial) => !vial.isEmpty() && vial.isComplete());
+}
+
+function breakSolvedVials(state: GameState, rng: SeededRandom): GameState {
+  const nextState = state.clone();
+  let attempts = 0;
+  const maxAttempts = nextState.vials.length * 3;
+
+  while (hasSolvedVials(nextState) && attempts < maxAttempts) {
+    const solvedIndex = nextState.vials.findIndex(
+      (vial) => !vial.isEmpty() && vial.isFull() && vial.isComplete(),
+    );
+    if (solvedIndex < 0) {
+      break;
+    }
+
+    const solvedVial = assertDefined(
+      nextState.vials[solvedIndex],
+      `Expected vial at index ${solvedIndex}.`,
+    );
+    const solvedTop = solvedVial.getTopColor();
+    if (!solvedTop) {
+      break;
+    }
+
+    const candidateIndices = nextState.vials
+      .map((vial, index) => ({ vial, index }))
+      .filter(
+        ({ vial, index }) =>
+          index !== solvedIndex &&
+          vial.isFull() &&
+          vial.getTopColor() !== solvedTop,
+      )
+      .map(({ index }) => index);
+
+    if (candidateIndices.length === 0) {
+      break;
+    }
+
+    const partnerIndex =
+      candidateIndices[rng.nextInt(0, candidateIndices.length)];
+    if (partnerIndex === undefined) {
+      break;
+    }
+
+    const partnerVial = assertDefined(
+      nextState.vials[partnerIndex],
+      `Expected vial at index ${partnerIndex}.`,
+    );
+
+    const solvedSwap = solvedVial.segments.pop();
+    const partnerSwap = partnerVial.segments.pop();
+    if (solvedSwap && partnerSwap) {
+      solvedVial.segments.push(partnerSwap);
+      partnerVial.segments.push(solvedSwap);
+    }
+
+    attempts++;
+  }
+
+  return nextState;
+}
+
+function forceMixSolvedVials(state: GameState): GameState {
+  const nextState = state.clone();
+  const fullIndices = nextState.vials.flatMap((vial, index) => {
+    if (vial.isEmpty() || !vial.isFull()) {
+      return [];
+    }
+    return [index];
+  });
+
+  if (fullIndices.length < 2) {
+    return nextState;
+  }
+
+  const tops = fullIndices.map((index) => {
+    const vial = assertDefined(
+      nextState.vials[index],
+      `Expected vial at index ${index}.`,
+    );
+    return vial.segments.at(-1);
+  });
+
+  if (tops.some((top) => top === undefined)) {
+    return nextState;
+  }
+
+  for (let i = 0; i < fullIndices.length; i++) {
+    const index = assertDefined(
+      fullIndices[i],
+      `Expected full vial index at position ${i}.`,
+    );
+    const vial = assertDefined(
+      nextState.vials[index],
+      `Expected vial at index ${index}.`,
+    );
+    vial.segments.pop();
+    const replacement = tops[(i + 1) % tops.length] ?? vial.segments.at(-1);
+    if (replacement) {
+      vial.segments.push(replacement);
+    }
+  }
+
+  return nextState;
+}
+
 /**
  * Generate a random level and verify its solvability with BFS
  */
@@ -52,19 +160,6 @@ function generateRandomLevelCandidate(
   // Create a solved state with colorCount vials, each containing a unique color
   const initialState = createInitialState(colorCount, vialHeight, 0);
 
-  // Randomize only the filled vials (not changing empty vial positions)
-  let randomizedState = randomizeVials(initialState, rng);
-
-  for (let i = 0; i < 5; i++) {
-    const hasSolvedVials = randomizedState.vials.some(
-      (vial) => !vial.isEmpty() && vial.isComplete(),
-    );
-    if (!hasSolvedVials) {
-      break;
-    }
-    randomizedState = randomizeVials(initialState, rng);
-  }
-
   // Start with just 1 empty vial
   let currentEmptyVials = 1;
   let solutionResult = null;
@@ -74,36 +169,59 @@ function generateRandomLevelCandidate(
     `Trying to generate level with seed: ${seed}, colors: ${colorCount}`,
   );
 
-  // Try solving with incrementally more empty vials until we find a solution
-  // or reach the maximum allowed empty vials
-  while (currentEmptyVials <= maxEmptyVials && !solutionResult?.solved) {
-    console.log(`Attempting solution with ${currentEmptyVials} empty vials...`);
-
-    // Add empty vials to the randomized state
-    stateWithEmptyVials = addEmptyVials(randomizedState, currentEmptyVials);
-
-    // Attempt to solve the puzzle with increased max steps
-    solutionResult = solvePuzzle(stateWithEmptyVials, timeoutMs, maxSteps);
-
-    if (solutionResult.timedOut) {
-      console.log(`Solver timed out with ${currentEmptyVials} empty vials.`);
-    } else if (solutionResult.solved) {
-      console.log(
-        `Found solution with ${currentEmptyVials} empty vials. Solution length: ${solutionResult.path!.length} moves.`,
-      );
-      break;
-    } else {
-      console.log(`No solution found with ${currentEmptyVials} empty vials.`);
+  for (let shuffleAttempt = 0; shuffleAttempt < 5; shuffleAttempt++) {
+    let randomizedState = randomizeVials(initialState, rng);
+    for (let i = 0; i < 3; i++) {
+      if (!hasSolvedVials(randomizedState)) {
+        break;
+      }
+      randomizedState = randomizeVials(initialState, rng);
+    }
+    randomizedState = breakSolvedVials(randomizedState, rng);
+    if (hasSolvedVials(randomizedState)) {
+      randomizedState = forceMixSolvedVials(randomizedState);
     }
 
-    // If no solution, try with one more empty vial
-    currentEmptyVials++;
+    currentEmptyVials = 1;
+    solutionResult = null;
+
+    while (currentEmptyVials <= maxEmptyVials && !solutionResult?.solved) {
+      console.log(
+        `Attempting solution with ${currentEmptyVials} empty vials...`,
+      );
+
+      stateWithEmptyVials = addEmptyVials(randomizedState, currentEmptyVials);
+
+      if (hasSolvedVials(stateWithEmptyVials)) {
+        console.log("Shuffled state contains solved vials, retrying.");
+        break;
+      }
+
+      solutionResult = solvePuzzle(stateWithEmptyVials, timeoutMs, maxSteps);
+
+      if (solutionResult.timedOut) {
+        console.log(`Solver timed out with ${currentEmptyVials} empty vials.`);
+      } else if (solutionResult.solved && solutionResult.path?.length) {
+        console.log(
+          `Found solution with ${currentEmptyVials} empty vials. Solution length: ${solutionResult.path.length} moves.`,
+        );
+        break;
+      } else {
+        console.log(`No solution found with ${currentEmptyVials} empty vials.`);
+      }
+
+      currentEmptyVials++;
+    }
+
+    if (solutionResult?.solved && solutionResult.path?.length) {
+      break;
+    }
   }
 
   let metrics = null;
 
   // Calculate metrics if we found a solution
-  if (solutionResult && solutionResult.solved && solutionResult.path) {
+  if (solutionResult?.solved && solutionResult.path?.length) {
     const solvedState = assertDefined(
       stateWithEmptyVials,
       "Expected state with empty vials when computing metrics.",
@@ -122,7 +240,10 @@ function generateRandomLevelCandidate(
 
   return {
     state: finalState,
-    solutionMoves: solutionResult?.solved ? solutionResult.path : null,
+    solutionMoves:
+      solutionResult?.solved && solutionResult.path?.length
+        ? solutionResult.path
+        : null,
     emptyVials: currentEmptyVials,
     metrics,
   };
@@ -145,6 +266,12 @@ function generateBestLevel(
   emptyVials: number;
 } | null {
   const candidates = [];
+  let fallbackCandidate: {
+    state: GameState;
+    solutionMoves: Move[];
+    metrics: any;
+    emptyVials: number;
+  } | null = null;
 
   console.log(`Generating ${attempts} candidate levels...`);
 
@@ -164,6 +291,15 @@ function generateBestLevel(
 
     // If a valid solution was found, evaluate the level
     if (result.solutionMoves && result.metrics) {
+      if (!fallbackCandidate) {
+        fallbackCandidate = {
+          state: result.state,
+          solutionMoves: result.solutionMoves,
+          metrics: result.metrics,
+          emptyVials: result.emptyVials,
+        };
+      }
+
       // Store the candidate if it meets our criteria
       if (result.metrics.isValid && hasDesirableProperties(result.state)) {
         candidates.push({
@@ -189,6 +325,10 @@ function generateBestLevel(
   console.log(`Found ${candidates.length} valid candidates.`);
 
   if (candidates.length === 0) {
+    if (fallbackCandidate) {
+      console.log("Falling back to first solvable candidate.");
+      return fallbackCandidate;
+    }
     return null;
   }
 

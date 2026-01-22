@@ -39,7 +39,7 @@ export class Vial {
     if (this.isEmpty()) {
       return null;
     }
-    const topColor = this.segments[this.segments.length - 1];
+    const topColor = this.segments.at(-1);
     if (topColor === undefined) {
       throw new TypeError("Expected a top segment color in a non-empty vial.");
     }
