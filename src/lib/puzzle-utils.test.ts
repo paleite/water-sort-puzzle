@@ -476,16 +476,11 @@ describe("evaluateLevel", () => {
     } // Empty vial
 
     const state = new GameState(vials, 3, 1);
-    const solutionPath: Move[] = Array(10).reduce<Move[]>((acc) => {
-      return [
-        ...acc,
-        {
-          sourceVialIndex: 0,
-          targetVialIndex: 1,
-          colorsToPour: 1,
-        } satisfies Move,
-      ];
-    }, []);
+    const solutionPath: Move[] = Array.from({ length: 10 }, () => ({
+      sourceVialIndex: 0,
+      targetVialIndex: 1,
+      colorsToPour: 1,
+    }));
 
     const evaluation = evaluateLevel(state, solutionPath);
 
