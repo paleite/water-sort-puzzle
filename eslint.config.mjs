@@ -52,6 +52,7 @@ export default defineConfig([
           ],
         },
         tsconfigRootDir: import.meta.dirname,
+        tsconfig: "tsconfig.json",
       },
     },
   },
@@ -92,8 +93,8 @@ export default defineConfig([
       "react/function-component-definition": [
         "warn",
         {
-          namedComponents: "arrow-function",
-          unnamedComponents: "arrow-function",
+          namedComponents: "function-declaration",
+          unnamedComponents: "function-expression",
         },
       ],
       "react/jsx-sort-props": [
