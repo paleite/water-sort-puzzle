@@ -21,6 +21,7 @@ const indexOfLastColorVialInPuzzle = (puzzle: VialState) => {
     if (vial.length > 0) {
       return index;
     }
+
     return acc;
   }, -1);
 };

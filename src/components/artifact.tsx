@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-
 // import Image from "next/image";
 import { ArrowRight, Award, RefreshCw, Undo } from "lucide-react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -36,6 +36,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -117,6 +118,7 @@ class SeededRandom {
   // Random number between 0 and 1 (exclusive)
   next(): number {
     const x = Math.sin(this.seed++) * 10000;
+
     return x - Math.floor(x);
   }
 
@@ -142,6 +144,7 @@ class SeededRandom {
         }
       }
     }
+
     return result;
   }
 }
@@ -943,6 +946,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     if (a.length > 0 && b.length === 0) {
       return -1;
     }
+
     // Otherwise maintain current order
     return 0;
   });
@@ -1269,6 +1273,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
         vialIndicesWithColor.sort((a, b) => {
           const countA = state[a]?.filter((c) => c === color).length || 0;
           const countB = state[b]?.filter((c) => c === color).length || 0;
+
           return countB - countA;
         });
 
@@ -1463,6 +1468,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
                 const color = vial.pop();
                 if (color !== undefined) {
                   targetVial.push(color);
+
                   return; // Successfully scrambled
                 }
               }

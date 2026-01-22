@@ -22,6 +22,7 @@ export class SeededRandom {
   next(): number {
     // Simple LCG implementation
     this.seed = (this.seed * 16807) % 2147483647;
+
     return this.seed / 2147483647;
   }
 

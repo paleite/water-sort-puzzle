@@ -7,6 +7,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -26,6 +27,7 @@ export function countTopSegmentsOfSameColor(vial: Vial, color: Color): number {
       break;
     }
   }
+
   return count;
 }
 
@@ -213,6 +215,7 @@ export function wouldCompleteVial(state: GameState, move: Move): boolean {
 
     // Check if all segments in target vial (including those to be poured) are the same color
     const targetColors = new Set([...targetVial.segments, topColor]);
+
     return targetColors.size === 1;
   }
 

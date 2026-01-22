@@ -6,6 +6,7 @@ function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
     throw new TypeError(message);
   }
+
   return value;
 }
 
@@ -127,6 +128,7 @@ export class GameState {
 
   clone(): GameState {
     const newVials = this.vials.map((vial) => vial.clone());
+
     return new GameState(newVials, this.colorCount, this.emptyVialCount);
   }
 }

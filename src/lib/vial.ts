@@ -31,6 +31,7 @@ export class Vial {
     if (firstColor === undefined) {
       throw new TypeError("Expected a top segment color in a full vial.");
     }
+
     return this.segments.every((segment) => segment === firstColor);
   }
 
@@ -42,6 +43,7 @@ export class Vial {
     if (topColor === undefined) {
       throw new TypeError("Expected a top segment color in a non-empty vial.");
     }
+
     return topColor;
   }
 
@@ -52,6 +54,7 @@ export class Vial {
   clone(): Vial {
     const newVial = new Vial(this.capacity);
     newVial.segments = [...this.segments];
+
     return newVial;
   }
 }

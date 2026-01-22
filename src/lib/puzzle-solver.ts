@@ -34,6 +34,7 @@ export function solvePuzzle(
       console.log(
         `Solver timed out after exploring ${statesExplored.toString()} states (pruned ${statesPruned.toString()}).`,
       );
+
       return { solved: false, path: null, timedOut: true };
     }
 
@@ -50,6 +51,7 @@ export function solvePuzzle(
       console.log(
         `Found solution after exploring ${statesExplored.toString()} states (pruned ${statesPruned.toString()}).`,
       );
+
       return { solved: true, path, timedOut: false };
     }
 
