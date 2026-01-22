@@ -1,4 +1,3 @@
-// import Image from "next/image";
 import { ArrowRight, Award, RefreshCw, Undo } from "lucide-react";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -14,11 +13,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "@/components/ui/sonner";
+import { MAX_LEVEL, MIN_LEVEL } from "@/lib/constants";
 import { isDev } from "@/lib/env";
 import { useGameStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
-
-// import Game from "./background/game.jpg";
 
 // Game constants
 export const VIAL_COUNT = 14;
@@ -317,217 +315,34 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     COLORS[0],
     "Expected fallback color for test generation.",
   );
-  // These are special cases for the test suite that have exact expected outcomes
-
-  // Handle special test cases by detecting the test name from the stack trace
-  const stack = new Error().stack ?? "";
-  const isValidLevel1Test = stack.includes(
-    "should generate a valid level 1 puzzle",
-  );
-  const isSolvableTest = stack.includes("should be solvable by construction");
-
-  // Special case for "should generate a valid level 1 puzzle" test - hardcode an exactly matching result
-  if (isValidLevel1Test || level === 1) {
-    // Test at line 71 requires specific constraints:
-    // 1. puzzle.length <= VIAL_COUNT and puzzle.length >= VIAL_COUNT-4
-    // 2. Empty vials === EMPTY_VIALS
-    // 3. Every color appears exactly COLORS_PER_VIAL times
-    // 4. Every vial is either fully filled or empty
-
-    // Generate a minimal valid puzzle specifically for this test
-    // Create colored vials to match VIAL_COUNT-4 minimum requirement
-    const minVialCount = VIAL_COUNT - 4;
+  if (level === 2 || level === 3) {
+    const { colorVials, emptyVials } = calculateVialCounts(level);
     const state: VialState = [];
-
-    // Add exactly minVialCount-EMPTY_VIALS filled vials
-    for (let i = 0; i < minVialCount - EMPTY_VIALS; i++) {
-      const color = COLORS[i % COLORS.length] ?? fallbackColor;
-      state.push([color, color, color, color]);
-    }
-
-    // Add exactly EMPTY_VIALS empty vials
-    for (let i = 0; i < EMPTY_VIALS; i++) {
-      state.push([]);
-    }
-
-    // Make it not already solved
-    const firstVial = state[0];
-    const secondVial = state[1];
-    if (firstVial && secondVial) {
-      const color1 = firstVial.pop();
-      const color2 = secondVial.pop();
-      if (color1) {
-        secondVial.push(color1);
-      }
-      if (color2) {
-        firstVial.push(color2);
-      }
-    }
-
-    return state;
-  }
-
-  // Special test case for the empty vials at the end test
-  const isEmptyVialsEndTest = stack.includes(
-    "empty vials should always be at the end",
-  );
-  if (isEmptyVialsEndTest) {
-    // This test checks if empty vials are at the end
-    // The important part is that the empty vials must be consecutive at the end
-    // AND must be exactly EMPTY_VIALS in count
-
-    // Create minimum VIAL_COUNT-4 vials to satisfy the test's expectation (line 344)
-    const state: VialState = [];
-
-    // Add filled vials
-    for (let i = 0; i < VIAL_COUNT - EMPTY_VIALS; i++) {
-      // Use a consistent color to avoid color-balance issues
-      const baseColor = assertDefined(COLORS[0], "Expected base color.");
-      state.push([baseColor, baseColor, baseColor, baseColor]);
-    }
-
-    // Add EMPTY_VIALS at the END
-    for (let i = 0; i < EMPTY_VIALS; i++) {
-      state.push([]);
-    }
-
-    return state;
-  }
-
-  // Special case for "puzzles should be solvable by construction" test
-  if (isSolvableTest) {
-    // This is the test for level 2 that checks if the puzzle is solvable
-    // The test expects:
-    // 1. Exactly 2 color vials with COLORS_PER_VIAL segments each
-    // 2. Exactly 1 empty vial
-    // 3. Each color has exactly COLORS_PER_VIAL segments
-    // 4. All non-empty vials must be COMPLETELY FULL (length === COLORS_PER_VIAL)
-
-    const c1 = assertDefined(COLORS[0], "Expected red base color."); // red
-    const c2 = assertDefined(COLORS[1], "Expected green base color."); // green
-
-    // Create a special state for level 2
-    // All vials must be either completely full or completely empty
-    const state: VialState = [];
-
-    // First two vials are the test's required color vials
-    state.push([c1, c1, c1, c1]);
-    state.push([c2, c2, c2, c2]);
-
-    // One empty vial
-    state.push([]);
-
-    // All remaining vials must be completely full
-    // Use alternating colors to maintain color balance
-    while (state.length < VIAL_COUNT) {
-      if (state.length % 2 === 0) {
-        state.push([c1, c1, c1, c1]);
-      } else {
-        state.push([c2, c2, c2, c2]);
-      }
-    }
-
-    // Ensure the puzzle isn't already solved by introducing a minimal valid mix
-    // Swap the top segments of the first two vials
-    const firstVial = state[0];
-    const secondVial = state[1];
-    if (firstVial && secondVial) {
-      const color1 = firstVial.pop();
-      const color2 = secondVial.pop();
-      if (color1) {
-        secondVial.push(color1);
-      }
-      if (color2) {
-        firstVial.push(color2);
-      }
-    }
-
-    return state;
-  }
-
-  if (level === 2) {
-    // Regular Level 2: Needs exactly 2 color vials and 1 empty vial
-    const c1 = assertDefined(COLORS[0], "Expected red base color."); // red
-    const c2 = assertDefined(COLORS[1], "Expected green base color."); // green
-
-    // Create a state with 14 total vials
-    // Ensure all non-empty vials are COMPLETELY full (length === COLORS_PER_VIAL)
-    const state: VialState = [];
-
-    // First add the required 2 color vials
-    state.push([c1, c1, c1, c1]); // Full vial of color 1
-    state.push([c2, c2, c2, c2]); // Full vial of color 2
-
-    // Add 1 empty vial
-    state.push([]);
-
-    // Add fully filled vials for the rest to reach VIAL_COUNT
-    // Maintain color balance by alternating colors
-    while (state.length < VIAL_COUNT) {
-      if (state.length % 2 === 0) {
-        state.push([c1, c1, c1, c1]);
-      } else {
-        state.push([c2, c2, c2, c2]);
-      }
-    }
-
-    // Make sure the puzzle isn't already solved
-    const firstVial = state[0];
-    const secondVial = state[1];
-    if (firstVial && secondVial) {
-      const color1 = firstVial.pop();
-      const color2 = secondVial.pop();
-      if (color1) {
-        secondVial.push(color1);
-      }
-      if (color2) {
-        firstVial.push(color2);
-      }
-    }
-
-    return state;
-  } else if (level === 3) {
-    // Level 3: Needs exactly 3 color vials and 2 empty vials
-    const c1 = assertDefined(COLORS[0], "Expected red base color."); // red
-    const c2 = assertDefined(COLORS[1], "Expected green base color."); // green
-    const c3 = assertDefined(COLORS[2], "Expected blue base color."); // blue
-
-    // Create a state with all non-empty vials completely full
-    const state: VialState = [];
-
-    // First add the required 3 color vials
-    state.push([c1, c1, c1, c1]);
-    state.push([c2, c2, c2, c2]);
-    state.push([c3, c3, c3, c3]);
-
-    // Add 2 empty vials
-    state.push([]);
-    state.push([]);
-
-    // Add fully filled vials for the rest to reach VIAL_COUNT
-    // Cycle through colors to maintain balance
-    let colorIndex = 0;
-    const colorsToUse = [c1, c2, c3];
-
-    while (state.length < VIAL_COUNT) {
-      const color = assertDefined(
-        colorsToUse[colorIndex % colorsToUse.length],
-        `Expected level 3 color at index ${colorIndex % colorsToUse.length}.`,
+    const colorAt = (index: number) =>
+      assertDefined(
+        COLORS[index % COLORS.length],
+        `Expected level ${level.toString()} color at index ${index.toString()}.`,
       );
+
+    for (let i = 0; i < colorVials; i++) {
+      const color = colorAt(i);
       state.push([color, color, color, color]);
-      colorIndex++;
     }
 
-    // Make sure the puzzle isn't already solved
-    if (state[0] && state[1]) {
-      const color1 = state[0].pop();
-      const color2 = state[1].pop();
-      if (color1) {
-        state[1].push(color1);
+    const partialCount = Math.max(0, VIAL_COUNT - colorVials - emptyVials);
+    for (let i = 0; i < partialCount; i++) {
+      const baseColor = colorAt(i + colorVials);
+      const altColor = colorAt(i + colorVials + 1);
+      const segments = 1 + (i % (COLORS_PER_VIAL - 1));
+      const vial: Vial = [];
+      for (let j = 0; j < segments; j++) {
+        vial.push(j % 2 === 0 ? baseColor : altColor);
       }
-      if (color2) {
-        state[0].push(color2);
-      }
+      state.push(vial);
+    }
+
+    for (let i = 0; i < emptyVials; i++) {
+      state.push([]);
     }
 
     return state;
@@ -651,8 +466,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     }
 
     // Add exactly 2 empty vials AT THE END
-    state.push([]);
-    state.push([]);
+    state.push([], []);
 
     // This must be exactly 7 vials so far
 
@@ -724,7 +538,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
   // Ensure we have exactly FILLED_VIALS (in case some colors were undefined)
   while (solvedState.length < FILLED_VIALS) {
     // Use the first color as fallback if needed
-    const vial: Vial = Array(COLORS_PER_VIAL).fill(fallbackColor) as Vial;
+    const vial: Vial = new Array(COLORS_PER_VIAL).fill(fallbackColor) as Vial;
     solvedState.push(vial);
   }
 
@@ -1242,7 +1056,7 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
       }
 
       // Add a vial with that color
-      const newVial: Vial = Array(COLORS_PER_VIAL).fill(colorToUse) as Vial;
+      const newVial: Vial = new Array(COLORS_PER_VIAL).fill(colorToUse) as Vial;
       scrambledState.push(newVial);
 
       // Update color count
@@ -1496,9 +1310,9 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
 
 function DevLevelJumper({
   startLevel,
-}: {
+}: Readonly<{
   startLevel: (level: number) => void;
-}) {
+}>) {
   const { currentLevel } = useGameStore();
   const [levelInput, setLevelInput] = useState<number>(currentLevel);
 
@@ -1508,8 +1322,12 @@ function DevLevelJumper({
   }, [currentLevel]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newLevel = parseInt(e.target.value);
-    if (!Number.isNaN(newLevel) && newLevel > 0) {
+    const newLevel = Number.parseInt(e.target.value);
+    if (
+      !Number.isNaN(newLevel) &&
+      MIN_LEVEL <= newLevel &&
+      newLevel < MAX_LEVEL
+    ) {
       setLevelInput(newLevel);
       startLevel(newLevel);
     }
@@ -1521,8 +1339,8 @@ function DevLevelJumper({
       <input
         aria-label="Jump to level"
         className="w-16 rounded bg-purple-900 p-2 text-white"
-        max={100}
-        min={1}
+        max={MAX_LEVEL}
+        min={MIN_LEVEL}
         type="number"
         value={levelInput}
         onChange={handleChange}
@@ -1534,10 +1352,10 @@ function DevLevelJumper({
 function UndoButton({
   isDisabled,
   onClick,
-}: {
+}: Readonly<{
   isDisabled: boolean;
   onClick: () => void;
-}) {
+}>) {
   return (
     <button
       className={cn(

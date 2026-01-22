@@ -104,7 +104,7 @@ function generateSolvablePuzzle(): PuzzleData {
   while (!valid) {
     const vials: Vial[] = [];
     for (let i = 0; i < NUMBER_OF_COLORS; i++) {
-      vials.push(Array(VIAL_CAPACITY).fill(COLORS[i]));
+      vials.push(new Array(VIAL_CAPACITY).fill(COLORS[i]));
     }
     for (let i = 0; i < EMPTY_VIALS; i++) {
       vials.push([]);
@@ -122,7 +122,8 @@ function generateSolvablePuzzle(): PuzzleData {
         continue;
       }
       if (
-        lastMove?.fromVialIndex === toIndex &&
+        lastMove !== null &&
+        lastMove.fromVialIndex === toIndex &&
         lastMove.toVialIndex === fromIndex
       ) {
         continue;

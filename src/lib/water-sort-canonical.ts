@@ -35,7 +35,7 @@ export type MoveList = readonly Move[];
 
 export type PuzzleJson = Readonly<{
   capacity: number;
-  empty_token: EmptyToken;
+  empty_token: string;
   vials: readonly (readonly SlotToken[])[];
 }>;
 

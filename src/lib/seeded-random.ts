@@ -9,7 +9,8 @@ export class SeededRandom {
     if (typeof seed === "string") {
       let hash = 0;
       for (let i = 0; i < seed.length; i++) {
-        hash = (hash << 5) - hash + seed.codePointAt(i);
+        const codePoint = seed.codePointAt(i) ?? 0;
+        hash = (hash << 5) - hash + codePoint;
         hash |= 0; // Convert to integer
       }
       this.seed = hash;

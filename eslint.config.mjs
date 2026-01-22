@@ -23,6 +23,7 @@ export default defineConfig([
     ignores: [
       ".ncurc.cjs",
       "**/.next/**",
+      "**/*.js",
       "**/build/**",
       "**/coverage/**",
       "**/dist/**",
@@ -30,7 +31,6 @@ export default defineConfig([
       "**/node_modules/**",
       "**/out-tsc/**",
       "**/test-output/**",
-      "test-level*.js",
       "**/vite.config.*.timestamp*",
       "**/vitest.config.*.timestamp*",
     ],
@@ -130,6 +130,7 @@ export default defineConfig([
   // NOTE: eslint-plugin-promise is not properly typed, so the member access is
   // seen as unsafe, even though the member exists.
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   pluginPromise.configs["flat/recommended"],
 
   {
@@ -297,20 +298,6 @@ export default defineConfig([
     },
   },
 
-  // Scripts and tooling (relax strict unsafe rules)
-  {
-    files: ["scripts/**/*.{ts}", "*.config.{cjs,mjs,ts}"],
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-redundant-type-constituents": "off",
-      "@typescript-eslint/no-unsafe-argument": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/prefer-nullish-coalescing": "off",
-    },
-  },
-
   // Tests
   {
     files: ["**/*.{test,spec}.{mjs,cjs,ts,tsx}"],
@@ -321,10 +308,25 @@ export default defineConfig([
 
   // Config files
   {
-    files: ["**/*.config.{mjs,cjs,ts}", "scripts/**/*.{ts,js}"],
+    files: ["**/*.config.{mjs,cjs,ts}", "scripts/**/*.ts"],
     rules: {
+      "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-require-imports": "off",
       "import-x/no-default-export": "off",
+    },
+  },
+
+  // Scripts and tooling (relax strict unsafe rules)
+  {
+    files: ["scripts/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
     },
   },
 

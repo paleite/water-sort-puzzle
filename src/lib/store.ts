@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
+import { MAX_LEVEL, MIN_LEVEL } from "./constants";
+
 type GameState = {
   currentLevel: number;
   highestLevel: number;
@@ -11,10 +13,10 @@ type GameState = {
 export const useGameStore = create<GameState>()(
   persist(
     (set) => ({
-      currentLevel: 1,
-      highestLevel: 1,
+      currentLevel: MIN_LEVEL,
+      highestLevel: MAX_LEVEL,
       setCurrentLevel: (level: number) => {
-        set({ currentLevel: level });
+        set({ currentLevel: Math.max(MIN_LEVEL, Math.min(level, MAX_LEVEL)) });
       },
       incrementHighestLevel: () => {
         set((state) => ({

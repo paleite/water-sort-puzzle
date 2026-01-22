@@ -118,7 +118,7 @@ function forceMixSolvedVials(state: GameState): GameState {
     return vial.segments.at(-1);
   });
 
-  if (tops.some((top) => top === undefined)) {
+  if (tops.every((top) => top !== undefined)) {
     return nextState;
   }
 
@@ -453,7 +453,7 @@ function generateLevelFilename(): string {
       return 0;
     }
 
-    return parseInt(match[1], 10);
+    return Number.parseInt(match[1], 10);
   });
 
   // Find the highest number

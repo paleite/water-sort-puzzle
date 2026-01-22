@@ -117,6 +117,10 @@ export function solvePuzzle(
     }
   }
 
+  if (initialState.vials[0]?.capacity !== 4) {
+    return solvePuzzleWithoutHeuristics(initialState, timeoutMs, maxSteps);
+  }
+
   const startTime = Date.now();
 
   // Initialize BFS queue with the initial state
@@ -258,4 +262,53 @@ export function solvePuzzle(
     path: null,
     timedOut: statesExplored >= maxSteps,
   };
+}
+
+function solvePuzzleWithoutHeuristics(
+  initialState: GameState,
+  timeoutMs: number,
+  maxSteps: number,
+): {
+  solved: boolean;
+  path: Move[] | null;
+  timedOut: boolean;
+} {
+  const startTime = Date.now();
+  const queue: { state: GameState; path: Move[] }[] = [
+    { state: initialState, path: [] },
+  ];
+  const visited = new Set<string>();
+  visited.add(initialState.getStateHash());
+
+  let statesExplored = 0;
+
+  while (queue.length > 0 && statesExplored < maxSteps) {
+    if (Date.now() - startTime > timeoutMs) {
+      return { solved: false, path: null, timedOut: true };
+    }
+
+    const current = queue.shift();
+    if (!current) {
+      break;
+    }
+
+    const { state, path } = current;
+    statesExplored++;
+
+    if (state.isComplete()) {
+      return { solved: true, path, timedOut: false };
+    }
+
+    const moves = state.getAvailableMoves();
+    for (const move of moves) {
+      const newState = state.applyMove(move);
+      const stateHash = newState.getStateHash();
+      if (!visited.has(stateHash)) {
+        visited.add(stateHash);
+        queue.push({ state: newState, path: [...path, move] });
+      }
+    }
+  }
+
+  return { solved: false, path: null, timedOut: statesExplored >= maxSteps };
 }

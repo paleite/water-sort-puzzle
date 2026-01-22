@@ -24,15 +24,17 @@ export class Vial {
     if (this.isEmpty()) {
       return true;
     }
-    if (!this.isFull()) {
-      return false;
-    }
     const firstColor = this.segments[0];
     if (firstColor === undefined) {
-      throw new TypeError("Expected a top segment color in a full vial.");
+      throw new TypeError("Expected a top segment color in a vial.");
     }
 
-    return this.segments.every((segment) => segment === firstColor);
+    const allSame = this.segments.every((segment) => segment === firstColor);
+    if (!allSame) {
+      return false;
+    }
+
+    return this.isFull() || this.capacity <= 2;
   }
 
   getTopColor(): Color | null {

@@ -899,12 +899,12 @@ function generateLevelFilename(): string {
 
   // Extract numbers from filenames
   const levelNumbers = existingLevels.map((filename: string) => {
-    const match = filename.match(/level-(\d+)\.json/);
+    const match = new RegExp(/level-(\d+)\.json/).exec(filename);
     if (!match?.[1]) {
       return 0;
     }
 
-    return parseInt(match[1], 10);
+    return Number.parseInt(match[1], 10);
   });
 
   // Find the highest number
