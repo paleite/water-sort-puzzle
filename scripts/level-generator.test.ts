@@ -6,7 +6,7 @@
 
 import fs from "fs";
 import path from "path";
-import { expect, describe, test, beforeEach, afterEach } from "bun:test";
+import { expect, describe, test, beforeEach, afterEach } from "vitest";
 
 // Define color type
 type Color = string;
