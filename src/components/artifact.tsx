@@ -23,13 +23,13 @@ import { cn } from "@/lib/utils";
 // Game constants
 export const VIAL_COUNT = 14;
 export const COLORS_PER_VIAL = 4;
-export const EMPTY_VIALS = 2;
-export const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
-export const MAX_GENERATION_ATTEMPTS = 10;
-export const GENERATION_TIMEOUT_MS = 10000;
+const EMPTY_VIALS = 2;
+const FILLED_VIALS = VIAL_COUNT - EMPTY_VIALS;
+const MAX_GENERATION_ATTEMPTS = 10;
+const GENERATION_TIMEOUT_MS = 10000;
 
 // Define types
-export type Vial = string[]; // A vial is an array of colors (strings)
+type Vial = string[]; // A vial is an array of colors (strings)
 export type VialState = Vial[]; // The game state is an array of vials
 
 // Game state enum
@@ -44,7 +44,7 @@ const GAME_STATE = {
 type GameStateType = (typeof GAME_STATE)[keyof typeof GAME_STATE];
 
 // Define colors for our liquid layers (12 distinct colors with improved contrast)
-export const COLORS = [
+const COLORS = [
   "#FF3030", // bright red
   "#3AE12E", // lime green
   "#347BFF", // bright blue
@@ -77,8 +77,30 @@ const EMOJIS = {
   // 13: "💡", // light bulb
 } as const;
 
+export function calculateVialCounts(level: number) {
+  // Calculate number of color vials based on level
+  let colorVials;
+  if (level === 2) {
+    colorVials = 2;
+  } else if (level <= 5) {
+    colorVials = level;
+  } else if (level <= 10) {
+    colorVials = 5 + Math.floor((level - 5) / 2);
+  } else {
+    colorVials = Math.min(7 + Math.floor((level - 10) / 10), 9);
+  }
+
+  // Calculate number of empty vials
+  const emptyVials = level === 2 ? 1 : 2;
+
+  // Total vials
+  const totalVials = colorVials + emptyVials;
+
+  return { colorVials, emptyVials, totalVials };
+}
+
 // Simple seeded random number generator for deterministic level generation
-export class SeededRandom {
+class SeededRandom {
   seed: number;
 
   constructor(seed: number) {
@@ -122,7 +144,7 @@ export class SeededRandom {
 /**
  * Check if the puzzle is solved
  */
-export function isSolvedState(vialState: VialState): boolean {
+function isSolvedState(vialState: VialState): boolean {
   // Count how many vials are properly sorted (single color or empty)
   let sortedVials = 0;
 
@@ -148,7 +170,7 @@ export function isSolvedState(vialState: VialState): boolean {
 /**
  * Validate that a vial state has correct color counts and is solvable
  */
-export function validateVials(vialState: VialState): boolean {
+function validateVials(vialState: VialState): boolean {
   // Count colors
   const colorCounts: Record<string, number> = {};
   let totalSegments = 0;
@@ -198,7 +220,7 @@ export function validateVials(vialState: VialState): boolean {
 /**
  * Check if a move is valid
  */
-export function isValidMove(
+function isValidMove(
   fromIndex: number,
   toIndex: number,
   vialState: VialState,
@@ -250,7 +272,7 @@ export function isValidMove(
  * Execute a move between vials (pour liquid)
  * Returns a new vial state or null if the move is invalid
  */
-export function executeMove(
+function executeMove(
   fromIndex: number,
   toIndex: number,
   vialState: VialState,
@@ -380,8 +402,12 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     if (state[0] && state[1]) {
       const color1 = state[0].pop();
       const color2 = state[1].pop();
-      if (color1) state[1].push(color1);
-      if (color2) state[0].push(color2);
+      if (color1) {
+        state[1].push(color1);
+      }
+      if (color2) {
+        state[0].push(color2);
+      }
     }
 
     return state;
@@ -456,8 +482,12 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     if (state[0] && state[1]) {
       const color1 = state[0].pop();
       const color2 = state[1].pop();
-      if (color1) state[1].push(color1);
-      if (color2) state[0].push(color2);
+      if (color1) {
+        state[1].push(color1);
+      }
+      if (color2) {
+        state[0].push(color2);
+      }
     }
 
     return state;
@@ -493,8 +523,12 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     if (state[0] && state[1]) {
       const color1 = state[0].pop();
       const color2 = state[1].pop();
-      if (color1) state[1].push(color1);
-      if (color2) state[0].push(color2);
+      if (color1) {
+        state[1].push(color1);
+      }
+      if (color2) {
+        state[0].push(color2);
+      }
     }
 
     return state;
@@ -531,8 +565,12 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
     if (state[0] && state[1]) {
       const color1 = state[0].pop();
       const color2 = state[1].pop();
-      if (color1) state[1].push(color1);
-      if (color2) state[0].push(color2);
+      if (color1) {
+        state[1].push(color1);
+      }
+      if (color2) {
+        state[0].push(color2);
+      }
     }
 
     return state;
@@ -568,7 +606,9 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
   } else if (level === 10) {
     // Level 10: Needs exactly 7 color vials and 2 empty vials
     const c = [...COLORS]; // Make a copy so we can extend if needed
-    while (c.length < 7) c.push(c[0] || "#FF0000");
+    while (c.length < 7) {
+      c.push(c[0] || "#FF0000");
+    }
 
     // Create a state with 14 total vials
     const state: VialState = [
@@ -598,7 +638,9 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
   } else if (level === 31) {
     // Level 31: Needs exactly 9 color vials and 2 empty vials
     const c = [...COLORS]; // Make a copy so we can extend if needed
-    while (c.length < 9) c.push(c[0] || "#FF0000");
+    while (c.length < 9) {
+      c.push(c[0] || "#FF0000");
+    }
 
     // Create a state with 14 total vials
     const state: VialState = [
@@ -663,8 +705,12 @@ export function generatePuzzle(level: number, attempts: number = 0): VialState {
       const colorA = state[0].pop();
       const colorB = state[1].pop();
 
-      if (colorA) state[1].push(colorA);
-      if (colorB) state[0].push(colorB);
+      if (colorA) {
+        state[1].push(colorA);
+      }
+      if (colorB) {
+        state[0].push(colorB);
+      }
     }
 
     return state;
@@ -1957,4 +2003,6 @@ function WaterSortGame() {
   );
 }
 
-export { WaterSortGame };
+{
+  WaterSortGame;
+}
