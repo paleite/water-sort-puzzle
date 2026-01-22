@@ -34,11 +34,21 @@ type ChartPayload = {
   payload?: Record<string, unknown>;
 };
 
+type ChartTooltipFormatter = (
+  value: ChartValue,
+  name: ChartName,
+  item: ChartPayload,
+  index: number,
+  payload: ChartPayload[],
+) => React.ReactNode;
+
 type ChartTooltipProps = Omit<
   TooltipProps<ChartValue, ChartName>,
-  "payload"
+  "payload" | "formatter" | "labelFormatter"
 > & {
   payload?: ChartPayload[];
+  formatter?: ChartTooltipFormatter;
+  labelFormatter?: (label: unknown, payload: ChartPayload[]) => React.ReactNode;
 };
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
@@ -223,8 +233,8 @@ const ChartTooltipContent = React.forwardRef<
               ? item.payload
               : undefined;
             const payloadFill =
-              typeof payloadRecord?.fill === "string"
-                ? payloadRecord.fill
+              typeof payloadRecord?.["fill"] === "string"
+                ? payloadRecord["fill"]
                 : undefined;
             const indicatorColor =
               color ?? payloadFill ?? item.color ?? "currentColor";
@@ -237,8 +247,10 @@ const ChartTooltipContent = React.forwardRef<
                   indicator === "dot" && "items-center",
                 )}
               >
-                {formatter && item.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
+                {formatter &&
+                item.value !== undefined &&
+                item.name !== undefined ? (
+                  formatter(item.value, item.name, item, index, payload ?? [])
                 ) : (
                   <>
                     {itemConfig?.icon ? (
@@ -367,8 +379,8 @@ function getPayloadConfigFromPayload(
     return undefined;
   }
 
-  const payloadPayload = isRecord(payload.payload)
-    ? payload.payload
+  const payloadPayload = isRecord(payload["payload"])
+    ? payload["payload"]
     : undefined;
 
   let configLabelKey: string = key;

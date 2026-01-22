@@ -168,7 +168,7 @@ export function getTopColorAndRunLength(vial: Vial): {
   }
 
   const topToken = vial[topIndex];
-  if (topToken === EMPTY_TOKEN) {
+  if (topToken === undefined || topToken === EMPTY_TOKEN) {
     return { color: null, runLength: 0, topIndex: null };
   }
 
@@ -203,7 +203,11 @@ export function getDestinationTopColor(vial: Vial): ColorToken | null {
   }
 
   const token = vial[topIndex];
-  return token === EMPTY_TOKEN ? null : token;
+  if (token === undefined || token === EMPTY_TOKEN) {
+    return null;
+  }
+
+  return token;
 }
 
 export function canPour(
@@ -258,8 +262,11 @@ export function applyPour(
     );
   }
 
-  const { color: sourceColor, runLength, topIndex } =
-    getTopColorAndRunLength(source);
+  const {
+    color: sourceColor,
+    runLength,
+    topIndex,
+  } = getTopColorAndRunLength(source);
   if (sourceColor === null || topIndex === null) {
     throw new Error(
       `Illegal pour: source empty after canPour check. ${sourceIndex} -> ${destinationIndex}`,
@@ -446,7 +453,11 @@ export function solveShortestBfs(startState: State): SolveResult {
   moveByKey.set(startKey, null);
 
   while (queueReadIndex < queue.length) {
-    const currentState = queue[queueReadIndex++];
+    const currentState = queue[queueReadIndex];
+    if (!currentState) {
+      throw new Error("Queue state missing during BFS traversal.");
+    }
+    queueReadIndex++;
     const currentKey = encodeState(currentState);
 
     const legalMoves = generateLegalMoves(currentState);
@@ -483,7 +494,7 @@ function reconstructMoves(
 
   while (cursorKey !== null) {
     const move = moveByKey.get(cursorKey) ?? null;
-    const parentKey = parentKeyByKey.get(cursorKey) ?? null;
+    const parentKey: string | null = parentKeyByKey.get(cursorKey) ?? null;
 
     if (move !== null) {
       reversed.push(move);
