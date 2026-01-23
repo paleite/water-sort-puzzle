@@ -808,7 +808,7 @@ function generatePredecessors(
   capacity: number,
 ): PredecessorCandidate[] {
   const candidates: PredecessorCandidate[] = [];
-  const stateKey = encodeState(state);
+  const encodedTargetState = encodeState(state);
 
   for (let sourceIndex = 0; sourceIndex < state.length; sourceIndex++) {
     for (let targetIndex = 0; targetIndex < state.length; targetIndex++) {
@@ -837,7 +837,14 @@ function generatePredecessors(
         continue;
       }
 
-      const maxMove = Math.min(runLength, sourceSpace);
+      const canEmptyTargetByRemovingWholeRun = runLength === targetVial.length;
+      const maxMove = Math.min(
+        sourceSpace,
+        canEmptyTargetByRemovingWholeRun ? runLength : runLength - 1,
+      );
+      if (maxMove <= 0) {
+        continue;
+      }
       for (let amount = 1; amount <= maxMove; amount++) {
         const predecessor = cloneState(state);
         const predecessorSource = assertDefined(
@@ -863,6 +870,14 @@ function generatePredecessors(
           continue;
         }
 
+        const predecessorTargetTop = getTopColor(predecessorTarget);
+        if (
+          predecessorTargetTop !== null &&
+          predecessorTargetTop !== targetTop
+        ) {
+          continue;
+        }
+
         const forward = applyMaximalPour(
           predecessor,
           sourceIndex,
@@ -873,7 +888,7 @@ function generatePredecessors(
           continue;
         }
 
-        if (encodeState(forward.state) !== stateKey) {
+        if (encodeState(forward.state) !== encodedTargetState) {
           continue;
         }
 
@@ -938,6 +953,23 @@ function pickCandidate(
   }
 
   return improving[0] ?? null;
+}
+
+function computeExplorationProbability(
+  options: GenerateLevelOptions,
+  stepIndex: number,
+  maxSteps: number,
+  stepsSinceBest: number,
+): number {
+  const explorationProbabilityStart = options.epsilonStart ?? 0.35;
+  const explorationProbabilityEnd = options.epsilonEnd ?? 0.05;
+  const progress = maxSteps <= 1 ? 1 : stepIndex / (maxSteps - 1);
+  const base =
+    explorationProbabilityStart +
+    (explorationProbabilityEnd - explorationProbabilityStart) * progress;
+  const plateauBoost = stepsSinceBest >= 10 ? 0.15 : 0;
+
+  return Math.min(0.9, base + plateauBoost);
 }
 
 function searchForNoSolvedVials(
@@ -1077,6 +1109,8 @@ type GenerateLevelOptions = {
   entropyThreshold?: number;
   beamWidth?: number;
   epsilon?: number;
+  epsilonStart?: number;
+  epsilonEnd?: number;
   attempts?: number;
   relaxEntropy?: boolean;
   relaxSolutionSteps?: boolean;
@@ -1099,7 +1133,8 @@ export default function generateEntropyReverseLevel(
     minimumSolutionSteps,
     entropyThreshold,
     beamWidth = 6,
-    epsilon = 0.15,
+    epsilonStart = 0.35,
+    epsilonEnd = 0.05,
     attempts = 20,
     relaxEntropy = true,
     relaxSolutionSteps = false,
@@ -1210,11 +1245,17 @@ export default function generateEntropyReverseLevel(
       );
 
       const allowPlateau = reverseMoves.length < attemptMinSteps;
+      const explorationProbability = computeExplorationProbability(
+        options,
+        step,
+        maxSteps,
+        stepsSinceBest,
+      );
       let nextCandidate = pickCandidate(
         candidates,
         rng,
         beamWidth,
-        epsilon,
+        explorationProbability,
         currentScore,
         phase,
         emptyVials,
@@ -1286,11 +1327,17 @@ export default function generateEntropyReverseLevel(
 
     if (bestReverseMoves.length === 0) {
       const candidates = generatePredecessors(current, vialHeight);
+      const fallbackExplorationProbability = computeExplorationProbability(
+        options,
+        0,
+        maxSteps,
+        stepsSinceBest,
+      );
       const fallback = pickCandidate(
         candidates,
         rng,
         beamWidth,
-        epsilon,
+        fallbackExplorationProbability,
         currentScore,
         phase,
         emptyVials,
@@ -1599,7 +1646,7 @@ function generateLevelFilename(): string {
 if (import.meta.main) {
   generateEntropyReverseLevel({
     seed: Date.now(),
-    colorCount: 6,
+    colorCount: 8,
     vialHeight: 4,
     emptyVials: 2,
     targetShuffleMoves: 35,
