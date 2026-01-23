@@ -102,13 +102,23 @@ export function solvePuzzle(
   initialState: GameState,
   timeoutMs: number = 5000,
   maxSteps: number = 1000,
+  options?: {
+    progress?: {
+      logEveryStates?: number;
+      logEveryMs?: number;
+    };
+    preferCanonical?: boolean;
+  },
 ): {
   solved: boolean;
   path: Move[] | null;
   timedOut: boolean;
 } {
+  const preferCanonical = options?.preferCanonical ?? true;
+  const progress = options?.progress;
+
   const canonicalState = toCanonicalState(initialState);
-  if (canonicalState) {
+  if (canonicalState && preferCanonical) {
     const solveResult = solveShortestBfs(canonicalState);
     if (solveResult.ok) {
       const path = canonicalMovesToMoves(initialState, solveResult.moves);
@@ -133,6 +143,10 @@ export function solvePuzzle(
   // Stats for debugging
   let statesExplored = 0;
   let statesPruned = 0;
+  let lastLogTime = Date.now();
+  let lastLogStates = 0;
+  const logEveryStates = progress?.logEveryStates ?? 2000;
+  const logEveryMs = progress?.logEveryMs ?? 1000;
 
   // BFS loop
   while (queue.length > 0 && statesExplored < maxSteps) {
@@ -152,6 +166,18 @@ export function solvePuzzle(
 
     const { state, path, lastMove } = current;
     statesExplored++;
+    if (progress) {
+      const now = Date.now();
+      const shouldLogStates = statesExplored - lastLogStates >= logEveryStates;
+      const shouldLogTime = now - lastLogTime >= logEveryMs;
+      if (shouldLogStates || shouldLogTime) {
+        console.log(
+          `Solver progress: explored ${statesExplored.toString()} states, queue ${queue.length.toString()}, depth ${path.length.toString()}.`,
+        );
+        lastLogTime = now;
+        lastLogStates = statesExplored;
+      }
+    }
 
     // Check if puzzle is solved
     if (state.isComplete()) {

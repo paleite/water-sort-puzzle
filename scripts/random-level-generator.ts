@@ -62,7 +62,7 @@ function breakSolvedVials(state: GameState, rng: SeededRandom): GameState {
       .filter(
         ({ vial, index }) =>
           index !== solvedIndex &&
-          vial.isFull() &&
+          !vial.isEmpty() &&
           vial.getTopColor() !== solvedTop,
       )
       .map(({ index }) => index);
@@ -118,7 +118,7 @@ function forceMixSolvedVials(state: GameState): GameState {
     return vial.segments.at(-1);
   });
 
-  if (tops.every((top) => top !== undefined)) {
+  if (tops.some((top) => top === undefined)) {
     return nextState;
   }
 
@@ -163,8 +163,25 @@ function generateRandomLevelCandidate(
   // Create a solved state with colorCount vials, each containing a unique color
   const initialState = createInitialState(colorCount, vialHeight, 0);
 
-  // Start with just 1 empty vial
-  let currentEmptyVials = 1;
+  if (maxEmptyVials < 2) {
+    throw new Error("maxEmptyVials must be at least 2.");
+  }
+
+  // Prefer starting at 3 empty vials, but never below 2.
+  const trialEmptyVials: number[] = [];
+  if (maxEmptyVials >= 3) {
+    for (let i = 3; i <= maxEmptyVials; i++) {
+      trialEmptyVials.push(i);
+    }
+  } else {
+    trialEmptyVials.push(2);
+  }
+
+  if (!trialEmptyVials.includes(2) && maxEmptyVials >= 2) {
+    trialEmptyVials.push(2);
+  }
+
+  let currentEmptyVials = trialEmptyVials[0] ?? 2;
   let solutionResult = null;
   let stateWithEmptyVials: GameState | undefined;
 
@@ -185,10 +202,15 @@ function generateRandomLevelCandidate(
       randomizedState = forceMixSolvedVials(randomizedState);
     }
 
-    currentEmptyVials = 1;
+    currentEmptyVials = trialEmptyVials[0] ?? 2;
     solutionResult = null;
 
-    while (currentEmptyVials <= maxEmptyVials && !solutionResult?.solved) {
+    for (const emptyVials of trialEmptyVials) {
+      if (solutionResult?.solved) {
+        break;
+      }
+
+      currentEmptyVials = emptyVials;
       console.log(
         `Attempting solution with ${currentEmptyVials} empty vials...`,
       );
@@ -204,19 +226,18 @@ function generateRandomLevelCandidate(
 
       if (solutionResult.timedOut) {
         console.log(`Solver timed out with ${currentEmptyVials} empty vials.`);
-      } else if (solutionResult.solved && solutionResult.path?.length) {
+      } else if (solutionResult.solved) {
+        const moveCount = solutionResult.path?.length ?? 0;
         console.log(
-          `Found solution with ${currentEmptyVials} empty vials. Solution length: ${solutionResult.path.length} moves.`,
+          `Found solution with ${currentEmptyVials} empty vials. Solution length: ${moveCount} moves.`,
         );
         break;
       } else {
         console.log(`No solution found with ${currentEmptyVials} empty vials.`);
       }
-
-      currentEmptyVials++;
     }
 
-    if (solutionResult?.solved && solutionResult.path?.length) {
+    if (solutionResult?.solved) {
       break;
     }
   }
@@ -224,12 +245,12 @@ function generateRandomLevelCandidate(
   let metrics = null;
 
   // Calculate metrics if we found a solution
-  if (solutionResult?.solved && solutionResult.path?.length) {
+  if (solutionResult?.solved) {
     const solvedState = assertDefined(
       stateWithEmptyVials,
       "Expected state with empty vials when computing metrics.",
     );
-    metrics = evaluateLevel(solvedState, solutionResult.path);
+    metrics = evaluateLevel(solvedState, solutionResult.path ?? []);
     console.log(
       `Level metrics: Entropy: ${metrics.entropy}, Fragmentation: ${metrics.fragmentation}, Difficulty: ${metrics.difficulty}`,
     );
@@ -243,10 +264,7 @@ function generateRandomLevelCandidate(
 
   return {
     state: finalState,
-    solutionMoves:
-      solutionResult?.solved && solutionResult.path?.length
-        ? solutionResult.path
-        : null,
+    solutionMoves: solutionResult?.solved ? (solutionResult.path ?? []) : null,
     emptyVials: currentEmptyVials,
     metrics,
   };
