@@ -1,3 +1,4 @@
+// @deprecated
 /**
  * Water Sort Puzzle Level Generator (Reverse-Shuffle Approach)
  *

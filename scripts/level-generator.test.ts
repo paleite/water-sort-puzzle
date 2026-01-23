@@ -100,8 +100,8 @@ function validateLevelFile(filePath: string): void {
   // Check that shuffledState has no partially filled vials
   validateNoPartialVials(levelData.shuffledState.vials);
 
-  // Check that shuffledState has no pre-solved vials
-  validateNoSolvedVials(levelData.shuffledState.vials);
+  // Check that shuffledState is not already solved
+  validateNoSolvedVials(levelData.shuffledState.vials, vialCapacity);
 
   // Check that solution moves are valid
   expect(Array.isArray(levelData.solutionMoves)).toBe(true);
@@ -156,23 +156,26 @@ function validateNoPartialVials(vials: any[]): void {
   }
 }
 
-function validateNoSolvedVials(vials: any[]): void {
-  // No vial in the shuffled state should be complete
+function validateNoSolvedVials(vials: any[], vialCapacity: number): void {
+  expect(isSolvedState(vials, vialCapacity)).toBe(false);
+}
+
+function isSolvedState(vials: any[], vialCapacity: number): boolean {
   for (const vial of vials) {
-    if (vial.segments.length === 0) {
+    const segments = vial.segments as Color[];
+    if (segments.length === 0) {
       continue;
     }
-
-    // Create mock vial to use isComplete method
-    const mockVial = new Vial(vial.segments.length);
-    mockVial.segments = [...vial.segments];
-
-    // Vial should not be complete (all same color)
-    const allSameColor = mockVial.segments.every(
-      (segment: Color) => segment === mockVial.segments[0],
-    );
-    expect(allSameColor && mockVial.isFull()).toBe(false);
+    if (segments.length !== vialCapacity) {
+      return false;
+    }
+    const first = segments[0];
+    if (!segments.every((segment) => segment === first)) {
+      return false;
+    }
   }
+
+  return true;
 }
 
 // Applies a solution to the shuffled state to verify it works
@@ -228,7 +231,9 @@ function applySolution(levelData: any): boolean {
 describe("Reverse-shuffle level generator", () => {
   test("Generated levels have valid structure", async () => {
     // Import the actual generator dynamically
-    const { default: generateLevel } = await import("./level-generator");
+    const { default: generateLevel } = await import(
+      "./entropy-reverse-generator"
+    );
 
     const outputPath = path.join(TEST_OUTPUT_DIR, "reverse-shuffle-level.json");
 
@@ -251,7 +256,9 @@ describe("Reverse-shuffle level generator", () => {
 
   test("Generated levels are solvable", async () => {
     // Import the actual generator dynamically
-    const { default: generateLevel } = await import("./level-generator");
+    const { default: generateLevel } = await import(
+      "./entropy-reverse-generator"
+    );
 
     const outputPath = path.join(TEST_OUTPUT_DIR, "solvable-level.json");
 
@@ -272,9 +279,34 @@ describe("Reverse-shuffle level generator", () => {
     expect(solvable).toBe(true);
   });
 
+  test("Generated levels are not already solved", async () => {
+    const { default: generateLevel } = await import(
+      "./entropy-reverse-generator"
+    );
+
+    const outputPath = path.join(TEST_OUTPUT_DIR, "unsolved-level.json");
+
+    generateLevel({
+      colorCount: 4,
+      vialHeight: 3,
+      emptyVials: 1,
+      targetShuffleMoves: 10,
+      outputPath,
+    });
+
+    const levelData = JSON.parse(fs.readFileSync(outputPath, "utf8"));
+    const vialCapacity = levelData.metadata.vialCapacity as number;
+
+    expect(isSolvedState(levelData.shuffledState.vials, vialCapacity)).toBe(
+      false,
+    );
+  });
+
   test("Generator handles different color counts", async () => {
     // Import the actual generator dynamically
-    const { default: generateLevel } = await import("./level-generator");
+    const { default: generateLevel } = await import(
+      "./entropy-reverse-generator"
+    );
 
     for (const colorCount of [3, 4, 5]) {
       const outputPath = path.join(

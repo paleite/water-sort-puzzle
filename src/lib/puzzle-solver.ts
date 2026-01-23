@@ -9,8 +9,8 @@ import {
   EMPTY_TOKEN,
   isColorToken,
   type MoveList,
+  solveHeuristicAStar,
   type SlotToken,
-  solveShortestBfs,
   type State,
   type Vial,
 } from "./water-sort-canonical";
@@ -119,7 +119,7 @@ export function solvePuzzle(
 
   const canonicalState = toCanonicalState(initialState);
   if (canonicalState && preferCanonical) {
-    const solveResult = solveShortestBfs(canonicalState);
+    const solveResult = solveHeuristicAStar(canonicalState);
     if (solveResult.ok) {
       const path = canonicalMovesToMoves(initialState, solveResult.moves);
 

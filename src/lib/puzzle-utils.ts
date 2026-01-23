@@ -6,7 +6,7 @@ import {
   EMPTY_TOKEN,
   isColorToken,
   type SlotToken,
-  solveShortestBfs,
+  solveHeuristicAStar,
   type State,
   type Vial as CanonicalVial,
 } from "./water-sort-canonical";
@@ -432,7 +432,7 @@ export function evaluateLevel(
   if (solutionSteps === 0 && !state.isComplete()) {
     const canonicalState = toCanonicalState(state);
     if (canonicalState) {
-      const result = solveShortestBfs(canonicalState);
+      const result = solveHeuristicAStar(canonicalState);
       if (result.ok) {
         solutionSteps = result.moveCount;
       }
