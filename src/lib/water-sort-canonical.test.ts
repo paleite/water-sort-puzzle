@@ -9,6 +9,7 @@ import {
   serializeStateToPuzzleJson,
   type SlotToken,
   SOLUTION_40_MOVES,
+  solveHeuristicAStar,
   solveShortestBfs,
   STARTING_PUZZLE_JSON,
   UNSOLVABLE_CANDIDATE_PREFIX,
@@ -114,6 +115,34 @@ describe("water-sort-canonical", () => {
     expect(result.ok).toBe(true);
     if (result.ok) {
       expect(result.moveCount).toBe(1);
+      const verification = verifyMoveList(state, result.moves);
+      expect(verification.ok).toBe(true);
+    }
+  });
+
+  it("solves the starting puzzle using heuristic A*", () => {
+    const state = parsePuzzleJsonToState(STARTING_PUZZLE_JSON);
+    const result = solveHeuristicAStar(state, {
+      heuristicWeight: 1.0,
+      maxExpandedStates: 600_000,
+    });
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      const verification = verifyMoveList(state, result.moves);
+      expect(verification.ok).toBe(true);
+    }
+  });
+
+  it("solves using Weighted A*", () => {
+    const state = parsePuzzleJsonToState(STARTING_PUZZLE_JSON);
+    const result = solveHeuristicAStar(state, {
+      heuristicWeight: 1.2,
+      maxExpandedStates: 600_000,
+    });
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
       const verification = verifyMoveList(state, result.moves);
       expect(verification.ok).toBe(true);
     }

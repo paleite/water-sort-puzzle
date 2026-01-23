@@ -533,6 +533,298 @@ function reconstructMoves(
   return reversed;
 }
 
+export type HeuristicSolveOptions = Readonly<{
+  /**
+   * 1.0 = standard A*
+   * >1.0 = Weighted A* (often faster, may return longer solutions)
+   */
+  heuristicWeight?: number;
+  /**
+   * Safety limit to prevent runaway searches on hard/unsolvable states.
+   */
+  maxExpandedStates?: number;
+}>;
+
+type AStarHeapNode = Readonly<{
+  estimatedTotalCost: number;
+  pathCost: number;
+  sequenceNumber: number;
+  encodedStateKey: string;
+  state: State;
+}>;
+
+class MinHeapPriorityQueue {
+  private heapNodes: AStarHeapNode[] = [];
+
+  public push(node: AStarHeapNode): void {
+    this.heapNodes.push(node);
+    this.bubbleUp(this.heapNodes.length - 1);
+  }
+
+  public pop(): AStarHeapNode | undefined {
+    if (this.heapNodes.length === 0) {
+      return undefined;
+    }
+
+    const rootNode = this.heapNodes[0];
+    const lastNode = this.heapNodes.pop();
+
+    if (this.heapNodes.length > 0 && lastNode) {
+      this.heapNodes[0] = lastNode;
+      this.bubbleDown(0);
+    }
+
+    return rootNode;
+  }
+
+  public get size(): number {
+    return this.heapNodes.length;
+  }
+
+  private bubbleUp(startIndex: number): void {
+    let childIndex = startIndex;
+
+    while (childIndex > 0) {
+      const parentIndex = Math.floor((childIndex - 1) / 2);
+
+      const childNode = this.heapNodes[childIndex];
+      const parentNode = this.heapNodes[parentIndex];
+
+      if (!childNode || !parentNode) {
+        return;
+      }
+
+      if (this.isHigherPriority(childNode, parentNode)) {
+        this.heapNodes[childIndex] = parentNode;
+        this.heapNodes[parentIndex] = childNode;
+        childIndex = parentIndex;
+      } else {
+        return;
+      }
+    }
+  }
+
+  private bubbleDown(startIndex: number): void {
+    let parentIndex = startIndex;
+
+    while (true) {
+      const leftChildIndex = parentIndex * 2 + 1;
+      const rightChildIndex = parentIndex * 2 + 2;
+
+      const parentNode = this.heapNodes[parentIndex];
+      const leftChildNode = this.heapNodes[leftChildIndex];
+      const rightChildNode = this.heapNodes[rightChildIndex];
+
+      if (!parentNode) {
+        return;
+      }
+
+      let smallestIndex = parentIndex;
+
+      if (
+        leftChildNode &&
+        this.isHigherPriority(leftChildNode, this.heapNodes[smallestIndex]!)
+      ) {
+        smallestIndex = leftChildIndex;
+      }
+
+      if (
+        rightChildNode &&
+        this.isHigherPriority(rightChildNode, this.heapNodes[smallestIndex]!)
+      ) {
+        smallestIndex = rightChildIndex;
+      }
+
+      if (smallestIndex !== parentIndex) {
+        const swapNode = this.heapNodes[smallestIndex]!;
+        this.heapNodes[smallestIndex] = parentNode;
+        this.heapNodes[parentIndex] = swapNode;
+        parentIndex = smallestIndex;
+      } else {
+        return;
+      }
+    }
+  }
+
+  private isHigherPriority(a: AStarHeapNode, b: AStarHeapNode): boolean {
+    if (a.estimatedTotalCost !== b.estimatedTotalCost) {
+      return a.estimatedTotalCost < b.estimatedTotalCost;
+    }
+    if (a.pathCost !== b.pathCost) {
+      return a.pathCost < b.pathCost;
+    }
+
+    return a.sequenceNumber < b.sequenceNumber;
+  }
+}
+
+function countColorRunsInVial(vial: Vial): number {
+  const nonEmptyTokens: string[] = [];
+  for (const token of vial) {
+    if (token !== EMPTY_TOKEN) {
+      nonEmptyTokens.push(token);
+    }
+  }
+
+  if (nonEmptyTokens.length === 0) {
+    return 0;
+  }
+
+  let runCount = 1;
+  for (let index = 1; index < nonEmptyTokens.length; index++) {
+    if (nonEmptyTokens[index] !== nonEmptyTokens[index - 1]) {
+      runCount += 1;
+    }
+  }
+
+  return runCount;
+}
+
+function calculateHeuristicScoreCombined(state: State): number {
+  let runsMinusOneSum = 0;
+  let mixedVialCount = 0;
+
+  for (const vial of state) {
+    const nonEmptyTokens = vial.filter((token) => token !== EMPTY_TOKEN);
+
+    if (nonEmptyTokens.length === 0) {
+      continue;
+    }
+
+    const runCount = countColorRunsInVial(vial);
+    if (runCount > 1) {
+      runsMinusOneSum += runCount - 1;
+    }
+
+    const isFullUniform =
+      nonEmptyTokens.length === 4 &&
+      nonEmptyTokens.every((token) => token === nonEmptyTokens[0]);
+
+    if (!isFullUniform) {
+      mixedVialCount += 1;
+    }
+  }
+
+  return runsMinusOneSum + mixedVialCount;
+}
+
+export function solveHeuristicAStar(
+  startState: State,
+  options?: HeuristicSolveOptions,
+): SolveResult {
+  const heuristicWeight = options?.heuristicWeight ?? 1.0;
+  const maxExpandedStates = options?.maxExpandedStates ?? 600_000;
+
+  if (!Number.isFinite(heuristicWeight) || heuristicWeight <= 0) {
+    return {
+      ok: false,
+      reason: `Invalid heuristicWeight=${String(heuristicWeight)}. Must be a finite number > 0.`,
+    };
+  }
+
+  if (!Number.isFinite(maxExpandedStates) || maxExpandedStates <= 0) {
+    return {
+      ok: false,
+      reason: `Invalid maxExpandedStates=${String(maxExpandedStates)}. Must be a finite number > 0.`,
+    };
+  }
+
+  if (isSolved(startState)) {
+    return { ok: true, moves: [], moveCount: 0 };
+  }
+
+  const openSet = new MinHeapPriorityQueue();
+  let nextSequenceNumber = 0;
+
+  const startKey = encodeState(startState);
+  const bestKnownPathCostByKey = new Map<string, number>();
+  bestKnownPathCostByKey.set(startKey, 0);
+
+  const parentKeyByKey = new Map<string, string | null>();
+  const moveByKey = new Map<string, Move | null>();
+  parentKeyByKey.set(startKey, null);
+  moveByKey.set(startKey, null);
+
+  const initialHeuristicScore = calculateHeuristicScoreCombined(startState);
+  openSet.push({
+    estimatedTotalCost: heuristicWeight * initialHeuristicScore,
+    pathCost: 0,
+    sequenceNumber: nextSequenceNumber++,
+    encodedStateKey: startKey,
+    state: startState,
+  });
+
+  let expandedStates = 0;
+
+  while (openSet.size > 0 && expandedStates < maxExpandedStates) {
+    const currentNode = openSet.pop();
+    if (!currentNode) {
+      break;
+    }
+
+    const bestKnownPathCost = bestKnownPathCostByKey.get(
+      currentNode.encodedStateKey,
+    );
+    if (
+      bestKnownPathCost === undefined ||
+      currentNode.pathCost !== bestKnownPathCost
+    ) {
+      continue;
+    }
+
+    expandedStates += 1;
+
+    if (isSolved(currentNode.state)) {
+      const moves = reconstructMoves(
+        parentKeyByKey,
+        moveByKey,
+        currentNode.encodedStateKey,
+      );
+
+      return { ok: true, moves, moveCount: moves.length };
+    }
+
+    const legalMoves = generateLegalMoves(currentNode.state);
+    for (const move of legalMoves) {
+      const [sourceIndex, destinationIndex] = move;
+      const nextState = applyPour(
+        currentNode.state,
+        sourceIndex,
+        destinationIndex,
+      );
+      const nextKey = encodeState(nextState);
+
+      const tentativePathCost = currentNode.pathCost + 1;
+      const previousBestPathCost = bestKnownPathCostByKey.get(nextKey);
+      if (
+        previousBestPathCost !== undefined &&
+        tentativePathCost >= previousBestPathCost
+      ) {
+        continue;
+      }
+
+      bestKnownPathCostByKey.set(nextKey, tentativePathCost);
+      parentKeyByKey.set(nextKey, currentNode.encodedStateKey);
+      moveByKey.set(nextKey, move);
+
+      const heuristicScore = calculateHeuristicScoreCombined(nextState);
+      openSet.push({
+        estimatedTotalCost:
+          tentativePathCost + heuristicWeight * heuristicScore,
+        pathCost: tentativePathCost,
+        sequenceNumber: nextSequenceNumber++,
+        encodedStateKey: nextKey,
+        state: nextState,
+      });
+    }
+  }
+
+  return {
+    ok: false,
+    reason: `Heuristic search stopped without reaching a solved state (expandedStates=${expandedStates.toString()}, maxExpandedStates=${maxExpandedStates.toString()}).`,
+  };
+}
+
 export function serializeMovesToJson(moves: MoveList): MovesJson {
   return moves.map((move) => [move[0], move[1]] as const);
 }
