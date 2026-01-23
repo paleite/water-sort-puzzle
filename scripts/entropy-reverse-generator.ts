@@ -33,6 +33,12 @@ type CandidateScore = Readonly<{
   runsMinusOne: number;
   uniformFullVials: number;
   solvedVials: number;
+  distinctColors: number;
+  topDiversity: number;
+  partialVials: number;
+  emptyVials: number;
+  adjacentDuplicates: number;
+  averageDistinctColors: number;
 }>;
 
 type PredecessorCandidate = Readonly<{
@@ -40,6 +46,8 @@ type PredecessorCandidate = Readonly<{
   move: Move;
   score: CandidateScore;
 }>;
+
+type GenerationPhase = "mix" | "pack";
 
 function assertDefined<T>(value: T | undefined, message: string): T {
   if (value === undefined) {
@@ -169,6 +177,37 @@ function countSolvedVials(state: LevelState, capacity: number): number {
   return solved;
 }
 
+function hasAdjacentDuplicates(state: LevelState): boolean {
+  for (const vial of state) {
+    if (vial.length <= 1) {
+      continue;
+    }
+    for (let i = 1; i < vial.length; i++) {
+      if (vial[i] === vial[i - 1]) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+function countAdjacentDuplicates(state: LevelState): number {
+  let duplicates = 0;
+  for (const vial of state) {
+    if (vial.length <= 1) {
+      continue;
+    }
+    for (let i = 1; i < vial.length; i++) {
+      if (vial[i] === vial[i - 1]) {
+        duplicates++;
+      }
+    }
+  }
+
+  return duplicates;
+}
+
 function isSolvedLevelState(state: LevelState, capacity: number): boolean {
   for (const vial of state) {
     if (vial.length === 0) {
@@ -249,8 +288,16 @@ function normalizeToFullOrEmpty(
   let lastColor: Color | null = null;
   while (arranged.length < segments.length) {
     const sorted = [...colorCounts.entries()].sort((a, b) => b[1] - a[1]);
+    const candidates = sorted.filter(([, count]) => count > 0);
     let picked: Color | null = null;
-    for (const [color, count] of sorted) {
+    const pickCount = Math.min(3, candidates.length);
+    const startIndex = pickCount > 0 ? rng.nextInt(0, pickCount) : 0;
+    for (let offset = 0; offset < candidates.length; offset++) {
+      const entry = candidates[(startIndex + offset) % candidates.length];
+      if (!entry) {
+        continue;
+      }
+      const [color, count] = entry;
       if (count <= 0) {
         continue;
       }
@@ -307,6 +354,159 @@ function normalizeToFullOrEmpty(
   return normalized;
 }
 
+function buildHighEntropyFullState(
+  state: LevelState,
+  capacity: number,
+  emptyVials: number,
+  rng: SeededRandom,
+): LevelState {
+  const segments: Color[] = [];
+  for (const vial of state) {
+    segments.push(...vial);
+  }
+
+  const totalVials = state.length;
+  const fullVials = Math.max(0, totalVials - emptyVials);
+  const vials: LevelState = Array.from({ length: fullVials }, () => []);
+
+  const remaining = new Map<Color, number>();
+  for (const color of segments) {
+    remaining.set(color, (remaining.get(color) ?? 0) + 1);
+  }
+
+  const presenceByColor = new Map<Color, number>();
+
+  for (let slot = 0; slot < capacity; slot++) {
+    for (let vialIndex = 0; vialIndex < fullVials; vialIndex++) {
+      const vial = vials[vialIndex];
+      if (!vial) {
+        continue;
+      }
+
+      const lastColor = vial[vial.length - 1] ?? null;
+      const candidates = [...remaining.entries()]
+        .filter(([, count]) => count > 0)
+        .map(([color, count]) => {
+          const presence = presenceByColor.get(color) ?? 0;
+          const penalty = color === lastColor ? 1 : 0;
+
+          return { color, count, presence, penalty };
+        })
+        .sort((a, b) => {
+          if (a.penalty !== b.penalty) {
+            return a.penalty - b.penalty;
+          }
+          if (a.presence !== b.presence) {
+            return a.presence - b.presence;
+          }
+          return b.count - a.count;
+        });
+
+      const pickCount = Math.min(3, candidates.length);
+      const pick = candidates[rng.nextInt(0, pickCount)] ?? candidates[0];
+      if (!pick) {
+        continue;
+      }
+
+      vial.push(pick.color);
+      remaining.set(pick.color, (remaining.get(pick.color) ?? 1) - 1);
+      presenceByColor.set(
+        pick.color,
+        (presenceByColor.get(pick.color) ?? 0) + 1,
+      );
+    }
+  }
+
+  while (vials.length < totalVials) {
+    vials.push([]);
+  }
+
+  return vials;
+}
+
+function buildNoAdjacentFullState(
+  state: LevelState,
+  capacity: number,
+  emptyVials: number,
+  rng: SeededRandom,
+  maxAttempts: number,
+): LevelState | null {
+  const segments: Color[] = [];
+  for (const vial of state) {
+    segments.push(...vial);
+  }
+
+  const totalVials = state.length;
+  const fullVials = Math.max(0, totalVials - emptyVials);
+  if (fullVials <= 0) {
+    return null;
+  }
+
+  const colorCounts = new Map<Color, number>();
+  for (const color of segments) {
+    colorCounts.set(color, (colorCounts.get(color) ?? 0) + 1);
+  }
+
+  const colors = [...colorCounts.keys()];
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const remaining = new Map<Color, number>(colorCounts);
+    const vials: LevelState = Array.from({ length: fullVials }, () => []);
+
+    let failed = false;
+    for (let vialIndex = 0; vialIndex < fullVials; vialIndex++) {
+      const vial = vials[vialIndex];
+      if (!vial) {
+        failed = true;
+        break;
+      }
+      let lastColor: Color | null = null;
+      for (let slot = 0; slot < capacity; slot++) {
+        const candidates = colors.filter((color) => {
+          const count = remaining.get(color) ?? 0;
+          if (count <= 0) {
+            return false;
+          }
+          return color !== lastColor;
+        });
+
+        if (candidates.length === 0) {
+          failed = true;
+          break;
+        }
+
+        const pick = candidates[rng.nextInt(0, candidates.length)];
+        if (!pick) {
+          failed = true;
+          break;
+        }
+
+        vial.push(pick);
+        remaining.set(pick, (remaining.get(pick) ?? 1) - 1);
+        lastColor = pick;
+      }
+
+      if (failed) {
+        break;
+      }
+    }
+
+    if (failed) {
+      continue;
+    }
+
+    while (vials.length < totalVials) {
+      vials.push([]);
+    }
+
+    if (!hasAdjacentDuplicates(vials)) {
+      return vials;
+    }
+  }
+
+  return null;
+}
+
 function calculateEntropyScore(
   state: LevelState,
   capacity: number,
@@ -314,16 +514,34 @@ function calculateEntropyScore(
   let runsMinusOne = 0;
   let mixedVials = 0;
   let uniformFullVials = 0;
+  let distinctColors = 0;
+  let topDiversity = 0;
+  let partialVials = 0;
+  let emptyVials = 0;
+  let adjacentDuplicates = 0;
+  let totalVials = 0;
   const colorDistribution = new Map<Color, number>();
+  const topColors = new Set<Color>();
 
   for (const vial of state) {
     if (vial.length === 0) {
+      emptyVials++;
       continue;
     }
+    totalVials++;
+    if (vial.length < capacity) {
+      partialVials++;
+    }
 
+    distinctColors += new Set(vial).size;
     const runCount = countColorRuns(vial);
     if (runCount > 1) {
       runsMinusOne += runCount - 1;
+    }
+    for (let i = 1; i < vial.length; i++) {
+      if (vial[i] === vial[i - 1]) {
+        adjacentDuplicates++;
+      }
     }
 
     const isFullUniform =
@@ -332,6 +550,11 @@ function calculateEntropyScore(
       mixedVials++;
     } else {
       uniformFullVials++;
+    }
+
+    const topColor = vial[vial.length - 1];
+    if (topColor) {
+      topColors.add(topColor);
     }
 
     const vialColors = new Set(vial);
@@ -347,9 +570,25 @@ function calculateEntropyScore(
     }
   }
 
-  const entropy = runsMinusOne + mixedVials + dispersion;
+  topDiversity = topColors.size;
+  const averageDistinctColors =
+    totalVials > 0 ? distinctColors / totalVials : 0;
+  const entropy =
+    runsMinusOne +
+    mixedVials +
+    dispersion +
+    topDiversity +
+    averageDistinctColors;
   const score =
-    dispersion * 3 + runsMinusOne * 2 + mixedVials * 2 - uniformFullVials;
+    dispersion * 5 +
+    distinctColors * 5 +
+    averageDistinctColors * 6 +
+    topDiversity * 3 +
+    runsMinusOne * 3 +
+    mixedVials * 2 -
+    uniformFullVials * 4 -
+    partialVials -
+    adjacentDuplicates * 5;
 
   return {
     score,
@@ -359,21 +598,209 @@ function calculateEntropyScore(
     runsMinusOne,
     uniformFullVials,
     solvedVials: countSolvedVials(state, capacity),
+    distinctColors,
+    topDiversity,
+    partialVials,
+    emptyVials,
+    adjacentDuplicates,
+    averageDistinctColors,
   };
 }
 
-function isBetterScore(a: CandidateScore, b: CandidateScore): boolean {
-  if (a.score !== b.score) {
-    return a.score > b.score;
-  }
-  if (a.solvedVials !== b.solvedVials) {
-    return a.solvedVials < b.solvedVials;
-  }
-  if (a.entropy !== b.entropy) {
-    return a.entropy > b.entropy;
+function scoreForPhase(
+  score: CandidateScore,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+): number {
+  if (phase === "mix") {
+    return score.score;
   }
 
-  return a.dispersion > b.dispersion;
+  const emptyDistance = Math.abs(score.emptyVials - targetEmptyVials);
+  return (
+    -emptyDistance * 12 -
+    score.partialVials * 10 +
+    score.dispersion * 3 +
+    score.topDiversity * 2 +
+    score.runsMinusOne -
+    score.uniformFullVials * 2 -
+    score.adjacentDuplicates * 6
+  );
+}
+
+function isBetterScoreForPhase(
+  a: CandidateScore,
+  b: CandidateScore,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+): boolean {
+  const scoreA = scoreForPhase(a, phase, targetEmptyVials);
+  const scoreB = scoreForPhase(b, phase, targetEmptyVials);
+  if (scoreA !== scoreB) {
+    return scoreA > scoreB;
+  }
+
+  if (phase === "mix") {
+    if (a.entropy !== b.entropy) {
+      return a.entropy > b.entropy;
+    }
+    if (a.averageDistinctColors !== b.averageDistinctColors) {
+      return a.averageDistinctColors > b.averageDistinctColors;
+    }
+    if (a.dispersion !== b.dispersion) {
+      return a.dispersion > b.dispersion;
+    }
+    if (a.topDiversity !== b.topDiversity) {
+      return a.topDiversity > b.topDiversity;
+    }
+    if (a.adjacentDuplicates !== b.adjacentDuplicates) {
+      return a.adjacentDuplicates < b.adjacentDuplicates;
+    }
+    return a.solvedVials < b.solvedVials;
+  }
+
+  if (a.partialVials !== b.partialVials) {
+    return a.partialVials < b.partialVials;
+  }
+  if (a.adjacentDuplicates !== b.adjacentDuplicates) {
+    return a.adjacentDuplicates < b.adjacentDuplicates;
+  }
+  const emptyDistanceA = Math.abs(a.emptyVials - targetEmptyVials);
+  const emptyDistanceB = Math.abs(b.emptyVials - targetEmptyVials);
+  if (emptyDistanceA !== emptyDistanceB) {
+    return emptyDistanceA < emptyDistanceB;
+  }
+
+  if (a.dispersion !== b.dispersion) {
+    return a.dispersion > b.dispersion;
+  }
+
+  return a.topDiversity > b.topDiversity;
+}
+
+function shuffleInPlace<T>(items: T[], rng: SeededRandom): void {
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = rng.nextInt(0, i + 1);
+    const temp = items[i];
+    items[i] = items[j];
+    items[j] = temp;
+  }
+}
+
+function sortCandidatesForPhase(
+  candidates: PredecessorCandidate[],
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+): PredecessorCandidate[] {
+  return [...candidates].sort((a, b) => {
+    if (
+      isBetterScoreForPhase(a.score, b.score, phase, targetEmptyVials) &&
+      !isBetterScoreForPhase(b.score, a.score, phase, targetEmptyVials)
+    ) {
+      return -1;
+    }
+    if (
+      isBetterScoreForPhase(b.score, a.score, phase, targetEmptyVials) &&
+      !isBetterScoreForPhase(a.score, b.score, phase, targetEmptyVials)
+    ) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
+function isBetterScore(
+  a: CandidateScore,
+  b: CandidateScore,
+  targetEmptyVials: number,
+): boolean {
+  return isBetterScoreForPhase(a, b, "mix", targetEmptyVials);
+}
+
+function isImprovement(
+  candidate: CandidateScore,
+  current: CandidateScore,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+): boolean {
+  return isBetterScoreForPhase(candidate, current, phase, targetEmptyVials);
+}
+
+function isNotWorseForPhase(
+  candidate: CandidateScore,
+  current: CandidateScore,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+): boolean {
+  const candidateScore = scoreForPhase(candidate, phase, targetEmptyVials);
+  const currentScore = scoreForPhase(current, phase, targetEmptyVials);
+
+  if (candidateScore < currentScore) {
+    return false;
+  }
+
+  if (phase === "mix") {
+    return candidate.entropy >= current.entropy;
+  }
+
+  return candidate.partialVials <= current.partialVials;
+}
+
+function isPhaseReady(
+  score: CandidateScore,
+  phase: GenerationPhase,
+  entropyThreshold: number,
+): boolean {
+  if (phase === "mix") {
+    return score.entropy >= entropyThreshold;
+  }
+
+  return score.partialVials === 0;
+}
+
+function isPackComplete(
+  score: CandidateScore,
+  entropyThreshold: number,
+  targetEmptyVials: number,
+): boolean {
+  return (
+    score.entropy >= entropyThreshold &&
+    score.partialVials === 0 &&
+    score.emptyVials === targetEmptyVials &&
+    score.adjacentDuplicates === 0
+  );
+}
+
+function selectImprovingCandidate(
+  candidates: PredecessorCandidate[],
+  rng: SeededRandom,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+  currentScore: CandidateScore,
+  allowPlateau: boolean,
+): PredecessorCandidate | null {
+  if (candidates.length === 0) {
+    return null;
+  }
+
+  const pool = [...candidates];
+  shuffleInPlace(pool, rng);
+  const sorted = sortCandidatesForPhase(pool, phase, targetEmptyVials);
+  for (const candidate of sorted) {
+    const isCandidateOk = allowPlateau
+      ? isNotWorseForPhase(
+          candidate.score,
+          currentScore,
+          phase,
+          targetEmptyVials,
+        )
+      : isImprovement(candidate.score, currentScore, phase, targetEmptyVials);
+    if (isCandidateOk) {
+      return candidate;
+    }
+  }
+
+  return null;
 }
 
 function generatePredecessors(
@@ -473,33 +900,33 @@ function pickCandidate(
   beamWidth: number,
   epsilon: number,
   currentScore: CandidateScore,
+  phase: GenerationPhase,
+  targetEmptyVials: number,
+  allowPlateau: boolean,
 ): PredecessorCandidate | null {
   if (candidates.length === 0) {
     return null;
   }
 
-  const sorted = [...candidates].sort((a, b) => {
-    if (a.score.score !== b.score.score) {
-      return b.score.score - a.score.score;
-    }
-    if (a.score.solvedVials !== b.score.solvedVials) {
-      return a.score.solvedVials - b.score.solvedVials;
-    }
-    if (a.score.entropy !== b.score.entropy) {
-      return b.score.entropy - a.score.entropy;
-    }
-
-    return b.score.dispersion - a.score.dispersion;
-  });
+  const shuffled = [...candidates];
+  shuffleInPlace(shuffled, rng);
+  const sorted = sortCandidatesForPhase(shuffled, phase, targetEmptyVials);
 
   const beam = sorted.slice(0, beamWidth);
   if (beam.length === 0) {
     return null;
   }
 
-  const improving = beam.filter((candidate) =>
-    isBetterScore(candidate.score, currentScore),
-  );
+  const improving = beam.filter((candidate) => {
+    return allowPlateau
+      ? isNotWorseForPhase(
+          candidate.score,
+          currentScore,
+          phase,
+          targetEmptyVials,
+        )
+      : isImprovement(candidate.score, currentScore, phase, targetEmptyVials);
+  });
 
   if (improving.length === 0) {
     return null;
@@ -646,14 +1073,17 @@ type GenerateLevelOptions = {
   vialHeight?: number;
   emptyVials?: number;
   targetShuffleMoves?: number;
+  minimumSolutionSteps?: number;
   entropyThreshold?: number;
   beamWidth?: number;
   epsilon?: number;
   attempts?: number;
   relaxEntropy?: boolean;
+  relaxSolutionSteps?: boolean;
   allowPartialVials?: boolean;
   maxDurationMs?: number;
   maximizeEntropy?: boolean;
+  plateauLimit?: number;
   outputPath?: string;
 };
 
@@ -666,20 +1096,27 @@ export default function generateEntropyReverseLevel(
     vialHeight = 4,
     emptyVials = 2,
     targetShuffleMoves = 25,
+    minimumSolutionSteps,
     entropyThreshold,
     beamWidth = 6,
     epsilon = 0.15,
     attempts = 20,
     relaxEntropy = true,
+    relaxSolutionSteps = false,
     allowPartialVials = false,
     maxDurationMs = 120000,
     maximizeEntropy = false,
+    plateauLimit = 25,
     outputPath,
   } = options;
 
   const maxSteps = Math.max(targetShuffleMoves, colorCount * 2);
   const threshold =
     entropyThreshold ?? Math.max(1, Math.floor(colorCount * vialHeight * 0.6));
+  const minSolutionSteps = Math.max(
+    1,
+    minimumSolutionSteps ?? Math.floor(targetShuffleMoves * 0.7),
+  );
 
   const initialState = createInitialState(colorCount, vialHeight, emptyVials);
   const solvedState = buildSolvedState(colorCount, vialHeight, emptyVials);
@@ -700,21 +1137,34 @@ export default function generateEntropyReverseLevel(
     if (Date.now() - startedAt > maxDurationMs) {
       break;
     }
+    if (Date.now() - startedAt > maxDurationMs * 0.7) {
+      break;
+    }
+    const attemptStartedAt = Date.now();
     const attemptSeed =
       typeof seed === "number" ? seed + attempt : `${seed}-${attempt}`;
     const rng = new SeededRandom(attemptSeed);
     const attemptThreshold = relaxEntropy
       ? Math.max(1, threshold - attempt)
       : threshold;
+    const attemptMinSteps = relaxSolutionSteps
+      ? Math.max(1, minSolutionSteps - attempt)
+      : minSolutionSteps;
+
+    console.log(
+      `Attempt ${attempt + 1}/${attempts} seed=${attemptSeed} entropy>=${attemptThreshold} minSteps>=${attemptMinSteps}`,
+    );
 
     let current = solvedState;
     let currentScore = calculateEntropyScore(current, vialHeight);
+    let phase: GenerationPhase = "mix";
     let bestState = current;
     let bestScore = currentScore;
     let bestReverseMoves: Move[] = [];
     let bestNoSolvedState: LevelState | null = null;
     let bestNoSolvedScore: CandidateScore | null = null;
     let bestNoSolvedMoves: Move[] = [];
+    let stepsSinceBest = 0;
 
     const reverseMoves: Move[] = [];
     const visited = new Set<string>();
@@ -724,6 +1174,15 @@ export default function generateEntropyReverseLevel(
     for (let step = 0; step < maxSteps; step++) {
       if (Date.now() - startedAt > maxDurationMs) {
         break;
+      }
+      if (step > 0 && step % 10 === 0) {
+        console.log(
+          `  step=${step} phase=${phase} entropy=${currentScore.entropy.toFixed(
+            1,
+          )} score=${currentScore.score.toFixed(1)} solvedVials=${currentScore.solvedVials} partial=${currentScore.partialVials} empty=${currentScore.emptyVials} bestEntropy=${bestScore.entropy.toFixed(
+            1,
+          )}`,
+        );
       }
       const minLowerBound = Math.max(1, Math.floor(attemptThreshold * 0.5));
       const candidates = generatePredecessors(current, vialHeight).filter(
@@ -738,7 +1197,11 @@ export default function generateEntropyReverseLevel(
           ) {
             return false;
           }
-          if (!maximizeEntropy && candidate.score.entropy < minLowerBound) {
+          if (
+            phase === "mix" &&
+            !maximizeEntropy &&
+            candidate.score.entropy < minLowerBound
+          ) {
             return false;
           }
 
@@ -746,13 +1209,28 @@ export default function generateEntropyReverseLevel(
         },
       );
 
-      const nextCandidate = pickCandidate(
+      const allowPlateau = reverseMoves.length < attemptMinSteps;
+      let nextCandidate = pickCandidate(
         candidates,
         rng,
         beamWidth,
         epsilon,
         currentScore,
+        phase,
+        emptyVials,
+        allowPlateau,
       );
+
+      if (!nextCandidate) {
+        nextCandidate = selectImprovingCandidate(
+          candidates,
+          rng,
+          phase,
+          emptyVials,
+          currentScore,
+          allowPlateau,
+        );
+      }
 
       if (!nextCandidate) {
         break;
@@ -764,16 +1242,19 @@ export default function generateEntropyReverseLevel(
       visited.add(encodeState(current));
       lastMoveKey = `${nextCandidate.move.sourceVialIndex}->${nextCandidate.move.targetVialIndex}`;
 
-      if (isBetterScore(currentScore, bestScore)) {
+      if (isBetterScore(currentScore, bestScore, emptyVials)) {
         bestState = current;
         bestScore = currentScore;
         bestReverseMoves = [...reverseMoves];
+        stepsSinceBest = 0;
+      } else {
+        stepsSinceBest += 1;
       }
 
       if (currentScore.solvedVials === 0) {
         if (
           !bestNoSolvedScore ||
-          isBetterScore(currentScore, bestNoSolvedScore)
+          isBetterScore(currentScore, bestNoSolvedScore, emptyVials)
         ) {
           bestNoSolvedState = current;
           bestNoSolvedScore = currentScore;
@@ -781,11 +1262,24 @@ export default function generateEntropyReverseLevel(
         }
       }
 
-      const isReady = currentScore.entropy >= attemptThreshold;
-      if (isReady) {
-        bestState = current;
-        bestScore = currentScore;
-        bestReverseMoves = [...reverseMoves];
+      const phaseReady = isPhaseReady(currentScore, phase, attemptThreshold);
+      if (phase === "mix" && phaseReady) {
+        phase = "pack";
+      }
+
+      if (phase === "pack") {
+        if (
+          isPackComplete(currentScore, attemptThreshold, emptyVials) &&
+          reverseMoves.length >= attemptMinSteps
+        ) {
+          bestState = current;
+          bestScore = currentScore;
+          bestReverseMoves = [...reverseMoves];
+          break;
+        }
+      }
+
+      if (stepsSinceBest >= plateauLimit) {
         break;
       }
     }
@@ -798,6 +1292,9 @@ export default function generateEntropyReverseLevel(
         beamWidth,
         epsilon,
         currentScore,
+        phase,
+        emptyVials,
+        true,
       );
       if (fallback) {
         bestState = fallback.state;
@@ -847,6 +1344,37 @@ export default function generateEntropyReverseLevel(
       selectedMoves = [...selectedMoves, ...fixup.reverseMoves];
     }
 
+    if (hasAdjacentDuplicates(selectedState)) {
+      const goal = (state: LevelState) =>
+        !isSolvedLevelState(state, vialHeight) && !hasAdjacentDuplicates(state);
+      const fixup = searchForGoalState(selectedState, vialHeight, 600000, goal);
+      if (!fixup) {
+        continue;
+      }
+      selectedState = fixup.state;
+      selectedScore = calculateEntropyScore(selectedState, vialHeight);
+      selectedMoves = [...selectedMoves, ...fixup.reverseMoves];
+
+      if (hasPartialVials(selectedState, vialHeight)) {
+        const packGoal = (state: LevelState) =>
+          !isSolvedLevelState(state, vialHeight) &&
+          !hasPartialVials(state, vialHeight) &&
+          !hasAdjacentDuplicates(state);
+        const packFix = searchForGoalState(
+          selectedState,
+          vialHeight,
+          600000,
+          packGoal,
+        );
+        if (!packFix) {
+          continue;
+        }
+        selectedState = packFix.state;
+        selectedScore = calculateEntropyScore(selectedState, vialHeight);
+        selectedMoves = [...selectedMoves, ...packFix.reverseMoves];
+      }
+    }
+
     let finalState = selectedState;
     let solutionMoves = [...selectedMoves].reverse();
 
@@ -884,8 +1412,40 @@ export default function generateEntropyReverseLevel(
       vialHeight,
     );
 
-    const metrics = evaluateLevel(shuffledState, solutionMoves);
+    let metrics = evaluateLevel(shuffledState, solutionMoves);
+    if (metrics.entropy < attemptThreshold) {
+      const highEntropyState = buildHighEntropyFullState(
+        finalState,
+        vialHeight,
+        emptyVials,
+        rng,
+      );
+      const candidateGameState = toGameState(
+        highEntropyState,
+        colorCount,
+        emptyVials,
+        vialHeight,
+      );
+      const candidateSolution = solvePuzzle(candidateGameState, 20000, 100000);
+      if (candidateSolution.solved && candidateSolution.path) {
+        const candidateMetrics = evaluateLevel(
+          candidateGameState,
+          candidateSolution.path,
+        );
+        if (candidateMetrics.entropy > metrics.entropy) {
+          finalState = highEntropyState;
+          solutionMoves = candidateSolution.path;
+          metrics = candidateMetrics;
+        }
+      }
+    }
     if (metrics.entropy < attemptThreshold && !maximizeEntropy) {
+      continue;
+    }
+    if (solutionMoves.length < attemptMinSteps) {
+      continue;
+    }
+    if (hasAdjacentDuplicates(finalState)) {
       continue;
     }
 
@@ -920,8 +1480,62 @@ export default function generateEntropyReverseLevel(
     console.log(`- Entropy: ${metrics.entropy}`);
     console.log(`- Difficulty: ${metrics.difficulty}`);
     console.log(`- Solution steps: ${solutionMoves.length}`);
+    console.log(
+      `- Attempt time: ${((Date.now() - attemptStartedAt) / 1000).toFixed(1)}s`,
+    );
 
     return levelPath;
+  }
+
+  if (bestResult === null) {
+    const rng = new SeededRandom(seed);
+    const noAdjacentState = buildNoAdjacentFullState(
+      solvedState,
+      vialHeight,
+      emptyVials,
+      rng,
+      500,
+    );
+    if (noAdjacentState) {
+      const candidateGameState = toGameState(
+        noAdjacentState,
+        colorCount,
+        emptyVials,
+        vialHeight,
+      );
+      const candidateSolution = solvePuzzle(candidateGameState, 20000, 150000);
+      if (candidateSolution.solved && candidateSolution.path) {
+        const candidateMetrics = evaluateLevel(
+          candidateGameState,
+          candidateSolution.path,
+        );
+        if (candidateMetrics.entropy >= threshold) {
+          const levelJson = serializeLevel(
+            initialState,
+            candidateGameState,
+            candidateSolution.path,
+            candidateMetrics,
+          );
+          const levelPath = outputPath || generateLevelFilename();
+          const dir = path.dirname(levelPath);
+          if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+          }
+          fs.writeFileSync(levelPath, levelJson);
+          console.log(`Generated new level: ${levelPath}`);
+          console.log(`- Colors: ${colorCount}`);
+          console.log(`- Empty vials: ${emptyVials}`);
+          console.log(`- Vial height: ${vialHeight}`);
+          console.log(`- Entropy: ${candidateMetrics.entropy}`);
+          console.log(`- Difficulty: ${candidateMetrics.difficulty}`);
+          console.log(`- Solution steps: ${candidateSolution.path.length}`);
+          console.log(
+            `- Total time: ${((Date.now() - startedAt) / 1000).toFixed(1)}s`,
+          );
+          return levelPath;
+        }
+      }
+    }
   }
 
   if (bestResult) {
@@ -952,10 +1566,16 @@ export default function generateEntropyReverseLevel(
     console.log(`- Entropy: ${bestResult.metrics.entropy}`);
     console.log(`- Difficulty: ${bestResult.metrics.difficulty}`);
     console.log(`- Solution steps: ${bestResult.moves.length}`);
+    console.log(
+      `- Total time: ${((Date.now() - startedAt) / 1000).toFixed(1)}s`,
+    );
 
     return levelPath;
   }
 
+  console.log(
+    `Generation exhausted after ${((Date.now() - startedAt) / 1000).toFixed(1)}s without a valid level.`,
+  );
   console.error("Failed to generate a valid entropy-reverse level.");
   return null;
 }
@@ -982,6 +1602,13 @@ if (import.meta.main) {
     colorCount: 6,
     vialHeight: 4,
     emptyVials: 2,
-    targetShuffleMoves: 25,
+    targetShuffleMoves: 35,
+    minimumSolutionSteps: 15,
+    entropyThreshold: 18,
+    attempts: 40,
+    maxDurationMs: 120000,
+    beamWidth: 10,
+    relaxSolutionSteps: true,
+    relaxEntropy: true,
   });
 }
