@@ -1,9 +1,14 @@
 {
   "version": "0.2",
-  "ignorePaths": [],
-  "dictionaryDefinitions": [],
-  "dictionaries": [],
-  "words": [],
-  "ignoreWords": [],
-  "import": []
+  "language": "en",
+  "words": [
+    "waterSort",
+    "cocoa",
+    "confetti",
+    "GSAP",
+    "paleite",
+    "turbopack",
+    "xstate",
+    "yoyo"
+  ]
 }

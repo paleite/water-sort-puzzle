@@ -1,0 +1,20 @@
+export const GAME_TIMING = {
+  selectSeconds: 0.14,
+  pour: {
+    travelSeconds: 0.22,
+    tiltStartSeconds: 0.12,
+    tiltSeconds: 0.18,
+    streamStartSeconds: 0.24,
+    streamOpenSeconds: 0.06,
+    transferStartSeconds: 0.26,
+    transferSeconds: 0.3,
+    streamCloseSeconds: 0.56,
+    returnRotationSeconds: 0.58,
+    returnTravelSeconds: 0.62,
+    totalSeconds: 0.76,
+  },
+  undoSeconds: 0.24,
+  restartSeconds: 0.22,
+  completedVialSeconds: 0.26,
+  completionHoldSeconds: 0.25,
+} as const;

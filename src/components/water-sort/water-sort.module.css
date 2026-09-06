@@ -1,0 +1,177 @@
+.gameShell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background:
+    radial-gradient(circle at 50% 10%, rgb(255 255 255 / 0.92), transparent 42%),
+    linear-gradient(180deg, #eef8ff 0%, #e3f1fa 48%, #d8eaf4 100%);
+}
+
+.board {
+  --vial-width: clamp(43px, 11vw, 64px);
+  --vial-height: calc(var(--vial-width) * 2.72);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 0;
+  isolation: isolate;
+}
+
+.vialGrid {
+  display: grid;
+  grid-template-columns: repeat(5, var(--vial-width));
+  justify-content: center;
+  align-content: center;
+  gap: clamp(11px, 2.5vw, 20px) clamp(9px, 2vw, 18px);
+  width: min(100%, 760px);
+  padding: 22px 14px 34px;
+}
+
+@media (min-width: 700px) {
+  .vialGrid { grid-template-columns: repeat(7, var(--vial-width)); }
+}
+
+.vialButton {
+  position: relative;
+  width: var(--vial-width);
+  height: var(--vial-height);
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+  touch-action: manipulation;
+  transition: filter 120ms ease, box-shadow 120ms ease, transform 140ms ease;
+}
+
+.vialButton::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 15%;
+  width: 70%;
+  height: 8px;
+  border: 3px solid rgb(64 92 111 / 0.62);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.55);
+  z-index: 3;
+}
+
+.vialButton[data-selected="true"] { transform: translateY(-10px); }
+.vialButton:focus-visible {
+  border-radius: 999px;
+  box-shadow: 0 0 0 3px rgb(59 130 246 / 0.38);
+}
+
+.vialGlass {
+  position: absolute;
+  inset: 4px 2px 0;
+  overflow: hidden;
+  border: 3px solid rgb(64 92 111 / 0.58);
+  border-top: 0;
+  border-radius: 0 0 calc(var(--vial-width) * 0.46) calc(var(--vial-width) * 0.46);
+  background: linear-gradient(100deg, rgb(255 255 255 / 0.45), rgb(255 255 255 / 0.08) 35%, rgb(255 255 255 / 0.24));
+  box-shadow:
+    inset 8px 0 10px rgb(255 255 255 / 0.22),
+    inset -5px 0 9px rgb(18 69 92 / 0.06),
+    0 7px 12px rgb(30 82 105 / 0.09);
+}
+
+.liquidUnit {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  height: calc(100% / var(--capacity));
+  bottom: calc(var(--segment-index) * 100% / var(--capacity));
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--liquid-color), white 14%),
+    var(--liquid-color) 45%,
+    color-mix(in srgb, var(--liquid-color), black 7%));
+}
+
+.liquidSurface {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  height: 6px;
+  bottom: calc(var(--fill-ratio) * 100% - 3px);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--liquid-color), white 18%);
+  z-index: 2;
+}
+
+.incomingLiquid {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: calc(var(--incoming-bottom) * 100%);
+  height: calc(var(--incoming-height) * 100%);
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--liquid-color), white 14%),
+    var(--liquid-color) 45%,
+    color-mix(in srgb, var(--liquid-color), black 7%));
+  transform: scaleY(0);
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+.streamLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 15;
+}
+
+.home {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  background:
+    radial-gradient(circle at 50% 20%, #fff, #e7f4fb 46%, #d9ebf4 100%);
+}
+
+.homePanel {
+  width: min(100%, 520px);
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+}
+
+.homeTitle {
+  margin: 0;
+  font-size: clamp(2.7rem, 11vw, 4.8rem);
+  line-height: 0.88;
+  font-weight: 850;
+  letter-spacing: -0.07em;
+  text-align: center;
+  color: #19384a;
+}
+
+.homeHero {
+  --vial-width: 58px;
+  --vial-height: calc(var(--vial-width) * 2.72);
+  position: relative;
+  width: min(100%, 340px);
+  height: 230px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 28px;
+}
+
+.homeActions {
+  display: grid;
+  width: min(100%, 280px);
+  gap: 10px;
+}
+
+.levelGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
+  gap: 12px;
+}
