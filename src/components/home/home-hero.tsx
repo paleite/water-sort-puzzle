@@ -80,6 +80,8 @@ export function HomeHero() {
             sourceTransferredElements: sourceUnits.slice(-DEMO_MOVE.amount),
             sourceSurfaceElement:
               source.querySelector<HTMLElement>("[data-liquid-surface]"),
+            destinationSurfaceElement:
+              destination.querySelector<HTMLElement>("[data-liquid-surface]"),
             incomingLiquidElement:
               destination.querySelector<HTMLElement>("[data-incoming-liquid]"),
           },
@@ -94,7 +96,7 @@ export function HomeHero() {
         delayedPour.kill();
       };
     },
-    { scope: containerRef },
+    {scope: containerRef},
   );
 
   const isBeforePour = board === DEMO_BOARD;
