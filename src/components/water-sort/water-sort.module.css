@@ -142,6 +142,91 @@
   opacity: 0;
 }
 
+.debugOverlay {
+  position: fixed;
+  left: max(8px, env(safe-area-inset-left));
+  right: max(8px, env(safe-area-inset-right));
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 10000;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  max-height: min(38dvh, 320px);
+  overflow: hidden;
+  border: 1px solid rgb(137 211 255 / 0.34);
+  border-radius: 10px;
+  background: rgb(5 15 24 / 0.92);
+  box-shadow: 0 8px 30px rgb(0 0 0 / 0.3);
+  color: #dcf4ff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 10px;
+  line-height: 1.35;
+  backdrop-filter: blur(10px);
+}
+
+.debugOverlayCollapsed {
+  max-height: none;
+}
+
+.debugHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  min-height: 34px;
+  padding: 6px 8px;
+  border-bottom: 1px solid rgb(137 211 255 / 0.2);
+  background: rgb(11 29 42 / 0.95);
+}
+
+.debugOverlayCollapsed .debugHeader {
+  border-bottom: 0;
+}
+
+.debugPhase,
+.debugCount {
+  color: #9edcff;
+}
+
+.debugActions {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.debugActions button {
+  min-height: 24px;
+  padding: 2px 7px;
+  border: 1px solid rgb(158 220 255 / 0.32);
+  border-radius: 5px;
+  background: rgb(255 255 255 / 0.08);
+  color: inherit;
+  font: inherit;
+}
+
+.debugLogList {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px 8px 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.debugLogRow {
+  padding: 3px 0;
+  border-top: 1px solid rgb(255 255 255 / 0.06);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.debugLogRow:first-child {
+  border-top: 0;
+}
+
+.debugEmpty {
+  padding: 6px 0;
+  color: #8faebe;
+}
+
 .home {
   min-height: 100dvh;
   display: grid;
