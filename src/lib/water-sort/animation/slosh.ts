@@ -1,4 +1,4 @@
-import gsap from "gsap";
+import type gsap from "gsap";
 
 export interface SloshOptions {
   surfaceElement: HTMLElement;
