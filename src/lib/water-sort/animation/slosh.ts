@@ -1,4 +1,6 @@
-import type gsap from "gsap";
+import gsap from "gsap";
+
+type Timeline = ReturnType<typeof gsap.timeline>;
 
 export interface SloshOptions {
   surfaceElement: HTMLElement;
@@ -16,7 +18,7 @@ export interface SloshOptions {
  * small so the liquid still reads as stable rather than gelatinous.
  */
 export function addSourceSlosh(
-  timeline: gsap.core.Timeline,
+  timeline: Timeline,
   {
     surfaceElement,
     bottleRotationDegrees,
@@ -93,7 +95,7 @@ export function addSourceSlosh(
  * liquid settles. This is intentionally much smaller than the source slosh.
  */
 export function addDestinationSlosh(
-  timeline: gsap.core.Timeline,
+  timeline: Timeline,
   surfaceElement: HTMLElement,
   startSeconds: number,
 ): void {
