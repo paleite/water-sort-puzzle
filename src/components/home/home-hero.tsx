@@ -34,7 +34,7 @@ export function HomeHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const sourceRef = useRef<HTMLButtonElement>(null);
   const destinationRef = useRef<HTMLButtonElement>(null);
-  const streamRef = useRef<SVGLineElement>(null);
+  const streamRef = useRef<SVGPathElement>(null);
   const hasPlayedRef = useRef(false);
 
   useGSAP(
@@ -66,7 +66,7 @@ export function HomeHero() {
       });
 
       const delayedPour = gsap.delayedCall(0.62, () => {
-        stream.style.stroke = LIQUID_COLORS[DEMO_MOVE.color];
+        stream.style.fill = LIQUID_COLORS[DEMO_MOVE.color];
 
         createPourTimeline({
           elements: {
@@ -148,11 +148,7 @@ export function HomeHero() {
         className={styles.streamLayer}
         aria-hidden="true"
       >
-        <line
-          ref={streamRef}
-          strokeWidth="7"
-          strokeLinecap="round"
-        />
+        <path ref={streamRef} style={{opacity: 0}} />
       </svg>
     </div>
   );
