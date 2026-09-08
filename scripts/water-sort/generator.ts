@@ -45,6 +45,87 @@ export function createSolvedBoard(
   ];
 }
 
+export function isCleanGeneratedBoard(
+  board: Board,
+  capacity: number,
+  emptyVialCount: number,
+): boolean {
+  if (capacity <= 0 || emptyVialCount < 0 || emptyVialCount > board.length) {
+    return false;
+  }
+
+  let emptyCount = 0;
+  for (const vial of board) {
+    if (vial.length === 0) {
+      emptyCount += 1;
+      continue;
+    }
+    if (vial.length !== capacity) return false;
+  }
+
+  return emptyCount === emptyVialCount;
+}
+
+/**
+ * Normalize a reverse-generated candidate into the conventional starting shape:
+ * every playable vial is full and the configured spare vials are empty.
+ *
+ * Full vials are preserved verbatim. Only liquid from partial vials is repacked,
+ * in stable bottom-to-top / vial order, into the existing non-full slots. The
+ * independent A* verification that follows generation remains authoritative for
+ * solvability after this normalization step.
+ */
+export function cleanGeneratedBoard(
+  board: Board,
+  capacity: number,
+  emptyVialCount: number,
+): Board {
+  if (capacity <= 0) throw new Error("Capacity must be positive.");
+  if (emptyVialCount < 0 || emptyVialCount > board.length) {
+    throw new Error("Invalid empty vial count.");
+  }
+
+  const expectedUnitCount = (board.length - emptyVialCount) * capacity;
+  const actualUnitCount = board.reduce((sum, vial) => sum + vial.length, 0);
+  if (actualUnitCount !== expectedUnitCount) {
+    throw new Error(
+      `Cannot clean board with ${actualUnitCount} units; expected ${expectedUnitCount}.`,
+    );
+  }
+
+  const result: Board = board.map((vial) =>
+    vial.length === capacity ? [...vial] : [],
+  );
+  const nonFullIndices: number[] = [];
+  const partialUnits: ColorId[] = [];
+
+  board.forEach((vial, vialIndex) => {
+    if (vial.length === capacity) return;
+    nonFullIndices.push(vialIndex);
+    partialUnits.push(...vial);
+  });
+
+  if (partialUnits.length % capacity !== 0) {
+    throw new Error("Partial-vial unit count is not divisible by capacity.");
+  }
+
+  let unitOffset = 0;
+  for (const vialIndex of nonFullIndices) {
+    if (unitOffset >= partialUnits.length) break;
+    result[vialIndex] = partialUnits.slice(unitOffset, unitOffset + capacity);
+    unitOffset += capacity;
+  }
+
+  if (unitOffset !== partialUnits.length) {
+    throw new Error("Failed to repack all partial-vial liquid.");
+  }
+  if (!isCleanGeneratedBoard(result, capacity, emptyVialCount)) {
+    throw new Error("Generated board cleanup invariant failed.");
+  }
+
+  return result;
+}
+
 export function enumerateReversePredecessors(
   parentBoard: Board,
   capacity: number,
