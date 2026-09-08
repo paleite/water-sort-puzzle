@@ -68,24 +68,22 @@ export function HomeHero() {
       const delayedPour = gsap.delayedCall(0.62, () => {
         stream.style.stroke = LIQUID_COLORS[DEMO_MOVE.color];
 
-        const sourceUnits = Array.from(
-          source.querySelectorAll<HTMLElement>("[data-liquid-unit]"),
-        );
-
         createPourTimeline({
           elements: {
             sourceElement: source,
             destinationElement: destination,
             streamElement: stream,
-            sourceTransferredElements: sourceUnits.slice(-DEMO_MOVE.amount),
+            sourceLayerElements: Array.from(
+              source.querySelectorAll<SVGPathElement>("[data-source-liquid-layer]"),
+            ),
             sourceSurfaceElement:
-              source.querySelector<HTMLElement>("[data-liquid-surface]"),
-            incomingLiquidElement:
-              destination.querySelector<HTMLElement>("[data-incoming-liquid]"),
-            incomingSurfaceElement:
-              destination.querySelector<HTMLElement>("[data-incoming-surface]"),
-            impactPlumeElement:
-              destination.querySelector<HTMLElement>("[data-impact-plume]"),
+              source.querySelector<SVGPathElement>("[data-source-surface-path]"),
+            destinationLiquidElement:
+              destination.querySelector<SVGPathElement>("[data-destination-liquid-path]"),
+            destinationSurfaceElement:
+              destination.querySelector<SVGPathElement>("[data-destination-surface-path]"),
+            destinationBaseSurfaceElement:
+              destination.querySelector<HTMLElement>("[data-liquid-surface]"),
           },
           geometry: calculatePourGeometry(container, source, destination),
           move: DEMO_MOVE,
@@ -123,6 +121,16 @@ export function HomeHero() {
           capacity={4}
           vialIndex={index}
           interactive={false}
+          {...(
+            index === 0 && isBeforePour
+              ? {
+                  outgoing: {
+                    color: DEMO_MOVE.color,
+                    amount: DEMO_MOVE.amount,
+                  },
+                }
+              : {}
+          )}
           {...(
             index === 1 && isBeforePour
               ? {
