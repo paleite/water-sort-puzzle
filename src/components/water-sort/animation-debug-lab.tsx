@@ -29,6 +29,7 @@ import debugStyles from "./animation-debug.module.css";
 interface PourStageProps {
   scenario: AnimationDebugScenario;
   initialTimeSeconds: number;
+  committed?: boolean;
   onPresentationReady?: (presentation: PourPresentation | null) => void;
   onFrame?: (snapshot: PourPresentationSnapshot) => void;
 }
@@ -40,6 +41,7 @@ function formatNumber(value: number): string {
 function PourStage({
   scenario,
   initialTimeSeconds,
+  committed = false,
   onPresentationReady,
   onFrame,
 }: PourStageProps) {
@@ -48,6 +50,11 @@ function PourStage({
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
 
   useLayoutEffect(() => {
+    if (committed) {
+      onPresentationReady?.(null);
+      return;
+    }
+
     const boardElement = boardRef.current;
     const streamElement = streamRef.current;
     const sourceVialIndex = scenario.move.move.sourceVialIndex;
@@ -104,14 +111,16 @@ function PourStage({
       onPresentationReady?.(null);
       presentation.timeline.revert();
     };
-  }, [initialTimeSeconds, onFrame, onPresentationReady, scenario]);
+  }, [committed, initialTimeSeconds, onFrame, onPresentationReady, scenario]);
+
+  const displayBoard = committed ? scenario.move.nextBoard : scenario.initialBoard;
 
   return (
     <div ref={boardRef} className={debugStyles.stageBoard} data-debug-stage="">
       <div className={debugStyles.stageGrid}>
-        {scenario.initialBoard.map((vial, vialIndex) => {
-          const isSource = vialIndex === scenario.move.move.sourceVialIndex;
-          const isDestination = vialIndex === scenario.move.move.destinationVialIndex;
+        {displayBoard.map((vial, vialIndex) => {
+          const isSource = !committed && vialIndex === scenario.move.move.sourceVialIndex;
+          const isDestination = !committed && vialIndex === scenario.move.move.destinationVialIndex;
           const outgoing = isSource
             ? {color: scenario.move.color, amount: scenario.move.amount}
             : undefined;
@@ -137,9 +146,11 @@ function PourStage({
         })}
       </div>
 
-      <svg className={debugStyles.streamLayer} aria-hidden="true">
-        <line ref={streamRef} strokeWidth="7" strokeLinecap="round" />
-      </svg>
+      {!committed && (
+        <svg className={debugStyles.streamLayer} aria-hidden="true">
+          <line ref={streamRef} strokeWidth="7" strokeLinecap="round" />
+        </svg>
+      )}
     </div>
   );
 }
@@ -370,8 +381,8 @@ export function AnimationDebugLab() {
         <div>
           <h2 className={debugStyles.sectionTitle}>Checkpoint gallery</h2>
           <p className={debugStyles.sectionDescription}>
-            Every card is paused at a deterministic presentation time. Compare the complete
-            choreography without replaying the move.
+            Every card is paused at a deterministic presentation time. The Settled card renders
+            the committed next board, matching production after presentation completion.
           </p>
         </div>
 
@@ -389,6 +400,7 @@ export function AnimationDebugLab() {
               <PourStage
                 scenario={selectedScenario}
                 initialTimeSeconds={checkpoint.timeSeconds}
+                committed={checkpoint.id === "settled"}
               />
             </article>
           ))}
