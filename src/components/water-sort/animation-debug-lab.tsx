@@ -93,8 +93,6 @@ function PourStage({
           destinationElement.querySelector<SVGPathElement>("[data-destination-liquid-path]"),
         destinationSurfaceElement:
           destinationElement.querySelector<SVGPathElement>("[data-destination-surface-path]"),
-        destinationBaseSurfaceElement:
-          destinationElement.querySelector<HTMLElement>("[data-liquid-surface]"),
       },
       geometry,
       move: scenario.move,
