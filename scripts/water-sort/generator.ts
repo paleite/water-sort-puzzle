@@ -93,7 +93,7 @@ export function cleanGeneratedBoard(
     );
   }
 
-  const result: Board = board.map((vial) =>
+  const result: ColorId[][] = board.map((vial) =>
     vial.length === capacity ? [...vial] : [],
   );
   const nonFullIndices: number[] = [];
