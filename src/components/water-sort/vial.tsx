@@ -82,96 +82,102 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
       ];
 
   const incomingBaseFill = vial.length;
+  const selectionLifted = selected && outgoing === undefined;
 
   return (
-    <button
-      ref={ref}
-      type="button"
-      className={styles.vialButton}
-      data-selected={selected ? "true" : "false"}
-      aria-pressed={interactive ? selected : undefined}
-      aria-label={label}
-      tabIndex={interactive ? 0 : -1}
-      onClick={interactive ? onPress : undefined}
+    <span
+      className={styles.vialSlot}
+      data-selection-lifted={selectionLifted ? "true" : "false"}
     >
-      <span className={styles.vialGlass} aria-hidden="true">
-        {vial.map((color, index) => (
-          <span
-            key={index}
-            className={`${styles.liquidUnit}${outgoing === undefined ? "" : ` ${styles.liquidUnitHidden}`}`}
-            data-liquid-unit=""
-            style={{
-              "--liquid-color": LIQUID_COLORS[color],
-              "--segment-index": index,
-              "--capacity": capacity,
-            } as CSSProperties}
-          />
-        ))}
+      <button
+        ref={ref}
+        type="button"
+        className={styles.vialButton}
+        data-selected={selected ? "true" : "false"}
+        aria-pressed={interactive ? selected : undefined}
+        aria-label={label}
+        tabIndex={interactive ? 0 : -1}
+        onClick={interactive ? onPress : undefined}
+      >
+        <span className={styles.vialGlass} aria-hidden="true">
+          {vial.map((color, index) => (
+            <span
+              key={index}
+              className={`${styles.liquidUnit}${outgoing === undefined ? "" : ` ${styles.liquidUnitHidden}`}`}
+              data-liquid-unit=""
+              style={{
+                "--liquid-color": LIQUID_COLORS[color],
+                "--segment-index": index,
+                "--capacity": capacity,
+              } as CSSProperties}
+            />
+          ))}
 
-        {topColor !== null && outgoing === undefined && (
-          <span
-            className={styles.liquidSurface}
-            data-liquid-surface=""
-            style={{
-              "--liquid-color": LIQUID_COLORS[topColor],
-              "--fill-ratio": vial.length / capacity,
-            } as CSSProperties}
-          />
-        )}
+          {topColor !== null && outgoing === undefined && (
+            <span
+              className={styles.liquidSurface}
+              data-liquid-surface=""
+              style={{
+                "--liquid-color": LIQUID_COLORS[topColor],
+                "--fill-ratio": vial.length / capacity,
+              } as CSSProperties}
+            />
+          )}
 
-        {outgoing !== undefined && (
-          <svg
-            className={styles.dynamicLiquidLayer}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {sourceDynamicLayers.map((layer, index) => (
+          {outgoing !== undefined && (
+            <svg
+              className={styles.dynamicLiquidLayer}
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              {sourceDynamicLayers.map((layer, index) => (
+                <path
+                  key={`${index}-${layer.color}`}
+                  data-source-liquid-layer=""
+                  className={styles.dynamicLiquidBody}
+                  d={rectangularLayerPath(layer.lowerFill, layer.upperFill, capacity)}
+                  style={{
+                    "--liquid-color": LIQUID_COLORS[layer.color],
+                  } as CSSProperties}
+                />
+              ))}
               <path
-                key={`${index}-${layer.color}`}
-                data-source-liquid-layer=""
-                className={styles.dynamicLiquidBody}
-                d={rectangularLayerPath(layer.lowerFill, layer.upperFill, capacity)}
+                data-source-surface-path=""
+                className={styles.dynamicLiquidSurface}
+                d={horizontalSurfacePath(vial.length, capacity)}
                 style={{
-                  "--liquid-color": LIQUID_COLORS[layer.color],
+                  "--liquid-color": LIQUID_COLORS[outgoing.color],
                 } as CSSProperties}
               />
-            ))}
-            <path
-              data-source-surface-path=""
-              className={styles.dynamicLiquidSurface}
-              d={horizontalSurfacePath(vial.length, capacity)}
-              style={{
-                "--liquid-color": LIQUID_COLORS[outgoing.color],
-              } as CSSProperties}
-            />
-          </svg>
-        )}
+            </svg>
+          )}
 
-        {incoming !== undefined && (
-          <svg
-            className={styles.dynamicLiquidLayer}
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            <path
-              data-destination-liquid-path=""
-              className={styles.dynamicLiquidBody}
-              d={rectangularLayerPath(incomingBaseFill, incomingBaseFill, capacity)}
-              style={{
-                "--liquid-color": LIQUID_COLORS[incoming.color],
-              } as CSSProperties}
-            />
-            <path
-              data-destination-surface-path=""
-              className={styles.dynamicLiquidSurface}
-              d={horizontalSurfacePath(incomingBaseFill, capacity)}
-              style={{
-                "--liquid-color": LIQUID_COLORS[incoming.color],
-              } as CSSProperties}
-            />
-          </svg>
-        )}
-      </span>
-    </button>
+          {incoming !== undefined && (
+            <svg
+              className={styles.dynamicLiquidLayer}
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              <path
+                data-destination-liquid-path=""
+                className={styles.dynamicLiquidBody}
+                d={rectangularLayerPath(incomingBaseFill, incomingBaseFill, capacity)}
+                style={{
+                  "--liquid-color": LIQUID_COLORS[incoming.color],
+                } as CSSProperties}
+              />
+              <path
+                data-destination-surface-path=""
+                className={styles.dynamicLiquidSurface}
+                d={horizontalSurfacePath(incomingBaseFill, capacity)}
+                style={{
+                  "--liquid-color": LIQUID_COLORS[incoming.color],
+                } as CSSProperties}
+              />
+            </svg>
+          )}
+        </span>
+      </button>
+    </span>
   );
 });
