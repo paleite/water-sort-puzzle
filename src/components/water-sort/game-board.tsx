@@ -82,7 +82,7 @@ export function GameBoard({
   onRestartPresentationFinished: () => void;
 }) {
   const boardRef = useRef<HTMLDivElement>(null);
-  const streamRef = useRef<SVGLineElement>(null);
+  const streamRef = useRef<SVGPathElement>(null);
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
   const debugSequenceRef = useRef(0);
   const previousPhaseRef = useRef<GamePhase | null>(null);
@@ -238,7 +238,7 @@ export function GameBoard({
       logVialSnapshot("before", "src", sourceVialIndex, sourceElement);
       logVialSnapshot("before", "dst", destinationVialIndex, destinationElement);
 
-      streamElement.style.stroke = LIQUID_COLORS[activeMove.color];
+      streamElement.style.fill = LIQUID_COLORS[activeMove.color];
 
       createPourTimeline({
         elements: {
@@ -337,7 +337,7 @@ export function GameBoard({
         </div>
 
         <svg className={styles.streamLayer} aria-hidden="true">
-          <line ref={streamRef} strokeWidth="7" strokeLinecap="round" />
+          <path ref={streamRef} style={{opacity: 0}} />
         </svg>
       </div>
 
