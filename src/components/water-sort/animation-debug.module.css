@@ -147,7 +147,7 @@
   pointer-events: none;
 }
 
-.streamLayer line {
+.streamLayer path {
   opacity: 0;
 }
 
