@@ -80,10 +80,12 @@ export function HomeHero() {
             sourceTransferredElements: sourceUnits.slice(-DEMO_MOVE.amount),
             sourceSurfaceElement:
               source.querySelector<HTMLElement>("[data-liquid-surface]"),
-            destinationSurfaceElement:
-              destination.querySelector<HTMLElement>("[data-liquid-surface]"),
             incomingLiquidElement:
               destination.querySelector<HTMLElement>("[data-incoming-liquid]"),
+            incomingSurfaceElement:
+              destination.querySelector<HTMLElement>("[data-incoming-surface]"),
+            impactPlumeElement:
+              destination.querySelector<HTMLElement>("[data-impact-plume]"),
           },
           geometry: calculatePourGeometry(container, source, destination),
           move: DEMO_MOVE,
