@@ -18,7 +18,6 @@ interface PourTimelineElements {
   sourceSurfaceElement: SVGPathElement | null;
   destinationLiquidElement: SVGPathElement | null;
   destinationSurfaceElement: SVGPathElement | null;
-  destinationBaseSurfaceElement: HTMLElement | null;
 }
 
 interface PourDebugMarker {
@@ -63,11 +62,11 @@ function createStreamPath(
   const length = Math.max(0.001, Math.hypot(deltaX, deltaY));
   const normalX = -deltaY / length;
   const normalY = deltaX / length;
-  const sourceHalfWidth = 3.1;
-  const destinationHalfWidth = 1.25;
+  const sourceHalfWidth = 2.4;
+  const destinationHalfWidth = 0.9;
   const middleX = (sourceX + destinationX) / 2;
-  const middleY = (sourceY + destinationY) / 2 + Math.min(3, length * 0.055);
-  const middleHalfWidth = 2.05;
+  const middleY = (sourceY + destinationY) / 2 + Math.min(2.5, length * 0.04);
+  const middleHalfWidth = 1.55;
 
   const sourceTop = {
     x: sourceX + normalX * sourceHalfWidth,
@@ -130,7 +129,6 @@ export function createPourTimeline({
     sourceSurfaceElement,
     destinationLiquidElement,
     destinationSurfaceElement,
-    destinationBaseSurfaceElement,
   } = elements;
 
   const streamSvg = streamElement.ownerSVGElement;
@@ -138,31 +136,38 @@ export function createPourTimeline({
     throw new Error("Pour stream must belong to an SVG element.");
   }
 
-  const streamRect = streamSvg.getBoundingClientRect();
-  const sourceRestRect = sourceElement.getBoundingClientRect();
-  const destinationRestRect = destinationElement.getBoundingClientRect();
-  const sourcePivot = {
-    x: sourceRestRect.left - streamRect.left + sourceRestRect.width / 2,
-    y: sourceRestRect.top - streamRect.top + 4,
-  };
-  const sourceMouthOffsetFromPivot = 1;
-  const destinationGlassTop = destinationRestRect.top - streamRect.top + 4;
-  const destinationGlassHeight = Math.max(1, destinationRestRect.height - 4);
-  const destinationImpactX =
-    destinationRestRect.left - streamRect.left
-    + destinationRestRect.width * (geometry.direction === "right" ? 0.32 : 0.68);
+  const sourceMouthAnchor = sourceElement.querySelector<SVGCircleElement>(
+    geometry.direction === "right" ? "[data-vial-mouth-right]" : "[data-vial-mouth-left]",
+  );
+  const destinationLiquidViewport = destinationElement.querySelector<SVGSVGElement>(
+    "[data-liquid-viewport]",
+  );
+  if (sourceMouthAnchor === null || destinationLiquidViewport === null) {
+    throw new Error("Missing SVG geometry anchor required for pour presentation.");
+  }
+
   const destinationVialIndex = move.move.destinationVialIndex;
   const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
 
+  function syncStreamViewport(): DOMRect {
+    const streamRect = streamSvg.getBoundingClientRect();
+    streamSvg.setAttribute(
+      "viewBox",
+      `0 0 ${Math.max(1, streamRect.width)} ${Math.max(1, streamRect.height)}`,
+    );
+    streamSvg.setAttribute("preserveAspectRatio", "none");
+    return streamRect;
+  }
+
   function updateStreamGeometry(timeSeconds: number): void {
-    const sourceX = getGsapNumber(sourceElement, "x");
-    const sourceY = getGsapNumber(sourceElement, "y");
-    const rotationDegrees = getGsapNumber(sourceElement, "rotation");
-    const radians = (rotationDegrees * Math.PI) / 180;
-    const sourceMouth = {
-      x: sourcePivot.x + sourceX - Math.sin(radians) * sourceMouthOffsetFromPivot,
-      y: sourcePivot.y + sourceY + Math.cos(radians) * sourceMouthOffsetFromPivot,
-    };
+    const streamRect = syncStreamViewport();
+    const sourceMouthRect = sourceMouthAnchor.getBoundingClientRect();
+    const destinationViewportRect = destinationLiquidViewport.getBoundingClientRect();
+
+    const sourceMouthX =
+      sourceMouthRect.left + sourceMouthRect.width / 2 - streamRect.left;
+    const sourceMouthY =
+      sourceMouthRect.top + sourceMouthRect.height / 2 - streamRect.top;
 
     const transferProgress = clamp(
       (timeSeconds - GAME_TIMING.pour.transferStartSeconds) / GAME_TIMING.pour.transferSeconds,
@@ -170,14 +175,18 @@ export function createPourTimeline({
       1,
     );
     const destinationFill = previousDestinationFill + move.amount * transferProgress;
+    const destinationImpactX =
+      destinationViewportRect.left - streamRect.left
+      + destinationViewportRect.width * (geometry.direction === "right" ? 0.28 : 0.72);
     const destinationSurfaceY =
-      destinationGlassTop + destinationGlassHeight * (1 - destinationFill / capacity);
+      destinationViewportRect.top - streamRect.top
+      + destinationViewportRect.height * (1 - destinationFill / capacity);
 
     streamElement.setAttribute(
       "d",
       createStreamPath(
-        sourceMouth.x,
-        sourceMouth.y,
+        sourceMouthX,
+        sourceMouthY,
         destinationImpactX,
         destinationSurfaceY,
       ),
@@ -186,10 +195,6 @@ export function createPourTimeline({
 
   gsap.set(sourceElement, {transformOrigin: "50% 4px", zIndex: 20});
   gsap.set(streamElement, {opacity: 0});
-
-  if (destinationBaseSurfaceElement !== null) {
-    gsap.set(destinationBaseSurfaceElement, {opacity: 1});
-  }
 
   const liquidSimulation = createLiquidSimulation({
     elements: {
@@ -321,18 +326,6 @@ export function createPourTimeline({
     },
     GAME_TIMING.pour.streamStartSeconds,
   );
-
-  if (destinationBaseSurfaceElement !== null) {
-    timeline.to(
-      destinationBaseSurfaceElement,
-      {
-        opacity: 0,
-        duration: 0.05,
-        ease: "power1.out",
-      },
-      GAME_TIMING.pour.transferStartSeconds,
-    );
-  }
 
   timeline.to(
     streamElement,
