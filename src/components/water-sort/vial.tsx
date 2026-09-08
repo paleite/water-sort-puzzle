@@ -61,7 +61,7 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
           />
         ))}
 
-        {topColor !== null && (
+        {topColor !== null && incoming === undefined && (
           <span
             className={styles.liquidSurface}
             data-liquid-surface=""
@@ -73,15 +73,33 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
         )}
 
         {incoming !== undefined && (
-          <span
-            className={styles.incomingLiquid}
-            data-incoming-liquid=""
-            style={{
-              "--liquid-color": LIQUID_COLORS[incoming.color],
-              "--incoming-bottom": vial.length / capacity,
-              "--incoming-height": incoming.amount / capacity,
-            } as CSSProperties}
-          />
+          <>
+            <span
+              className={styles.incomingLiquid}
+              data-incoming-liquid=""
+              style={{
+                "--liquid-color": LIQUID_COLORS[incoming.color],
+                "--incoming-bottom": vial.length / capacity,
+                "--incoming-height": incoming.amount / capacity,
+              } as CSSProperties}
+            />
+            <span
+              className={styles.incomingSurface}
+              data-incoming-surface=""
+              style={{
+                "--liquid-color": LIQUID_COLORS[incoming.color],
+                "--incoming-bottom": vial.length / capacity,
+              } as CSSProperties}
+            />
+            <span
+              className={styles.impactPlume}
+              data-impact-plume=""
+              style={{
+                "--liquid-color": LIQUID_COLORS[incoming.color],
+                "--incoming-bottom": vial.length / capacity,
+              } as CSSProperties}
+            />
+          </>
         )}
       </span>
     </button>
