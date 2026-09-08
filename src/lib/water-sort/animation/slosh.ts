@@ -1,9 +1,17 @@
 import gsap from "gsap";
 
+import {
+  fillToVialY,
+  VIAL_INNER_BOTTOM,
+  VIAL_INNER_HEIGHT,
+  VIAL_INNER_LEFT,
+  VIAL_INNER_RIGHT,
+  VIAL_INNER_TOP,
+  VIAL_INNER_WIDTH,
+} from "../presentation/vial-geometry";
 import type { AppliedMove } from "../domain/types";
 import { GAME_TIMING } from "./timing";
 
-const VIEWBOX_SIZE = 100;
 const SURFACE_POINT_COUNT = 11;
 const GRAVITY_METRES_PER_SECOND_SQUARED = 9.81;
 const SOURCE_NATURAL_FREQUENCY = 22;
@@ -27,6 +35,7 @@ interface LiquidSimulationElements {
   sourceSurfaceElement: SVGPathElement | null;
   destinationLiquidElement: SVGPathElement | null;
   destinationSurfaceElement: SVGPathElement | null;
+  destinationDebugPointElements?: readonly SVGCircleElement[];
 }
 
 export interface LiquidSimulationSnapshot {
@@ -47,10 +56,6 @@ function clamp(value: number, minimum: number, maximum: number): number {
   return Math.max(minimum, Math.min(maximum, value));
 }
 
-function fillToY(fillFraction: number): number {
-  return VIEWBOX_SIZE * (1 - fillFraction);
-}
-
 function getGsapNumber(element: HTMLElement, property: string): number {
   const value = gsap.getProperty(element, property);
   if (typeof value === "number") return value;
@@ -58,27 +63,33 @@ function getGsapNumber(element: HTMLElement, property: string): number {
   return Number.isFinite(parsed) ? parsed : 0;
 }
 
-function createXCoordinates(): number[] {
-  return Array.from(
-    {length: SURFACE_POINT_COUNT},
-    (_, index) => (index / (SURFACE_POINT_COUNT - 1)) * VIEWBOX_SIZE,
-  );
-}
-
-const X_COORDINATES = createXCoordinates();
+const X_COORDINATES = Array.from(
+  {length: SURFACE_POINT_COUNT},
+  (_, index) =>
+    VIAL_INNER_LEFT
+    + (index / (SURFACE_POINT_COUNT - 1)) * VIAL_INNER_WIDTH,
+);
 
 function trapezoidAreaBelowSurface(
   intercept: number,
   offsets: readonly number[],
 ): number {
   let area = 0;
-  const segmentWidth = VIEWBOX_SIZE / (SURFACE_POINT_COUNT - 1);
+  const segmentWidth = VIAL_INNER_WIDTH / (SURFACE_POINT_COUNT - 1);
 
   for (let index = 0; index < SURFACE_POINT_COUNT - 1; index += 1) {
-    const firstY = clamp(intercept + (offsets[index] ?? 0), 0, VIEWBOX_SIZE);
-    const secondY = clamp(intercept + (offsets[index + 1] ?? 0), 0, VIEWBOX_SIZE);
-    const firstHeight = VIEWBOX_SIZE - firstY;
-    const secondHeight = VIEWBOX_SIZE - secondY;
+    const firstY = clamp(
+      intercept + (offsets[index] ?? 0),
+      VIAL_INNER_TOP,
+      VIAL_INNER_BOTTOM,
+    );
+    const secondY = clamp(
+      intercept + (offsets[index + 1] ?? 0),
+      VIAL_INNER_TOP,
+      VIAL_INNER_BOTTOM,
+    );
+    const firstHeight = VIAL_INNER_BOTTOM - firstY;
+    const secondHeight = VIAL_INNER_BOTTOM - secondY;
     area += ((firstHeight + secondHeight) / 2) * segmentWidth;
   }
 
@@ -92,21 +103,22 @@ function boundaryForFill(
 ): Point[] {
   const clampedFill = clamp(fillFraction, 0, 1);
   if (clampedFill <= 0) {
-    return X_COORDINATES.map((x) => ({x, y: VIEWBOX_SIZE}));
+    return X_COORDINATES.map((x) => ({x, y: VIAL_INNER_BOTTOM}));
   }
   if (clampedFill >= 1) {
-    return X_COORDINATES.map((x) => ({x, y: 0}));
+    return X_COORDINATES.map((x) => ({x, y: VIAL_INNER_TOP}));
   }
 
   const safeAngle = clamp(angleDegrees, -86, 86);
   const slope = Math.tan((safeAngle * Math.PI) / 180);
+  const centerX = (VIAL_INNER_LEFT + VIAL_INNER_RIGHT) / 2;
   const offsets = X_COORDINATES.map((x, index) =>
-    slope * (x - VIEWBOX_SIZE / 2) + (waveOffsets[index] ?? 0)
+    slope * (x - centerX) + (waveOffsets[index] ?? 0)
   );
-  const targetArea = clampedFill * VIEWBOX_SIZE * VIEWBOX_SIZE;
+  const targetArea = clampedFill * VIAL_INNER_WIDTH * VIAL_INNER_HEIGHT;
 
-  let lowerIntercept = -VIEWBOX_SIZE * 6;
-  let upperIntercept = VIEWBOX_SIZE * 6;
+  let lowerIntercept = VIAL_INNER_TOP - VIAL_INNER_HEIGHT * 6;
+  let upperIntercept = VIAL_INNER_BOTTOM + VIAL_INNER_HEIGHT * 6;
 
   for (let iteration = 0; iteration < 34; iteration += 1) {
     const midpoint = (lowerIntercept + upperIntercept) / 2;
@@ -118,18 +130,19 @@ function boundaryForFill(
   const intercept = (lowerIntercept + upperIntercept) / 2;
   return X_COORDINATES.map((x, index) => ({
     x,
-    y: clamp(intercept + (offsets[index] ?? 0), 0, VIEWBOX_SIZE),
+    y: clamp(
+      intercept + (offsets[index] ?? 0),
+      VIAL_INNER_TOP,
+      VIAL_INNER_BOTTOM,
+    ),
   }));
 }
 
-function splineCommands(points: readonly Point[], includeMove: boolean): string {
-  if (points.length === 0) return "";
-
+function splineCommands(points: readonly Point[]): string {
   const first = points[0];
   if (first === undefined) return "";
 
-  const commands: string[] = [];
-  if (includeMove) commands.push(`M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`);
+  const commands = [`M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`];
 
   for (let index = 0; index < points.length - 1; index += 1) {
     const p0 = points[Math.max(0, index - 1)] ?? first;
@@ -154,13 +167,34 @@ function splineCommands(points: readonly Point[], includeMove: boolean): string 
   return commands.join(" ");
 }
 
-function layerPath(upperBoundary: readonly Point[], lowerBoundary: readonly Point[]): string {
-  if (upperBoundary.length === 0 || lowerBoundary.length === 0) return "";
-  return `${splineCommands(upperBoundary, true)} ${splineCommands([...lowerBoundary].reverse(), false)} Z`;
+function liquidBodyPath(
+  upperBoundary: readonly Point[],
+  baseY: number,
+): string {
+  const first = upperBoundary[0];
+  const last = upperBoundary.at(-1);
+  if (first === undefined || last === undefined) return "";
+
+  return [
+    splineCommands(upperBoundary),
+    `L ${VIAL_INNER_RIGHT} ${baseY.toFixed(2)}`,
+    `L ${VIAL_INNER_LEFT} ${baseY.toFixed(2)}`,
+    "Z",
+  ].join(" ");
 }
 
 function surfacePath(boundary: readonly Point[]): string {
-  return splineCommands(boundary, true);
+  return splineCommands(boundary);
+}
+
+function clampBoundaryAboveBase(
+  boundary: readonly Point[],
+  baseY: number,
+): Point[] {
+  return boundary.map((point) => ({
+    x: point.x,
+    y: Math.min(point.y, baseY),
+  }));
 }
 
 function streamStrengthAt(timeSeconds: number): number {
@@ -193,6 +227,7 @@ export function createLiquidSimulation({
     sourceSurfaceElement,
     destinationLiquidElement,
     destinationSurfaceElement,
+    destinationDebugPointElements = [],
   } = elements;
 
   const sourceIndex = move.move.sourceVialIndex;
@@ -302,6 +337,15 @@ export function createLiquidSimulation({
     }
   }
 
+  function updateDebugSurfacePoints(boundary: readonly Point[]): void {
+    destinationDebugPointElements.forEach((element, index) => {
+      const point = boundary[index];
+      if (point === undefined) return;
+      element.setAttribute("cx", point.x.toFixed(2));
+      element.setAttribute("cy", point.y.toFixed(2));
+    });
+  }
+
   function render(timeSeconds: number, rotationDegrees: number): void {
     const transferProgress = clamp(
       (timeSeconds - GAME_TIMING.pour.transferStartSeconds) / GAME_TIMING.pour.transferSeconds,
@@ -316,38 +360,22 @@ export function createLiquidSimulation({
       return curvatureAmplitude * Math.sin(Math.PI * normalized);
     });
 
-    const sourceBoundaries: Point[][] = [];
-    for (let fill = 0; fill <= nextSourceFill; fill += 1) {
-      sourceBoundaries.push(boundaryForFill(fill / capacity, localSourceAngle, sourceWaveOffsets));
-    }
-
-    for (let layerIndex = 0; layerIndex < nextSourceFill; layerIndex += 1) {
-      const lowerBoundary = sourceBoundaries[layerIndex];
-      const upperBoundary = sourceBoundaries[layerIndex + 1];
-      const layerElement = sourceLayerElements[layerIndex];
-      if (lowerBoundary === undefined || upperBoundary === undefined || layerElement === undefined) continue;
-      layerElement.setAttribute("d", layerPath(upperBoundary, lowerBoundary));
-      layerElement.style.opacity = "1";
-    }
-
-    const outgoingLayerElement = sourceLayerElements[nextSourceFill];
-    const outgoingLowerBoundary = sourceBoundaries[nextSourceFill]
-      ?? boundaryForFill(nextSourceFill / capacity, localSourceAngle, sourceWaveOffsets);
+    const sourceDynamicElement = sourceLayerElements[0];
+    const sourceBaseY = fillToVialY(nextSourceFill, capacity);
     const remainingOutgoingFill = move.amount * (1 - transferProgress);
-    const outgoingUpperFillFraction = (nextSourceFill + remainingOutgoingFill) / capacity;
-    const outgoingUpperBoundary = boundaryForFill(
-      outgoingUpperFillFraction,
-      localSourceAngle,
-      sourceWaveOffsets,
+    const outgoingTopFillFraction = (nextSourceFill + remainingOutgoingFill) / capacity;
+    const outgoingBoundary = clampBoundaryAboveBase(
+      boundaryForFill(outgoingTopFillFraction, localSourceAngle, sourceWaveOffsets),
+      sourceBaseY,
     );
 
-    if (outgoingLayerElement !== undefined) {
-      outgoingLayerElement.setAttribute("d", layerPath(outgoingUpperBoundary, outgoingLowerBoundary));
-      outgoingLayerElement.style.opacity = remainingOutgoingFill > 0.001 ? "1" : "0";
+    if (sourceDynamicElement !== undefined) {
+      sourceDynamicElement.setAttribute("d", liquidBodyPath(outgoingBoundary, sourceBaseY));
+      sourceDynamicElement.style.opacity = remainingOutgoingFill > 0.001 ? "1" : "0";
     }
 
     if (sourceSurfaceElement !== null) {
-      sourceSurfaceElement.setAttribute("d", surfacePath(outgoingUpperBoundary));
+      sourceSurfaceElement.setAttribute("d", surfacePath(outgoingBoundary));
       setPathVisibility(sourceSurfaceElement, remainingOutgoingFill > 0.001);
     }
 
@@ -359,23 +387,19 @@ export function createLiquidSimulation({
       const destinationWaveOffsets = destinationDisplacements.map(
         (value) => value * waveScale,
       );
-      const upperBoundary = boundaryForFill(
-        destinationTopFillFraction,
-        0,
-        destinationWaveOffsets,
+      const destinationBaseY = fillToVialY(destinationDynamicBaseFill, capacity);
+      const upperBoundary = clampBoundaryAboveBase(
+        boundaryForFill(destinationTopFillFraction, 0, destinationWaveOffsets),
+        destinationBaseY,
       );
-      const baseY = fillToY(destinationBaseFillFraction);
-      const clippedUpperBoundary = upperBoundary.map((point) => ({
-        x: point.x,
-        y: Math.min(point.y, baseY),
-      }));
-      const lowerBoundary = X_COORDINATES.map((x) => ({x, y: baseY}));
 
       destinationLiquidElement.setAttribute(
         "d",
-        layerPath(clippedUpperBoundary, lowerBoundary),
+        liquidBodyPath(upperBoundary, destinationBaseY),
       );
-      destinationSurfaceElement.setAttribute("d", surfacePath(clippedUpperBoundary));
+      destinationSurfaceElement.setAttribute("d", surfacePath(upperBoundary));
+      updateDebugSurfacePoints(upperBoundary);
+
       const visible = destinationTopFillFraction - destinationBaseFillFraction > 0.0005;
       setPathVisibility(destinationLiquidElement, visible);
       setPathVisibility(destinationSurfaceElement, visible);
