@@ -6,6 +6,20 @@ import type { ColorId } from "@/lib/water-sort/domain/colors";
 import type { Vial as VialState } from "@/lib/water-sort/domain/types";
 import { getTopColor } from "@/lib/water-sort/domain/vial";
 import { LIQUID_COLORS } from "@/lib/water-sort/presentation/palette";
+import {
+  fillToVialY,
+  liquidLayerRect,
+  VIAL_INNER_BOTTOM,
+  VIAL_INNER_LEFT,
+  VIAL_INNER_RIGHT,
+  VIAL_INNER_TOP,
+  VIAL_INNER_WIDTH,
+  VIAL_INTERIOR_PATH,
+  VIAL_MOUTH,
+  VIAL_OUTLINE_PATH,
+  VIAL_VIEWBOX_HEIGHT,
+  VIAL_VIEWBOX_WIDTH,
+} from "@/lib/water-sort/presentation/vial-geometry";
 
 import styles from "./water-sort.module.css";
 
@@ -22,34 +36,38 @@ interface VialProps {
   interactive?: boolean;
   incoming?: MovingLiquid;
   outgoing?: MovingLiquid;
+  debugGeometry?: boolean;
   onPress?: () => void;
 }
 
-const VIAL_INTERIOR_PATH =
-  "M 10 10 H 90 V 194 C 90 220 73 236 50 236 C 27 236 10 220 10 194 Z";
-const VIAL_OUTLINE_PATH =
-  "M 10 10 V 194 C 10 220 27 236 50 236 C 73 236 90 220 90 194 V 10";
+const DEBUG_SURFACE_POINT_COUNT = 11;
 
-function fillToY(fill: number, capacity: number): number {
-  return 100 * (1 - fill / capacity);
-}
-
-function rectangularLayerPath(
-  lowerFill: number,
-  upperFill: number,
+function flatLiquidBodyPath(
+  baseFill: number,
+  topFill: number,
   capacity: number,
 ): string {
-  const upperY = fillToY(upperFill, capacity);
-  const lowerY = fillToY(lowerFill, capacity);
-  return `M 0 ${upperY} L 100 ${upperY} L 100 ${lowerY} L 0 ${lowerY} Z`;
+  const topY = fillToVialY(topFill, capacity);
+  const baseY = fillToVialY(baseFill, capacity);
+
+  return [
+    `M ${VIAL_INNER_LEFT} ${topY}`,
+    `L ${VIAL_INNER_RIGHT} ${topY}`,
+    `L ${VIAL_INNER_RIGHT} ${baseY}`,
+    `L ${VIAL_INNER_LEFT} ${baseY}`,
+    "Z",
+  ].join(" ");
 }
 
-function horizontalSurfacePath(fill: number, capacity: number): string {
-  const y = fillToY(fill, capacity);
-  return `M 0 ${y} L 100 ${y}`;
+function flatSurfacePath(fill: number, capacity: number): string {
+  const y = fillToVialY(fill, capacity);
+  return `M ${VIAL_INNER_LEFT} ${y} L ${VIAL_INNER_RIGHT} ${y}`;
 }
 
-function getMergedIncomingBaseFill(vial: VialState, incoming: MovingLiquid | undefined): number {
+function getMergedIncomingBaseFill(
+  vial: VialState,
+  incoming: MovingLiquid | undefined,
+): number {
   if (incoming === undefined) return vial.length;
 
   let baseFill = vial.length;
@@ -68,6 +86,7 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
     interactive = true,
     incoming,
     outgoing,
+    debugGeometry = false,
     onPress,
   },
   ref,
@@ -86,25 +105,10 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
   const selectionLifted = selected && outgoing === undefined;
 
   const staticLayerCount = outgoing !== undefined
-    ? 0
+    ? outgoingBaseFill
     : incoming !== undefined
       ? mergedIncomingBaseFill
       : vial.length;
-
-  const sourceDynamicLayers = outgoing === undefined
-    ? []
-    : [
-        ...vial.slice(0, outgoingBaseFill).map((color, index) => ({
-          color,
-          lowerFill: index,
-          upperFill: index + 1,
-        })),
-        {
-          color: outgoing.color,
-          lowerFill: outgoingBaseFill,
-          upperFill: vial.length,
-        },
-      ];
 
   return (
     <span
@@ -123,8 +127,8 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
       >
         <svg
           className={styles.vialSvg}
-          viewBox="0 0 100 240"
-          preserveAspectRatio="none"
+          viewBox={`0 0 ${VIAL_VIEWBOX_WIDTH} ${VIAL_VIEWBOX_HEIGHT}`}
+          preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
         >
           <defs>
@@ -136,84 +140,136 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
           <path className={styles.vialGlassFill} d={VIAL_INTERIOR_PATH} />
 
           <g clipPath={`url(#${clipId})`}>
-            <svg
-              data-liquid-viewport=""
-              x="10"
-              y="10"
-              width="80"
-              height="226"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-            >
-              {vial.slice(0, staticLayerCount).map((color, index) => (
+            {vial.slice(0, staticLayerCount).map((color, index) => {
+              const rect = liquidLayerRect(index, capacity);
+              return (
                 <rect
                   key={`static-${index}-${color}`}
-                  x="0"
-                  y={fillToY(index + 1, capacity)}
-                  width="100"
-                  height={100 / capacity}
+                  x={rect.x}
+                  y={rect.y}
+                  width={rect.width}
+                  height={rect.height}
                   className={styles.liquidRect}
                   style={{"--liquid-color": LIQUID_COLORS[color]} as CSSProperties}
                 />
-              ))}
+              );
+            })}
 
-              {outgoing !== undefined && sourceDynamicLayers.map((layer, index) => (
-                <path
-                  key={`source-${index}-${layer.color}`}
-                  data-source-liquid-layer=""
-                  className={styles.dynamicLiquidBody}
-                  d={rectangularLayerPath(layer.lowerFill, layer.upperFill, capacity)}
-                  style={{"--liquid-color": LIQUID_COLORS[layer.color]} as CSSProperties}
-                />
-              ))}
+            {outgoing !== undefined && (
+              <path
+                data-source-liquid-layer=""
+                className={styles.dynamicLiquidBody}
+                d={flatLiquidBodyPath(outgoingBaseFill, vial.length, capacity)}
+                style={{"--liquid-color": LIQUID_COLORS[outgoing.color]} as CSSProperties}
+              />
+            )}
 
-              {incoming !== undefined && (
-                <path
-                  data-destination-liquid-path=""
-                  className={styles.dynamicLiquidBody}
-                  d={rectangularLayerPath(
-                    mergedIncomingBaseFill,
-                    vial.length,
-                    capacity,
-                  )}
-                  style={{"--liquid-color": LIQUID_COLORS[incoming.color]} as CSSProperties}
-                />
-              )}
+            {incoming !== undefined && (
+              <path
+                data-destination-liquid-path=""
+                className={styles.dynamicLiquidBody}
+                d={flatLiquidBodyPath(
+                  mergedIncomingBaseFill,
+                  vial.length,
+                  capacity,
+                )}
+                style={{"--liquid-color": LIQUID_COLORS[incoming.color]} as CSSProperties}
+              />
+            )}
 
-              {outgoing !== undefined && (
-                <path
-                  data-source-surface-path=""
-                  className={styles.dynamicLiquidSurface}
-                  d={horizontalSurfacePath(vial.length, capacity)}
-                  style={{"--liquid-color": LIQUID_COLORS[outgoing.color]} as CSSProperties}
-                />
-              )}
+            {outgoing !== undefined && (
+              <path
+                data-source-surface-path=""
+                className={styles.dynamicLiquidSurface}
+                d={flatSurfacePath(vial.length, capacity)}
+                style={{"--liquid-color": LIQUID_COLORS[outgoing.color]} as CSSProperties}
+              />
+            )}
 
-              {incoming !== undefined && (
-                <path
-                  data-destination-surface-path=""
-                  className={styles.dynamicLiquidSurface}
-                  d={horizontalSurfacePath(vial.length, capacity)}
-                  style={{"--liquid-color": LIQUID_COLORS[incoming.color]} as CSSProperties}
-                />
-              )}
+            {incoming !== undefined && (
+              <path
+                data-destination-surface-path=""
+                className={styles.dynamicLiquidSurface}
+                d={flatSurfacePath(vial.length, capacity)}
+                style={{"--liquid-color": LIQUID_COLORS[incoming.color]} as CSSProperties}
+              />
+            )}
 
-              {incoming === undefined && outgoing === undefined && topColor !== null && (
-                <path
-                  data-liquid-surface=""
-                  className={styles.dynamicLiquidSurface}
-                  d={horizontalSurfacePath(vial.length, capacity)}
-                  style={{"--liquid-color": LIQUID_COLORS[topColor]} as CSSProperties}
-                />
-              )}
-            </svg>
+            {incoming === undefined && outgoing === undefined && topColor !== null && (
+              <path
+                data-liquid-surface=""
+                className={styles.dynamicLiquidSurface}
+                d={flatSurfacePath(vial.length, capacity)}
+                style={{"--liquid-color": LIQUID_COLORS[topColor]} as CSSProperties}
+              />
+            )}
           </g>
 
-          <path className={styles.vialGlassOutline} d={VIAL_OUTLINE_PATH} />
-          <rect className={styles.vialMouth} x="24" y="2" width="52" height="9" rx="4.5" />
+          <rect
+            data-liquid-bounds=""
+            x={VIAL_INNER_LEFT}
+            y={VIAL_INNER_TOP}
+            width={VIAL_INNER_WIDTH}
+            height={VIAL_INNER_BOTTOM - VIAL_INNER_TOP}
+            fill="transparent"
+            pointerEvents="none"
+          />
 
-          <circle data-vial-mouth-left="" cx="10" cy="10" r="0.5" fill="transparent" />
-          <circle data-vial-mouth-right="" cx="90" cy="10" r="0.5" fill="transparent" />
+          <path className={styles.vialGlassOutline} d={VIAL_OUTLINE_PATH} />
+          <rect className={styles.vialMouth} x="24" y="2" width="52" height="10" rx="5" />
+
+          <circle
+            data-vial-mouth-left=""
+            cx={VIAL_MOUTH.left.x}
+            cy={VIAL_MOUTH.left.y}
+            r="0.7"
+            fill="transparent"
+          />
+          <circle
+            data-vial-mouth-right=""
+            cx={VIAL_MOUTH.right.x}
+            cy={VIAL_MOUTH.right.y}
+            r="0.7"
+            fill="transparent"
+          />
+
+          {debugGeometry && (
+            <g className={styles.vialGeometryGuides} pointerEvents="none">
+              <path d={VIAL_INTERIOR_PATH} className={styles.debugVialInterior} />
+              <rect
+                x={VIAL_INNER_LEFT}
+                y={VIAL_INNER_TOP}
+                width={VIAL_INNER_WIDTH}
+                height={VIAL_INNER_BOTTOM - VIAL_INNER_TOP}
+                className={styles.debugLiquidBounds}
+              />
+              <circle
+                cx={VIAL_MOUTH.left.x}
+                cy={VIAL_MOUTH.left.y}
+                r="2.5"
+                className={styles.debugMouthAnchor}
+              />
+              <circle
+                cx={VIAL_MOUTH.right.x}
+                cy={VIAL_MOUTH.right.y}
+                r="2.5"
+                className={styles.debugMouthAnchor}
+              />
+              {Array.from({length: DEBUG_SURFACE_POINT_COUNT}, (_, index) => (
+                <circle
+                  key={index}
+                  data-debug-destination-point=""
+                  cx={
+                    VIAL_INNER_LEFT
+                    + (index / (DEBUG_SURFACE_POINT_COUNT - 1)) * VIAL_INNER_WIDTH
+                  }
+                  cy={VIAL_INNER_BOTTOM}
+                  r="1.7"
+                  className={styles.debugSurfacePoint}
+                />
+              ))}
+            </g>
+          )}
         </svg>
       </button>
     </span>
