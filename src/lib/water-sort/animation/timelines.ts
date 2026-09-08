@@ -73,14 +73,13 @@ export function createPourTimeline({
     capacity,
   });
 
-  let timeline: gsap.core.Timeline;
-  timeline = gsap.timeline({
+  const timeline = gsap.timeline({
     defaults: {overwrite: "auto"},
-    onUpdate: () => liquidSimulation.update(timeline.time()),
-    onComplete: () => {
-      liquidSimulation.finish();
-      onComplete();
-    },
+  });
+  timeline.eventCallback("onUpdate", () => liquidSimulation.update(timeline.time()));
+  timeline.eventCallback("onComplete", () => {
+    liquidSimulation.finish();
+    onComplete();
   });
 
   liquidSimulation.update(0);
