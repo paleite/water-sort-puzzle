@@ -2,8 +2,13 @@ import gsap from "gsap";
 
 import type { AppliedMove } from "../domain/types";
 import type { PourGeometry } from "./pour-geometry";
-import { createLiquidSimulation } from "./slosh";
+import {
+  createLiquidSimulation,
+  type LiquidSimulationSnapshot,
+} from "./slosh";
 import { GAME_TIMING } from "./timing";
+
+const DEBUG_SEEK_STEP_SECONDS = 1 / 120;
 
 interface PourTimelineElements {
   sourceElement: HTMLElement;
@@ -21,6 +26,28 @@ interface PourDebugMarker {
   timeSeconds: number;
 }
 
+export interface PourPresentationSnapshot {
+  timeSeconds: number;
+  progress: number;
+  sourceX: number;
+  sourceY: number;
+  sourceRotationDegrees: number;
+  liquid: LiquidSimulationSnapshot;
+}
+
+export interface PourPresentation {
+  timeline: gsap.core.Timeline;
+  seek(timeSeconds: number): void;
+  getSnapshot(): PourPresentationSnapshot;
+}
+
+function getGsapNumber(element: HTMLElement, property: string): number {
+  const value = gsap.getProperty(element, property);
+  if (typeof value === "number") return value;
+  const parsed = Number.parseFloat(String(value));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 export function createPourTimeline({
   elements,
   geometry,
@@ -28,6 +55,8 @@ export function createPourTimeline({
   capacity,
   onComplete,
   onDebug,
+  onFrame,
+  paused = false,
 }: {
   elements: PourTimelineElements;
   geometry: PourGeometry;
@@ -35,7 +64,9 @@ export function createPourTimeline({
   capacity: number;
   onComplete: () => void;
   onDebug?: (event: string, timeSeconds: number) => void;
-}): gsap.core.Timeline {
+  onFrame?: (snapshot: PourPresentationSnapshot) => void;
+  paused?: boolean;
+}): PourPresentation {
   const {
     sourceElement,
     destinationElement,
@@ -117,11 +148,32 @@ export function createPourTimeline({
 
   const timeline = gsap.timeline({
     defaults: {overwrite: "auto"},
+    paused,
   });
+
+  function getSnapshot(): PourPresentationSnapshot {
+    const timeSeconds = timeline.time();
+    return {
+      timeSeconds,
+      progress: GAME_TIMING.pour.totalSeconds <= 0
+        ? 0
+        : timeSeconds / GAME_TIMING.pour.totalSeconds,
+      sourceX: getGsapNumber(sourceElement, "x"),
+      sourceY: getGsapNumber(sourceElement, "y"),
+      sourceRotationDegrees: getGsapNumber(sourceElement, "rotation"),
+      liquid: liquidSimulation.getSnapshot(),
+    };
+  }
+
+  function emitFrame(): void {
+    onFrame?.(getSnapshot());
+  }
+
   timeline.eventCallback("onStart", () => onDebug?.("timeline:start", 0));
   timeline.eventCallback("onUpdate", () => {
     const timeSeconds = timeline.time();
     liquidSimulation.update(timeSeconds);
+    emitFrame();
 
     while (
       nextDebugMarkerIndex < debugMarkers.length
@@ -138,6 +190,7 @@ export function createPourTimeline({
   timeline.eventCallback("onComplete", () => {
     onDebug?.("timeline:complete", timeline.time());
     liquidSimulation.finish();
+    emitFrame();
     onComplete();
   });
 
@@ -240,7 +293,39 @@ export function createPourTimeline({
     GAME_TIMING.pour.totalSeconds,
   );
 
-  return timeline;
+  function seek(timeSeconds: number): void {
+    const targetTime = gsap.utils.clamp(
+      0,
+      GAME_TIMING.pour.totalSeconds,
+      timeSeconds,
+    );
+
+    timeline.pause();
+    timeline.time(0, true);
+    liquidSimulation.reset();
+    liquidSimulation.update(0);
+
+    let cursor = DEBUG_SEEK_STEP_SECONDS;
+    while (cursor < targetTime) {
+      timeline.time(cursor, true);
+      liquidSimulation.update(cursor);
+      cursor += DEBUG_SEEK_STEP_SECONDS;
+    }
+
+    timeline.time(targetTime, true);
+    liquidSimulation.update(targetTime);
+
+    const firstFutureMarkerIndex = debugMarkers.findIndex(
+      (marker) => marker.timeSeconds > targetTime,
+    );
+    nextDebugMarkerIndex = firstFutureMarkerIndex === -1
+      ? debugMarkers.length
+      : firstFutureMarkerIndex;
+
+    emitFrame();
+  }
+
+  return {timeline, seek, getSnapshot};
 }
 
 export function createUndoTimeline(
