@@ -14,6 +14,7 @@ const DESTINATION_COUPLING = 86;
 const DESTINATION_IMPACT_FORCE = 360;
 const MAX_SOURCE_WORLD_ANGLE_DEGREES = 14;
 const MAX_DESTINATION_DISPLACEMENT = 8.5;
+const SPLINE_TENSION = 0.82;
 
 interface Point {
   x: number;
@@ -121,24 +122,45 @@ function boundaryForFill(
   }));
 }
 
+function splineCommands(points: readonly Point[], includeMove: boolean): string {
+  if (points.length === 0) return "";
+
+  const first = points[0];
+  if (first === undefined) return "";
+
+  const commands: string[] = [];
+  if (includeMove) commands.push(`M ${first.x.toFixed(2)} ${first.y.toFixed(2)}`);
+
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const p0 = points[Math.max(0, index - 1)] ?? first;
+    const p1 = points[index] ?? first;
+    const p2 = points[index + 1] ?? p1;
+    const p3 = points[Math.min(points.length - 1, index + 2)] ?? p2;
+    const scale = SPLINE_TENSION / 6;
+    const cp1 = {
+      x: p1.x + (p2.x - p0.x) * scale,
+      y: p1.y + (p2.y - p0.y) * scale,
+    };
+    const cp2 = {
+      x: p2.x - (p3.x - p1.x) * scale,
+      y: p2.y - (p3.y - p1.y) * scale,
+    };
+
+    commands.push(
+      `C ${cp1.x.toFixed(2)} ${cp1.y.toFixed(2)} ${cp2.x.toFixed(2)} ${cp2.y.toFixed(2)} ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`,
+    );
+  }
+
+  return commands.join(" ");
+}
+
 function layerPath(upperBoundary: readonly Point[], lowerBoundary: readonly Point[]): string {
   if (upperBoundary.length === 0 || lowerBoundary.length === 0) return "";
-
-  const upper = upperBoundary
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`)
-    .join(" ");
-  const lower = [...lowerBoundary]
-    .reverse()
-    .map((point) => `L ${point.x.toFixed(2)} ${point.y.toFixed(2)}`)
-    .join(" ");
-
-  return `${upper} ${lower} Z`;
+  return `${splineCommands(upperBoundary, true)} ${splineCommands([...lowerBoundary].reverse(), false)} Z`;
 }
 
 function surfacePath(boundary: readonly Point[]): string {
-  return boundary
-    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(2)} ${point.y.toFixed(2)}`)
-    .join(" ");
+  return splineCommands(boundary, true);
 }
 
 function streamStrengthAt(timeSeconds: number): number {
@@ -177,12 +199,23 @@ export function createLiquidSimulation({
   const destinationIndex = move.move.destinationVialIndex;
   const previousSourceFill = move.previousBoard[sourceIndex]?.length ?? 0;
   const nextSourceFill = move.nextBoard[sourceIndex]?.length ?? 0;
-  const previousDestinationFill = move.previousBoard[destinationIndex]?.length ?? 0;
+  const previousDestinationVial = move.previousBoard[destinationIndex] ?? [];
+  const previousDestinationFill = previousDestinationVial.length;
+
+  let destinationDynamicBaseFill = previousDestinationFill;
+  while (
+    destinationDynamicBaseFill > 0
+    && previousDestinationVial[destinationDynamicBaseFill - 1] === move.color
+  ) {
+    destinationDynamicBaseFill -= 1;
+  }
 
   const sourceHeight = Math.max(1, sourceElement.offsetHeight);
   const sourceWidth = Math.max(1, sourceElement.offsetWidth);
   const pivotToCenter = sourceHeight / 2 - 4;
   const metresPerPixel = 0.06 / sourceWidth;
+  const homeTimeSeconds =
+    GAME_TIMING.pour.returnTravelSeconds + GAME_TIMING.pour.returnTravelDurationSeconds;
 
   let previousTimeSeconds: number | null = null;
   let previousCenterX = 0;
@@ -219,12 +252,15 @@ export function createLiquidSimulation({
   ): void {
     const substepCount = Math.max(1, Math.ceil(deltaSeconds / (1 / 120)));
     const substepSeconds = deltaSeconds / substepCount;
+    const settleBlend = clamp((integrationTimeSeconds - homeTimeSeconds) / 0.18, 0, 1);
+    const sourceDampingRatio = SOURCE_DAMPING_RATIO + settleBlend * 0.9;
+    const destinationDamping = DESTINATION_DAMPING + settleBlend * 24;
 
     for (let step = 0; step < substepCount; step += 1) {
       const sourceAcceleration =
         SOURCE_NATURAL_FREQUENCY * SOURCE_NATURAL_FREQUENCY
         * (equilibriumWorldAngle - sourceWorldAngle)
-        - 2 * SOURCE_DAMPING_RATIO * SOURCE_NATURAL_FREQUENCY * sourceAngularVelocity;
+        - 2 * sourceDampingRatio * SOURCE_NATURAL_FREQUENCY * sourceAngularVelocity;
 
       sourceAngularVelocity += sourceAcceleration * substepSeconds;
       sourceWorldAngle = clamp(
@@ -252,7 +288,7 @@ export function createLiquidSimulation({
         const impactForce = DESTINATION_IMPACT_FORCE * flow * impactWeight;
         const acceleration =
           -DESTINATION_SPRING * displacement
-          -DESTINATION_DAMPING * velocity
+          -destinationDamping * velocity
           + neighborForce
           + impactForce;
 
@@ -317,8 +353,8 @@ export function createLiquidSimulation({
 
     if (destinationLiquidElement !== null && destinationSurfaceElement !== null) {
       const incomingFill = (move.amount * transferProgress) / capacity;
-      const destinationBaseFillFraction = previousDestinationFill / capacity;
-      const destinationTopFillFraction = destinationBaseFillFraction + incomingFill;
+      const destinationTopFillFraction = previousDestinationFill / capacity + incomingFill;
+      const destinationBaseFillFraction = destinationDynamicBaseFill / capacity;
       const waveScale = clamp(transferProgress * 3, 0, 1);
       const destinationWaveOffsets = destinationDisplacements.map(
         (value) => value * waveScale,
@@ -340,7 +376,7 @@ export function createLiquidSimulation({
         layerPath(clippedUpperBoundary, lowerBoundary),
       );
       destinationSurfaceElement.setAttribute("d", surfacePath(clippedUpperBoundary));
-      const visible = incomingFill > 0.0005;
+      const visible = destinationTopFillFraction - destinationBaseFillFraction > 0.0005;
       setPathVisibility(destinationLiquidElement, visible);
       setPathVisibility(destinationSurfaceElement, visible);
     }
@@ -368,6 +404,12 @@ export function createLiquidSimulation({
 
       filteredAccelerationX += lowPassBlend * (accelerationX - filteredAccelerationX);
       filteredAccelerationY += lowPassBlend * (accelerationY - filteredAccelerationY);
+
+      if (timeSeconds >= homeTimeSeconds) {
+        const decay = Math.exp(-deltaSeconds * 18);
+        filteredAccelerationX *= decay;
+        filteredAccelerationY *= decay;
+      }
 
       const horizontalAcceleration = filteredAccelerationX * metresPerPixel;
       const verticalAcceleration = filteredAccelerationY * metresPerPixel;
@@ -422,6 +464,12 @@ export function createLiquidSimulation({
 
   function finish(): void {
     currentTimeSeconds = GAME_TIMING.pour.totalSeconds;
+    sourceWorldAngle = 0;
+    sourceAngularVelocity = 0;
+    filteredAccelerationX = 0;
+    filteredAccelerationY = 0;
+    destinationDisplacements.fill(0);
+    destinationVelocities.fill(0);
     render(GAME_TIMING.pour.totalSeconds, 0);
   }
 
