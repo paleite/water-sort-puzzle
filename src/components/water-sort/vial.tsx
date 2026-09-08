@@ -93,6 +93,12 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
 
   const incomingBaseFill = vial.length;
   const mergedIncomingBaseFill = getMergedIncomingBaseFill(vial, incoming);
+  const staticLayerCount = outgoing !== undefined
+    ? 0
+    : incoming === undefined
+      ? vial.length
+      : mergedIncomingBaseFill;
+  const staticLayers = vial.slice(0, staticLayerCount);
   const selectionLifted = selected && outgoing === undefined;
 
   return (
@@ -111,35 +117,34 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
         onClick={interactive ? onPress : undefined}
       >
         <span className={styles.vialGlass} aria-hidden="true">
-          {vial.map((color, index) => {
-            const hiddenForOutgoing = outgoing !== undefined;
-            const hiddenForIncomingMerge =
-              incoming !== undefined && index >= mergedIncomingBaseFill;
-            const hidden = hiddenForOutgoing || hiddenForIncomingMerge;
+          {staticLayers.length > 0 && (
+            <svg
+              className={styles.dynamicLiquidLayer}
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+            >
+              {staticLayers.map((color, index) => (
+                <path
+                  key={`${index}-${color}`}
+                  className={styles.dynamicLiquidBody}
+                  d={rectangularLayerPath(index, index + 1, capacity)}
+                  style={{
+                    "--liquid-color": LIQUID_COLORS[color],
+                  } as CSSProperties}
+                />
+              ))}
 
-            return (
-              <span
-                key={index}
-                className={`${styles.liquidUnit}${hidden ? ` ${styles.liquidUnitHidden}` : ""}`}
-                data-liquid-unit=""
-                style={{
-                  "--liquid-color": LIQUID_COLORS[color],
-                  "--segment-index": index,
-                  "--capacity": capacity,
-                } as CSSProperties}
-              />
-            );
-          })}
-
-          {topColor !== null && outgoing === undefined && incoming === undefined && (
-            <span
-              className={styles.liquidSurface}
-              data-liquid-surface=""
-              style={{
-                "--liquid-color": LIQUID_COLORS[topColor],
-                "--fill-ratio": vial.length / capacity,
-              } as CSSProperties}
-            />
+              {incoming === undefined && topColor !== null && (
+                <path
+                  data-liquid-surface=""
+                  className={styles.dynamicLiquidSurface}
+                  d={horizontalSurfacePath(vial.length, capacity)}
+                  style={{
+                    "--liquid-color": LIQUID_COLORS[topColor],
+                  } as CSSProperties}
+                />
+              )}
+            </svg>
           )}
 
           {outgoing !== undefined && (
