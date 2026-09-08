@@ -16,18 +16,25 @@ interface PourTimelineElements {
   destinationBaseSurfaceElement: HTMLElement | null;
 }
 
+interface PourDebugMarker {
+  label: string;
+  timeSeconds: number;
+}
+
 export function createPourTimeline({
   elements,
   geometry,
   move,
   capacity,
   onComplete,
+  onDebug,
 }: {
   elements: PourTimelineElements;
   geometry: PourGeometry;
   move: AppliedMove;
   capacity: number;
   onComplete: () => void;
+  onDebug?: (event: string, timeSeconds: number) => void;
 }): gsap.core.Timeline {
   const {
     sourceElement,
@@ -73,11 +80,63 @@ export function createPourTimeline({
     capacity,
   });
 
+  const debugMarkers: PourDebugMarker[] = [
+    {label: "tilt:start", timeSeconds: GAME_TIMING.pour.tiltStartSeconds},
+    {label: "travel:end", timeSeconds: GAME_TIMING.pour.travelSeconds},
+    {label: "stream:start", timeSeconds: GAME_TIMING.pour.streamStartSeconds},
+    {
+      label: "tilt:end",
+      timeSeconds: GAME_TIMING.pour.tiltStartSeconds + GAME_TIMING.pour.tiltSeconds,
+    },
+    {label: "transfer:start", timeSeconds: GAME_TIMING.pour.transferStartSeconds},
+    {
+      label: "transfer:end",
+      timeSeconds: GAME_TIMING.pour.transferStartSeconds + GAME_TIMING.pour.transferSeconds,
+    },
+    {label: "stream:close:start", timeSeconds: GAME_TIMING.pour.streamCloseSeconds},
+    {
+      label: "stream:close:end",
+      timeSeconds: GAME_TIMING.pour.streamCloseSeconds + GAME_TIMING.pour.streamCloseDurationSeconds,
+    },
+    {label: "return:rotation:start", timeSeconds: GAME_TIMING.pour.returnRotationSeconds},
+    {label: "return:travel:start", timeSeconds: GAME_TIMING.pour.returnTravelSeconds},
+    {
+      label: "return:rotation:end",
+      timeSeconds:
+        GAME_TIMING.pour.returnRotationSeconds
+        + GAME_TIMING.pour.returnRotationDurationSeconds,
+    },
+    {
+      label: "return:travel:end",
+      timeSeconds:
+        GAME_TIMING.pour.returnTravelSeconds
+        + GAME_TIMING.pour.returnTravelDurationSeconds,
+    },
+  ].sort((first, second) => first.timeSeconds - second.timeSeconds);
+  let nextDebugMarkerIndex = 0;
+
   const timeline = gsap.timeline({
     defaults: {overwrite: "auto"},
   });
-  timeline.eventCallback("onUpdate", () => liquidSimulation.update(timeline.time()));
+  timeline.eventCallback("onStart", () => onDebug?.("timeline:start", 0));
+  timeline.eventCallback("onUpdate", () => {
+    const timeSeconds = timeline.time();
+    liquidSimulation.update(timeSeconds);
+
+    while (
+      nextDebugMarkerIndex < debugMarkers.length
+      && timeSeconds >= (debugMarkers[nextDebugMarkerIndex]?.timeSeconds ?? Number.POSITIVE_INFINITY)
+    ) {
+      const marker = debugMarkers[nextDebugMarkerIndex];
+      if (marker !== undefined) onDebug?.(marker.label, timeSeconds);
+      nextDebugMarkerIndex += 1;
+    }
+  });
+  timeline.eventCallback("onInterrupt", () => {
+    onDebug?.("timeline:interrupt", timeline.time());
+  });
   timeline.eventCallback("onComplete", () => {
+    onDebug?.("timeline:complete", timeline.time());
     liquidSimulation.finish();
     onComplete();
   });
