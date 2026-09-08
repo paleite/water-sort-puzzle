@@ -6,8 +6,10 @@ import { getColorIds } from "../../src/lib/water-sort/domain/colors";
 import {
   beamScramble,
   calculateStructuralMetrics,
+  cleanGeneratedBoard,
   createSeededRandom,
   createSolvedBoard,
+  isCleanGeneratedBoard,
   verifyGenerationCertificate,
 } from "./generator";
 import { solveWithAStar, verifySolution } from "./solver";
@@ -92,19 +94,31 @@ async function main(): Promise<void> {
       throw new Error("Generator certificate invariant failed.");
     }
 
-    const metrics = calculateStructuralMetrics(candidate.board, options.capacity);
+    // Reverse generation can leave liquid spread across partial vials. Normalize
+    // the candidate before scoring/solving so shipped levels always start with
+    // full playable vials plus the configured empty spare vials.
+    const board = cleanGeneratedBoard(
+      candidate.board,
+      options.capacity,
+      options.emptyVials,
+    );
+    if (!isCleanGeneratedBoard(board, options.capacity, options.emptyVials)) {
+      throw new Error("Generated board was not clean after normalization.");
+    }
+
+    const metrics = calculateStructuralMetrics(board, options.capacity);
     if (metrics.meanVialEntropy < options.minimumEntropy) continue;
 
-    const canonicalKey = createCanonicalBoardKey(candidate.board);
+    const canonicalKey = createCanonicalBoardKey(board);
     if (seen.has(canonicalKey)) continue;
 
     const solved = solveWithAStar(
-      candidate.board,
+      board,
       options.capacity,
       options.maxSolverStates,
     );
     if (solved === null) continue;
-    if (!verifySolution(candidate.board, solved.solution, options.capacity)) {
+    if (!verifySolution(board, solved.solution, options.capacity)) {
       throw new Error("A* replay verification failed.");
     }
 
@@ -124,7 +138,7 @@ async function main(): Promise<void> {
     const json = {
       id,
       capacity: options.capacity,
-      vials: candidate.board.map((vial) => [...vial].reverse()),
+      vials: board.map((vial) => [...vial].reverse()),
       development,
     };
 
