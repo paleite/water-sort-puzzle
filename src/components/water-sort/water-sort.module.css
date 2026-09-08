@@ -98,10 +98,46 @@
 
 .dynamicLiquidSurface {
   fill: none;
-  stroke: color-mix(in srgb, var(--liquid-color), white 22%);
-  stroke-width: 1.4;
+  stroke: color-mix(in srgb, var(--liquid-color), white 18%);
+  stroke-width: 1.1;
   stroke-linecap: round;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.vialGeometryGuides {
+  opacity: 0.92;
+}
+
+.debugVialInterior,
+.debugLiquidBounds {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+}
+
+.debugVialInterior {
+  stroke: #ef4444;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+}
+
+.debugLiquidBounds {
+  stroke: #0ea5e9;
+  stroke-width: 1;
+  stroke-dasharray: 3 2;
+}
+
+.debugMouthAnchor {
+  fill: #f59e0b;
+  stroke: white;
+  stroke-width: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+
+.debugSurfacePoint {
+  fill: #ec4899;
+  stroke: white;
+  stroke-width: 0.55;
   vector-effect: non-scaling-stroke;
 }
 
