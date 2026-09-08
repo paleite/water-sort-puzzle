@@ -82,8 +82,6 @@ export function HomeHero() {
               destination.querySelector<SVGPathElement>("[data-destination-liquid-path]"),
             destinationSurfaceElement:
               destination.querySelector<SVGPathElement>("[data-destination-surface-path]"),
-            destinationBaseSurfaceElement:
-              destination.querySelector<HTMLElement>("[data-liquid-surface]"),
           },
           geometry: calculatePourGeometry(container, source, destination),
           move: DEMO_MOVE,
@@ -144,10 +142,7 @@ export function HomeHero() {
         />
       ))}
 
-      <svg
-        className={styles.streamLayer}
-        aria-hidden="true"
-      >
+      <svg className={styles.streamLayer} aria-hidden="true">
         <path ref={streamRef} style={{opacity: 0}} />
       </svg>
     </div>
