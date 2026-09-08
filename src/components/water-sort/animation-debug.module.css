@@ -55,6 +55,13 @@
   color: rgb(23 55 73 / 0.7);
 }
 
+.scenarioRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  align-items: end;
+}
+
 .scenarioControl {
   display: grid;
   gap: 6px;
@@ -70,6 +77,20 @@
   background: white;
   color: inherit;
   font: inherit;
+}
+
+.guideToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.guideToggle input {
+  width: 18px;
+  height: 18px;
 }
 
 .selectionGrid {
@@ -149,6 +170,21 @@
 
 .streamLayer path {
   opacity: 0;
+}
+
+.streamSourceGuide,
+.streamDestinationGuide {
+  stroke: white;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.streamSourceGuide {
+  fill: #f59e0b;
+}
+
+.streamDestinationGuide {
+  fill: #ec4899;
 }
 
 .timeReadout {
