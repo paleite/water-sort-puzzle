@@ -76,7 +76,7 @@ export function createPourTimeline({
   if (incomingSurfaceElement !== null) {
     gsap.set(incomingSurfaceElement, {
       opacity: 0,
-      bottom: `${previousDestinationPercent}%`,
+      bottom: `calc(${previousDestinationPercent}% - 4px)`,
       rotation: 0,
       scaleY: 1,
       transformOrigin: "50% 50%",
@@ -86,8 +86,9 @@ export function createPourTimeline({
   if (impactPlumeElement !== null) {
     gsap.set(impactPlumeElement, {
       opacity: 0,
-      bottom: `${previousDestinationPercent}%`,
+      bottom: `calc(${previousDestinationPercent}% - 4px)`,
       x: 0,
+      y: 24,
       scaleY: 0,
       transformOrigin: "top center",
     });
@@ -145,7 +146,7 @@ export function createPourTimeline({
     timeline.to(
       sourceSurfaceElement,
       {
-        bottom: `${(nextSourceFill / capacity) * 100}%`,
+        bottom: `calc(${(nextSourceFill / capacity) * 100}% - 3px)`,
         duration: GAME_TIMING.pour.transferSeconds,
         ease: "none",
       },
@@ -190,7 +191,7 @@ export function createPourTimeline({
     timeline.to(
       incomingSurfaceElement,
       {
-        bottom: `${nextDestinationPercent}%`,
+        bottom: `calc(${nextDestinationPercent}% - 4px)`,
         duration: GAME_TIMING.pour.transferSeconds,
         ease: "none",
       },
@@ -201,7 +202,7 @@ export function createPourTimeline({
       timeline.to(
         impactPlumeElement,
         {
-          bottom: `${nextDestinationPercent}%`,
+          bottom: `calc(${nextDestinationPercent}% - 4px)`,
           duration: GAME_TIMING.pour.transferSeconds,
           ease: "none",
         },
