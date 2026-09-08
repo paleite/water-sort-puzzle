@@ -67,32 +67,28 @@ export function GameBoard({
 
       streamElement.style.stroke = LIQUID_COLORS[activeMove.color];
 
-      const geometry = calculatePourGeometry(
-        boardElement,
-        sourceElement,
-        destinationElement,
-      );
-
-      const sourceUnits = Array.from(
-        sourceElement.querySelectorAll<HTMLElement>("[data-liquid-unit]"),
-      );
-
       createPourTimeline({
         elements: {
           sourceElement,
           destinationElement,
           streamElement,
-          sourceTransferredElements: sourceUnits.slice(-activeMove.amount),
+          sourceLayerElements: Array.from(
+            sourceElement.querySelectorAll<SVGPathElement>("[data-source-liquid-layer]"),
+          ),
           sourceSurfaceElement:
-            sourceElement.querySelector<HTMLElement>("[data-liquid-surface]"),
-          incomingLiquidElement:
-            destinationElement.querySelector<HTMLElement>("[data-incoming-liquid]"),
-          incomingSurfaceElement:
-            destinationElement.querySelector<HTMLElement>("[data-incoming-surface]"),
-          impactPlumeElement:
-            destinationElement.querySelector<HTMLElement>("[data-impact-plume]"),
+            sourceElement.querySelector<SVGPathElement>("[data-source-surface-path]"),
+          destinationLiquidElement:
+            destinationElement.querySelector<SVGPathElement>("[data-destination-liquid-path]"),
+          destinationSurfaceElement:
+            destinationElement.querySelector<SVGPathElement>("[data-destination-surface-path]"),
+          destinationBaseSurfaceElement:
+            destinationElement.querySelector<HTMLElement>("[data-liquid-surface]"),
         },
-        geometry,
+        geometry: calculatePourGeometry(
+          boardElement,
+          sourceElement,
+          destinationElement,
+        ),
         move: activeMove,
         capacity,
         onComplete: onMovePresentationFinished,
@@ -132,10 +128,13 @@ export function GameBoard({
     <div ref={boardRef} className={styles.board}>
       <div className={styles.vialGrid}>
         {board.map((vial, vialIndex) => {
+          const isPresentingMove = phase === "presentingMove" && activeMove !== null;
           const incoming =
-            phase === "presentingMove" &&
-            activeMove !== null &&
-            activeMove.move.destinationVialIndex === vialIndex
+            isPresentingMove && activeMove.move.destinationVialIndex === vialIndex
+              ? {color: activeMove.color, amount: activeMove.amount}
+              : undefined;
+          const outgoing =
+            isPresentingMove && activeMove.move.sourceVialIndex === vialIndex
               ? {color: activeMove.color, amount: activeMove.amount}
               : undefined;
 
@@ -148,6 +147,7 @@ export function GameBoard({
               vialIndex={vialIndex}
               selected={selectedSourceVialIndex === vialIndex}
               {...(incoming === undefined ? {} : {incoming})}
+              {...(outgoing === undefined ? {} : {outgoing})}
               onPress={() => onVialPress(vialIndex)}
             />
           );
