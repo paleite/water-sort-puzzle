@@ -2,20 +2,22 @@ import gsap from "gsap";
 
 type Timeline = ReturnType<typeof gsap.timeline>;
 
-export interface SloshOptions {
+export interface SourceSloshOptions {
   surfaceElement: HTMLElement;
   bottleRotationDegrees: number;
   tiltStartSeconds: number;
-  transferStartSeconds: number;
+  tiltEndSeconds: number;
   returnStartSeconds: number;
+  returnEndSeconds: number;
+  settleEndSeconds: number;
 }
 
 /**
- * Adds a lightweight "liquid has mass" illusion without physics simulation.
+ * Keeps the source free surface roughly horizontal in world space while still
+ * allowing one readable lag/overshoot during acceleration and return.
  *
- * The bottle rotates normally while the free surface counter-rotates with
- * deliberate lag, slight overshoot, and a damped settle. The values are kept
- * small so the liquid still reads as stable rather than gelatinous.
+ * These phases deliberately do not overlap on `rotation`. The old version had
+ * competing rotation tweens, which made the intended slosh hard to read.
  */
 export function addSourceSlosh(
   timeline: Timeline,
@@ -23,30 +25,24 @@ export function addSourceSlosh(
     surfaceElement,
     bottleRotationDegrees,
     tiltStartSeconds,
-    transferStartSeconds,
+    tiltEndSeconds,
     returnStartSeconds,
-  }: SloshOptions,
+    returnEndSeconds,
+    settleEndSeconds,
+  }: SourceSloshOptions,
 ): void {
   const counterRotation = -bottleRotationDegrees;
+  const lagStartSeconds = tiltStartSeconds + 0.03;
+  const returnMidSeconds = (returnStartSeconds + returnEndSeconds) / 2;
 
   timeline.to(
     surfaceElement,
     {
-      rotation: counterRotation * 0.78,
-      duration: 0.12,
+      rotation: counterRotation * 0.9,
+      duration: Math.max(0.01, tiltEndSeconds - lagStartSeconds),
       ease: "power2.out",
     },
-    tiltStartSeconds + 0.03,
-  );
-
-  timeline.to(
-    surfaceElement,
-    {
-      rotation: counterRotation * 1.06,
-      duration: 0.08,
-      ease: "sine.inOut",
-    },
-    transferStartSeconds - 0.02,
+    lagStartSeconds,
   );
 
   timeline.to(
@@ -56,69 +52,85 @@ export function addSourceSlosh(
       duration: 0.12,
       ease: "sine.out",
     },
-    transferStartSeconds + 0.06,
+    tiltEndSeconds,
   );
 
   timeline.to(
     surfaceElement,
     {
-      rotation: bottleRotationDegrees * 0.07,
-      duration: 0.09,
-      ease: "power1.out",
+      rotation: counterRotation * 0.45,
+      duration: returnMidSeconds - returnStartSeconds,
+      ease: "power2.inOut",
     },
-    returnStartSeconds + 0.04,
+    returnStartSeconds,
   );
 
   timeline.to(
     surfaceElement,
     {
-      rotation: -bottleRotationDegrees * 0.035,
-      duration: 0.08,
+      rotation: counterRotation * 0.06,
+      duration: returnEndSeconds - returnMidSeconds,
       ease: "sine.inOut",
     },
-    returnStartSeconds + 0.13,
+    returnMidSeconds,
   );
 
   timeline.to(
     surfaceElement,
     {
       rotation: 0,
-      duration: 0.1,
+      duration: Math.max(0.01, settleEndSeconds - returnEndSeconds),
       ease: "sine.out",
     },
-    returnStartSeconds + 0.21,
+    returnEndSeconds,
   );
 }
 
+export interface DestinationSloshOptions {
+  surfaceElement: HTMLElement;
+  impactPlumeElement: HTMLElement | null;
+  transferStartSeconds: number;
+  transferEndSeconds: number;
+  streamCloseEndSeconds: number;
+}
+
 /**
- * Adds one restrained wobble to the receiving liquid surface as the incoming
- * liquid settles. This is intentionally much smaller than the source slosh.
+ * Animates the *visible incoming* surface rather than the destination's old,
+ * buried surface. A short-lived impact plume grows, sways, and is absorbed as
+ * the stream closes so the receiving-side purple shape never reads as static.
  */
 export function addDestinationSlosh(
   timeline: Timeline,
-  surfaceElement: HTMLElement,
-  startSeconds: number,
+  {
+    surfaceElement,
+    impactPlumeElement,
+    transferStartSeconds,
+    transferEndSeconds,
+    streamCloseEndSeconds,
+  }: DestinationSloshOptions,
 ): void {
+  const impactStartSeconds = transferStartSeconds + 0.04;
+
   timeline.to(
     surfaceElement,
     {
-      rotation: 3.5,
-      scaleY: 0.94,
-      duration: 0.07,
+      rotation: 4.5,
+      scaleY: 0.88,
+      duration: 0.08,
       ease: "power1.out",
     },
-    startSeconds,
+    impactStartSeconds,
   );
 
   timeline.to(
     surfaceElement,
     {
-      rotation: -2,
-      scaleY: 1.03,
-      duration: 0.08,
+      rotation: -2.75,
+      scaleY: 1.08,
+      duration: 0.1,
       ease: "sine.inOut",
     },
-    startSeconds + 0.07,
+    impactStartSeconds + 0.08,
   );
 
   timeline.to(
@@ -126,9 +138,67 @@ export function addDestinationSlosh(
     {
       rotation: 0,
       scaleY: 1,
-      duration: 0.1,
+      duration: Math.max(0.12, transferEndSeconds - (impactStartSeconds + 0.18)),
       ease: "sine.out",
     },
-    startSeconds + 0.15,
+    impactStartSeconds + 0.18,
+  );
+
+  if (impactPlumeElement === null) return;
+
+  timeline.to(
+    impactPlumeElement,
+    {
+      opacity: 0.86,
+      scaleY: 1,
+      x: 0,
+      duration: 0.08,
+      ease: "power2.out",
+    },
+    impactStartSeconds,
+  );
+
+  timeline.to(
+    impactPlumeElement,
+    {
+      x: 2,
+      scaleY: 1.08,
+      duration: 0.08,
+      ease: "sine.inOut",
+    },
+    impactStartSeconds + 0.08,
+  );
+
+  timeline.to(
+    impactPlumeElement,
+    {
+      x: -2,
+      scaleY: 0.92,
+      duration: 0.08,
+      ease: "sine.inOut",
+    },
+    impactStartSeconds + 0.16,
+  );
+
+  timeline.to(
+    impactPlumeElement,
+    {
+      x: 0,
+      scaleY: 1,
+      duration: Math.max(0.06, transferEndSeconds - (impactStartSeconds + 0.24)),
+      ease: "sine.out",
+    },
+    impactStartSeconds + 0.24,
+  );
+
+  timeline.to(
+    impactPlumeElement,
+    {
+      opacity: 0,
+      scaleY: 0.45,
+      duration: Math.max(0.06, streamCloseEndSeconds - transferEndSeconds),
+      ease: "power1.in",
+    },
+    transferEndSeconds,
   );
 }
