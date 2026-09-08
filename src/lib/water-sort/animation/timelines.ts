@@ -11,8 +11,9 @@ interface PourTimelineElements {
   streamElement: SVGLineElement;
   sourceTransferredElements: readonly HTMLElement[];
   sourceSurfaceElement: HTMLElement | null;
-  destinationSurfaceElement: HTMLElement | null;
   incomingLiquidElement: HTMLElement | null;
+  incomingSurfaceElement: HTMLElement | null;
+  impactPlumeElement: HTMLElement | null;
 }
 
 export function createPourTimeline({
@@ -34,8 +35,9 @@ export function createPourTimeline({
     streamElement,
     sourceTransferredElements,
     sourceSurfaceElement,
-    destinationSurfaceElement,
     incomingLiquidElement,
+    incomingSurfaceElement,
+    impactPlumeElement,
   } = elements;
 
   const streamLength = Math.hypot(
@@ -55,6 +57,14 @@ export function createPourTimeline({
     strokeDashoffset: streamLength,
   });
 
+  const sourceVialIndex = move.move.sourceVialIndex;
+  const destinationVialIndex = move.move.destinationVialIndex;
+  const nextSourceFill = move.nextBoard[sourceVialIndex]?.length ?? 0;
+  const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
+  const nextDestinationFill = move.nextBoard[destinationVialIndex]?.length ?? previousDestinationFill;
+  const previousDestinationPercent = (previousDestinationFill / capacity) * 100;
+  const nextDestinationPercent = (nextDestinationFill / capacity) * 100;
+
   if (incomingLiquidElement !== null) {
     gsap.set(incomingLiquidElement, {scaleY: 0, transformOrigin: "bottom center"});
   }
@@ -63,11 +73,25 @@ export function createPourTimeline({
     gsap.set(sourceSurfaceElement, {transformOrigin: "50% 50%"});
   }
 
-  if (destinationSurfaceElement !== null) {
-    gsap.set(destinationSurfaceElement, {transformOrigin: "50% 50%"});
+  if (incomingSurfaceElement !== null) {
+    gsap.set(incomingSurfaceElement, {
+      opacity: 0,
+      bottom: `${previousDestinationPercent}%`,
+      rotation: 0,
+      scaleY: 1,
+      transformOrigin: "50% 50%",
+    });
   }
 
-  const nextSourceFill = move.nextBoard[move.move.sourceVialIndex]?.length ?? 0;
+  if (impactPlumeElement !== null) {
+    gsap.set(impactPlumeElement, {
+      opacity: 0,
+      bottom: `${previousDestinationPercent}%`,
+      x: 0,
+      scaleY: 0,
+      transformOrigin: "top center",
+    });
+  }
 
   const timeline = gsap.timeline({onComplete, defaults: {overwrite: "auto"}});
 
@@ -132,8 +156,11 @@ export function createPourTimeline({
       surfaceElement: sourceSurfaceElement,
       bottleRotationDegrees: geometry.rotationDegrees,
       tiltStartSeconds: GAME_TIMING.pour.tiltStartSeconds,
-      transferStartSeconds: GAME_TIMING.pour.transferStartSeconds,
+      tiltEndSeconds: GAME_TIMING.pour.tiltStartSeconds + GAME_TIMING.pour.tiltSeconds,
       returnStartSeconds: GAME_TIMING.pour.returnRotationSeconds,
+      returnEndSeconds:
+        GAME_TIMING.pour.returnRotationSeconds + GAME_TIMING.pour.returnRotationDurationSeconds,
+      settleEndSeconds: GAME_TIMING.pour.totalSeconds,
     });
   }
 
@@ -149,28 +176,61 @@ export function createPourTimeline({
     );
   }
 
+  if (incomingSurfaceElement !== null) {
+    timeline.to(
+      incomingSurfaceElement,
+      {
+        opacity: 1,
+        duration: 0.04,
+        ease: "power1.out",
+      },
+      GAME_TIMING.pour.transferStartSeconds,
+    );
+
+    timeline.to(
+      incomingSurfaceElement,
+      {
+        bottom: `${nextDestinationPercent}%`,
+        duration: GAME_TIMING.pour.transferSeconds,
+        ease: "none",
+      },
+      GAME_TIMING.pour.transferStartSeconds,
+    );
+
+    if (impactPlumeElement !== null) {
+      timeline.to(
+        impactPlumeElement,
+        {
+          bottom: `${nextDestinationPercent}%`,
+          duration: GAME_TIMING.pour.transferSeconds,
+          ease: "none",
+        },
+        GAME_TIMING.pour.transferStartSeconds,
+      );
+    }
+
+    addDestinationSlosh(timeline, {
+      surfaceElement: incomingSurfaceElement,
+      impactPlumeElement,
+      transferStartSeconds: GAME_TIMING.pour.transferStartSeconds,
+      transferEndSeconds: GAME_TIMING.pour.transferStartSeconds + GAME_TIMING.pour.transferSeconds,
+      streamCloseEndSeconds:
+        GAME_TIMING.pour.streamCloseSeconds + GAME_TIMING.pour.streamCloseDurationSeconds,
+    });
+  }
+
   timeline.to(
     streamElement,
     {
       opacity: 0,
       strokeDashoffset: -streamLength,
-      duration: 0.07,
+      duration: GAME_TIMING.pour.streamCloseDurationSeconds,
       ease: "power1.in",
     },
     GAME_TIMING.pour.streamCloseSeconds,
   );
 
-  const receivingSurface = destinationSurfaceElement ?? incomingLiquidElement;
-
-  if (receivingSurface !== null) {
-    addDestinationSlosh(
-      timeline,
-      receivingSurface,
-      GAME_TIMING.pour.streamCloseSeconds + 0.02,
-    );
-  }
-
-  if (move.newlyCompletedVialIndices.includes(move.move.destinationVialIndex)) {
+  if (move.newlyCompletedVialIndices.includes(destinationVialIndex)) {
     timeline.to(
       destinationElement,
       {
@@ -188,7 +248,7 @@ export function createPourTimeline({
     sourceElement,
     {
       rotation: 0,
-      duration: 0.17,
+      duration: GAME_TIMING.pour.returnRotationDurationSeconds,
       ease: "power2.inOut",
     },
     GAME_TIMING.pour.returnRotationSeconds,
@@ -199,7 +259,7 @@ export function createPourTimeline({
     {
       x: 0,
       y: 0,
-      duration: 0.18,
+      duration: GAME_TIMING.pour.returnTravelDurationSeconds,
       ease: "power2.inOut",
     },
     GAME_TIMING.pour.returnTravelSeconds,
