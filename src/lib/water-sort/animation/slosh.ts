@@ -11,9 +11,9 @@ const SOURCE_DAMPING_RATIO = 0.34;
 const DESTINATION_SPRING = 118;
 const DESTINATION_DAMPING = 12.5;
 const DESTINATION_COUPLING = 86;
-const DESTINATION_IMPACT_FORCE = 360;
+const DESTINATION_IMPACT_FORCE = 210;
 const MAX_SOURCE_WORLD_ANGLE_DEGREES = 14;
-const MAX_DESTINATION_DISPLACEMENT = 8.5;
+const MAX_DESTINATION_DISPLACEMENT = 6.5;
 const SPLINE_TENSION = 0.82;
 
 interface Point {
@@ -252,9 +252,9 @@ export function createLiquidSimulation({
   ): void {
     const substepCount = Math.max(1, Math.ceil(deltaSeconds / (1 / 120)));
     const substepSeconds = deltaSeconds / substepCount;
-    const settleBlend = clamp((integrationTimeSeconds - homeTimeSeconds) / 0.18, 0, 1);
-    const sourceDampingRatio = SOURCE_DAMPING_RATIO + settleBlend * 0.9;
-    const destinationDamping = DESTINATION_DAMPING + settleBlend * 24;
+    const settleBlend = clamp((integrationTimeSeconds - homeTimeSeconds) / 0.28, 0, 1);
+    const sourceDampingRatio = SOURCE_DAMPING_RATIO + settleBlend * 0.5;
+    const destinationDamping = DESTINATION_DAMPING + settleBlend * 14;
 
     for (let step = 0; step < substepCount; step += 1) {
       const sourceAcceleration =
@@ -283,8 +283,8 @@ export function createLiquidSimulation({
         const displacement = previousDisplacements[pointIndex] ?? 0;
         const velocity = previousVelocities[pointIndex] ?? 0;
         const neighborForce = DESTINATION_COUPLING * (left + right - 2 * displacement);
-        const distanceFromImpact = Math.abs(pointIndex - 2);
-        const impactWeight = Math.exp(-(distanceFromImpact * distanceFromImpact) / 1.8);
+        const distanceFromImpact = Math.abs(pointIndex - 2.5);
+        const impactWeight = Math.exp(-(distanceFromImpact * distanceFromImpact) / 5.2);
         const impactForce = DESTINATION_IMPACT_FORCE * flow * impactWeight;
         const acceleration =
           -DESTINATION_SPRING * displacement
@@ -406,7 +406,7 @@ export function createLiquidSimulation({
       filteredAccelerationY += lowPassBlend * (accelerationY - filteredAccelerationY);
 
       if (timeSeconds >= homeTimeSeconds) {
-        const decay = Math.exp(-deltaSeconds * 18);
+        const decay = Math.exp(-deltaSeconds * 11);
         filteredAccelerationX *= decay;
         filteredAccelerationY *= decay;
       }
@@ -425,8 +425,10 @@ export function createLiquidSimulation({
       const impactTime = GAME_TIMING.pour.transferStartSeconds + 0.045;
       if (!impactTriggered && timeSeconds >= impactTime) {
         impactTriggered = true;
-        destinationVelocities[2] = (destinationVelocities[2] ?? 0) + 54;
+        destinationVelocities[1] = (destinationVelocities[1] ?? 0) + 12;
+        destinationVelocities[2] = (destinationVelocities[2] ?? 0) + 28;
         destinationVelocities[3] = (destinationVelocities[3] ?? 0) + 24;
+        destinationVelocities[4] = (destinationVelocities[4] ?? 0) + 12;
       }
 
       previousVelocityX = velocityX;
