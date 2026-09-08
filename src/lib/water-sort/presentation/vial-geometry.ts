@@ -1,3 +1,4 @@
+// Shared geometry for the static vial, animated liquid, stream anchors, and debug guides.
 export const VIAL_VIEWBOX_WIDTH = 100;
 export const VIAL_VIEWBOX_HEIGHT = 272;
 
