@@ -13,7 +13,7 @@ const DEBUG_SEEK_STEP_SECONDS = 1 / 120;
 interface PourTimelineElements {
   sourceElement: HTMLElement;
   destinationElement: HTMLElement;
-  streamElement: SVGLineElement;
+  streamElement: SVGPathElement;
   sourceLayerElements: readonly SVGPathElement[];
   sourceSurfaceElement: SVGPathElement | null;
   destinationLiquidElement: SVGPathElement | null;
@@ -50,6 +50,57 @@ function getGsapNumber(element: HTMLElement, property: string): number {
   if (typeof value === "number") return value;
   const parsed = Number.parseFloat(String(value));
   return Number.isFinite(parsed) ? parsed : 0;
+}
+
+function createStreamPath(
+  sourceX: number,
+  sourceY: number,
+  destinationX: number,
+  destinationY: number,
+): string {
+  const deltaX = destinationX - sourceX;
+  const deltaY = destinationY - sourceY;
+  const length = Math.max(0.001, Math.hypot(deltaX, deltaY));
+  const normalX = -deltaY / length;
+  const normalY = deltaX / length;
+  const sourceHalfWidth = 3.1;
+  const destinationHalfWidth = 1.25;
+  const middleX = (sourceX + destinationX) / 2;
+  const middleY = (sourceY + destinationY) / 2 + Math.min(3, length * 0.055);
+  const middleHalfWidth = 2.05;
+
+  const sourceTop = {
+    x: sourceX + normalX * sourceHalfWidth,
+    y: sourceY + normalY * sourceHalfWidth,
+  };
+  const sourceBottom = {
+    x: sourceX - normalX * sourceHalfWidth,
+    y: sourceY - normalY * sourceHalfWidth,
+  };
+  const destinationTop = {
+    x: destinationX + normalX * destinationHalfWidth,
+    y: destinationY + normalY * destinationHalfWidth,
+  };
+  const destinationBottom = {
+    x: destinationX - normalX * destinationHalfWidth,
+    y: destinationY - normalY * destinationHalfWidth,
+  };
+  const middleTop = {
+    x: middleX + normalX * middleHalfWidth,
+    y: middleY + normalY * middleHalfWidth,
+  };
+  const middleBottom = {
+    x: middleX - normalX * middleHalfWidth,
+    y: middleY - normalY * middleHalfWidth,
+  };
+
+  return [
+    `M ${sourceTop.x.toFixed(2)} ${sourceTop.y.toFixed(2)}`,
+    `Q ${middleTop.x.toFixed(2)} ${middleTop.y.toFixed(2)} ${destinationTop.x.toFixed(2)} ${destinationTop.y.toFixed(2)}`,
+    `L ${destinationBottom.x.toFixed(2)} ${destinationBottom.y.toFixed(2)}`,
+    `Q ${middleBottom.x.toFixed(2)} ${middleBottom.y.toFixed(2)} ${sourceBottom.x.toFixed(2)} ${sourceBottom.y.toFixed(2)}`,
+    "Z",
+  ].join(" ");
 }
 
 export function createPourTimeline({
@@ -122,10 +173,15 @@ export function createPourTimeline({
     const destinationSurfaceY =
       destinationGlassTop + destinationGlassHeight * (1 - destinationFill / capacity);
 
-    streamElement.setAttribute("x1", sourceMouth.x.toFixed(2));
-    streamElement.setAttribute("y1", sourceMouth.y.toFixed(2));
-    streamElement.setAttribute("x2", destinationImpactX.toFixed(2));
-    streamElement.setAttribute("y2", destinationSurfaceY.toFixed(2));
+    streamElement.setAttribute(
+      "d",
+      createStreamPath(
+        sourceMouth.x,
+        sourceMouth.y,
+        destinationImpactX,
+        destinationSurfaceY,
+      ),
+    );
   }
 
   gsap.set(sourceElement, {transformOrigin: "50% 4px", zIndex: 20});
