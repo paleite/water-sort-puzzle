@@ -28,9 +28,18 @@ interface LiquidSimulationElements {
   destinationSurfaceElement: SVGPathElement | null;
 }
 
+export interface LiquidSimulationSnapshot {
+  timeSeconds: number;
+  sourceWorldAngleDegrees: number;
+  sourceAngularVelocity: number;
+  destinationMaximumDisplacement: number;
+}
+
 export interface LiquidSimulation {
   update(timeSeconds: number): void;
+  reset(): void;
   finish(): void;
+  getSnapshot(): LiquidSimulationSnapshot;
 }
 
 function clamp(value: number, minimum: number, maximum: number): number {
@@ -185,6 +194,7 @@ export function createLiquidSimulation({
   let sourceWorldAngle = 0;
   let sourceAngularVelocity = 0;
   let impactTriggered = false;
+  let currentTimeSeconds = 0;
 
   const destinationDisplacements = Array.from({length: SURFACE_POINT_COUNT}, () => 0);
   const destinationVelocities = Array.from({length: SURFACE_POINT_COUNT}, () => 0);
@@ -205,7 +215,7 @@ export function createLiquidSimulation({
   function integrate(
     deltaSeconds: number,
     equilibriumWorldAngle: number,
-    currentTimeSeconds: number,
+    integrationTimeSeconds: number,
   ): void {
     const substepCount = Math.max(1, Math.ceil(deltaSeconds / (1 / 120)));
     const substepSeconds = deltaSeconds / substepCount;
@@ -225,7 +235,7 @@ export function createLiquidSimulation({
 
       const previousDisplacements = [...destinationDisplacements];
       const previousVelocities = [...destinationVelocities];
-      const flow = streamStrengthAt(currentTimeSeconds);
+      const flow = streamStrengthAt(integrationTimeSeconds);
 
       for (let pointIndex = 0; pointIndex < SURFACE_POINT_COUNT; pointIndex += 1) {
         const left = pointIndex > 0
@@ -337,6 +347,7 @@ export function createLiquidSimulation({
   }
 
   function update(timeSeconds: number): void {
+    currentTimeSeconds = timeSeconds;
     const center = getSourceCenter();
 
     if (previousTimeSeconds === null) {
@@ -386,8 +397,44 @@ export function createLiquidSimulation({
     render(timeSeconds, center.rotationDegrees);
   }
 
+  function reset(): void {
+    previousTimeSeconds = null;
+    previousCenterX = 0;
+    previousCenterY = 0;
+    previousVelocityX = 0;
+    previousVelocityY = 0;
+    filteredAccelerationX = 0;
+    filteredAccelerationY = 0;
+    sourceWorldAngle = 0;
+    sourceAngularVelocity = 0;
+    impactTriggered = false;
+    currentTimeSeconds = 0;
+    destinationDisplacements.fill(0);
+    destinationVelocities.fill(0);
+
+    for (const sourceLayerElement of sourceLayerElements) {
+      sourceLayerElement.style.opacity = "0";
+    }
+    setPathVisibility(sourceSurfaceElement, false);
+    setPathVisibility(destinationLiquidElement, false);
+    setPathVisibility(destinationSurfaceElement, false);
+  }
+
   function finish(): void {
+    currentTimeSeconds = GAME_TIMING.pour.totalSeconds;
     render(GAME_TIMING.pour.totalSeconds, 0);
+  }
+
+  function getSnapshot(): LiquidSimulationSnapshot {
+    return {
+      timeSeconds: currentTimeSeconds,
+      sourceWorldAngleDegrees: sourceWorldAngle,
+      sourceAngularVelocity,
+      destinationMaximumDisplacement: Math.max(
+        0,
+        ...destinationDisplacements.map((value) => Math.abs(value)),
+      ),
+    };
   }
 
   if (previousSourceFill <= 0) {
@@ -396,5 +443,5 @@ export function createLiquidSimulation({
   setPathVisibility(destinationLiquidElement, false);
   setPathVisibility(destinationSurfaceElement, false);
 
-  return {update, finish};
+  return {update, reset, finish, getSnapshot};
 }
