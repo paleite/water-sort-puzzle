@@ -44,6 +44,16 @@ function horizontalSurfacePath(fill: number, capacity: number): string {
   return `M 0 ${y} L 100 ${y}`;
 }
 
+function getMergedIncomingBaseFill(vial: VialState, incoming: MovingLiquid | undefined): number {
+  if (incoming === undefined) return vial.length;
+
+  let baseFill = vial.length;
+  while (baseFill > 0 && vial[baseFill - 1] === incoming.color) {
+    baseFill -= 1;
+  }
+  return baseFill;
+}
+
 export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
   {
     vial,
@@ -82,6 +92,7 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
       ];
 
   const incomingBaseFill = vial.length;
+  const mergedIncomingBaseFill = getMergedIncomingBaseFill(vial, incoming);
   const selectionLifted = selected && outgoing === undefined;
 
   return (
@@ -100,20 +111,27 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
         onClick={interactive ? onPress : undefined}
       >
         <span className={styles.vialGlass} aria-hidden="true">
-          {vial.map((color, index) => (
-            <span
-              key={index}
-              className={`${styles.liquidUnit}${outgoing === undefined ? "" : ` ${styles.liquidUnitHidden}`}`}
-              data-liquid-unit=""
-              style={{
-                "--liquid-color": LIQUID_COLORS[color],
-                "--segment-index": index,
-                "--capacity": capacity,
-              } as CSSProperties}
-            />
-          ))}
+          {vial.map((color, index) => {
+            const hiddenForOutgoing = outgoing !== undefined;
+            const hiddenForIncomingMerge =
+              incoming !== undefined && index >= mergedIncomingBaseFill;
+            const hidden = hiddenForOutgoing || hiddenForIncomingMerge;
 
-          {topColor !== null && outgoing === undefined && (
+            return (
+              <span
+                key={index}
+                className={`${styles.liquidUnit}${hidden ? ` ${styles.liquidUnitHidden}` : ""}`}
+                data-liquid-unit=""
+                style={{
+                  "--liquid-color": LIQUID_COLORS[color],
+                  "--segment-index": index,
+                  "--capacity": capacity,
+                } as CSSProperties}
+              />
+            );
+          })}
+
+          {topColor !== null && outgoing === undefined && incoming === undefined && (
             <span
               className={styles.liquidSurface}
               data-liquid-surface=""
@@ -161,7 +179,11 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
               <path
                 data-destination-liquid-path=""
                 className={styles.dynamicLiquidBody}
-                d={rectangularLayerPath(incomingBaseFill, incomingBaseFill, capacity)}
+                d={rectangularLayerPath(
+                  mergedIncomingBaseFill,
+                  incomingBaseFill,
+                  capacity,
+                )}
                 style={{
                   "--liquid-color": LIQUID_COLORS[incoming.color],
                 } as CSSProperties}
