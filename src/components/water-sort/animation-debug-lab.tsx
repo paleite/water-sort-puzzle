@@ -30,6 +30,7 @@ interface PourStageProps {
   scenario: AnimationDebugScenario;
   initialTimeSeconds: number;
   committed?: boolean;
+  debugGeometry?: boolean;
   onPresentationReady?: (presentation: PourPresentation | null) => void;
   onFrame?: (snapshot: PourPresentationSnapshot) => void;
 }
@@ -42,6 +43,7 @@ function PourStage({
   scenario,
   initialTimeSeconds,
   committed = false,
+  debugGeometry = false,
   onPresentationReady,
   onFrame,
 }: PourStageProps) {
@@ -109,7 +111,14 @@ function PourStage({
       onPresentationReady?.(null);
       presentation.timeline.revert();
     };
-  }, [committed, initialTimeSeconds, onFrame, onPresentationReady, scenario]);
+  }, [
+    committed,
+    debugGeometry,
+    initialTimeSeconds,
+    onFrame,
+    onPresentationReady,
+    scenario,
+  ]);
 
   const displayBoard = committed ? scenario.move.nextBoard : scenario.initialBoard;
 
@@ -137,6 +146,7 @@ function PourStage({
               capacity={scenario.capacity}
               vialIndex={vialIndex}
               interactive={false}
+              debugGeometry={debugGeometry}
               {...(outgoing === undefined ? {} : {outgoing})}
               {...(incoming === undefined ? {} : {incoming})}
             />
@@ -147,6 +157,20 @@ function PourStage({
       {!committed && (
         <svg className={debugStyles.streamLayer} aria-hidden="true">
           <path ref={streamRef} style={{opacity: 0}} />
+          {debugGeometry && (
+            <>
+              <circle
+                data-debug-stream-source=""
+                r="4"
+                className={debugStyles.streamSourceGuide}
+              />
+              <circle
+                data-debug-stream-destination=""
+                r="4"
+                className={debugStyles.streamDestinationGuide}
+              />
+            </>
+          )}
         </svg>
       )}
     </div>
@@ -227,6 +251,7 @@ export function AnimationDebugLab() {
   const [selectedScenarioId, setSelectedScenarioId] = useState(
     defaultScenario?.id ?? "normal-non-empty",
   );
+  const [showGeometryGuides, setShowGeometryGuides] = useState(false);
   const selectedScenario = useMemo(
     () => ANIMATION_DEBUG_SCENARIOS.find((scenario) => scenario.id === selectedScenarioId)
       ?? defaultScenario,
@@ -271,24 +296,36 @@ export function AnimationDebugLab() {
       </header>
 
       <section className={debugStyles.section}>
-        <label className={debugStyles.scenarioControl}>
-          <span>Scenario</span>
-          <select
-            value={selectedScenarioId}
-            onChange={(event) => {
-              const nextId = event.currentTarget.value;
-              requestedTimeRef.current = 0;
-              setPlayheadTime(0);
-              setSnapshot(null);
-              setSelectedScenarioId(nextId);
-            }}
-            data-debug-scenario=""
-          >
-            {ANIMATION_DEBUG_SCENARIOS.map((scenario) => (
-              <option key={scenario.id} value={scenario.id}>{scenario.title}</option>
-            ))}
-          </select>
-        </label>
+        <div className={debugStyles.scenarioRow}>
+          <label className={debugStyles.scenarioControl}>
+            <span>Scenario</span>
+            <select
+              value={selectedScenarioId}
+              onChange={(event) => {
+                const nextId = event.currentTarget.value;
+                requestedTimeRef.current = 0;
+                setPlayheadTime(0);
+                setSnapshot(null);
+                setSelectedScenarioId(nextId);
+              }}
+              data-debug-scenario=""
+            >
+              {ANIMATION_DEBUG_SCENARIOS.map((scenario) => (
+                <option key={scenario.id} value={scenario.id}>{scenario.title}</option>
+              ))}
+            </select>
+          </label>
+
+          <label className={debugStyles.guideToggle}>
+            <input
+              type="checkbox"
+              checked={showGeometryGuides}
+              onChange={(event) => setShowGeometryGuides(event.currentTarget.checked)}
+            />
+            <span>Geometry guides</span>
+          </label>
+        </div>
+
         <p className={debugStyles.sectionDescription}>{selectedScenario.description}</p>
       </section>
 
@@ -306,9 +343,10 @@ export function AnimationDebugLab() {
         <div className={debugStyles.interactiveLayout}>
           <div>
             <PourStage
-              key={selectedScenario.id}
+              key={`${selectedScenario.id}-${showGeometryGuides ? "guides" : "plain"}`}
               scenario={selectedScenario}
               initialTimeSeconds={0}
+              debugGeometry={showGeometryGuides}
               onPresentationReady={handlePresentationReady}
               onFrame={handleFrame}
             />
@@ -387,7 +425,7 @@ export function AnimationDebugLab() {
         <div className={debugStyles.gallery} data-debug-gallery="">
           {POUR_DEBUG_CHECKPOINTS.map((checkpoint) => (
             <article
-              key={`${selectedScenario.id}-${checkpoint.id}`}
+              key={`${selectedScenario.id}-${checkpoint.id}-${showGeometryGuides ? "guides" : "plain"}`}
               className={debugStyles.checkpointCard}
               data-debug-card={checkpoint.id}
             >
@@ -399,6 +437,7 @@ export function AnimationDebugLab() {
                 scenario={selectedScenario}
                 initialTimeSeconds={checkpoint.timeSeconds}
                 committed={checkpoint.id === "settled"}
+                debugGeometry={showGeometryGuides}
               />
             </article>
           ))}
