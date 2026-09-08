@@ -245,9 +245,7 @@ export function createLiquidSimulation({
     destinationDynamicBaseFill -= 1;
   }
 
-  const sourceHeight = Math.max(1, sourceElement.offsetHeight);
   const sourceWidth = Math.max(1, sourceElement.offsetWidth);
-  const pivotToCenter = sourceHeight / 2 - 4;
   const metresPerPixel = 0.06 / sourceWidth;
   const homeTimeSeconds =
     GAME_TIMING.pour.returnTravelSeconds + GAME_TIMING.pour.returnTravelDurationSeconds;
@@ -268,15 +266,11 @@ export function createLiquidSimulation({
   const destinationVelocities = Array.from({length: SURFACE_POINT_COUNT}, () => 0);
 
   function getSourceCenter(): {x: number; y: number; rotationDegrees: number} {
-    const translationX = getGsapNumber(sourceElement, "x");
-    const translationY = getGsapNumber(sourceElement, "y");
-    const rotationDegrees = getGsapNumber(sourceElement, "rotation");
-    const radians = (rotationDegrees * Math.PI) / 180;
-
+    const rect = sourceElement.getBoundingClientRect();
     return {
-      x: translationX - pivotToCenter * Math.sin(radians),
-      y: translationY + pivotToCenter * Math.cos(radians),
-      rotationDegrees,
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+      rotationDegrees: getGsapNumber(sourceElement, "rotation"),
     };
   }
 
