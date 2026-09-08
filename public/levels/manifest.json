@@ -4,12 +4,12 @@
       "id": "001",
       "file": "001.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 385,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 7726,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -17,11 +17,11 @@
       "id": "002",
       "file": "002.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 372,
+        "optimalMoveCount": 26,
+        "exploredStateCount": 4781,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -30,12 +30,12 @@
       "id": "003",
       "file": "003.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 297,
+        "optimalMoveCount": 28,
+        "exploredStateCount": 16826,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -43,11 +43,11 @@
       "id": "004",
       "file": "004.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 298,
+        "optimalMoveCount": 26,
+        "exploredStateCount": 4341,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -57,11 +57,11 @@
       "file": "005.json",
       "development": {
         "optimalMoveCount": 24,
-        "exploredStateCount": 475,
+        "exploredStateCount": 189,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.4426065103715944,
+        "boundaryRate": 0.6388888888888888,
+        "totalRunCount": 35,
         "generationDepth": 24
       }
     },
@@ -69,11 +69,11 @@
       "id": "006",
       "file": "006.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 253,
+        "optimalMoveCount": 26,
+        "exploredStateCount": 7671,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -82,12 +82,12 @@
       "id": "007",
       "file": "007.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 441,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 5922,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -95,11 +95,11 @@
       "id": "008",
       "file": "008.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 249,
+        "optimalMoveCount": 26,
+        "exploredStateCount": 6417,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -108,12 +108,12 @@
       "id": "009",
       "file": "009.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 202,
+        "optimalMoveCount": 25,
+        "exploredStateCount": 2259,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.4583333333333333,
+        "boundaryRate": 0.6388888888888888,
+        "totalRunCount": 35,
         "generationDepth": 24
       }
     },
@@ -121,11 +121,11 @@
       "id": "010",
       "file": "010.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 333,
+        "optimalMoveCount": 25,
+        "exploredStateCount": 118,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -134,12 +134,12 @@
       "id": "011",
       "file": "011.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 338,
+        "optimalMoveCount": 28,
+        "exploredStateCount": 12493,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -147,12 +147,12 @@
       "id": "012",
       "file": "012.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 415,
+        "optimalMoveCount": 25,
+        "exploredStateCount": 10487,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.3852130207431887,
+        "boundaryRate": 0.6111111111111112,
+        "totalRunCount": 34,
         "generationDepth": 24
       }
     },
@@ -160,12 +160,12 @@
       "id": "013",
       "file": "013.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 267,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 9629,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -173,11 +173,11 @@
       "id": "014",
       "file": "014.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 302,
+        "optimalMoveCount": 26,
+        "exploredStateCount": 8549,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.4842731770382611,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -186,11 +186,11 @@
       "id": "015",
       "file": "015.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 295,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 14312,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -199,12 +199,12 @@
       "id": "016",
       "file": "016.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 322,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 3305,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -212,11 +212,11 @@
       "id": "017",
       "file": "017.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 342,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 9906,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
+        "meanVialEntropy": 1.5,
+        "boundaryRate": 0.6666666666666666,
         "totalRunCount": 36,
         "generationDepth": 24
       }
@@ -225,12 +225,12 @@
       "id": "018",
       "file": "018.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 312,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 4174,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -238,12 +238,12 @@
       "id": "019",
       "file": "019.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 400,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 6176,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     },
@@ -251,12 +251,12 @@
       "id": "020",
       "file": "020.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 338,
+        "optimalMoveCount": 27,
+        "exploredStateCount": 9950,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.372296154068048,
-        "boundaryRate": 0.6571428571428571,
-        "totalRunCount": 36,
+        "meanVialEntropy": 1.5416666666666667,
+        "boundaryRate": 0.6944444444444444,
+        "totalRunCount": 37,
         "generationDepth": 24
       }
     }
