@@ -41,6 +41,10 @@ export interface PourPresentation {
   getSnapshot(): PourPresentationSnapshot;
 }
 
+function clamp(value: number, minimum: number, maximum: number): number {
+  return Math.max(minimum, Math.min(maximum, value));
+}
+
 function getGsapNumber(element: HTMLElement, property: string): number {
   const value = gsap.getProperty(element, property);
   if (typeof value === "number") return value;
@@ -78,22 +82,54 @@ export function createPourTimeline({
     destinationBaseSurfaceElement,
   } = elements;
 
-  const streamLength = Math.hypot(
-    geometry.streamEnd.x - geometry.streamStart.x,
-    geometry.streamEnd.y - geometry.streamStart.y,
-  );
+  const streamSvg = streamElement.ownerSVGElement;
+  if (streamSvg === null) {
+    throw new Error("Pour stream must belong to an SVG element.");
+  }
 
-  streamElement.setAttribute("x1", String(geometry.streamStart.x));
-  streamElement.setAttribute("y1", String(geometry.streamStart.y));
-  streamElement.setAttribute("x2", String(geometry.streamEnd.x));
-  streamElement.setAttribute("y2", String(geometry.streamEnd.y));
+  const streamRect = streamSvg.getBoundingClientRect();
+  const sourceRestRect = sourceElement.getBoundingClientRect();
+  const destinationRestRect = destinationElement.getBoundingClientRect();
+  const sourcePivot = {
+    x: sourceRestRect.left - streamRect.left + sourceRestRect.width / 2,
+    y: sourceRestRect.top - streamRect.top + 4,
+  };
+  const sourceMouthOffsetFromPivot = 1;
+  const destinationGlassTop = destinationRestRect.top - streamRect.top + 4;
+  const destinationGlassHeight = Math.max(1, destinationRestRect.height - 4);
+  const destinationImpactX =
+    destinationRestRect.left - streamRect.left
+    + destinationRestRect.width * (geometry.direction === "right" ? 0.32 : 0.68);
+  const destinationVialIndex = move.move.destinationVialIndex;
+  const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
+
+  function updateStreamGeometry(timeSeconds: number): void {
+    const sourceX = getGsapNumber(sourceElement, "x");
+    const sourceY = getGsapNumber(sourceElement, "y");
+    const rotationDegrees = getGsapNumber(sourceElement, "rotation");
+    const radians = (rotationDegrees * Math.PI) / 180;
+    const sourceMouth = {
+      x: sourcePivot.x + sourceX - Math.sin(radians) * sourceMouthOffsetFromPivot,
+      y: sourcePivot.y + sourceY + Math.cos(radians) * sourceMouthOffsetFromPivot,
+    };
+
+    const transferProgress = clamp(
+      (timeSeconds - GAME_TIMING.pour.transferStartSeconds) / GAME_TIMING.pour.transferSeconds,
+      0,
+      1,
+    );
+    const destinationFill = previousDestinationFill + move.amount * transferProgress;
+    const destinationSurfaceY =
+      destinationGlassTop + destinationGlassHeight * (1 - destinationFill / capacity);
+
+    streamElement.setAttribute("x1", sourceMouth.x.toFixed(2));
+    streamElement.setAttribute("y1", sourceMouth.y.toFixed(2));
+    streamElement.setAttribute("x2", destinationImpactX.toFixed(2));
+    streamElement.setAttribute("y2", destinationSurfaceY.toFixed(2));
+  }
 
   gsap.set(sourceElement, {transformOrigin: "50% 4px", zIndex: 20});
-  gsap.set(streamElement, {
-    opacity: 0,
-    strokeDasharray: streamLength,
-    strokeDashoffset: streamLength,
-  });
+  gsap.set(streamElement, {opacity: 0});
 
   if (destinationBaseSurfaceElement !== null) {
     gsap.set(destinationBaseSurfaceElement, {opacity: 1});
@@ -172,6 +208,7 @@ export function createPourTimeline({
   timeline.eventCallback("onStart", () => onDebug?.("timeline:start", 0));
   timeline.eventCallback("onUpdate", () => {
     const timeSeconds = timeline.time();
+    updateStreamGeometry(timeSeconds);
     liquidSimulation.update(timeSeconds);
     emitFrame();
 
@@ -190,10 +227,12 @@ export function createPourTimeline({
   timeline.eventCallback("onComplete", () => {
     onDebug?.("timeline:complete", timeline.time());
     liquidSimulation.finish();
+    updateStreamGeometry(GAME_TIMING.pour.totalSeconds);
     emitFrame();
     onComplete();
   });
 
+  updateStreamGeometry(0);
   liquidSimulation.update(0);
 
   timeline.to(
@@ -221,7 +260,6 @@ export function createPourTimeline({
     streamElement,
     {
       opacity: 1,
-      strokeDashoffset: 0,
       duration: GAME_TIMING.pour.streamOpenSeconds,
       ease: "power1.out",
     },
@@ -244,14 +282,12 @@ export function createPourTimeline({
     streamElement,
     {
       opacity: 0,
-      strokeDashoffset: -streamLength,
       duration: GAME_TIMING.pour.streamCloseDurationSeconds,
       ease: "power1.in",
     },
     GAME_TIMING.pour.streamCloseSeconds,
   );
 
-  const destinationVialIndex = move.move.destinationVialIndex;
   if (move.newlyCompletedVialIndices.includes(destinationVialIndex)) {
     timeline.to(
       destinationElement,
@@ -287,11 +323,7 @@ export function createPourTimeline({
     GAME_TIMING.pour.returnTravelSeconds,
   );
 
-  timeline.set(
-    streamElement,
-    {opacity: 0},
-    GAME_TIMING.pour.totalSeconds,
-  );
+  timeline.set(streamElement, {opacity: 0}, GAME_TIMING.pour.totalSeconds);
 
   function seek(timeSeconds: number): void {
     const targetTime = gsap.utils.clamp(
@@ -303,17 +335,24 @@ export function createPourTimeline({
     timeline.pause();
     timeline.time(0, true);
     liquidSimulation.reset();
+    updateStreamGeometry(0);
     liquidSimulation.update(0);
 
     let cursor = DEBUG_SEEK_STEP_SECONDS;
     while (cursor < targetTime) {
       timeline.time(cursor, true);
+      updateStreamGeometry(cursor);
       liquidSimulation.update(cursor);
       cursor += DEBUG_SEEK_STEP_SECONDS;
     }
 
     timeline.time(targetTime, true);
-    liquidSimulation.update(targetTime);
+    updateStreamGeometry(targetTime);
+    if (targetTime >= GAME_TIMING.pour.totalSeconds - 0.0001) {
+      liquidSimulation.finish();
+    } else {
+      liquidSimulation.update(targetTime);
+    }
 
     const firstFutureMarkerIndex = debugMarkers.findIndex(
       (marker) => marker.timeSeconds > targetTime,
