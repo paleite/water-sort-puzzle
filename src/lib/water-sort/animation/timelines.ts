@@ -139,16 +139,32 @@ export function createPourTimeline({
   const sourceMouthAnchor = sourceElement.querySelector<SVGCircleElement>(
     geometry.direction === "right" ? "[data-vial-mouth-right]" : "[data-vial-mouth-left]",
   );
-  const destinationLiquidViewport = destinationElement.querySelector<SVGSVGElement>(
-    "[data-liquid-viewport]",
+  const destinationLiquidBounds = destinationElement.querySelector<SVGRectElement>(
+    "[data-liquid-bounds]",
   );
-  if (sourceMouthAnchor === null || destinationLiquidViewport === null) {
+  if (sourceMouthAnchor === null || destinationLiquidBounds === null) {
     throw new Error("Missing SVG geometry anchor required for pour presentation.");
   }
 
   const streamSvgElement: SVGSVGElement = streamSvg;
   const sourceMouthAnchorElement: SVGCircleElement = sourceMouthAnchor;
-  const destinationLiquidViewportElement: SVGSVGElement = destinationLiquidViewport;
+  const destinationLiquidBoundsElement: SVGRectElement = destinationLiquidBounds;
+  const streamSourceGuide = streamSvgElement.querySelector<SVGCircleElement>(
+    "[data-debug-stream-source]",
+  );
+  const streamDestinationGuide = streamSvgElement.querySelector<SVGCircleElement>(
+    "[data-debug-stream-destination]",
+  );
+  const destinationDebugPointElements = Array.from(
+    destinationElement.querySelectorAll<SVGCircleElement>("[data-debug-destination-point]"),
+  );
+
+  const sourceElementRect = sourceElement.getBoundingClientRect();
+  const sourceMouthRectAtRest = sourceMouthAnchorElement.getBoundingClientRect();
+  const transformOriginX =
+    sourceMouthRectAtRest.left + sourceMouthRectAtRest.width / 2 - sourceElementRect.left;
+  const transformOriginY =
+    sourceMouthRectAtRest.top + sourceMouthRectAtRest.height / 2 - sourceElementRect.top;
 
   const destinationVialIndex = move.move.destinationVialIndex;
   const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
@@ -163,10 +179,20 @@ export function createPourTimeline({
     return streamRect;
   }
 
+  function updateStreamGuide(
+    element: SVGCircleElement | null,
+    x: number,
+    y: number,
+  ): void {
+    if (element === null) return;
+    element.setAttribute("cx", x.toFixed(2));
+    element.setAttribute("cy", y.toFixed(2));
+  }
+
   function updateStreamGeometry(timeSeconds: number): void {
     const streamRect = syncStreamViewport();
     const sourceMouthRect = sourceMouthAnchorElement.getBoundingClientRect();
-    const destinationViewportRect = destinationLiquidViewportElement.getBoundingClientRect();
+    const destinationBoundsRect = destinationLiquidBoundsElement.getBoundingClientRect();
 
     const sourceMouthX =
       sourceMouthRect.left + sourceMouthRect.width / 2 - streamRect.left;
@@ -180,11 +206,11 @@ export function createPourTimeline({
     );
     const destinationFill = previousDestinationFill + move.amount * transferProgress;
     const destinationImpactX =
-      destinationViewportRect.left - streamRect.left
-      + destinationViewportRect.width * (geometry.direction === "right" ? 0.28 : 0.72);
+      destinationBoundsRect.left - streamRect.left
+      + destinationBoundsRect.width * (geometry.direction === "right" ? 0.28 : 0.72);
     const destinationSurfaceY =
-      destinationViewportRect.top - streamRect.top
-      + destinationViewportRect.height * (1 - destinationFill / capacity);
+      destinationBoundsRect.top - streamRect.top
+      + destinationBoundsRect.height * (1 - destinationFill / capacity);
 
     streamElement.setAttribute(
       "d",
@@ -195,9 +221,14 @@ export function createPourTimeline({
         destinationSurfaceY,
       ),
     );
+    updateStreamGuide(streamSourceGuide, sourceMouthX, sourceMouthY);
+    updateStreamGuide(streamDestinationGuide, destinationImpactX, destinationSurfaceY);
   }
 
-  gsap.set(sourceElement, {transformOrigin: "50% 4px", zIndex: 20});
+  gsap.set(sourceElement, {
+    transformOrigin: `${transformOriginX}px ${transformOriginY}px`,
+    zIndex: 20,
+  });
   gsap.set(streamElement, {opacity: 0});
 
   const liquidSimulation = createLiquidSimulation({
@@ -207,6 +238,7 @@ export function createPourTimeline({
       sourceSurfaceElement,
       destinationLiquidElement,
       destinationSurfaceElement,
+      destinationDebugPointElements,
     },
     move,
     capacity,
