@@ -8,6 +8,20 @@ export interface PourGeometry {
   streamEnd: Point;
 }
 
+function centerOfRect(rect: DOMRect): Point {
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
+}
+
+function relativePoint(point: Point, containerRect: DOMRect): Point {
+  return {
+    x: point.x - containerRect.left,
+    y: point.y - containerRect.top,
+  };
+}
+
 export function calculatePourGeometry(
   boardElement: HTMLElement,
   sourceElement: HTMLElement,
@@ -16,19 +30,32 @@ export function calculatePourGeometry(
   const boardRect = boardElement.getBoundingClientRect();
   const sourceRect = sourceElement.getBoundingClientRect();
   const destinationRect = destinationElement.getBoundingClientRect();
+  const direction = destinationRect.left + destinationRect.width / 2
+    >= sourceRect.left + sourceRect.width / 2
+    ? "right"
+    : "left";
 
-  const sourceMouth = {
-    x: sourceRect.left - boardRect.left + sourceRect.width / 2,
-    y: sourceRect.top - boardRect.top + 5,
-  };
-  const destinationMouth = {
-    x: destinationRect.left - boardRect.left + destinationRect.width / 2,
-    y: destinationRect.top - boardRect.top + 6,
-  };
-  const direction = destinationMouth.x >= sourceMouth.x ? "right" : "left";
-  const horizontalOffset = Math.min(20, sourceRect.width * 0.3);
+  const sourceMouthAnchor = sourceElement.querySelector<SVGCircleElement>(
+    direction === "right" ? "[data-vial-mouth-right]" : "[data-vial-mouth-left]",
+  );
+  const destinationMouthAnchor = destinationElement.querySelector<SVGCircleElement>(
+    direction === "right" ? "[data-vial-mouth-left]" : "[data-vial-mouth-right]",
+  );
+
+  if (sourceMouthAnchor === null || destinationMouthAnchor === null) {
+    throw new Error("Missing vial mouth anchor required for pour geometry.");
+  }
+
+  const sourceMouth = relativePoint(
+    centerOfRect(sourceMouthAnchor.getBoundingClientRect()),
+    boardRect,
+  );
+  const destinationMouth = relativePoint(
+    centerOfRect(destinationMouthAnchor.getBoundingClientRect()),
+    boardRect,
+  );
   const targetMouth = {
-    x: destinationMouth.x + (direction === "right" ? -horizontalOffset : horizontalOffset),
+    x: destinationMouth.x,
     y: destinationMouth.y - 28,
   };
 
