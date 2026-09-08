@@ -26,10 +26,10 @@ export function calculatePourGeometry(
     y: destinationRect.top - boardRect.top + 6,
   };
   const direction = destinationMouth.x >= sourceMouth.x ? "right" : "left";
-  const horizontalOffset = Math.min(18, sourceRect.width * 0.28);
+  const horizontalOffset = Math.min(20, sourceRect.width * 0.3);
   const targetMouth = {
     x: destinationMouth.x + (direction === "right" ? -horizontalOffset : horizontalOffset),
-    y: destinationMouth.y - 8,
+    y: destinationMouth.y - 28,
   };
 
   return {
