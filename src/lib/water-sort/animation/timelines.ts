@@ -146,23 +146,27 @@ export function createPourTimeline({
     throw new Error("Missing SVG geometry anchor required for pour presentation.");
   }
 
+  const streamSvgElement: SVGSVGElement = streamSvg;
+  const sourceMouthAnchorElement: SVGCircleElement = sourceMouthAnchor;
+  const destinationLiquidViewportElement: SVGSVGElement = destinationLiquidViewport;
+
   const destinationVialIndex = move.move.destinationVialIndex;
   const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
 
   function syncStreamViewport(): DOMRect {
-    const streamRect = streamSvg.getBoundingClientRect();
-    streamSvg.setAttribute(
+    const streamRect = streamSvgElement.getBoundingClientRect();
+    streamSvgElement.setAttribute(
       "viewBox",
       `0 0 ${Math.max(1, streamRect.width)} ${Math.max(1, streamRect.height)}`,
     );
-    streamSvg.setAttribute("preserveAspectRatio", "none");
+    streamSvgElement.setAttribute("preserveAspectRatio", "none");
     return streamRect;
   }
 
   function updateStreamGeometry(timeSeconds: number): void {
     const streamRect = syncStreamViewport();
-    const sourceMouthRect = sourceMouthAnchor.getBoundingClientRect();
-    const destinationViewportRect = destinationLiquidViewport.getBoundingClientRect();
+    const sourceMouthRect = sourceMouthAnchorElement.getBoundingClientRect();
+    const destinationViewportRect = destinationLiquidViewportElement.getBoundingClientRect();
 
     const sourceMouthX =
       sourceMouthRect.left + sourceMouthRect.width / 2 - streamRect.left;
