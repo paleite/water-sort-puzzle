@@ -85,6 +85,8 @@ export function GameBoard({
           sourceTransferredElements: sourceUnits.slice(-activeMove.amount),
           sourceSurfaceElement:
             sourceElement.querySelector<HTMLElement>("[data-liquid-surface]"),
+          destinationSurfaceElement:
+            destinationElement.querySelector<HTMLElement>("[data-liquid-surface]"),
           incomingLiquidElement:
             destinationElement.querySelector<HTMLElement>("[data-incoming-liquid]"),
         },
