@@ -46,7 +46,7 @@ function PourStage({
   onFrame,
 }: PourStageProps) {
   const boardRef = useRef<HTMLDivElement>(null);
-  const streamRef = useRef<SVGLineElement>(null);
+  const streamRef = useRef<SVGPathElement>(null);
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
 
   useLayoutEffect(() => {
@@ -77,7 +77,7 @@ function PourStage({
       destinationElement,
     );
 
-    streamElement.style.stroke = LIQUID_COLORS[scenario.move.color];
+    streamElement.style.fill = LIQUID_COLORS[scenario.move.color];
 
     const presentation = createPourTimeline({
       elements: {
@@ -148,7 +148,7 @@ function PourStage({
 
       {!committed && (
         <svg className={debugStyles.streamLayer} aria-hidden="true">
-          <line ref={streamRef} strokeWidth="7" strokeLinecap="round" />
+          <path ref={streamRef} style={{opacity: 0}} />
         </svg>
       )}
     </div>
