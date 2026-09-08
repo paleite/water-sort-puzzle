@@ -19,6 +19,23 @@ async function readJson<T>(file: string): Promise<T> {
   return JSON.parse(await readFile(file, "utf8")) as T;
 }
 
+function hasCleanStartingShape(raw: RawLevel): boolean {
+  if (raw.capacity <= 0) return false;
+
+  const totalUnits = raw.vials.reduce((sum, vial) => sum + vial.length, 0);
+  if (totalUnits % raw.capacity !== 0) return false;
+
+  const expectedFullVials = totalUnits / raw.capacity;
+  const fullVials = raw.vials.filter((vial) => vial.length === raw.capacity).length;
+  const emptyVials = raw.vials.filter((vial) => vial.length === 0).length;
+
+  return (
+    raw.vials.every((vial) => vial.length === 0 || vial.length === raw.capacity)
+    && fullVials === expectedFullVials
+    && emptyVials === raw.vials.length - expectedFullVials
+  );
+}
+
 async function main(): Promise<void> {
   const directory = path.resolve(process.argv[2] ?? "public/levels");
   const manifest = await readJson<Manifest>(path.join(directory, "manifest.json"));
@@ -26,8 +43,14 @@ async function main(): Promise<void> {
 
   for (const entry of manifest.levels) {
     const raw = await readJson<RawLevel>(path.join(directory, entry.file));
-    const board: Board = raw.vials.map((vial) => [...vial].reverse());
 
+    if (!hasCleanStartingShape(raw)) {
+      console.error(`${entry.id}: FAIL · dirty starting shape`);
+      failed = true;
+      continue;
+    }
+
+    const board: Board = raw.vials.map((vial) => [...vial].reverse());
     const result = solveWithAStar(board, raw.capacity, 2_000_000);
     if (result === null || !verifySolution(board, result.solution, raw.capacity)) {
       console.error(`${entry.id}: FAIL`);
