@@ -41,6 +41,7 @@ interface VialProps {
 }
 
 const DEBUG_SURFACE_POINT_COUNT = 11;
+const STATIC_LAYER_OVERLAP = 1;
 
 function flatLiquidBodyPath(
   baseFill: number,
@@ -142,13 +143,19 @@ export const Vial = forwardRef<HTMLButtonElement, VialProps>(function Vial(
           <g clipPath={`url(#${clipId})`}>
             {vial.slice(0, staticLayerCount).map((color, index) => {
               const rect = liquidLayerRect(index, capacity);
+              const hasLiquidAbove =
+                index < staticLayerCount - 1
+                || incoming !== undefined
+                || outgoing !== undefined;
+              const overlap = hasLiquidAbove ? STATIC_LAYER_OVERLAP : 0;
+
               return (
                 <rect
                   key={`static-${index}-${color}`}
                   x={rect.x}
-                  y={rect.y}
+                  y={rect.y - overlap}
                   width={rect.width}
-                  height={rect.height}
+                  height={rect.height + overlap}
                   className={styles.liquidRect}
                   style={{"--liquid-color": LIQUID_COLORS[color]} as CSSProperties}
                 />
