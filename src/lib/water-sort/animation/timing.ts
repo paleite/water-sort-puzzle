@@ -14,7 +14,7 @@ export const GAME_TIMING = {
     returnRotationDurationSeconds: 0.18,
     returnTravelSeconds: 0.86,
     returnTravelDurationSeconds: 0.18,
-    totalSeconds: 1.14,
+    totalSeconds: 1.34,
   },
   undoSeconds: 0.24,
   restartSeconds: 0.22,
