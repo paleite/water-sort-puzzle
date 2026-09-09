@@ -50,6 +50,10 @@ export function resolveVialPress(
 
   if (canPour(board, move, capacity)) return {type: "move", move};
 
+  if (pressedVial !== undefined && pressedVial.length > 0) {
+    return {type: "source-selected", vialIndex: pressedVialIndex};
+  }
+
   return {
     type: "invalid-move",
     sourceVialIndex: selectedSourceVialIndex,
