@@ -1,8 +1,13 @@
-import type { AppliedMove, Board } from "../domain/types";
-import type { ColorId } from "../domain/colors";
 import type { PourGeometry } from "../animation/pour-geometry";
 import type { PourPresentationSnapshot } from "../animation/timelines";
 import { GAME_TIMING } from "../animation/timing";
+import type { ColorId } from "../domain/colors";
+import type {
+  AppliedMove,
+  AppliedPourBatch,
+  AppliedPourTransfer,
+  Board,
+} from "../domain/types";
 
 export interface VialAnchor {
   x: number;
@@ -56,6 +61,12 @@ export interface BoardRenderState {
   debugGeometry: boolean;
 }
 
+export interface PourBatchPresentation {
+  transfer: AppliedPourTransfer;
+  geometry: PourGeometry;
+  presentation: PourPresentationSnapshot;
+}
+
 function clamp(value: number, minimum: number, maximum: number): number {
   return Math.max(minimum, Math.min(maximum, value));
 }
@@ -72,10 +83,21 @@ function emptySurface(): LiquidSurfaceRenderState {
   };
 }
 
+function selectedSet(
+  selectedSourceVialIndex: number | null | undefined,
+  selectedSourceVialIndices: readonly number[] | undefined,
+): ReadonlySet<number> {
+  if (selectedSourceVialIndices !== undefined) return new Set(selectedSourceVialIndices);
+  return selectedSourceVialIndex === null || selectedSourceVialIndex === undefined
+    ? new Set()
+    : new Set([selectedSourceVialIndex]);
+}
+
 export function buildStaticBoardRenderState({
   board,
   anchors,
   selectedSourceVialIndex,
+  selectedSourceVialIndices,
   capacity,
   boardAlpha = 1,
   boardScale = 1,
@@ -83,12 +105,14 @@ export function buildStaticBoardRenderState({
 }: {
   board: Board;
   anchors: readonly VialAnchor[];
-  selectedSourceVialIndex: number | null;
+  selectedSourceVialIndex?: number | null;
+  selectedSourceVialIndices?: readonly number[];
   capacity: number;
   boardAlpha?: number;
   boardScale?: number;
   debugGeometry?: boolean;
 }): BoardRenderState {
+  const selected = selectedSet(selectedSourceVialIndex, selectedSourceVialIndices);
   return {
     capacity,
     vials: board.map((vial, vialIndex) => ({
@@ -99,7 +123,7 @@ export function buildStaticBoardRenderState({
       rotationDegrees: 0,
       scale: 1,
       alpha: 1,
-      selectionOffsetY: selectedSourceVialIndex === vialIndex ? -10 : 0,
+      selectionOffsetY: selected.has(vialIndex) ? -10 : 0,
       pivot: "center",
       bands: staticBands(vial),
       surface: emptySurface(),
@@ -119,14 +143,173 @@ function getTransferProgress(timeSeconds: number): number {
   );
 }
 
-function buildSourceBands(move: AppliedMove, transferProgress: number): LiquidBandRenderState[] {
-  const sourceVial = move.previousBoard[move.move.sourceVialIndex] ?? [];
-  const firstTransferredIndex = Math.max(0, sourceVial.length - move.amount);
-
+function sourceBands(
+  board: Board,
+  transfer: Pick<AppliedPourTransfer, "move" | "amount">,
+  transferProgress: number,
+): LiquidBandRenderState[] {
+  const sourceVial = board[transfer.move.sourceVialIndex] ?? [];
+  const firstTransferredIndex = Math.max(0, sourceVial.length - transfer.amount);
   return sourceVial.map((color, index) => ({
     color,
     volume: index < firstTransferredIndex ? 1 : 1 - transferProgress,
   }));
+}
+
+function destinationBands(
+  board: Board,
+  destinationVialIndex: number,
+  incoming: readonly PourBatchPresentation[],
+): LiquidBandRenderState[] {
+  const destinationVial = board[destinationVialIndex] ?? [];
+  return [
+    ...destinationVial.map((color) => ({color, volume: 1})),
+    ...incoming.flatMap(({transfer, presentation}) => {
+      const progress = getTransferProgress(presentation.timeSeconds);
+      return Array.from({length: transfer.amount}, () => ({
+        color: transfer.color,
+        volume: progress,
+      }));
+    }),
+  ];
+}
+
+function combinedDestinationWave(
+  incoming: readonly PourBatchPresentation[],
+): readonly number[] {
+  const sampleCount = Math.max(
+    0,
+    ...incoming.map(({presentation}) => presentation.liquid.destinationDisplacements.length),
+  );
+  return Array.from({length: sampleCount}, (_, sampleIndex) =>
+    clamp(
+      incoming.reduce(
+        (sum, {presentation}) =>
+          sum + (presentation.liquid.destinationDisplacements[sampleIndex] ?? 0),
+        0,
+      ),
+      -8,
+      8,
+    )
+  );
+}
+
+export function buildPourBatchBoardRenderState({
+  batch,
+  anchors,
+  presentations,
+  capacity,
+  debugGeometry = false,
+}: {
+  batch: AppliedPourBatch;
+  anchors: readonly VialAnchor[];
+  presentations: readonly PourBatchPresentation[];
+  capacity: number;
+  debugGeometry?: boolean;
+}): BoardRenderState {
+  const presentationBySource = new Map(
+    presentations.map((entry) => [entry.transfer.move.sourceVialIndex, entry] as const),
+  );
+  const incomingByDestination = new Map<number, PourBatchPresentation[]>();
+  for (const entry of presentations) {
+    const destinationVialIndex = entry.transfer.move.destinationVialIndex;
+    const incoming = incomingByDestination.get(destinationVialIndex) ?? [];
+    incoming.push(entry);
+    incomingByDestination.set(destinationVialIndex, incoming);
+  }
+
+  const vials = batch.previousBoard.map((vial, vialIndex): VialRenderState => {
+    const sourcePresentation = presentationBySource.get(vialIndex);
+    if (sourcePresentation !== undefined) {
+      const {transfer, geometry, presentation} = sourcePresentation;
+      const progress = getTransferProgress(presentation.timeSeconds);
+      return {
+        vialIndex,
+        anchor: anchors[vialIndex] ?? {x: 0, y: 0, width: 1, height: 1},
+        translationX: presentation.sourceX,
+        translationY: presentation.sourceY,
+        rotationDegrees: presentation.sourceRotationDegrees,
+        scale: 1,
+        alpha: 1,
+        selectionOffsetY: 0,
+        pivot: geometry.direction === "right" ? "right-mouth" : "left-mouth",
+        bands: sourceBands(batch.previousBoard, transfer, progress),
+        surface: {
+          freeSurfaceAngleDegrees: presentation.liquid.sourceLocalAngleDegrees,
+          curvatureAmplitude: presentation.liquid.sourceCurvatureAmplitude,
+          waveSamples: [],
+        },
+      };
+    }
+
+    const incoming = incomingByDestination.get(vialIndex);
+    if (incoming !== undefined) {
+      return {
+        vialIndex,
+        anchor: anchors[vialIndex] ?? {x: 0, y: 0, width: 1, height: 1},
+        translationX: 0,
+        translationY: 0,
+        rotationDegrees: 0,
+        scale: Math.max(1, ...incoming.map(({presentation}) => presentation.destinationScale)),
+        alpha: 1,
+        selectionOffsetY: 0,
+        pivot: "center",
+        bands: destinationBands(batch.previousBoard, vialIndex, incoming),
+        surface: {
+          freeSurfaceAngleDegrees: 0,
+          curvatureAmplitude: 0,
+          waveSamples: combinedDestinationWave(incoming),
+        },
+      };
+    }
+
+    return {
+      vialIndex,
+      anchor: anchors[vialIndex] ?? {x: 0, y: 0, width: 1, height: 1},
+      translationX: 0,
+      translationY: 0,
+      rotationDegrees: 0,
+      scale: 1,
+      alpha: 1,
+      selectionOffsetY: 0,
+      pivot: "center",
+      bands: staticBands(vial),
+      surface: emptySurface(),
+    };
+  });
+
+  const streams = presentations.flatMap(({transfer, geometry, presentation}) => {
+    if (presentation.streamOpacity <= 0.001) return [];
+    const destinationVialIndex = transfer.move.destinationVialIndex;
+    const previousDestinationFill = batch.previousBoard[destinationVialIndex]?.length ?? 0;
+    const destinationIncoming = incomingByDestination.get(destinationVialIndex) ?? [];
+    const destinationFill = previousDestinationFill + destinationIncoming.reduce(
+      (sum, entry) =>
+        sum + entry.transfer.amount * getTransferProgress(entry.presentation.timeSeconds),
+      0,
+    );
+    return [{
+      color: transfer.color,
+      opacity: presentation.streamOpacity,
+      sourceVialIndex: transfer.move.sourceVialIndex,
+      destinationVialIndex,
+      direction: geometry.direction,
+      destinationFill,
+    } satisfies PourStreamRenderState];
+  });
+
+  return {
+    capacity,
+    vials,
+    streams,
+    boardAlpha: 1,
+    boardScale: 1,
+    debugGeometry,
+  };
+}
+
+function buildSourceBands(move: AppliedMove, transferProgress: number): LiquidBandRenderState[] {
+  return sourceBands(move.previousBoard, move, transferProgress);
 }
 
 function buildDestinationBands(
