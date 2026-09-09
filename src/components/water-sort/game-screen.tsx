@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
-import { validateAndApplyPourBatch } from "@/lib/water-sort/domain/pour-batch";
-import type { Level, Move } from "@/lib/water-sort/domain/types";
-import { getTopColor } from "@/lib/water-sort/domain/vial";
+import type { Level } from "@/lib/water-sort/domain/types";
 import { loadLevel, loadLevelManifest } from "@/lib/water-sort/levels/load-level";
 import type { LevelManifest } from "@/lib/water-sort/levels/schemas";
 import {
@@ -71,61 +69,14 @@ function GameRuntime({
   savedGame?: SavedGame;
 }) {
   const game = useWaterSortGame(level, savedGame);
-  const [parallelMode, setParallelMode] = useState(false);
-  const [parallelSources, setParallelSources] = useState<readonly number[]>([]);
   const manifestIndex = manifest.levels.findIndex((entry) => entry.id === level.id);
   const nextLevelId =
     manifestIndex < 0 ? null : (manifest.levels[manifestIndex + 1]?.id ?? null);
 
-  const isAnimating =
-    game.phase === "presentingMove" ||
-    game.phase === "presentingUndo" ||
-    game.phase === "presentingRestart";
-
-  const clearParallelMode = (): void => {
-    setParallelMode(false);
-    setParallelSources([]);
-  };
-
-  const handleVialPress = (vialIndex: number): void => {
-    if (!parallelMode) {
-      game.pressVial(vialIndex);
-      return;
-    }
-
-    if (parallelSources.includes(vialIndex)) {
-      setParallelSources((current) => current.filter((index) => index !== vialIndex));
-      return;
-    }
-
-    if (parallelSources.length < 2) {
-      const vial = game.context.board[vialIndex];
-      if (vial === undefined || vial.length === 0) return;
-
-      const firstSourceIndex = parallelSources[0];
-      if (firstSourceIndex !== undefined) {
-        const firstSource = game.context.board[firstSourceIndex];
-        if (firstSource === undefined || getTopColor(firstSource) !== getTopColor(vial)) return;
-      }
-
-      setParallelSources((current) => [...current, vialIndex]);
-      return;
-    }
-
-    const requestedMoves: readonly Move[] = parallelSources.map((sourceVialIndex) => ({
-      sourceVialIndex,
-      destinationVialIndex: vialIndex,
-    }));
-    const validation = validateAndApplyPourBatch(
-      game.context.board,
-      requestedMoves,
-      level.capacity,
-    );
-    if (!validation.ok) return;
-
-    game.startPourBatch(parallelSources, vialIndex);
-    clearParallelMode();
-  };
+  const isTransitionAnimating =
+    game.phase === "presentingUndo" || game.phase === "presentingRestart";
+  const hasActivePours = game.context.activePresentations.length > 0;
+  const isHudAnimating = isTransitionAnimating || hasActivePours;
 
   useEffect(() => {
     if (
@@ -173,31 +124,14 @@ function GameRuntime({
       <GameHud
         levelId={level.id}
         moveCount={game.context.history.length}
-        canUndo={game.context.history.length > 0}
-        isAnimating={isAnimating}
+        canUndo={game.context.history.length > 0 && !hasActivePours}
+        isAnimating={isHudAnimating}
         isDeadEnd={game.context.isDeadEnd}
-        parallelMode={parallelMode}
-        parallelSourceCount={parallelSources.length}
-        canToggleParallel={game.phase === "idle"}
-        onToggleParallel={() => {
-          if (game.phase !== "idle") return;
-          if (parallelMode) clearParallelMode();
-          else {
-            setParallelSources([]);
-            setParallelMode(true);
-          }
-        }}
         {...(level.development?.optimalMoveCount === undefined
           ? {}
           : {optimalMoveCount: level.development.optimalMoveCount})}
-        onUndo={() => {
-          clearParallelMode();
-          game.undo();
-        }}
-        onRestart={() => {
-          clearParallelMode();
-          game.restart();
-        }}
+        onUndo={game.undo}
+        onRestart={game.restart}
       />
 
       <GameBoard
@@ -205,11 +139,9 @@ function GameRuntime({
         capacity={level.capacity}
         phase={game.phase}
         selectedSourceVialIndex={game.context.selectedSourceVialIndex}
-        parallelSelectedSourceVialIndices={parallelSources}
-        activeMove={game.context.activeMove}
-        activeBatch={game.context.activeBatch}
+        activePresentations={game.context.activePresentations}
         activeUndo={game.context.activeUndo}
-        onVialPress={handleVialPress}
+        onVialPress={game.pressVial}
         onMovePresentationFinished={game.finishMovePresentation}
         onUndoPresentationFinished={game.finishUndoPresentation}
         onRestartPresentationFinished={game.finishRestartPresentation}
