@@ -112,14 +112,15 @@ function createLiquidGeometry(): MeshGeometry {
 
 function createUniforms(): UniformGroup {
   return new UniformGroup({
+    uTime: {value: 0, type: "f32"},
     uCapacity: {value: 4, type: "f32"},
     uFill: {value: 0, type: "f32"},
     uSurfaceSlope: {value: 0, type: "f32"},
     uCurvature: {value: 0, type: "f32"},
-    uBand0: {value: new Float32Array([0, 0, 0, 1]), type: "vec4<f32>"},
-    uBand1: {value: new Float32Array([0, 0, 0, 1]), type: "vec4<f32>"},
-    uBand2: {value: new Float32Array([0, 0, 0, 1]), type: "vec4<f32>"},
-    uBand3: {value: new Float32Array([0, 0, 0, 1]), type: "vec4<f32>"},
+    uBand0: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
+    uBand1: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
+    uBand2: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
+    uBand3: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uBandVolumes: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uWave0: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uWave1: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
@@ -145,6 +146,7 @@ export class PixiBoardRenderer {
   private pendingState: BoardRenderState | null = null;
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
+  private elapsedSeconds = 0;
 
   constructor({boardElement, canvasHost}: {boardElement: HTMLElement; canvasHost: HTMLElement}) {
     this.boardElement = boardElement;
@@ -173,6 +175,12 @@ export class PixiBoardRenderer {
     this.vialLayer.sortableChildren = true;
     this.app.stage.addChild(this.vialLayer, this.streamLayer);
     this.canvasHost.replaceChildren(this.app.canvas);
+    this.app.ticker.add((ticker) => {
+      this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
+      for (const visual of this.visuals.values()) {
+        visual.uniforms.uniforms.uTime = this.elapsedSeconds;
+      }
+    });
 
     const pendingState = this.pendingState;
     if (pendingState !== null) this.render(pendingState);
@@ -232,6 +240,7 @@ export class PixiBoardRenderer {
     const glassBack = createGlassBack();
     const mask = createInteriorMask();
     const uniforms = createUniforms();
+    uniforms.uniforms.uTime = this.elapsedSeconds;
     const shader = Shader.from({
       gl: {vertex: liquidVertexShader, fragment: liquidFragmentShader},
       resources: {liquidUniforms: uniforms},
@@ -279,6 +288,7 @@ export class PixiBoardRenderer {
     const bands = state.bands.slice(0, 4);
     const totalUnits = bands.reduce((sum, band) => sum + clamp(band.volume, 0, 1), 0);
     const uniforms = visual.uniforms.uniforms;
+    uniforms.uTime = this.elapsedSeconds;
     uniforms.uCapacity = capacity;
     uniforms.uFill = clamp(totalUnits / capacity, 0, 1);
     uniforms.uSurfaceSlope =
@@ -293,7 +303,7 @@ export class PixiBoardRenderer {
     for (let index = 0; index < 4; index += 1) {
       const band = bands[index];
       if (band === undefined) {
-        colors[index]?.set([0, 0, 0, 1]);
+        colors[index]?.set([0, 0, 0, 0]);
         continue;
       }
       colors[index]?.set(hexToRgba(LIQUID_COLORS[band.color]));
