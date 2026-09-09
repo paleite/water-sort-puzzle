@@ -54,21 +54,21 @@ export function isCleanGeneratedBoard(
     return false;
   }
 
-  let emptyCount = 0;
-  for (const vial of board) {
-    if (vial.length === 0) {
-      emptyCount += 1;
-      continue;
-    }
-    if (vial.length !== capacity) return false;
-  }
+  const firstEmptyIndex = board.findIndex((vial) => vial.length === 0);
+  const expectedFirstEmptyIndex = board.length - emptyVialCount;
+  if (firstEmptyIndex !== expectedFirstEmptyIndex) return false;
 
-  return emptyCount === emptyVialCount;
+  return board.every((vial, vialIndex) =>
+    vialIndex < expectedFirstEmptyIndex
+      ? vial.length === capacity
+      : vial.length === 0
+  );
 }
 
 /**
  * Normalize a reverse-generated candidate into the conventional starting shape:
- * every playable vial is full and the configured spare vials are empty.
+ * every playable vial is full and the configured spare vials are empty. Empty
+ * vials are always shifted to the end so level presentation is deterministic.
  *
  * Full vials are preserved verbatim. Only liquid from partial vials is repacked,
  * in stable bottom-to-top / vial order, into the existing non-full slots. The
@@ -119,11 +119,17 @@ export function cleanGeneratedBoard(
   if (unitOffset !== partialUnits.length) {
     throw new Error("Failed to repack all partial-vial liquid.");
   }
-  if (!isCleanGeneratedBoard(result, capacity, emptyVialCount)) {
+
+  const ordered: Board = [
+    ...result.filter((vial) => vial.length > 0),
+    ...result.filter((vial) => vial.length === 0),
+  ];
+
+  if (!isCleanGeneratedBoard(ordered, capacity, emptyVialCount)) {
     throw new Error("Generated board cleanup invariant failed.");
   }
 
-  return result;
+  return ordered;
 }
 
 export function enumerateReversePredecessors(
