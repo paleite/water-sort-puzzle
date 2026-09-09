@@ -1,0 +1,50 @@
+name: Validate Pixi migration
+
+on:
+  push:
+    branches: ["pixi-renderer-migration"]
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies and refresh lockfile
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Commit refreshed lockfile
+        shell: bash
+        run: |
+          if git diff --quiet -- pnpm-lock.yaml; then
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add pnpm-lock.yaml
+          git commit -m "Refresh lockfile for Pixi renderer"
+          git push origin HEAD:pixi-renderer-migration
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Verify levels
+        run: pnpm run verify:levels
+
+      - name: Build
+        run: pnpm run build
