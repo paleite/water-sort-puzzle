@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { COLOR_IDS } from "../domain/colors";
-import type { AppliedMove, Board } from "../domain/types";
+import type { AppliedTurn, Board } from "../domain/types";
 
 const ColorIdSchema = z.enum(COLOR_IDS);
 const BoardSchema = z.array(z.array(ColorIdSchema));
@@ -17,10 +17,22 @@ const AppliedMoveSchema = z.object({
   nextBoard: BoardSchema,
   newlyCompletedVialIndices: z.array(z.number().int().nonnegative()),
 });
+const AppliedPourTransferSchema = z.object({
+  move: MoveSchema,
+  color: ColorIdSchema,
+  amount: z.number().int().positive(),
+});
+const AppliedPourBatchSchema = z.object({
+  transfers: z.array(AppliedPourTransferSchema).min(1),
+  previousBoard: BoardSchema,
+  nextBoard: BoardSchema,
+  newlyCompletedVialIndices: z.array(z.number().int().nonnegative()),
+});
+const AppliedTurnSchema = z.union([AppliedMoveSchema, AppliedPourBatchSchema]);
 const SavedGameSchema = z.object({
   levelId: z.string(),
   board: BoardSchema,
-  history: z.array(AppliedMoveSchema),
+  history: z.array(AppliedTurnSchema),
 });
 const PersistedProgressSchema = z.object({
   version: z.literal(1),
@@ -32,7 +44,7 @@ const PersistedProgressSchema = z.object({
 export interface SavedGame {
   levelId: string;
   board: Board;
-  history: readonly AppliedMove[];
+  history: readonly AppliedTurn[];
 }
 export interface PersistedProgress {
   version: 1;
