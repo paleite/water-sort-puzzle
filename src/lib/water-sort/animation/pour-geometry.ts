@@ -1,3 +1,9 @@
+import {
+  VIAL_MOUTH,
+  VIAL_VIEWBOX_HEIGHT,
+  VIAL_VIEWBOX_WIDTH,
+} from "../presentation/vial-geometry";
+
 export interface Point {x: number; y: number}
 export interface PourGeometry {
   direction: "left" | "right";
@@ -22,6 +28,13 @@ function relativePoint(point: Point, containerRect: DOMRect): Point {
   };
 }
 
+function vialLocalPointInRect(rect: DOMRect, point: Point): Point {
+  return {
+    x: rect.left + (point.x / VIAL_VIEWBOX_WIDTH) * rect.width,
+    y: rect.top + (point.y / VIAL_VIEWBOX_HEIGHT) * rect.height,
+  };
+}
+
 export function calculatePourGeometry(
   boardElement: HTMLElement,
   sourceElement: HTMLElement,
@@ -30,28 +43,15 @@ export function calculatePourGeometry(
   const boardRect = boardElement.getBoundingClientRect();
   const sourceRect = sourceElement.getBoundingClientRect();
   const destinationRect = destinationElement.getBoundingClientRect();
-  const direction = destinationRect.left + destinationRect.width / 2
-    >= sourceRect.left + sourceRect.width / 2
-    ? "right"
-    : "left";
+  const sourceCenter = centerOfRect(sourceRect);
+  const destinationCenter = centerOfRect(destinationRect);
+  const direction = destinationCenter.x >= sourceCenter.x ? "right" : "left";
 
-  const sourceMouthAnchor = sourceElement.querySelector<SVGCircleElement>(
-    direction === "right" ? "[data-vial-mouth-right]" : "[data-vial-mouth-left]",
-  );
-  const destinationMouthAnchor = destinationElement.querySelector<SVGCircleElement>(
-    direction === "right" ? "[data-vial-mouth-left]" : "[data-vial-mouth-right]",
-  );
-
-  if (sourceMouthAnchor === null || destinationMouthAnchor === null) {
-    throw new Error("Missing vial mouth anchor required for pour geometry.");
-  }
-
-  const sourceMouth = relativePoint(
-    centerOfRect(sourceMouthAnchor.getBoundingClientRect()),
-    boardRect,
-  );
+  const sourceMouthLocal = direction === "right" ? VIAL_MOUTH.right : VIAL_MOUTH.left;
+  const destinationMouthLocal = direction === "right" ? VIAL_MOUTH.left : VIAL_MOUTH.right;
+  const sourceMouth = relativePoint(vialLocalPointInRect(sourceRect, sourceMouthLocal), boardRect);
   const destinationMouth = relativePoint(
-    centerOfRect(destinationMouthAnchor.getBoundingClientRect()),
+    vialLocalPointInRect(destinationRect, destinationMouthLocal),
     boardRect,
   );
   const targetMouth = {
