@@ -19,20 +19,15 @@ import {
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
 import { GAME_TIMING } from "@/lib/water-sort/animation/timing";
-import type {
-  AppliedMove,
-  AppliedPourBatch,
-  AppliedTurn,
-  Board,
-} from "@/lib/water-sort/domain/types";
+import type { AppliedTurn, Board } from "@/lib/water-sort/domain/types";
+import type { ActiveMovePresentation } from "@/lib/water-sort/machine/game-machine";
 import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
 import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
 import {
-  buildPourBatchBoardRenderState,
-  buildPourBoardRenderState,
+  buildConcurrentPourBoardRenderState,
   buildStaticBoardRenderState,
   type BoardRenderState,
-  type PourBatchPresentation,
+  type ConcurrentPourPresentation,
   type VialAnchor,
 } from "@/lib/water-sort/rendering/render-state";
 
@@ -42,10 +37,11 @@ import styles from "./water-sort.module.css";
 
 type TransientStateBuilder = (anchors: readonly VialAnchor[]) => BoardRenderState;
 
-interface BatchPresentationRuntime {
-  transferIndex: number;
+interface PresentationRuntime {
+  id: number;
   geometry: ReturnType<typeof calculatePourGeometry>;
   presentation: PourPresentation;
+  snapshot: PourPresentationSnapshot;
 }
 
 function setVialRef(
@@ -80,48 +76,12 @@ function getAffectedVialIndices(turn: AppliedTurn): readonly number[] {
   return [turn.move.sourceVialIndex, turn.move.destinationVialIndex];
 }
 
-function chooseBatchDirection({
-  batch,
-  transferIndex,
-  vialRefs,
-}: {
-  batch: AppliedPourBatch;
-  transferIndex: number;
-  vialRefs: ReadonlyMap<number, HTMLButtonElement>;
-}): "left" | "right" | undefined {
-  const transfer = batch.transfers[transferIndex];
-  if (transfer === undefined) return undefined;
-
-  const destinationVialIndex = transfer.move.destinationVialIndex;
-  const siblingTransferIndices = batch.transfers
-    .map((candidate, index) => ({candidate, index}))
-    .filter(({candidate}) => candidate.move.destinationVialIndex === destinationVialIndex)
-    .map(({index}) => index);
-
-  if (siblingTransferIndices.length <= 1) return undefined;
-
-  const sorted = siblingTransferIndices.toSorted((firstIndex, secondIndex) => {
-    const firstSourceIndex = batch.transfers[firstIndex]?.move.sourceVialIndex;
-    const secondSourceIndex = batch.transfers[secondIndex]?.move.sourceVialIndex;
-    const firstElement = firstSourceIndex === undefined ? undefined : vialRefs.get(firstSourceIndex);
-    const secondElement = secondSourceIndex === undefined ? undefined : vialRefs.get(secondSourceIndex);
-    const firstX = firstElement?.getBoundingClientRect().x ?? 0;
-    const secondX = secondElement?.getBoundingClientRect().x ?? 0;
-    return firstX - secondX;
-  });
-
-  const position = sorted.indexOf(transferIndex);
-  return position < siblingTransferIndices.length / 2 ? "right" : "left";
-}
-
 export function GameBoard({
   board,
   capacity,
   phase,
   selectedSourceVialIndex,
-  parallelSelectedSourceVialIndices,
-  activeMove,
-  activeBatch,
+  activePresentations,
   activeUndo,
   onVialPress,
   onMovePresentationFinished,
@@ -132,12 +92,10 @@ export function GameBoard({
   capacity: number;
   phase: GamePhase;
   selectedSourceVialIndex: number | null;
-  parallelSelectedSourceVialIndices: readonly number[];
-  activeMove: AppliedMove | null;
-  activeBatch: AppliedPourBatch | null;
+  activePresentations: readonly ActiveMovePresentation[];
   activeUndo: AppliedTurn | null;
   onVialPress: (vialIndex: number) => void;
-  onMovePresentationFinished: () => void;
+  onMovePresentationFinished: (presentationId: number) => void;
   onUndoPresentationFinished: () => void;
   onRestartPresentationFinished: () => void;
 }) {
@@ -145,6 +103,7 @@ export function GameBoard({
   const canvasHostRef = useRef<HTMLDivElement>(null);
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
   const rendererRef = useRef<PixiBoardRenderer | null>(null);
+  const presentationRuntimesRef = useRef(new Map<number, PresentationRuntime>());
   const transientStateBuilderRef = useRef<TransientStateBuilder | null>(null);
   const renderLatestRef = useRef<() => void>(() => {});
   const debugSequenceRef = useRef(0);
@@ -177,11 +136,6 @@ export function GameBoard({
     appendDebugLog(`${label} BOARD ${positions.join(" | ")}`);
   }, [appendDebugLog]);
 
-  const selectedSourceVialIndices = [
-    ...(selectedSourceVialIndex === null ? [] : [selectedSourceVialIndex]),
-    ...parallelSelectedSourceVialIndices,
-  ];
-
   const renderLatest = useCallback((): void => {
     const renderer = rendererRef.current;
     const boardElement = boardRef.current;
@@ -189,17 +143,40 @@ export function GameBoard({
 
     const anchors = measureVialAnchors(boardElement, vialRefs.current, board.length);
     const transientStateBuilder = transientStateBuilderRef.current;
+
+    if (transientStateBuilder !== null) {
+      renderer.render(transientStateBuilder(anchors));
+      return;
+    }
+
+    const presentations: ConcurrentPourPresentation[] = activePresentations.flatMap((active) => {
+      const runtime = presentationRuntimesRef.current.get(active.id);
+      return runtime === undefined
+        ? []
+        : [{
+            move: active.move,
+            geometry: runtime.geometry,
+            presentation: runtime.snapshot,
+          }];
+    });
+
     renderer.render(
-      transientStateBuilder === null
+      presentations.length === 0
         ? buildStaticBoardRenderState({
             board,
             anchors,
-            selectedSourceVialIndices,
+            selectedSourceVialIndex,
             capacity,
           })
-        : transientStateBuilder(anchors),
+        : buildConcurrentPourBoardRenderState({
+            board,
+            anchors,
+            presentations,
+            selectedSourceVialIndex,
+            capacity,
+          }),
     );
-  }, [board, capacity, selectedSourceVialIndices]);
+  }, [activePresentations, board, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
 
@@ -239,6 +216,76 @@ export function GameBoard({
   }, [board.length]);
 
   useLayoutEffect(() => {
+    const boardElement = boardRef.current;
+    if (boardElement === null) return;
+
+    const activeIds = new Set(activePresentations.map(({id}) => id));
+    for (const [presentationId, runtime] of presentationRuntimesRef.current) {
+      if (activeIds.has(presentationId)) continue;
+      runtime.presentation.timeline.kill();
+      presentationRuntimesRef.current.delete(presentationId);
+    }
+
+    for (const active of activePresentations) {
+      if (presentationRuntimesRef.current.has(active.id)) continue;
+
+      const sourceVialIndex = active.move.move.sourceVialIndex;
+      const destinationVialIndex = active.move.move.destinationVialIndex;
+      const sourceElement = vialRefs.current.get(sourceVialIndex);
+      const destinationElement = vialRefs.current.get(destinationVialIndex);
+      if (sourceElement === undefined || destinationElement === undefined) {
+        throw new Error("Missing DOM slot required for concurrent pour presentation.");
+      }
+
+      const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
+      let runtime: PresentationRuntime;
+      const presentation = createPourTimeline({
+        geometry,
+        move: active.move,
+        sourceWidthPixels: sourceElement.getBoundingClientRect().width,
+        paused: true,
+        onFrame: (snapshot) => {
+          runtime.snapshot = snapshot;
+          renderLatestRef.current();
+        },
+        onDebug: (event, timeSeconds) => {
+          appendDebugLog(`p${active.id} t=${timeSeconds.toFixed(3)} ${event}`);
+        },
+        onComplete: () => {
+          appendDebugLog(`p${active.id} complete`);
+          onMovePresentationFinished(active.id);
+        },
+      });
+
+      runtime = {
+        id: active.id,
+        geometry,
+        presentation,
+        snapshot: presentation.getSnapshot(),
+      };
+      presentationRuntimesRef.current.set(active.id, runtime);
+
+      appendDebugLog(
+        `MOVE#${active.id} v${sourceVialIndex + 1}->v${destinationVialIndex + 1} `
+        + `amount=${active.move.amount} `
+        + `geom[dx=${formatNumber(geometry.translationX)} `
+        + `dy=${formatNumber(geometry.translationY)} `
+        + `rot=${formatNumber(geometry.rotationDegrees)}]`,
+      );
+      presentation.timeline.play(0);
+    }
+
+    renderLatestRef.current();
+  }, [activePresentations, appendDebugLog, onMovePresentationFinished]);
+
+  useEffect(() => () => {
+    for (const runtime of presentationRuntimesRef.current.values()) {
+      runtime.presentation.timeline.kill();
+    }
+    presentationRuntimesRef.current.clear();
+  }, []);
+
+  useLayoutEffect(() => {
     renderLatest();
   }, [phase, renderLatest]);
 
@@ -254,151 +301,13 @@ export function GameBoard({
 
     if (previousPhase === phase) return;
     appendDebugLog(`phase ${previousPhase} -> ${phase}`);
-
-    if (previousPhase === "presentingMove") {
-      requestAnimationFrame(() => {
-        appendDebugLog("post-commit:rAF1");
-        requestAnimationFrame(() => logBoardPositions("post-commit:rAF2"));
-      });
-    }
   }, [appendDebugLog, logBoardPositions, phase]);
 
   useGSAP(() => {
-    const boardElement = boardRef.current;
     let cleanup: (() => void) | undefined;
-
     transientStateBuilderRef.current = null;
 
-    if (boardElement !== null && phase === "presentingMove" && activeBatch !== null) {
-      const snapshots = new Map<number, PourPresentationSnapshot>();
-      const runtimes: BatchPresentationRuntime[] = [];
-      let completedPresentationCount = 0;
-
-      activeBatch.transfers.forEach((transfer, transferIndex) => {
-        const sourceVialIndex = transfer.move.sourceVialIndex;
-        const destinationVialIndex = transfer.move.destinationVialIndex;
-        const sourceElement = vialRefs.current.get(sourceVialIndex);
-        const destinationElement = vialRefs.current.get(destinationVialIndex);
-        if (sourceElement === undefined || destinationElement === undefined) {
-          throw new Error("Missing DOM slot required for concurrent pour presentation.");
-        }
-
-        const preferredDirection = chooseBatchDirection({
-          batch: activeBatch,
-          transferIndex,
-          vialRefs: vialRefs.current,
-        });
-        const geometry = calculatePourGeometry(
-          boardElement,
-          sourceElement,
-          destinationElement,
-          preferredDirection,
-        );
-        const animationMove: AppliedMove = {
-          move: transfer.move,
-          color: transfer.color,
-          amount: transfer.amount,
-          previousBoard: activeBatch.previousBoard,
-          nextBoard: activeBatch.nextBoard,
-          newlyCompletedVialIndices: activeBatch.newlyCompletedVialIndices,
-        };
-
-        const presentation = createPourTimeline({
-          geometry,
-          move: animationMove,
-          sourceWidthPixels: sourceElement.getBoundingClientRect().width,
-          paused: true,
-          onFrame: (snapshot) => {
-            snapshots.set(transferIndex, snapshot);
-            renderLatestRef.current();
-          },
-          onComplete: () => {
-            completedPresentationCount += 1;
-            if (completedPresentationCount === activeBatch.transfers.length) {
-              onMovePresentationFinished();
-            }
-          },
-        });
-
-        snapshots.set(transferIndex, presentation.getSnapshot());
-        runtimes.push({transferIndex, geometry, presentation});
-      });
-
-      transientStateBuilderRef.current = (anchors) => {
-        const presentations: PourBatchPresentation[] = runtimes.map((runtime) => {
-          const transfer = activeBatch.transfers[runtime.transferIndex];
-          if (transfer === undefined) {
-            throw new Error("Concurrent pour presentation lost its transfer.");
-          }
-          return {
-            transfer,
-            geometry: runtime.geometry,
-            presentation:
-              snapshots.get(runtime.transferIndex) ?? runtime.presentation.getSnapshot(),
-          };
-        });
-
-        return buildPourBatchBoardRenderState({
-          batch: activeBatch,
-          anchors,
-          presentations,
-          capacity,
-        });
-      };
-
-      appendDebugLog(
-        `BATCH ${activeBatch.transfers.map((transfer) =>
-          `v${transfer.move.sourceVialIndex + 1}->v${transfer.move.destinationVialIndex + 1}`
-        ).join(" + ")}`,
-      );
-      renderLatestRef.current();
-      for (const runtime of runtimes) runtime.presentation.timeline.play(0);
-
-      cleanup = () => {
-        for (const runtime of runtimes) runtime.presentation.timeline.kill();
-      };
-    } else if (boardElement !== null && phase === "presentingMove" && activeMove !== null) {
-      const sourceVialIndex = activeMove.move.sourceVialIndex;
-      const destinationVialIndex = activeMove.move.destinationVialIndex;
-      const sourceElement = vialRefs.current.get(sourceVialIndex);
-      const destinationElement = vialRefs.current.get(destinationVialIndex);
-
-      if (sourceElement === undefined || destinationElement === undefined) {
-        throw new Error("Missing DOM slot required for pour presentation.");
-      }
-
-      const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
-      appendDebugLog(
-        `MOVE v${sourceVialIndex + 1}->v${destinationVialIndex + 1} `
-        + `amount=${activeMove.amount} `
-        + `geom[dx=${formatNumber(geometry.translationX)} `
-        + `dy=${formatNumber(geometry.translationY)} `
-        + `rot=${formatNumber(geometry.rotationDegrees)}]`,
-      );
-
-      const presentation = createPourTimeline({
-        geometry,
-        move: activeMove,
-        sourceWidthPixels: sourceElement.getBoundingClientRect().width,
-        onFrame: (snapshot) => {
-          transientStateBuilderRef.current = (anchors) => buildPourBoardRenderState({
-            move: activeMove,
-            anchors,
-            selectedSourceVialIndex,
-            geometry,
-            presentation: snapshot,
-            capacity,
-          });
-          renderLatestRef.current();
-        },
-        onDebug: (event, timeSeconds) => {
-          appendDebugLog(`t=${timeSeconds.toFixed(3)} ${event}`);
-        },
-        onComplete: onMovePresentationFinished,
-      });
-
-      cleanup = () => presentation.timeline.kill();
-    } else if (phase === "presentingUndo" && activeUndo !== null) {
+    if (phase === "presentingUndo" && activeUndo !== null) {
       const affectedVialIndices = new Set(getAffectedVialIndices(activeUndo));
       const motion = {scale: 1, alpha: 1};
       appendDebugLog(
@@ -409,7 +318,7 @@ export function GameBoard({
         const state = buildStaticBoardRenderState({
           board,
           anchors,
-          selectedSourceVialIndices: [],
+          selectedSourceVialIndex: null,
           capacity,
         });
         return {
@@ -448,7 +357,7 @@ export function GameBoard({
       transientStateBuilderRef.current = (anchors) => buildStaticBoardRenderState({
         board,
         anchors,
-        selectedSourceVialIndices: [],
+        selectedSourceVialIndex: null,
         capacity,
         boardAlpha: motion.alpha,
         boardScale: motion.scale,
@@ -478,21 +387,16 @@ export function GameBoard({
     scope: boardRef,
     dependencies: [
       phase,
-      activeMove,
-      activeBatch,
       activeUndo,
       board,
       capacity,
       selectedSourceVialIndex,
-      onMovePresentationFinished,
       onUndoPresentationFinished,
       onRestartPresentationFinished,
       appendDebugLog,
     ],
     revertOnUpdate: true,
   });
-
-  const selectedSet = new Set(selectedSourceVialIndices);
 
   return (
     <>
@@ -507,7 +411,7 @@ export function GameBoard({
               vial={vial}
               capacity={capacity}
               vialIndex={vialIndex}
-              selected={selectedSet.has(vialIndex)}
+              selected={selectedSourceVialIndex === vialIndex}
               onPress={() => onVialPress(vialIndex)}
             />
           ))}
