@@ -8,9 +8,8 @@
   grid-template-rows: auto minmax(0, 1fr);
   overflow: hidden;
   overscroll-behavior: none;
-  background:
-    radial-gradient(circle at 50% 10%, rgb(255 255 255 / 0.58), transparent 40%),
-    linear-gradient(180deg, #dcebf4 0%, #c9dde9 48%, #b7d0df 100%);
+  background: #222;
+  color: #f1f5f9;
 }
 
 .board {
