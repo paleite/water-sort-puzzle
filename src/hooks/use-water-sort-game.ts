@@ -36,6 +36,13 @@ export function useWaterSortGame(level: Level, savedGame?: SavedGame) {
     send({type: "VIAL.PRESSED", vialIndex});
   }, [send]);
 
+  const startPourBatch = useCallback((
+    sourceVialIndices: readonly number[],
+    destinationVialIndex: number,
+  ) => {
+    send({type: "POUR_BATCH.REQUESTED", sourceVialIndices, destinationVialIndex});
+  }, [send]);
+
   const undo = useCallback(() => send({type: "UNDO"}), [send]);
   const restart = useCallback(() => send({type: "RESTART"}), [send]);
   const finishMovePresentation = useCallback(
@@ -56,6 +63,7 @@ export function useWaterSortGame(level: Level, savedGame?: SavedGame) {
     context: snapshot.context,
     phase,
     pressVial,
+    startPourBatch,
     undo,
     restart,
     finishMovePresentation,
