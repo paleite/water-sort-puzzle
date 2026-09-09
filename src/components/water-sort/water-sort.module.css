@@ -18,7 +18,24 @@
   isolation: isolate;
 }
 
+.pixiCanvasHost {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.pixiCanvasHost canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 .vialGrid {
+  position: relative;
+  z-index: 3;
   display: grid;
   grid-template-columns: repeat(5, var(--vial-width));
   justify-content: center;
@@ -37,16 +54,11 @@
   display: block;
   width: var(--vial-width);
   height: var(--vial-height);
-  transform: translateY(0);
-  transition: transform 140ms ease;
-}
-
-.vialSlot[data-selection-lifted="true"] {
-  transform: translateY(-10px);
 }
 
 .vialButton {
   position: relative;
+  display: block;
   width: 100%;
   height: 100%;
   border: 0;
@@ -55,104 +67,11 @@
   cursor: pointer;
   outline: none;
   touch-action: manipulation;
-  transition: filter 120ms ease, box-shadow 120ms ease;
 }
 
 .vialButton:focus-visible {
   border-radius: 999px;
   box-shadow: 0 0 0 3px rgb(59 130 246 / 0.38);
-}
-
-.vialSvg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 7px 7px rgb(30 82 105 / 0.09));
-}
-
-.vialGlassFill {
-  fill: rgb(255 255 255 / 0.18);
-}
-
-.vialGlassOutline {
-  fill: none;
-  stroke: rgb(64 92 111 / 0.58);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.vialMouth {
-  fill: rgb(255 255 255 / 0.55);
-  stroke: rgb(64 92 111 / 0.62);
-  stroke-width: 5;
-  vector-effect: non-scaling-stroke;
-}
-
-.liquidRect,
-.dynamicLiquidBody {
-  fill: var(--liquid-color);
-}
-
-.dynamicLiquidSurface {
-  fill: none;
-  stroke: color-mix(in srgb, var(--liquid-color), white 18%);
-  stroke-width: 1.1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.vialGeometryGuides {
-  opacity: 0.92;
-}
-
-.debugVialInterior,
-.debugLiquidBounds {
-  fill: none;
-  vector-effect: non-scaling-stroke;
-}
-
-.debugVialInterior {
-  stroke: #ef4444;
-  stroke-width: 1;
-  stroke-dasharray: 4 3;
-}
-
-.debugLiquidBounds {
-  stroke: #0ea5e9;
-  stroke-width: 1;
-  stroke-dasharray: 3 2;
-}
-
-.debugMouthAnchor {
-  fill: #f59e0b;
-  stroke: white;
-  stroke-width: 0.7;
-  vector-effect: non-scaling-stroke;
-}
-
-.debugSurfacePoint {
-  fill: #ec4899;
-  stroke: white;
-  stroke-width: 0.55;
-  vector-effect: non-scaling-stroke;
-}
-
-.streamLayer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-  z-index: 15;
-}
-
-.streamLayer path {
-  opacity: 0;
 }
 
 .debugOverlay {
@@ -272,6 +191,14 @@
   position: relative;
   width: min(100%, 340px);
   height: 230px;
+  isolation: isolate;
+}
+
+.homeHeroSlots {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
