@@ -39,13 +39,15 @@ export function calculatePourGeometry(
   boardElement: HTMLElement,
   sourceElement: HTMLElement,
   destinationElement: HTMLElement,
+  preferredDirection?: "left" | "right",
 ): PourGeometry {
   const boardRect = boardElement.getBoundingClientRect();
   const sourceRect = sourceElement.getBoundingClientRect();
   const destinationRect = destinationElement.getBoundingClientRect();
   const sourceCenter = centerOfRect(sourceRect);
   const destinationCenter = centerOfRect(destinationRect);
-  const direction = destinationCenter.x >= sourceCenter.x ? "right" : "left";
+  const direction = preferredDirection
+    ?? (destinationCenter.x >= sourceCenter.x ? "right" : "left");
 
   const sourceMouthLocal = direction === "right" ? VIAL_MOUTH.right : VIAL_MOUTH.left;
   const destinationMouthLocal = direction === "right" ? VIAL_MOUTH.left : VIAL_MOUTH.right;
