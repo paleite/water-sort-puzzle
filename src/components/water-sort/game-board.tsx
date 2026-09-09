@@ -238,14 +238,14 @@ export function GameBoard({
       }
 
       const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
-      let runtime: PresentationRuntime;
       const presentation = createPourTimeline({
         geometry,
         move: active.move,
         sourceWidthPixels: sourceElement.getBoundingClientRect().width,
         paused: true,
         onFrame: (snapshot) => {
-          runtime.snapshot = snapshot;
+          const currentRuntime = presentationRuntimesRef.current.get(active.id);
+          if (currentRuntime !== undefined) currentRuntime.snapshot = snapshot;
           renderLatestRef.current();
         },
         onDebug: (event, timeSeconds) => {
@@ -257,7 +257,7 @@ export function GameBoard({
         },
       });
 
-      runtime = {
+      const runtime: PresentationRuntime = {
         id: active.id,
         geometry,
         presentation,
