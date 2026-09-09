@@ -26,13 +26,17 @@ function hasCleanStartingShape(raw: RawLevel): boolean {
   if (totalUnits % raw.capacity !== 0) return false;
 
   const expectedFullVials = totalUnits / raw.capacity;
-  const fullVials = raw.vials.filter((vial) => vial.length === raw.capacity).length;
-  const emptyVials = raw.vials.filter((vial) => vial.length === 0).length;
+  const expectedEmptyVials = raw.vials.length - expectedFullVials;
+  const firstEmptyIndex = raw.vials.findIndex((vial) => vial.length === 0);
 
   return (
-    raw.vials.every((vial) => vial.length === 0 || vial.length === raw.capacity)
-    && fullVials === expectedFullVials
-    && emptyVials === raw.vials.length - expectedFullVials
+    firstEmptyIndex === expectedFullVials
+    && raw.vials.every((vial, vialIndex) =>
+      vialIndex < expectedFullVials
+        ? vial.length === raw.capacity
+        : vial.length === 0
+    )
+    && expectedEmptyVials >= 0
   );
 }
 
@@ -45,7 +49,7 @@ async function main(): Promise<void> {
     const raw = await readJson<RawLevel>(path.join(directory, entry.file));
 
     if (!hasCleanStartingShape(raw)) {
-      console.error(`${entry.id}: FAIL · dirty starting shape`);
+      console.error(`${entry.id}: FAIL · dirty starting shape or empty vials not trailing`);
       failed = true;
       continue;
     }
