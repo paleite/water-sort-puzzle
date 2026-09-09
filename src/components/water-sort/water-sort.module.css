@@ -1,4 +1,7 @@
 .gameShell {
+  position: fixed;
+  inset: 0;
+  width: 100%;
   height: 100dvh;
   min-height: 0;
   display: grid;
@@ -19,6 +22,8 @@
   min-height: 0;
   overflow: hidden;
   isolation: isolate;
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 .pixiCanvasHost {
@@ -37,6 +42,7 @@
 }
 
 .vialGrid {
+  --vial-column-gap: clamp(3px, 1vw, 10px);
   position: relative;
   z-index: 3;
   display: grid;
@@ -44,7 +50,7 @@
   grid-template-rows: repeat(2, auto);
   justify-content: stretch;
   align-content: center;
-  column-gap: clamp(3px, 1vw, 10px);
+  column-gap: var(--vial-column-gap);
   row-gap: clamp(28px, 6dvh, 72px);
   width: min(100%, 920px);
   max-height: 100%;
@@ -72,6 +78,15 @@
   outline: none;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+}
+
+.vialButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--vial-column-gap) / -2);
+  right: calc(var(--vial-column-gap) / -2);
 }
 
 .vialButton:focus-visible {
@@ -146,6 +161,7 @@
   overscroll-behavior: contain;
   padding: 4px 8px 8px;
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .debugLogRow {
