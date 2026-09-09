@@ -45,27 +45,8 @@ export interface GameMachineInput {
   savedGame?: SavedGame;
 }
 
-function sourceIsBusy(context: GameContext, vialIndex: number): boolean {
-  return context.activePresentations.some(({move}) =>
-    move.move.sourceVialIndex === vialIndex || move.move.destinationVialIndex === vialIndex
-  );
-}
-
-function destinationIsBusy(context: GameContext, vialIndex: number): boolean {
-  return context.activePresentations.some(({move}) => move.move.sourceVialIndex === vialIndex);
-}
-
 function resolvePress(context: GameContext, event: GameEvent): InteractionResolution | null {
   if (event.type !== "VIAL.PRESSED" || context.completionPending) return null;
-
-  if (context.selectedSourceVialIndex === null) {
-    if (sourceIsBusy(context, event.vialIndex)) return null;
-  } else if (
-    event.vialIndex !== context.selectedSourceVialIndex
-    && destinationIsBusy(context, event.vialIndex)
-  ) {
-    return null;
-  }
 
   return resolveVialPress(
     context.board,
@@ -221,6 +202,11 @@ export const gameMachine = setup({
                 guard: "pressCreatesMove",
                 target: "idle",
                 actions: "commitMoveAndStartPresentation",
+              },
+              {
+                guard: "pressSelectsSource",
+                target: "sourceSelected",
+                actions: "selectSource",
               },
               {actions: "recordNonMoveInteraction"},
             ],
