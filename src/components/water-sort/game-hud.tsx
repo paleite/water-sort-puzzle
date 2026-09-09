@@ -12,6 +12,10 @@ export function GameHud({
   isAnimating,
   isDeadEnd,
   optimalMoveCount,
+  parallelMode,
+  parallelSourceCount,
+  canToggleParallel,
+  onToggleParallel,
   onUndo,
   onRestart,
 }: {
@@ -21,6 +25,10 @@ export function GameHud({
   isAnimating: boolean;
   isDeadEnd: boolean;
   optimalMoveCount?: number;
+  parallelMode: boolean;
+  parallelSourceCount: number;
+  canToggleParallel: boolean;
+  onToggleParallel: () => void;
   onUndo: () => void;
   onRestart: () => void;
 }) {
@@ -36,6 +44,11 @@ export function GameHud({
 
       <div className="text-center">
         <div className="font-semibold">Level {levelId}</div>
+        {parallelMode && (
+          <div className="text-xs font-medium text-sky-700">
+            Parallel: choose {parallelSourceCount < 2 ? `${2 - parallelSourceCount} source${parallelSourceCount === 1 ? "" : "s"}` : "destination"}
+          </div>
+        )}
         {showDebug && (
           <div className="text-xs text-slate-500">
             Moves {moveCount}
@@ -46,6 +59,19 @@ export function GameHud({
       </div>
 
       <div className="flex gap-1">
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-lg"
+          disabled={!canToggleParallel || isAnimating}
+          aria-label="Toggle parallel pour mode"
+          aria-pressed={parallelMode}
+          title="Parallel pour"
+          className={parallelMode ? "bg-sky-100 text-sky-800" : undefined}
+          onClick={onToggleParallel}
+        >
+          <span className="text-sm font-bold">2×</span>
+        </Button>
         <Button
           type="button"
           variant="ghost"
