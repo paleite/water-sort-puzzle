@@ -60,7 +60,11 @@ export const LevelManifestSchema = z.object({
 export type LevelManifest = z.infer<typeof LevelManifestSchema>;
 
 export function rawLevelToLevel(rawLevel: RawLevel): Level {
-  const board: Board = rawLevel.vials.map((vial) => [...vial].reverse());
+  const orderedVials = [
+    ...rawLevel.vials.filter((vial) => vial.length > 0),
+    ...rawLevel.vials.filter((vial) => vial.length === 0),
+  ];
+  const board: Board = orderedVials.map((vial) => [...vial].reverse());
   return {
     id: rawLevel.id,
     capacity: rawLevel.capacity,
