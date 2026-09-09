@@ -157,16 +157,16 @@ export function GameBoard({
 
     const anchors = measureVialAnchors(boardElement, vialRefs.current, board.length);
     const transientStateBuilder = transientStateBuilderRef.current;
-    const state = transientStateBuilder === null
-      ? buildStaticBoardRenderState({
-          board,
-          anchors,
-          selectedSourceVialIndex,
-          capacity,
-        })
-      : transientStateBuilder(anchors);
-
-    renderer.render(state);
+    renderer.render(
+      transientStateBuilder === null
+        ? buildStaticBoardRenderState({
+            board,
+            anchors,
+            selectedSourceVialIndex,
+            capacity,
+          })
+        : transientStateBuilder(anchors),
+    );
   }, [board, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
@@ -247,12 +247,12 @@ export function GameBoard({
 
   useGSAP(() => {
     const boardElement = boardRef.current;
-    if (boardElement === null) return;
+    let cleanup: (() => void) | undefined;
 
     transientStateBuilderRef.current = null;
     lastPourSnapshotRef.current = null;
 
-    if (phase === "presentingMove" && activeMove !== null) {
+    if (boardElement !== null && phase === "presentingMove" && activeMove !== null) {
       const sourceVialIndex = activeMove.move.sourceVialIndex;
       const destinationVialIndex = activeMove.move.destinationVialIndex;
       const sourceElement = vialRefs.current.get(sourceVialIndex);
@@ -300,14 +300,8 @@ export function GameBoard({
         onComplete: onMovePresentationFinished,
       });
 
-      return () => {
-        presentation.timeline.kill();
-        transientStateBuilderRef.current = null;
-        lastPourSnapshotRef.current = null;
-      };
-    }
-
-    if (phase === "presentingUndo" && activeUndo !== null) {
+      cleanup = () => presentation.timeline.kill();
+    } else if (phase === "presentingUndo" && activeUndo !== null) {
       appendDebugLog(
         `UNDO v${activeUndo.move.sourceVialIndex + 1}<->v${activeUndo.move.destinationVialIndex + 1}`,
       );
@@ -351,13 +345,8 @@ export function GameBoard({
           ease: "power2.in",
         });
 
-      return () => {
-        timeline.kill();
-        transientStateBuilderRef.current = null;
-      };
-    }
-
-    if (phase === "presentingRestart") {
+      cleanup = () => timeline.kill();
+    } else if (phase === "presentingRestart") {
       appendDebugLog("RESTART");
       const motion = {alpha: 0.45, scale: 0.985};
       transientStateBuilderRef.current = (anchors) => buildStaticBoardRenderState({
@@ -380,13 +369,16 @@ export function GameBoard({
         ease: "power2.out",
       });
 
-      return () => {
-        timeline.kill();
-        transientStateBuilderRef.current = null;
-      };
+      cleanup = () => timeline.kill();
+    } else {
+      renderLatestRef.current();
     }
 
-    renderLatestRef.current();
+    return () => {
+      cleanup?.();
+      transientStateBuilderRef.current = null;
+      lastPourSnapshotRef.current = null;
+    };
   }, {
     scope: boardRef,
     dependencies: [
