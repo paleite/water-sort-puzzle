@@ -10,19 +10,17 @@ import { GAME_TIMING } from "./timing";
 
 const DEBUG_SEEK_STEP_SECONDS = 1 / 120;
 
-interface PourTimelineElements {
-  sourceElement: HTMLElement;
-  destinationElement: HTMLElement;
-  streamElement: SVGPathElement;
-  sourceLayerElements: readonly SVGPathElement[];
-  sourceSurfaceElement: SVGPathElement | null;
-  destinationLiquidElement: SVGPathElement | null;
-  destinationSurfaceElement: SVGPathElement | null;
-}
-
 interface PourDebugMarker {
   label: string;
   timeSeconds: number;
+}
+
+interface PourMotionState {
+  x: number;
+  y: number;
+  rotationDegrees: number;
+  streamOpacity: number;
+  destinationScale: number;
 }
 
 export interface PourPresentationSnapshot {
@@ -31,6 +29,8 @@ export interface PourPresentationSnapshot {
   sourceX: number;
   sourceY: number;
   sourceRotationDegrees: number;
+  streamOpacity: number;
+  destinationScale: number;
   liquid: LiquidSimulationSnapshot;
 }
 
@@ -40,208 +40,39 @@ export interface PourPresentation {
   getSnapshot(): PourPresentationSnapshot;
 }
 
-function clamp(value: number, minimum: number, maximum: number): number {
-  return Math.max(minimum, Math.min(maximum, value));
-}
-
-function getGsapNumber(element: HTMLElement, property: string): number {
-  const value = gsap.getProperty(element, property);
-  if (typeof value === "number") return value;
-  const parsed = Number.parseFloat(String(value));
-  return Number.isFinite(parsed) ? parsed : 0;
-}
-
-function createStreamPath(
-  sourceX: number,
-  sourceY: number,
-  destinationX: number,
-  destinationY: number,
-): string {
-  const deltaX = destinationX - sourceX;
-  const deltaY = destinationY - sourceY;
-  const length = Math.max(0.001, Math.hypot(deltaX, deltaY));
-  const normalX = -deltaY / length;
-  const normalY = deltaX / length;
-  const sourceHalfWidth = 2.4;
-  const destinationHalfWidth = 0.9;
-  const middleX = (sourceX + destinationX) / 2;
-  const middleY = (sourceY + destinationY) / 2 + Math.min(2.5, length * 0.04);
-  const middleHalfWidth = 1.55;
-
-  const sourceTop = {
-    x: sourceX + normalX * sourceHalfWidth,
-    y: sourceY + normalY * sourceHalfWidth,
-  };
-  const sourceBottom = {
-    x: sourceX - normalX * sourceHalfWidth,
-    y: sourceY - normalY * sourceHalfWidth,
-  };
-  const destinationTop = {
-    x: destinationX + normalX * destinationHalfWidth,
-    y: destinationY + normalY * destinationHalfWidth,
-  };
-  const destinationBottom = {
-    x: destinationX - normalX * destinationHalfWidth,
-    y: destinationY - normalY * destinationHalfWidth,
-  };
-  const middleTop = {
-    x: middleX + normalX * middleHalfWidth,
-    y: middleY + normalY * middleHalfWidth,
-  };
-  const middleBottom = {
-    x: middleX - normalX * middleHalfWidth,
-    y: middleY - normalY * middleHalfWidth,
-  };
-
-  return [
-    `M ${sourceTop.x.toFixed(2)} ${sourceTop.y.toFixed(2)}`,
-    `Q ${middleTop.x.toFixed(2)} ${middleTop.y.toFixed(2)} ${destinationTop.x.toFixed(2)} ${destinationTop.y.toFixed(2)}`,
-    `L ${destinationBottom.x.toFixed(2)} ${destinationBottom.y.toFixed(2)}`,
-    `Q ${middleBottom.x.toFixed(2)} ${middleBottom.y.toFixed(2)} ${sourceBottom.x.toFixed(2)} ${sourceBottom.y.toFixed(2)}`,
-    "Z",
-  ].join(" ");
-}
-
 export function createPourTimeline({
-  elements,
   geometry,
   move,
-  capacity,
+  sourceWidthPixels,
   onComplete,
   onDebug,
   onFrame,
   paused = false,
 }: {
-  elements: PourTimelineElements;
   geometry: PourGeometry;
   move: AppliedMove;
-  capacity: number;
+  sourceWidthPixels: number;
   onComplete: () => void;
   onDebug?: (event: string, timeSeconds: number) => void;
   onFrame?: (snapshot: PourPresentationSnapshot) => void;
   paused?: boolean;
 }): PourPresentation {
-  const {
-    sourceElement,
-    destinationElement,
-    streamElement,
-    sourceLayerElements,
-    sourceSurfaceElement,
-    destinationLiquidElement,
-    destinationSurfaceElement,
-  } = elements;
-
-  const streamSvg = streamElement.ownerSVGElement;
-  if (streamSvg === null) {
-    throw new Error("Pour stream must belong to an SVG element.");
-  }
-
-  const sourceMouthAnchor = sourceElement.querySelector<SVGCircleElement>(
-    geometry.direction === "right" ? "[data-vial-mouth-right]" : "[data-vial-mouth-left]",
-  );
-  const destinationLiquidBounds = destinationElement.querySelector<SVGRectElement>(
-    "[data-liquid-bounds]",
-  );
-  if (sourceMouthAnchor === null || destinationLiquidBounds === null) {
-    throw new Error("Missing SVG geometry anchor required for pour presentation.");
-  }
-
-  const streamSvgElement: SVGSVGElement = streamSvg;
-  const sourceMouthAnchorElement: SVGCircleElement = sourceMouthAnchor;
-  const destinationLiquidBoundsElement: SVGRectElement = destinationLiquidBounds;
-  const streamSourceGuide = streamSvgElement.querySelector<SVGCircleElement>(
-    "[data-debug-stream-source]",
-  );
-  const streamDestinationGuide = streamSvgElement.querySelector<SVGCircleElement>(
-    "[data-debug-stream-destination]",
-  );
-  const destinationDebugPointElements = Array.from(
-    destinationElement.querySelectorAll<SVGCircleElement>("[data-debug-destination-point]"),
-  );
-
-  const sourceElementRect = sourceElement.getBoundingClientRect();
-  const sourceMouthRectAtRest = sourceMouthAnchorElement.getBoundingClientRect();
-  const transformOriginX =
-    sourceMouthRectAtRest.left + sourceMouthRectAtRest.width / 2 - sourceElementRect.left;
-  const transformOriginY =
-    sourceMouthRectAtRest.top + sourceMouthRectAtRest.height / 2 - sourceElementRect.top;
-
   const destinationVialIndex = move.move.destinationVialIndex;
-  const previousDestinationFill = move.previousBoard[destinationVialIndex]?.length ?? 0;
-
-  function syncStreamViewport(): DOMRect {
-    const streamRect = streamSvgElement.getBoundingClientRect();
-    streamSvgElement.setAttribute(
-      "viewBox",
-      `0 0 ${Math.max(1, streamRect.width)} ${Math.max(1, streamRect.height)}`,
-    );
-    streamSvgElement.setAttribute("preserveAspectRatio", "none");
-    return streamRect;
-  }
-
-  function updateStreamGuide(
-    element: SVGCircleElement | null,
-    x: number,
-    y: number,
-  ): void {
-    if (element === null) return;
-    element.setAttribute("cx", x.toFixed(2));
-    element.setAttribute("cy", y.toFixed(2));
-  }
-
-  function updateStreamGeometry(timeSeconds: number): void {
-    const streamRect = syncStreamViewport();
-    const sourceMouthRect = sourceMouthAnchorElement.getBoundingClientRect();
-    const destinationBoundsRect = destinationLiquidBoundsElement.getBoundingClientRect();
-
-    const sourceMouthX =
-      sourceMouthRect.left + sourceMouthRect.width / 2 - streamRect.left;
-    const sourceMouthY =
-      sourceMouthRect.top + sourceMouthRect.height / 2 - streamRect.top;
-
-    const transferProgress = clamp(
-      (timeSeconds - GAME_TIMING.pour.transferStartSeconds) / GAME_TIMING.pour.transferSeconds,
-      0,
-      1,
-    );
-    const destinationFill = previousDestinationFill + move.amount * transferProgress;
-    const destinationImpactX =
-      destinationBoundsRect.left - streamRect.left
-      + destinationBoundsRect.width * (geometry.direction === "right" ? 0.28 : 0.72);
-    const destinationSurfaceY =
-      destinationBoundsRect.top - streamRect.top
-      + destinationBoundsRect.height * (1 - destinationFill / capacity);
-
-    streamElement.setAttribute(
-      "d",
-      createStreamPath(
-        sourceMouthX,
-        sourceMouthY,
-        destinationImpactX,
-        destinationSurfaceY,
-      ),
-    );
-    updateStreamGuide(streamSourceGuide, sourceMouthX, sourceMouthY);
-    updateStreamGuide(streamDestinationGuide, destinationImpactX, destinationSurfaceY);
-  }
-
-  gsap.set(sourceElement, {
-    transformOrigin: `${transformOriginX}px ${transformOriginY}px`,
-    zIndex: 20,
-  });
-  gsap.set(streamElement, {opacity: 0});
+  const motion: PourMotionState = {
+    x: 0,
+    y: 0,
+    rotationDegrees: 0,
+    streamOpacity: 0,
+    destinationScale: 1,
+  };
 
   const liquidSimulation = createLiquidSimulation({
-    elements: {
-      sourceElement,
-      sourceLayerElements,
-      sourceSurfaceElement,
-      destinationLiquidElement,
-      destinationSurfaceElement,
-      destinationDebugPointElements,
-    },
-    move,
-    capacity,
+    sourceWidthPixels,
+    getSourceMotion: () => ({
+      x: motion.x,
+      y: motion.y,
+      rotationDegrees: motion.rotationDegrees,
+    }),
   });
 
   const debugMarkers: PourDebugMarker[] = [
@@ -291,9 +122,11 @@ export function createPourTimeline({
       progress: GAME_TIMING.pour.totalSeconds <= 0
         ? 0
         : timeSeconds / GAME_TIMING.pour.totalSeconds,
-      sourceX: getGsapNumber(sourceElement, "x"),
-      sourceY: getGsapNumber(sourceElement, "y"),
-      sourceRotationDegrees: getGsapNumber(sourceElement, "rotation"),
+      sourceX: motion.x,
+      sourceY: motion.y,
+      sourceRotationDegrees: motion.rotationDegrees,
+      streamOpacity: motion.streamOpacity,
+      destinationScale: motion.destinationScale,
       liquid: liquidSimulation.getSnapshot(),
     };
   }
@@ -305,7 +138,6 @@ export function createPourTimeline({
   timeline.eventCallback("onStart", () => onDebug?.("timeline:start", 0));
   timeline.eventCallback("onUpdate", () => {
     const timeSeconds = timeline.time();
-    updateStreamGeometry(timeSeconds);
     liquidSimulation.update(timeSeconds);
     emitFrame();
 
@@ -324,16 +156,15 @@ export function createPourTimeline({
   timeline.eventCallback("onComplete", () => {
     onDebug?.("timeline:complete", timeline.time());
     liquidSimulation.finish();
-    updateStreamGeometry(GAME_TIMING.pour.totalSeconds);
+    motion.streamOpacity = 0;
     emitFrame();
     onComplete();
   });
 
-  updateStreamGeometry(0);
   liquidSimulation.update(0);
 
   timeline.to(
-    sourceElement,
+    motion,
     {
       x: geometry.translationX,
       y: geometry.translationY,
@@ -344,9 +175,9 @@ export function createPourTimeline({
   );
 
   timeline.to(
-    sourceElement,
+    motion,
     {
-      rotation: geometry.rotationDegrees,
+      rotationDegrees: geometry.rotationDegrees,
       duration: GAME_TIMING.pour.tiltSeconds,
       ease: "power2.inOut",
     },
@@ -354,9 +185,9 @@ export function createPourTimeline({
   );
 
   timeline.to(
-    streamElement,
+    motion,
     {
-      opacity: 1,
+      streamOpacity: 1,
       duration: GAME_TIMING.pour.streamOpenSeconds,
       ease: "power1.out",
     },
@@ -364,9 +195,9 @@ export function createPourTimeline({
   );
 
   timeline.to(
-    streamElement,
+    motion,
     {
-      opacity: 0,
+      streamOpacity: 0,
       duration: GAME_TIMING.pour.streamCloseDurationSeconds,
       ease: "power1.in",
     },
@@ -375,9 +206,9 @@ export function createPourTimeline({
 
   if (move.newlyCompletedVialIndices.includes(destinationVialIndex)) {
     timeline.to(
-      destinationElement,
+      motion,
       {
-        scale: 1.04,
+        destinationScale: 1.04,
         duration: GAME_TIMING.completedVialSeconds / 2,
         ease: "power2.out",
         yoyo: true,
@@ -388,9 +219,9 @@ export function createPourTimeline({
   }
 
   timeline.to(
-    sourceElement,
+    motion,
     {
-      rotation: 0,
+      rotationDegrees: 0,
       duration: GAME_TIMING.pour.returnRotationDurationSeconds,
       ease: "power2.inOut",
     },
@@ -398,7 +229,7 @@ export function createPourTimeline({
   );
 
   timeline.to(
-    sourceElement,
+    motion,
     {
       x: 0,
       y: 0,
@@ -408,33 +239,27 @@ export function createPourTimeline({
     GAME_TIMING.pour.returnTravelSeconds,
   );
 
-  timeline.set(streamElement, {opacity: 0}, GAME_TIMING.pour.totalSeconds);
+  timeline.set(motion, {streamOpacity: 0}, GAME_TIMING.pour.totalSeconds);
 
   function seek(timeSeconds: number): void {
-    const targetTime = gsap.utils.clamp(
-      0,
-      GAME_TIMING.pour.totalSeconds,
-      timeSeconds,
-    );
+    const targetTime = gsap.utils.clamp(0, GAME_TIMING.pour.totalSeconds, timeSeconds);
 
     timeline.pause();
     timeline.time(0, true);
     liquidSimulation.reset();
-    updateStreamGeometry(0);
     liquidSimulation.update(0);
 
     let cursor = DEBUG_SEEK_STEP_SECONDS;
     while (cursor < targetTime) {
       timeline.time(cursor, true);
-      updateStreamGeometry(cursor);
       liquidSimulation.update(cursor);
       cursor += DEBUG_SEEK_STEP_SECONDS;
     }
 
     timeline.time(targetTime, true);
-    updateStreamGeometry(targetTime);
     if (targetTime >= GAME_TIMING.pour.totalSeconds - 0.0001) {
       liquidSimulation.finish();
+      motion.streamOpacity = 0;
     } else {
       liquidSimulation.update(targetTime);
     }
