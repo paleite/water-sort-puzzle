@@ -21,9 +21,15 @@ import {
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
 import { GAME_TIMING } from "@/lib/water-sort/animation/timing";
-import { LIQUID_COLORS } from "@/lib/water-sort/presentation/palette";
+import type { Board } from "@/lib/water-sort/domain/types";
+import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
+import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
+import {
+  buildPourBoardRenderState,
+  buildStaticBoardRenderState,
+} from "@/lib/water-sort/rendering/render-state";
 
-import { Vial } from "./vial";
+import { VialSlotButton } from "./vial-slot-button";
 import debugStyles from "./animation-debug.module.css";
 
 interface PourStageProps {
@@ -48,68 +54,118 @@ function PourStage({
   onFrame,
 }: PourStageProps) {
   const boardRef = useRef<HTMLDivElement>(null);
-  const streamRef = useRef<SVGPathElement>(null);
+  const canvasHostRef = useRef<HTMLDivElement>(null);
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
+  const latestSnapshotRef = useRef<PourPresentationSnapshot | null>(null);
+  const presentationRef = useRef<PourPresentation | null>(null);
 
   useLayoutEffect(() => {
-    if (committed) {
-      onPresentationReady?.(null);
-      return;
-    }
-
     const boardElement = boardRef.current;
-    const streamElement = streamRef.current;
-    const sourceVialIndex = scenario.move.move.sourceVialIndex;
-    const destinationVialIndex = scenario.move.move.destinationVialIndex;
-    const sourceElement = vialRefs.current.get(sourceVialIndex);
-    const destinationElement = vialRefs.current.get(destinationVialIndex);
+    const canvasHost = canvasHostRef.current;
+    if (boardElement === null || canvasHost === null) return;
 
-    if (
-      boardElement === null
-      || streamElement === null
-      || sourceElement === undefined
-      || destinationElement === undefined
-    ) {
-      return;
-    }
-
-    const geometry = calculatePourGeometry(
-      boardElement,
-      sourceElement,
-      destinationElement,
-    );
-
-    streamElement.style.fill = LIQUID_COLORS[scenario.move.color];
-
-    const presentation = createPourTimeline({
-      elements: {
-        sourceElement,
-        destinationElement,
-        streamElement,
-        sourceLayerElements: Array.from(
-          sourceElement.querySelectorAll<SVGPathElement>("[data-source-liquid-layer]"),
-        ),
-        sourceSurfaceElement:
-          sourceElement.querySelector<SVGPathElement>("[data-source-surface-path]"),
-        destinationLiquidElement:
-          destinationElement.querySelector<SVGPathElement>("[data-destination-liquid-path]"),
-        destinationSurfaceElement:
-          destinationElement.querySelector<SVGPathElement>("[data-destination-surface-path]"),
-      },
-      geometry,
-      move: scenario.move,
-      capacity: scenario.capacity,
-      paused: true,
-      onComplete: () => {},
-      ...(onFrame === undefined ? {} : {onFrame}),
+    const displayBoard = committed ? scenario.move.nextBoard : scenario.initialBoard;
+    const renderer = new PixiBoardRenderer({boardElement, canvasHost});
+    void renderer.initialize().catch((error: unknown) => {
+      console.error("Failed to initialize Pixi debug renderer.", error);
     });
 
-    presentation.seek(initialTimeSeconds);
-    onPresentationReady?.(presentation);
+    const renderCurrent = (): void => {
+      const anchors = measureVialAnchors(boardElement, vialRefs.current, displayBoard.length);
+      const snapshot = latestSnapshotRef.current;
+
+      if (committed || snapshot === null) {
+        renderer.render(buildStaticBoardRenderState({
+          board: displayBoard,
+          anchors,
+          selectedSourceVialIndex: null,
+          capacity: scenario.capacity,
+          debugGeometry,
+        }));
+        return;
+      }
+
+      const sourceElement = vialRefs.current.get(scenario.move.move.sourceVialIndex);
+      const destinationElement = vialRefs.current.get(scenario.move.move.destinationVialIndex);
+      if (sourceElement === undefined || destinationElement === undefined) return;
+      const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
+      renderer.render(buildPourBoardRenderState({
+        move: scenario.move,
+        anchors,
+        selectedSourceVialIndex: null,
+        geometry,
+        presentation: snapshot,
+        capacity: scenario.capacity,
+        debugGeometry,
+      }));
+    };
+
+    let frame = 0;
+    const scheduleRender = (): void => {
+      if (frame !== 0) cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        renderCurrent();
+      });
+    };
+
+    const observer = new ResizeObserver(scheduleRender);
+    observer.observe(boardElement);
+    for (const element of vialRefs.current.values()) observer.observe(element);
+    window.addEventListener("resize", scheduleRender);
+
+    let presentation: PourPresentation | null = null;
+    if (!committed) {
+      const sourceElement = vialRefs.current.get(scenario.move.move.sourceVialIndex);
+      const destinationElement = vialRefs.current.get(scenario.move.move.destinationVialIndex);
+      if (sourceElement !== undefined && destinationElement !== undefined) {
+        const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
+        presentation = createPourTimeline({
+          geometry,
+          move: scenario.move,
+          sourceWidthPixels: sourceElement.getBoundingClientRect().width,
+          paused: true,
+          onComplete: () => {},
+          onFrame: (snapshot) => {
+            latestSnapshotRef.current = snapshot;
+            const anchors = measureVialAnchors(
+              boardElement,
+              vialRefs.current,
+              scenario.initialBoard.length,
+            );
+            renderer.render(buildPourBoardRenderState({
+              move: scenario.move,
+              anchors,
+              selectedSourceVialIndex: null,
+              geometry,
+              presentation: snapshot,
+              capacity: scenario.capacity,
+              debugGeometry,
+            }));
+            onFrame?.(snapshot);
+          },
+        });
+        presentationRef.current = presentation;
+        presentation.seek(initialTimeSeconds);
+        onPresentationReady?.(presentation);
+      }
+    } else {
+      latestSnapshotRef.current = null;
+      onPresentationReady?.(null);
+      renderCurrent();
+    }
+
+    scheduleRender();
 
     return () => {
+      if (frame !== 0) cancelAnimationFrame(frame);
+      window.removeEventListener("resize", scheduleRender);
+      observer.disconnect();
+      presentation?.timeline.kill();
+      if (presentationRef.current === presentation) presentationRef.current = null;
+      latestSnapshotRef.current = null;
       onPresentationReady?.(null);
-      presentation.timeline.revert();
+      renderer.destroy();
     };
   }, [
     committed,
@@ -124,55 +180,87 @@ function PourStage({
 
   return (
     <div ref={boardRef} className={debugStyles.stageBoard} data-debug-stage="">
+      <div ref={canvasHostRef} className={debugStyles.pixiCanvasHost} aria-hidden="true" />
       <div className={debugStyles.stageGrid}>
-        {displayBoard.map((vial, vialIndex) => {
-          const isSource = !committed && vialIndex === scenario.move.move.sourceVialIndex;
-          const isDestination = !committed && vialIndex === scenario.move.move.destinationVialIndex;
-          const outgoing = isSource
-            ? {color: scenario.move.color, amount: scenario.move.amount}
-            : undefined;
-          const incoming = isDestination
-            ? {color: scenario.move.color, amount: scenario.move.amount}
-            : undefined;
+        {displayBoard.map((vial, vialIndex) => (
+          <VialSlotButton
+            key={vialIndex}
+            ref={(element) => {
+              if (element === null) vialRefs.current.delete(vialIndex);
+              else vialRefs.current.set(vialIndex, element);
+            }}
+            vial={vial}
+            capacity={scenario.capacity}
+            vialIndex={vialIndex}
+            interactive={false}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-          return (
-            <Vial
-              key={vialIndex}
+function SelectionPreviewStage() {
+  const board: Board = [
+    ["amber", "violet"],
+    ["amber", "violet"],
+  ];
+  const boardRef = useRef<HTMLDivElement>(null);
+  const canvasHostRef = useRef<HTMLDivElement>(null);
+  const vialRefs = useRef(new Map<number, HTMLButtonElement>());
+
+  useLayoutEffect(() => {
+    const boardElement = boardRef.current;
+    const canvasHost = canvasHostRef.current;
+    if (boardElement === null || canvasHost === null) return;
+
+    const renderer = new PixiBoardRenderer({boardElement, canvasHost});
+    void renderer.initialize().catch((error: unknown) => {
+      console.error("Failed to initialize Pixi selection preview.", error);
+    });
+
+    const render = (): void => {
+      const anchors = measureVialAnchors(boardElement, vialRefs.current, board.length);
+      renderer.render(buildStaticBoardRenderState({
+        board,
+        anchors,
+        selectedSourceVialIndex: 1,
+        capacity: 4,
+      }));
+    };
+
+    const observer = new ResizeObserver(render);
+    observer.observe(boardElement);
+    for (const element of vialRefs.current.values()) observer.observe(element);
+    render();
+
+    return () => {
+      observer.disconnect();
+      renderer.destroy();
+    };
+  }, []);
+
+  return (
+    <div ref={boardRef} className={debugStyles.selectionPreviewStage}>
+      <div ref={canvasHostRef} className={debugStyles.pixiCanvasHost} aria-hidden="true" />
+      <div className={debugStyles.selectionPreviewGrid}>
+        {board.map((vial, vialIndex) => (
+          <div key={vialIndex} className={debugStyles.selectionPreviewItem}>
+            <span className={debugStyles.cardLabel}>{vialIndex === 0 ? "Resting" : "Selected"}</span>
+            <VialSlotButton
               ref={(element) => {
                 if (element === null) vialRefs.current.delete(vialIndex);
                 else vialRefs.current.set(vialIndex, element);
               }}
               vial={vial}
-              capacity={scenario.capacity}
+              capacity={4}
               vialIndex={vialIndex}
+              selected={vialIndex === 1}
               interactive={false}
-              debugGeometry={debugGeometry}
-              {...(outgoing === undefined ? {} : {outgoing})}
-              {...(incoming === undefined ? {} : {incoming})}
             />
-          );
-        })}
+          </div>
+        ))}
       </div>
-
-      {!committed && (
-        <svg className={debugStyles.streamLayer} aria-hidden="true">
-          <path ref={streamRef} style={{opacity: 0}} />
-          {debugGeometry && (
-            <>
-              <circle
-                data-debug-stream-source=""
-                r="4"
-                className={debugStyles.streamSourceGuide}
-              />
-              <circle
-                data-debug-stream-destination=""
-                r="4"
-                className={debugStyles.streamDestinationGuide}
-              />
-            </>
-          )}
-        </svg>
-      )}
     </div>
   );
 }
@@ -183,37 +271,10 @@ function SelectionStatePreview() {
       <div>
         <h2 className={debugStyles.sectionTitle}>Selection states</h2>
         <p className={debugStyles.sectionDescription}>
-          The selected vial must lift through the outer vial slot. The button itself remains at
-          GSAP transform identity.
+          DOM slots remain fixed. The selected Pixi vial is translated 10 px upward in render state.
         </p>
       </div>
-
-      <div className={debugStyles.selectionGrid}>
-        <article className={debugStyles.selectionCard}>
-          <span className={debugStyles.cardLabel}>Resting</span>
-          <div className={debugStyles.selectionStage}>
-            <Vial
-              vial={["amber", "violet"]}
-              capacity={4}
-              vialIndex={0}
-              interactive={false}
-            />
-          </div>
-        </article>
-
-        <article className={debugStyles.selectionCard}>
-          <span className={debugStyles.cardLabel}>Selected</span>
-          <div className={debugStyles.selectionStage}>
-            <Vial
-              vial={["amber", "violet"]}
-              capacity={4}
-              vialIndex={0}
-              selected
-              interactive={false}
-            />
-          </div>
-        </article>
-      </div>
+      <SelectionPreviewStage />
     </section>
   );
 }
@@ -230,18 +291,10 @@ function Inspector({snapshot}: {snapshot: PourPresentationSnapshot | null}) {
       <div><dt>source x</dt><dd>{formatNumber(snapshot.sourceX)} px</dd></div>
       <div><dt>source y</dt><dd>{formatNumber(snapshot.sourceY)} px</dd></div>
       <div><dt>source rotation</dt><dd>{formatNumber(snapshot.sourceRotationDegrees)}°</dd></div>
-      <div>
-        <dt>surface world angle</dt>
-        <dd>{formatNumber(snapshot.liquid.sourceWorldAngleDegrees)}°</dd>
-      </div>
-      <div>
-        <dt>surface angular velocity</dt>
-        <dd>{formatNumber(snapshot.liquid.sourceAngularVelocity)}</dd>
-      </div>
-      <div>
-        <dt>destination wave</dt>
-        <dd>{formatNumber(snapshot.liquid.destinationMaximumDisplacement)}</dd>
-      </div>
+      <div><dt>surface world angle</dt><dd>{formatNumber(snapshot.liquid.sourceWorldAngleDegrees)}°</dd></div>
+      <div><dt>surface local angle</dt><dd>{formatNumber(snapshot.liquid.sourceLocalAngleDegrees)}°</dd></div>
+      <div><dt>surface angular velocity</dt><dd>{formatNumber(snapshot.liquid.sourceAngularVelocity)}</dd></div>
+      <div><dt>destination wave</dt><dd>{formatNumber(snapshot.liquid.destinationMaximumDisplacement)}</dd></div>
     </dl>
   );
 }
@@ -292,7 +345,7 @@ export function AnimationDebugLab() {
       <header className={debugStyles.header}>
         <p className={debugStyles.eyebrow}>Water Sort</p>
         <h1>Animation Debug Lab</h1>
-        <p>Render deterministic states from the production GSAP and liquid presentation.</p>
+        <p>Render deterministic Pixi frames from the production GSAP and slosh presentation.</p>
       </header>
 
       <section className={debugStyles.section}>
@@ -302,11 +355,10 @@ export function AnimationDebugLab() {
             <select
               value={selectedScenarioId}
               onChange={(event) => {
-                const nextId = event.currentTarget.value;
                 requestedTimeRef.current = 0;
                 setPlayheadTime(0);
                 setSnapshot(null);
-                setSelectedScenarioId(nextId);
+                setSelectedScenarioId(event.currentTarget.value);
               }}
               data-debug-scenario=""
             >
@@ -325,7 +377,6 @@ export function AnimationDebugLab() {
             <span>Geometry guides</span>
           </label>
         </div>
-
         <p className={debugStyles.sectionDescription}>{selectedScenario.description}</p>
       </section>
 
@@ -335,8 +386,7 @@ export function AnimationDebugLab() {
         <div>
           <h2 className={debugStyles.sectionTitle}>Interactive preview</h2>
           <p className={debugStyles.sectionDescription}>
-            Dragging the timeline performs a deterministic replay from zero. It does not wait for
-            wall-clock animation time.
+            Scrubbing resets and deterministically replays the simulation; it does not wait for wall-clock time.
           </p>
         </div>
 
@@ -366,9 +416,7 @@ export function AnimationDebugLab() {
                   }
                   presentation.timeline.play();
                 }}
-              >
-                Play
-              </button>
+              >Play</button>
               <button type="button" onClick={() => presentationRef.current?.timeline.pause()}>
                 Pause
               </button>
@@ -378,9 +426,7 @@ export function AnimationDebugLab() {
                   seek(0);
                   presentationRef.current?.timeline.play();
                 }}
-              >
-                Restart
-              </button>
+              >Restart</button>
             </div>
 
             <input
@@ -408,7 +454,6 @@ export function AnimationDebugLab() {
               ))}
             </div>
           </div>
-
           <Inspector snapshot={snapshot} />
         </div>
       </section>
@@ -417,8 +462,7 @@ export function AnimationDebugLab() {
         <div>
           <h2 className={debugStyles.sectionTitle}>Checkpoint gallery</h2>
           <p className={debugStyles.sectionDescription}>
-            Every card is paused at a deterministic presentation time. The Settled card renders
-            the committed next board, matching production after presentation completion.
+            Each card seeks the real production presentation to an exact checkpoint. Settled renders the committed next board.
           </p>
         </div>
 
