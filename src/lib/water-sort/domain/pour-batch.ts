@@ -1,3 +1,4 @@
+import type { ColorId } from "./colors";
 import { isCompleteVial } from "./solved";
 import type {
   AppliedPourBatch,
@@ -110,7 +111,7 @@ export function validateAndApplyPourBatch(
     }
   }
 
-  const nextBoard: Board = board.map((vial) => [...vial]);
+  const nextBoard: ColorId[][] = board.map((vial) => [...vial]);
 
   for (const draft of drafts) {
     const source = nextBoard[draft.move.sourceVialIndex];
