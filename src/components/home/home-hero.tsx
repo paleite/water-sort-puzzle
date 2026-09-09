@@ -175,6 +175,7 @@ export function HomeHero() {
       pourPresentationRef.current?.timeline.kill();
       pourPresentationRef.current = null;
       transientStateBuilderRef.current = null;
+      hasPlayedRef.current = false;
     };
   }, {scope: containerRef});
 
