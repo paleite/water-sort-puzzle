@@ -52,7 +52,7 @@ float waveSample(int index) {
 float sampleWave(float x) {
   float scaled = clamp(x, 0.0, 1.0) * 10.0;
   int firstIndex = int(floor(scaled));
-  int secondIndex = min(firstIndex + 1, 10);
+  int secondIndex = firstIndex < 10 ? firstIndex + 1 : 10;
   float t = fract(scaled);
   return mix(waveSample(firstIndex), waveSample(secondIndex), t);
 }
