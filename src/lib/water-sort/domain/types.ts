@@ -18,6 +18,21 @@ export interface AppliedMove {
   newlyCompletedVialIndices: readonly number[];
 }
 
+export interface AppliedPourTransfer {
+  move: Move;
+  color: ColorId;
+  amount: number;
+}
+
+export interface AppliedPourBatch {
+  transfers: readonly AppliedPourTransfer[];
+  previousBoard: Board;
+  nextBoard: Board;
+  newlyCompletedVialIndices: readonly number[];
+}
+
+export type AppliedTurn = AppliedMove | AppliedPourBatch;
+
 export type InvalidMoveReason =
   | "destination-full"
   | "different-top-color"
