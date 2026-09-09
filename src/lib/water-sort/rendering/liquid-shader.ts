@@ -101,8 +101,9 @@ void main() {
   float unitsFromBottom = (1.0 - internalY) * uCapacity;
   vec4 band = chooseBand(unitsFromBottom);
 
-  float sideLight = smoothstep(0.0, 0.24, vUV.x) * smoothstep(1.0, 0.76, vUV.x);
-  vec3 color = band.rgb * (0.88 + sideLight * 0.12);
+  // Keep the supplied palette unmodified across the body. Bubbles and foam
+  // remain local highlights rather than globally tinting every liquid color.
+  vec3 color = band.rgb;
 
   float bubbleMask = 0.0;
   for (int i = 0; i < 7; i++) {
@@ -124,6 +125,6 @@ void main() {
   float foamNoise = 0.65 + hash(floor(vec2(vUV.x * 90.0, uTime * 8.0))) * 0.35;
   color = mix(color, vec3(0.98), foam * foamNoise * 0.70);
 
-  gl_FragColor = vec4(color, 0.96);
+  gl_FragColor = vec4(color, 1.0);
 }
 `;
