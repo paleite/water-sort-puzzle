@@ -9,8 +9,8 @@
   overflow: hidden;
   overscroll-behavior: none;
   background:
-    radial-gradient(circle at 50% 10%, rgb(255 255 255 / 0.92), transparent 42%),
-    linear-gradient(180deg, #eef8ff 0%, #e3f1fa 48%, #d8eaf4 100%);
+    radial-gradient(circle at 50% 10%, rgb(255 255 255 / 0.58), transparent 40%),
+    linear-gradient(180deg, #dcebf4 0%, #c9dde9 48%, #b7d0df 100%);
 }
 
 .board {
