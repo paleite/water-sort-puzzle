@@ -2,22 +2,21 @@ import { assign, setup } from "xstate";
 
 import { isDeadEnd } from "../domain/dead-end";
 import { applyMove } from "../domain/moves";
-import {
-  applyPourBatch,
-  canApplyPourBatch,
-} from "../domain/pour-batch";
 import { isSolved } from "../domain/solved";
 import type {
   AppliedMove,
-  AppliedPourBatch,
   AppliedTurn,
   Board,
   InteractionResolution,
   Level,
-  Move,
 } from "../domain/types";
 import type { SavedGame } from "../persistence/progress";
 import { resolveVialPress } from "./interaction";
+
+export interface ActiveMovePresentation {
+  id: number;
+  move: AppliedMove;
+}
 
 export interface GameContext {
   level: Level;
@@ -25,21 +24,17 @@ export interface GameContext {
   board: Board;
   selectedSourceVialIndex: number | null;
   history: readonly AppliedTurn[];
-  activeMove: AppliedMove | null;
-  activeBatch: AppliedPourBatch | null;
+  activePresentations: readonly ActiveMovePresentation[];
+  nextPresentationId: number;
   activeUndo: AppliedTurn | null;
   lastInteraction: InteractionResolution | null;
   isDeadEnd: boolean;
+  completionPending: boolean;
 }
 
 export type GameEvent =
   | {type: "VIAL.PRESSED"; vialIndex: number}
-  | {
-      type: "POUR_BATCH.REQUESTED";
-      sourceVialIndices: readonly number[];
-      destinationVialIndex: number;
-    }
-  | {type: "MOVE.PRESENTATION_FINISHED"}
+  | {type: "PRESENTATION.FINISHED"; presentationId: number}
   | {type: "UNDO"}
   | {type: "UNDO.PRESENTATION_FINISHED"}
   | {type: "RESTART"}
@@ -50,26 +45,34 @@ export interface GameMachineInput {
   savedGame?: SavedGame;
 }
 
+function sourceIsBusy(context: GameContext, vialIndex: number): boolean {
+  return context.activePresentations.some(({move}) =>
+    move.move.sourceVialIndex === vialIndex || move.move.destinationVialIndex === vialIndex
+  );
+}
+
+function destinationIsBusy(context: GameContext, vialIndex: number): boolean {
+  return context.activePresentations.some(({move}) => move.move.sourceVialIndex === vialIndex);
+}
+
 function resolvePress(context: GameContext, event: GameEvent): InteractionResolution | null {
-  if (event.type !== "VIAL.PRESSED") return null;
+  if (event.type !== "VIAL.PRESSED" || context.completionPending) return null;
+
+  if (context.selectedSourceVialIndex === null) {
+    if (sourceIsBusy(context, event.vialIndex)) return null;
+  } else if (
+    event.vialIndex !== context.selectedSourceVialIndex
+    && destinationIsBusy(context, event.vialIndex)
+  ) {
+    return null;
+  }
+
   return resolveVialPress(
     context.board,
     context.selectedSourceVialIndex,
     event.vialIndex,
     context.level.capacity,
   );
-}
-
-function requestedBatchMoves(event: GameEvent): readonly Move[] | null {
-  if (event.type !== "POUR_BATCH.REQUESTED") return null;
-  return event.sourceVialIndices.map((sourceVialIndex) => ({
-    sourceVialIndex,
-    destinationVialIndex: event.destinationVialIndex,
-  }));
-}
-
-function activePresentationBoard(context: GameContext): Board | null {
-  return context.activeBatch?.nextBoard ?? context.activeMove?.nextBoard ?? null;
 }
 
 export const gameMachine = setup({
@@ -85,15 +88,13 @@ export const gameMachine = setup({
       resolvePress(context, event)?.type === "source-unselected",
     pressCreatesMove: ({context, event}) =>
       resolvePress(context, event)?.type === "move",
-    requestedBatchIsLegal: ({context, event}) => {
-      const moves = requestedBatchMoves(event);
-      return moves !== null && canApplyPourBatch(context.board, moves, context.level.capacity);
-    },
-    canUndo: ({context}) => context.history.length > 0,
-    activePresentationSolvesBoard: ({context}) => {
-      const nextBoard = activePresentationBoard(context);
-      return nextBoard !== null && isSolved(nextBoard, context.level.capacity);
-    },
+    canUndo: ({context}) =>
+      context.history.length > 0 && context.activePresentations.length === 0,
+    finishingLastSolvedPresentation: ({context, event}) =>
+      event.type === "PRESENTATION.FINISHED"
+      && context.completionPending
+      && context.activePresentations.length === 1
+      && context.activePresentations[0]?.id === event.presentationId,
   },
   actions: {
     selectSource: assign(({context, event}) => {
@@ -111,40 +112,36 @@ export const gameMachine = setup({
     recordNonMoveInteraction: assign(({context, event}) => ({
       lastInteraction: resolvePress(context, event) ?? context.lastInteraction,
     })),
-    prepareMove: assign(({context, event}) => {
+    commitMoveAndStartPresentation: assign(({context, event}) => {
       const resolution = resolvePress(context, event);
       if (resolution?.type !== "move") {
-        throw new Error("prepareMove received a non-move interaction.");
+        throw new Error("commitMoveAndStartPresentation received a non-move interaction.");
       }
+
+      const appliedMove = applyMove(context.board, resolution.move, context.level.capacity);
+      const presentationId = context.nextPresentationId;
+      const nextBoard = appliedMove.nextBoard;
+
       return {
-        activeMove: applyMove(context.board, resolution.move, context.level.capacity),
-        activeBatch: null,
+        board: nextBoard,
+        history: [...context.history, appliedMove],
+        activePresentations: [
+          ...context.activePresentations,
+          {id: presentationId, move: appliedMove},
+        ],
+        nextPresentationId: presentationId + 1,
+        selectedSourceVialIndex: null,
         lastInteraction: resolution,
+        isDeadEnd: isDeadEnd(nextBoard, context.level.capacity),
+        completionPending: isSolved(nextBoard, context.level.capacity),
       };
     }),
-    prepareBatch: assign(({context, event}) => {
-      const moves = requestedBatchMoves(event);
-      if (moves === null) {
-        throw new Error("prepareBatch received a non-batch event.");
-      }
+    finishPresentation: assign(({context, event}) => {
+      if (event.type !== "PRESENTATION.FINISHED") return {};
       return {
-        activeBatch: applyPourBatch(context.board, moves, context.level.capacity),
-        activeMove: null,
-        selectedSourceVialIndex: null,
-      };
-    }),
-    commitPresentation: assign(({context}) => {
-      const activeTurn: AppliedTurn | null = context.activeBatch ?? context.activeMove;
-      if (activeTurn === null) {
-        throw new Error("MOVE.PRESENTATION_FINISHED without an active presentation.");
-      }
-      return {
-        board: activeTurn.nextBoard,
-        history: [...context.history, activeTurn],
-        activeMove: null,
-        activeBatch: null,
-        selectedSourceVialIndex: null,
-        isDeadEnd: isDeadEnd(activeTurn.nextBoard, context.level.capacity),
+        activePresentations: context.activePresentations.filter(
+          (presentation) => presentation.id !== event.presentationId,
+        ),
       };
     }),
     prepareUndo: assign(({context}) => {
@@ -154,9 +151,8 @@ export const gameMachine = setup({
         board: activeUndo.previousBoard,
         history: context.history.slice(0, -1),
         activeUndo,
-        activeMove: null,
-        activeBatch: null,
         selectedSourceVialIndex: null,
+        completionPending: false,
         isDeadEnd: isDeadEnd(activeUndo.previousBoard, context.level.capacity),
       };
     }),
@@ -164,12 +160,12 @@ export const gameMachine = setup({
     restart: assign(({context}) => ({
       board: context.initialBoard,
       history: [],
-      activeMove: null,
-      activeBatch: null,
+      activePresentations: [],
       activeUndo: null,
       selectedSourceVialIndex: null,
       lastInteraction: null,
       isDeadEnd: isDeadEnd(context.initialBoard, context.level.capacity),
+      completionPending: false,
     })),
   },
 }).createMachine({
@@ -184,17 +180,28 @@ export const gameMachine = setup({
       board,
       selectedSourceVialIndex: null,
       history,
-      activeMove: null,
-      activeBatch: null,
+      activePresentations: [],
+      nextPresentationId: 1,
       activeUndo: null,
       lastInteraction: null,
       isDeadEnd: isDeadEnd(board, input.level.capacity),
+      completionPending: false,
     };
   },
   initial: "playing",
   states: {
     playing: {
       initial: "idle",
+      on: {
+        "PRESENTATION.FINISHED": [
+          {
+            guard: "finishingLastSolvedPresentation",
+            target: "#waterSortGame.completed",
+            actions: "finishPresentation",
+          },
+          {actions: "finishPresentation"},
+        ],
+      },
       states: {
         idle: {
           on: {
@@ -202,11 +209,6 @@ export const gameMachine = setup({
               {guard: "pressSelectsSource", target: "sourceSelected", actions: "selectSource"},
               {actions: "recordNonMoveInteraction"},
             ],
-            "POUR_BATCH.REQUESTED": {
-              guard: "requestedBatchIsLegal",
-              target: "presentingMove",
-              actions: "prepareBatch",
-            },
             UNDO: {guard: "canUndo", target: "presentingUndo", actions: "prepareUndo"},
             RESTART: {target: "presentingRestart", actions: "restart"},
           },
@@ -215,23 +217,15 @@ export const gameMachine = setup({
           on: {
             "VIAL.PRESSED": [
               {guard: "pressUnselectsSource", target: "idle", actions: "unselectSource"},
-              {guard: "pressCreatesMove", target: "presentingMove", actions: "prepareMove"},
+              {
+                guard: "pressCreatesMove",
+                target: "idle",
+                actions: "commitMoveAndStartPresentation",
+              },
               {actions: "recordNonMoveInteraction"},
             ],
             UNDO: {guard: "canUndo", target: "presentingUndo", actions: "prepareUndo"},
             RESTART: {target: "presentingRestart", actions: "restart"},
-          },
-        },
-        presentingMove: {
-          on: {
-            "MOVE.PRESENTATION_FINISHED": [
-              {
-                guard: "activePresentationSolvesBoard",
-                target: "#waterSortGame.completed",
-                actions: "commitPresentation",
-              },
-              {target: "idle", actions: "commitPresentation"},
-            ],
           },
         },
         presentingUndo: {
