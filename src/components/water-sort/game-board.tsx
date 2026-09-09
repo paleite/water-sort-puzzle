@@ -42,6 +42,7 @@ interface PresentationRuntime {
   geometry: ReturnType<typeof calculatePourGeometry>;
   presentation: PourPresentation;
   snapshot: PourPresentationSnapshot;
+  started: boolean;
 }
 
 function setVialRef(
@@ -74,6 +75,26 @@ function getAffectedVialIndices(turn: AppliedTurn): readonly number[] {
     ]))];
   }
   return [turn.move.sourceVialIndex, turn.move.destinationVialIndex];
+}
+
+function presentationIsBlocked(
+  candidate: ActiveMovePresentation,
+  activePresentations: readonly ActiveMovePresentation[],
+): boolean {
+  const candidateSource = candidate.move.move.sourceVialIndex;
+  const candidateDestination = candidate.move.move.destinationVialIndex;
+
+  return activePresentations.some((earlier) => {
+    if (earlier.id >= candidate.id) return false;
+    const earlierSource = earlier.move.move.sourceVialIndex;
+    const earlierDestination = earlier.move.move.destinationVialIndex;
+
+    return (
+      candidateSource === earlierSource
+      || candidateSource === earlierDestination
+      || candidateDestination === earlierSource
+    );
+  });
 }
 
 export function GameBoard({
@@ -262,6 +283,7 @@ export function GameBoard({
         geometry,
         presentation,
         snapshot: presentation.getSnapshot(),
+        started: false,
       };
       presentationRuntimesRef.current.set(active.id, runtime);
 
@@ -272,7 +294,19 @@ export function GameBoard({
         + `dy=${formatNumber(geometry.translationY)} `
         + `rot=${formatNumber(geometry.rotationDegrees)}]`,
       );
-      presentation.timeline.play(0);
+    }
+
+    for (const active of activePresentations) {
+      const runtime = presentationRuntimesRef.current.get(active.id);
+      if (runtime === undefined || runtime.started) continue;
+      if (presentationIsBlocked(active, activePresentations)) {
+        appendDebugLog(`p${active.id} queued for vial dependency`);
+        continue;
+      }
+
+      runtime.started = true;
+      appendDebugLog(`p${active.id} presentation:start`);
+      runtime.presentation.timeline.play(0);
     }
 
     renderLatestRef.current();
