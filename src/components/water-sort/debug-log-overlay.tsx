@@ -14,7 +14,7 @@ export function DebugLogOverlay({
   onClear: () => void;
 }) {
   const listRef = useRef<HTMLDivElement>(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
     if (collapsed) return;
