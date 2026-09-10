@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
 import type { Level } from "@/lib/water-sort/domain/types";
@@ -11,6 +11,14 @@ import {
   saveProgress,
   type SavedGame,
 } from "@/lib/water-sort/persistence/progress";
+import {
+  applyLiquidPalette,
+  DEFAULT_LIQUID_PALETTE_ID,
+  getAdjacentPaletteId,
+  isLiquidPaletteId,
+  PALETTE_STORAGE_KEY,
+  type LiquidPaletteId,
+} from "@/lib/water-sort/presentation/palette";
 
 import { GameBoard } from "./game-board";
 import { GameCompleteOverlay } from "./game-complete-overlay";
@@ -69,6 +77,9 @@ function GameRuntime({
   savedGame?: SavedGame;
 }) {
   const game = useWaterSortGame(level, savedGame);
+  const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
+  const [paletteAnnouncement, setPaletteAnnouncement] = useState<string | null>(null);
+  const paletteAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const manifestIndex = manifest.levels.findIndex((entry) => entry.id === level.id);
   const nextLevelId =
     manifestIndex < 0 ? null : (manifest.levels[manifestIndex + 1]?.id ?? null);
@@ -77,6 +88,63 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
+
+  const forceBoardRender = useCallback((): void => {
+    window.dispatchEvent(new Event("resize"));
+  }, []);
+
+  const cyclePalette = useCallback((direction: -1 | 1): void => {
+    const nextPaletteId = getAdjacentPaletteId(paletteId, direction);
+    const nextPalette = applyLiquidPalette(nextPaletteId);
+    setPaletteId(nextPaletteId);
+
+    try {
+      window.localStorage.setItem(PALETTE_STORAGE_KEY, nextPaletteId);
+    } catch {
+      // Persistence is optional when storage is unavailable.
+    }
+
+    if (paletteAnnouncementTimeoutRef.current !== null) {
+      clearTimeout(paletteAnnouncementTimeoutRef.current);
+    }
+    setPaletteAnnouncement(nextPalette.name);
+    paletteAnnouncementTimeoutRef.current = setTimeout(() => {
+      setPaletteAnnouncement(null);
+      paletteAnnouncementTimeoutRef.current = null;
+    }, 1100);
+
+    forceBoardRender();
+  }, [forceBoardRender, paletteId]);
+
+  useEffect(() => {
+    let storedPaletteId: string | null = null;
+    try {
+      storedPaletteId = window.localStorage.getItem(PALETTE_STORAGE_KEY);
+    } catch {
+      // Fall back to the first palette when storage is unavailable.
+    }
+
+    const resolvedPaletteId = isLiquidPaletteId(storedPaletteId)
+      ? storedPaletteId
+      : DEFAULT_LIQUID_PALETTE_ID;
+
+    applyLiquidPalette(resolvedPaletteId);
+    setPaletteId(resolvedPaletteId);
+
+    try {
+      window.localStorage.setItem(PALETTE_STORAGE_KEY, resolvedPaletteId);
+    } catch {
+      // Persistence is optional when storage is unavailable.
+    }
+
+    forceBoardRender();
+
+    return () => {
+      if (paletteAnnouncementTimeoutRef.current !== null) {
+        clearTimeout(paletteAnnouncementTimeoutRef.current);
+      }
+    };
+  }, [forceBoardRender]);
 
   useEffect(() => {
     if (
@@ -127,6 +195,9 @@ function GameRuntime({
         canUndo={game.context.history.length > 0 && !hasActivePours}
         isAnimating={isHudAnimating}
         isDeadEnd={game.context.isDeadEnd}
+        paletteAnnouncement={paletteAnnouncement}
+        onPreviousPalette={() => cyclePalette(-1)}
+        onNextPalette={() => cyclePalette(1)}
         {...(level.development?.optimalMoveCount === undefined
           ? {}
           : {optimalMoveCount: level.development.optimalMoveCount})}
