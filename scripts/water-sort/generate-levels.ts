@@ -1,8 +1,8 @@
-import { mkdir, readdir, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { createCanonicalBoardKey } from "../../src/lib/water-sort/domain/board";
-import { getColorIds } from "../../src/lib/water-sort/domain/colors";
+import { getColorIds, type ColorId } from "../../src/lib/water-sort/domain/colors";
 import {
   beamScramble,
   calculateStructuralMetrics,
@@ -14,9 +14,30 @@ import {
 } from "./generator";
 import { solveWithAStar, verifySolution } from "./solver";
 
+interface ManifestEntry {
+  id: string;
+  file: string;
+  development: {
+    optimalMoveCount: number;
+    exploredStateCount: number;
+    maximumBranchingFactor: number;
+    meanVialEntropy: number;
+    boundaryRate: number;
+    totalRunCount: number;
+    generationDepth: number;
+  };
+}
+
+interface StoredLevel {
+  vials: ColorId[][];
+}
+
 function flag(name: string): string | undefined {
   const index = process.argv.indexOf(name);
   return index < 0 ? undefined : process.argv[index + 1];
+}
+function hasFlag(name: string): boolean {
+  return process.argv.includes(name);
 }
 function numberFlag(name: string, fallback: number): number {
   const raw = flag(name);
@@ -29,9 +50,34 @@ function formatId(index: number): string {
   return String(index).padStart(3, "0");
 }
 
+async function loadExistingManifest(output: string): Promise<ManifestEntry[]> {
+  const manifestPath = path.join(output, "manifest.json");
+  const parsed = JSON.parse(await readFile(manifestPath, "utf8")) as {levels?: ManifestEntry[]};
+  if (!Array.isArray(parsed.levels)) {
+    throw new Error("Existing manifest is missing a levels array.");
+  }
+  return parsed.levels;
+}
+
+async function seedSeenBoards(
+  output: string,
+  manifest: readonly ManifestEntry[],
+  seen: Set<string>,
+): Promise<void> {
+  for (const entry of manifest) {
+    const stored = JSON.parse(
+      await readFile(path.join(output, entry.file), "utf8"),
+    ) as StoredLevel;
+    const board = stored.vials.map((vial) => [...vial].reverse());
+    seen.add(createCanonicalBoardKey(board));
+  }
+}
+
 async function main(): Promise<void> {
   const options = {
     count: numberFlag("--count", 20),
+    startId: numberFlag("--start-id", 1),
+    append: hasFlag("--append"),
     colors: numberFlag("--colors", 12),
     capacity: numberFlag("--capacity", 4),
     emptyVials: numberFlag("--empty-vials", 2),
@@ -44,11 +90,32 @@ async function main(): Promise<void> {
     output: flag("--output") ?? "public/levels",
   };
 
+  if (!Number.isInteger(options.startId) || options.startId < 1) {
+    throw new Error("--start-id must be a positive integer.");
+  }
+
   const output = path.resolve(options.output);
   await mkdir(output, {recursive: true});
-  for (const name of await readdir(output)) {
-    if (name === "manifest.json" || /^\d+\.json$/.test(name)) {
-      await unlink(path.join(output, name));
+
+  let manifest: ManifestEntry[] = [];
+  const seen = new Set<string>();
+
+  if (options.append) {
+    manifest = await loadExistingManifest(output);
+    await seedSeenBoards(output, manifest, seen);
+
+    const occupiedIds = new Set(manifest.map((entry) => entry.id));
+    for (let offset = 0; offset < options.count; offset += 1) {
+      const id = formatId(options.startId + offset);
+      if (occupiedIds.has(id)) {
+        throw new Error(`Cannot append level ${id}; that id already exists.`);
+      }
+    }
+  } else {
+    for (const name of await readdir(output)) {
+      if (name === "manifest.json" || /^\d+\.json$/.test(name)) {
+        await unlink(path.join(output, name));
+      }
     }
   }
 
@@ -57,21 +124,6 @@ async function main(): Promise<void> {
     options.capacity,
     options.emptyVials,
   );
-
-  const seen = new Set<string>();
-  const manifest: Array<{
-    id: string;
-    file: string;
-    development: {
-      optimalMoveCount: number;
-      exploredStateCount: number;
-      maximumBranchingFactor: number;
-      meanVialEntropy: number;
-      boundaryRate: number;
-      totalRunCount: number;
-      generationDepth: number;
-    };
-  }> = [];
 
   let accepted = 0;
   const maximumAttempts = options.count * 100;
@@ -94,9 +146,6 @@ async function main(): Promise<void> {
       throw new Error("Generator certificate invariant failed.");
     }
 
-    // Reverse generation can leave liquid spread across partial vials. Normalize
-    // the candidate before scoring/solving so shipped levels always start with
-    // full playable vials plus the configured empty spare vials.
     const board = cleanGeneratedBoard(
       candidate.board,
       options.capacity,
@@ -122,9 +171,10 @@ async function main(): Promise<void> {
       throw new Error("A* replay verification failed.");
     }
 
+    const id = formatId(options.startId + accepted);
     accepted += 1;
     seen.add(canonicalKey);
-    const id = formatId(accepted);
+
     const development = {
       optimalMoveCount: solved.solution.length,
       exploredStateCount: solved.exploredStateCount,
@@ -155,6 +205,7 @@ async function main(): Promise<void> {
     throw new Error(`Generated only ${accepted}/${options.count} levels.`);
   }
 
+  manifest.sort((left, right) => left.id.localeCompare(right.id));
   await writeFile(
     path.join(output, "manifest.json"),
     `${JSON.stringify({levels: manifest}, null, 2)}\n`,
