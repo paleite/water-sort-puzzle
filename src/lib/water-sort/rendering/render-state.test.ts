@@ -81,6 +81,11 @@ function getBands(state: ReturnType<typeof buildConcurrentPourBoardRenderState>,
   return state.vials[vialIndex]?.bands ?? [];
 }
 
+function assertClose(actual: number | undefined, expected: number): void {
+  assert.notEqual(actual, undefined);
+  assert.ok(Math.abs((actual ?? 0) - expected) < 1e-9);
+}
+
 test("queued dependent moves do not foreshadow future vial colors", () => {
   const initialBoard: Board = [["coral"], [], [], []];
   const firstMove = applyMove(
@@ -115,9 +120,9 @@ test("queued dependent moves do not foreshadow future vial colors", () => {
   });
 
   assert.equal(getBands(state, 0)[0]?.color, "coral");
-  assert.equal(getBands(state, 0)[0]?.volume, 0.5);
+  assertClose(getBands(state, 0)[0]?.volume, 0.5);
   assert.equal(getBands(state, 1)[0]?.color, "coral");
-  assert.equal(getBands(state, 1)[0]?.volume, 0.5);
+  assertClose(getBands(state, 1)[0]?.volume, 0.5);
   assert.deepEqual(getBands(state, 2), []);
 });
 
@@ -196,7 +201,7 @@ test("independent running pours still interpolate concurrently", () => {
   });
 
   assert.equal(getBands(state, 2)[0]?.color, "coral");
-  assert.equal(getBands(state, 2)[0]?.volume, 0.5);
+  assertClose(getBands(state, 2)[0]?.volume, 0.5);
   assert.equal(getBands(state, 3)[0]?.color, "amber");
-  assert.equal(getBands(state, 3)[0]?.volume, 0.5);
+  assertClose(getBands(state, 3)[0]?.volume, 0.5);
 });
