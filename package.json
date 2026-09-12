@@ -10,6 +10,7 @@
     "lint": "eslint --cache src scripts",
     "spellcheck": "cspell --config=cspell.json README.md VALIDATION.md package.json src scripts --no-progress --show-context --show-suggestions",
     "start": "next start",
+    "test:unit": "tsx --test src/lib/water-sort/rendering/render-state.test.ts src/lib/water-sort/animation/timing.test.ts",
     "typecheck": "tsc --noEmit",
     "generate:levels": "tsx scripts/water-sort/generate-levels.ts",
     "verify:levels": "tsx scripts/water-sort/verify-levels.ts"
