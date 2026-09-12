@@ -1,13 +1,17 @@
 import {
   Application,
+  Assets,
   Container,
   Graphics,
   Mesh,
   MeshGeometry,
   Shader,
+  Sprite,
+  type Texture,
   UniformGroup,
 } from "pixi.js";
 
+import { LIQUID_PATTERN_IDS } from "../presentation/liquid-patterns";
 import { LIQUID_COLORS } from "../presentation/palette";
 import {
   fillToVialY,
@@ -21,6 +25,7 @@ import {
   VIAL_VIEWBOX_HEIGHT,
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
+import { DEFAULT_VIAL_SKIN } from "../presentation/vial-skins";
 import type {
   BoardRenderState,
   PourStreamRenderState,
@@ -58,45 +63,28 @@ function clamp(value: number, minimum: number, maximum: number): number {
   return Math.max(minimum, Math.min(maximum, value));
 }
 
-function createInteriorShape(graphics: Graphics): Graphics {
-  return graphics
-    .moveTo(VIAL_INNER_LEFT, VIAL_INNER_TOP)
-    .lineTo(VIAL_INNER_RIGHT, VIAL_INNER_TOP)
-    .lineTo(VIAL_INNER_RIGHT, 214)
-    .bezierCurveTo(VIAL_INNER_RIGHT, 244, 69, VIAL_INNER_BOTTOM, 50, VIAL_INNER_BOTTOM)
-    .bezierCurveTo(31, VIAL_INNER_BOTTOM, VIAL_INNER_LEFT, 244, VIAL_INNER_LEFT, 214)
-    .closePath();
-}
+function traceLiquidPolygon(graphics: Graphics): Graphics {
+  const [firstPoint, ...remainingPoints] = DEFAULT_VIAL_SKIN.liquidPolygon;
+  if (firstPoint === undefined) {
+    throw new Error("Default vial skin must define a liquid polygon.");
+  }
 
-function createGlassBack(): Graphics {
-  const graphics = new Graphics();
-  createInteriorShape(graphics).fill({color: 0xffffff, alpha: 0.18});
-  return graphics;
+  graphics.moveTo(firstPoint.x, firstPoint.y);
+  for (const point of remainingPoints) {
+    graphics.lineTo(point.x, point.y);
+  }
+  return graphics.closePath();
 }
 
 function createInteriorMask(): Graphics {
-  const graphics = new Graphics();
-  createInteriorShape(graphics).fill(0xffffff);
-  return graphics;
+  return traceLiquidPolygon(new Graphics()).fill(0xffffff);
 }
 
-function createGlassFront(): Graphics {
-  const graphics = new Graphics();
-
-  graphics
-    .moveTo(10, 12)
-    .lineTo(10, 214)
-    .bezierCurveTo(10, 248, 28, 266, 50, 266)
-    .bezierCurveTo(72, 266, 90, 248, 90, 214)
-    .lineTo(90, 12)
-    .stroke({color: 0x405c6f, alpha: 0.58, width: 5});
-
-  graphics
-    .roundRect(24, 2, 52, 10, 5)
-    .fill({color: 0xffffff, alpha: 0.55})
-    .stroke({color: 0x405c6f, alpha: 0.62, width: 5});
-
-  return graphics;
+function createVialArtwork(texture: Texture): Sprite {
+  const sprite = new Sprite(texture);
+  sprite.width = DEFAULT_VIAL_SKIN.viewBox.width;
+  sprite.height = DEFAULT_VIAL_SKIN.viewBox.height;
+  return sprite;
 }
 
 function createLiquidGeometry(): MeshGeometry {
@@ -124,6 +112,7 @@ function createUniforms(): UniformGroup {
     uBand2: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uBand3: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uBandVolumes: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
+    uBandPatterns: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uWave0: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uWave1: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uWave2: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
@@ -146,6 +135,7 @@ export class PixiBoardRenderer {
   private readonly visuals = new Map<number, VialVisual>();
   private readonly streams = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
+  private vialTexture: Texture | null = null;
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
   private elapsedSeconds = 0;
@@ -166,6 +156,10 @@ export class PixiBoardRenderer {
       resolution: Math.min(window.devicePixelRatio || 1, 3),
       backgroundAlpha: 0,
       resizeTo: this.boardElement,
+    });
+
+    this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource, {
+      resolution: 3,
     });
 
     if (this.destroyRequested) {
@@ -237,9 +231,11 @@ export class PixiBoardRenderer {
   private ensureVialVisual(vialIndex: number): VialVisual {
     const existing = this.visuals.get(vialIndex);
     if (existing !== undefined) return existing;
+    if (this.vialTexture === null) {
+      throw new Error("Vial artwork texture is not loaded.");
+    }
 
     const container = new Container();
-    const glassBack = createGlassBack();
     const mask = createInteriorMask();
     const uniforms = createUniforms();
     uniforms.uniforms.uTime = this.elapsedSeconds;
@@ -249,10 +245,10 @@ export class PixiBoardRenderer {
     });
     const mesh = new Mesh({geometry: createLiquidGeometry(), shader});
     mesh.mask = mask;
-    const glassFront = createGlassFront();
+    const artwork = createVialArtwork(this.vialTexture);
     const debug = new Graphics();
 
-    container.addChild(glassBack, mesh, mask, glassFront, debug);
+    container.addChild(mesh, mask, artwork, debug);
     this.vialLayer.addChild(container);
 
     const visual = {container, uniforms, debug};
@@ -300,7 +296,9 @@ export class PixiBoardRenderer {
 
     const colors = [uniforms.uBand0, uniforms.uBand1, uniforms.uBand2, uniforms.uBand3] as Float32Array[];
     const volumes = uniforms.uBandVolumes as Float32Array;
+    const patterns = uniforms.uBandPatterns as Float32Array;
     volumes.fill(0);
+    patterns.fill(0);
 
     for (let index = 0; index < 4; index += 1) {
       const band = bands[index];
@@ -310,6 +308,7 @@ export class PixiBoardRenderer {
       }
       colors[index]?.set(hexToRgba(LIQUID_COLORS[band.color]));
       volumes[index] = clamp(band.volume, 0, 1);
+      patterns[index] = LIQUID_PATTERN_IDS[band.color];
     }
 
     const normalizedWave = Array.from({length: SURFACE_SAMPLE_COUNT}, (_, index) =>
@@ -326,14 +325,7 @@ export class PixiBoardRenderer {
 
     visual.debug.clear();
     if (debugGeometry) {
-      visual.debug
-        .rect(
-          VIAL_INNER_LEFT,
-          VIAL_INNER_TOP,
-          VIAL_INNER_WIDTH,
-          VIAL_INNER_BOTTOM - VIAL_INNER_TOP,
-        )
-        .stroke({color: 0x0ea5e9, alpha: 0.92, width: 1});
+      traceLiquidPolygon(visual.debug).stroke({color: 0x0ea5e9, alpha: 0.92, width: 1});
       visual.debug
         .circle(VIAL_MOUTH.left.x, VIAL_MOUTH.left.y, 2.4)
         .fill({color: 0xf59e0b, alpha: 0.95});

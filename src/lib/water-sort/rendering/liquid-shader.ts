@@ -32,6 +32,7 @@ uniform vec4 uBand1;
 uniform vec4 uBand2;
 uniform vec4 uBand3;
 uniform vec4 uBandVolumes;
+uniform vec4 uBandPatterns;
 uniform vec4 uWave0;
 uniform vec4 uWave1;
 uniform vec4 uWave2;
@@ -71,7 +72,11 @@ float waveEnergy() {
 }
 
 vec4 chooseBand(float unitsFromBottom) {
-  float cursor = clamp(unitsFromBottom, 0.0, max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0));
+  float cursor = clamp(
+    unitsFromBottom,
+    0.0,
+    max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0)
+  );
 
   if (uBandVolumes.x > 0.0001) {
     if (cursor < uBandVolumes.x) return uBand0;
@@ -91,27 +96,118 @@ vec4 chooseBand(float unitsFromBottom) {
   return uBand0;
 }
 
-float frothCells(float surfaceY, float intensity) {
+float choosePattern(float unitsFromBottom) {
+  float cursor = clamp(
+    unitsFromBottom,
+    0.0,
+    max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0)
+  );
+
+  if (uBandVolumes.x > 0.0001) {
+    if (cursor < uBandVolumes.x) return uBandPatterns.x;
+    cursor -= uBandVolumes.x;
+  }
+  if (uBandVolumes.y > 0.0001) {
+    if (cursor < uBandVolumes.y) return uBandPatterns.y;
+    cursor -= uBandVolumes.y;
+  }
+  if (uBandVolumes.z > 0.0001) {
+    if (cursor < uBandVolumes.z) return uBandPatterns.z;
+    cursor -= uBandVolumes.z;
+  }
+  if (uBandVolumes.w > 0.0001) return uBandPatterns.w;
+  if (uBandVolumes.z > 0.0001) return uBandPatterns.z;
+  if (uBandVolumes.y > 0.0001) return uBandPatterns.y;
+  return uBandPatterns.x;
+}
+
+vec4 topBandColor() {
+  if (uBandVolumes.w > 0.0001) return uBand3;
+  if (uBandVolumes.z > 0.0001) return uBand2;
+  if (uBandVolumes.y > 0.0001) return uBand1;
+  return uBand0;
+}
+
+float centeredLine(float coordinate, float width) {
+  float distanceToCenter = abs(fract(coordinate) - 0.5);
+  return 1.0 - smoothstep(width, width + 0.075, distanceToCenter);
+}
+
+float dotGrid(vec2 point, float radius) {
+  vec2 cell = fract(point) - 0.5;
+  return 1.0 - smoothstep(radius, radius + 0.09, length(cell));
+}
+
+float ringGrid(vec2 point) {
+  float radius = length(fract(point) - 0.5);
+  return 1.0 - smoothstep(0.07, 0.13, abs(radius - 0.28));
+}
+
+float diamondGrid(vec2 point) {
+  vec2 cell = abs(fract(point) - 0.5);
+  float distanceToEdge = abs(cell.x + cell.y - 0.38);
+  return 1.0 - smoothstep(0.05, 0.11, distanceToEdge);
+}
+
+float zigzagPattern(vec2 point) {
+  float triangle = abs(fract(point.x * 0.5) * 2.0 - 1.0);
+  float row = fract(point.y * 0.5);
+  return 1.0 - smoothstep(0.055, 0.12, abs(row - triangle));
+}
+
+float liquidPattern(float patternId) {
+  vec2 coarse = vec2(vUV.x * 6.2, vUV.y * 14.0);
+
+  if (patternId < 0.5) return centeredLine(coarse.x + coarse.y * 0.55, 0.12);
+  if (patternId < 1.5) return dotGrid(coarse, 0.17);
+  if (patternId < 2.5) return centeredLine(coarse.y, 0.12);
+  if (patternId < 3.5) return centeredLine(coarse.x, 0.12);
+  if (patternId < 4.5) {
+    return mod(floor(coarse.x) + floor(coarse.y), 2.0);
+  }
+  if (patternId < 5.5) {
+    return max(
+      centeredLine(coarse.x + coarse.y, 0.09),
+      centeredLine(coarse.x - coarse.y, 0.09)
+    );
+  }
+  if (patternId < 6.5) return diamondGrid(coarse);
+  if (patternId < 7.5) return ringGrid(coarse);
+  if (patternId < 8.5) return zigzagPattern(coarse);
+  if (patternId < 9.5) {
+    vec2 staggered = coarse;
+    staggered.x += mod(floor(staggered.y), 2.0) * 0.5;
+    return dotGrid(staggered, 0.145);
+  }
+  if (patternId < 10.5) {
+    return max(centeredLine(coarse.x, 0.08), centeredLine(coarse.y, 0.08));
+  }
+
+  float speckle = hash(floor(coarse * 2.0));
+  return smoothstep(0.72, 0.88, speckle);
+}
+
+float foamCells(float surfaceY, float agitation) {
   float cells = 0.0;
 
-  for (int index = 0; index < 10; index++) {
+  for (int index = 0; index < 12; index++) {
     float fi = float(index);
-    float cellX = fract(0.08 + fi * 0.173 + sin(fi * 3.17) * 0.09);
-    float cellY = surfaceY
-      + 0.006
-      + mod(fi, 3.0) * 0.007
-      + sin(uTime * (3.2 + mod(fi, 4.0) * 0.35) + fi * 1.9) * 0.0025;
-    float radiusX = 0.024 + mod(fi, 4.0) * 0.005;
-    float radiusY = 0.007 + mod(fi, 3.0) * 0.003;
+    float drift = sin(uTime * (0.55 + mod(fi, 4.0) * 0.08) + fi * 1.7) * 0.012;
+    float cellX = fract(0.07 + fi * 0.151 + sin(fi * 2.91) * 0.08 + drift);
+    float bob = sin(uTime * (1.1 + mod(fi, 3.0) * 0.14) + fi * 2.2) * 0.0018;
+    float cellY = surfaceY + 0.006 + mod(fi, 3.0) * 0.0065 + bob;
+    float agitationScale = 1.0 + agitation * 0.28;
+    float radiusX = (0.020 + mod(fi, 4.0) * 0.004) * agitationScale;
+    float radiusY = (0.006 + mod(fi, 3.0) * 0.0024) * agitationScale;
     vec2 delta = vec2(
       (vUV.x - cellX) / radiusX,
       (vUV.y - cellY) / radiusY
     );
-    float cell = 1.0 - smoothstep(0.62, 1.0, length(delta));
+    float cell = 1.0 - smoothstep(0.58, 1.0, length(delta));
     cells = max(cells, cell);
   }
 
-  return cells * intensity;
+  return cells;
 }
 
 void main() {
@@ -134,13 +230,21 @@ void main() {
   float internalY = vUV.y - centeredX * internalSlope;
   float unitsFromBottom = (1.0 - internalY) * uCapacity;
   vec4 band = chooseBand(unitsFromBottom);
+  float patternId = choosePattern(unitsFromBottom);
 
   float sideLight = smoothstep(0.0, 0.24, vUV.x) * smoothstep(1.0, 0.76, vUV.x);
   vec3 color = band.rgb * (0.88 + sideLight * 0.12);
 
+  float pattern = liquidPattern(patternId);
+  float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
+  vec3 lightPatternColor = mix(color, vec3(1.0), 0.38);
+  vec3 darkPatternColor = color * 0.62;
+  vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
+  color = mix(color, patternColor, pattern * 0.28);
+
   float bubbleMask = 0.0;
-  for (int i = 0; i < 7; i++) {
-    float fi = float(i);
+  for (int index = 0; index < 7; index++) {
+    float fi = float(index);
     float bubbleX = fract(0.15 + fi * 0.137 + sin(fi * 2.7) * 0.13);
     float speed = 0.10 + mod(fi, 3.0) * 0.025;
     float bubbleY = 1.08 - fract(uTime * speed + fi * 0.173) * (uFill + 0.14);
@@ -154,14 +258,18 @@ void main() {
   color = mix(color, bubbleColor, bubbleMask * 0.58);
 
   float distanceBelowSurface = max(0.0, vUV.y - surfaceY);
-  float frothBand = 1.0 - smoothstep(0.0, 0.032, distanceBelowSurface);
-  float frothNoise = 0.55
-    + hash(floor(vec2(vUV.x * 72.0, uTime * 7.0))) * 0.45;
-  float froth = max(
-    frothBand * frothNoise * 0.72,
-    frothCells(surfaceY, agitation)
-  ) * agitation;
-  color = mix(color, vec3(0.99), froth * 0.86);
+  float foamBand = 1.0 - smoothstep(0.0, 0.021 + agitation * 0.009, distanceBelowSurface);
+  float foamTexture = 0.72
+    + 0.18 * sin(vUV.x * 58.0 + uTime * 1.25)
+    + 0.10 * sin(vUV.x * 103.0 - uTime * 0.72);
+  float foam = max(
+    foamBand * clamp(foamTexture, 0.45, 1.0) * (0.38 + agitation * 0.22),
+    foamCells(surfaceY, agitation) * (0.58 + agitation * 0.22)
+  );
+
+  vec3 topColor = topBandColor().rgb;
+  vec3 foamColor = mix(topColor, vec3(1.0), 0.28);
+  color = mix(color, foamColor, clamp(foam, 0.0, 0.82));
 
   gl_FragColor = vec4(color, 0.96);
 }

@@ -12,6 +12,14 @@ import {
   type SavedGame,
 } from "@/lib/water-sort/persistence/progress";
 import {
+  BACKGROUND_STORAGE_KEY,
+  DEFAULT_GAME_BACKGROUND_ID,
+  getGameBackground,
+  getNextGameBackgroundId,
+  isGameBackgroundId,
+  type GameBackgroundId,
+} from "@/lib/water-sort/presentation/backgrounds";
+import {
   applyLiquidPalette,
   DEFAULT_LIQUID_PALETTE_ID,
   getAdjacentPaletteId,
@@ -99,12 +107,16 @@ function GameRuntime({
 }) {
   const game = useWaterSortGame(level, savedGame);
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
-  const [paletteAnnouncement, setPaletteAnnouncement] = useState<string | null>(null);
-  const paletteAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [backgroundId, setBackgroundId] = useState<GameBackgroundId>(
+    DEFAULT_GAME_BACKGROUND_ID,
+  );
+  const [appearanceAnnouncement, setAppearanceAnnouncement] = useState<string | null>(null);
+  const appearanceAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressDragClickUntilRef = useRef(0);
   const manifestIndex = manifest.levels.findIndex((entry) => entry.id === level.id);
   const nextLevelId =
     manifestIndex < 0 ? null : (manifest.levels[manifestIndex + 1]?.id ?? null);
+  const background = getGameBackground(backgroundId);
 
   const isTransitionAnimating =
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
@@ -113,6 +125,18 @@ function GameRuntime({
 
   const forceBoardRender = useCallback((): void => {
     window.dispatchEvent(new Event("resize"));
+  }, []);
+
+  const announceAppearance = useCallback((message: string): void => {
+    if (appearanceAnnouncementTimeoutRef.current !== null) {
+      clearTimeout(appearanceAnnouncementTimeoutRef.current);
+    }
+
+    setAppearanceAnnouncement(message);
+    appearanceAnnouncementTimeoutRef.current = setTimeout(() => {
+      setAppearanceAnnouncement(null);
+      appearanceAnnouncementTimeoutRef.current = null;
+    }, 1100);
   }, []);
 
   const cyclePalette = useCallback((direction: -1 | 1): void => {
@@ -126,35 +150,48 @@ function GameRuntime({
       // Persistence is optional when storage is unavailable.
     }
 
-    if (paletteAnnouncementTimeoutRef.current !== null) {
-      clearTimeout(paletteAnnouncementTimeoutRef.current);
-    }
-    setPaletteAnnouncement(nextPalette.name);
-    paletteAnnouncementTimeoutRef.current = setTimeout(() => {
-      setPaletteAnnouncement(null);
-      paletteAnnouncementTimeoutRef.current = null;
-    }, 1100);
-
+    announceAppearance(nextPalette.name);
     forceBoardRender();
-  }, [forceBoardRender, paletteId]);
+  }, [announceAppearance, forceBoardRender, paletteId]);
+
+  const cycleBackground = useCallback((): void => {
+    const nextBackgroundId = getNextGameBackgroundId(backgroundId);
+    const nextBackground = getGameBackground(nextBackgroundId);
+    setBackgroundId(nextBackgroundId);
+
+    try {
+      window.localStorage.setItem(BACKGROUND_STORAGE_KEY, nextBackgroundId);
+    } catch {
+      // Persistence is optional when storage is unavailable.
+    }
+
+    announceAppearance(`Background: ${nextBackground.name}`);
+  }, [announceAppearance, backgroundId]);
 
   useEffect(() => {
     let storedPaletteId: string | null = null;
+    let storedBackgroundId: string | null = null;
     try {
       storedPaletteId = window.localStorage.getItem(PALETTE_STORAGE_KEY);
+      storedBackgroundId = window.localStorage.getItem(BACKGROUND_STORAGE_KEY);
     } catch {
-      // Fall back to the first palette when storage is unavailable.
+      // Fall back to defaults when storage is unavailable.
     }
 
     const resolvedPaletteId = isLiquidPaletteId(storedPaletteId)
       ? storedPaletteId
       : DEFAULT_LIQUID_PALETTE_ID;
+    const resolvedBackgroundId = isGameBackgroundId(storedBackgroundId)
+      ? storedBackgroundId
+      : DEFAULT_GAME_BACKGROUND_ID;
 
     applyLiquidPalette(resolvedPaletteId);
     setPaletteId(resolvedPaletteId);
+    setBackgroundId(resolvedBackgroundId);
 
     try {
       window.localStorage.setItem(PALETTE_STORAGE_KEY, resolvedPaletteId);
+      window.localStorage.setItem(BACKGROUND_STORAGE_KEY, resolvedBackgroundId);
     } catch {
       // Persistence is optional when storage is unavailable.
     }
@@ -162,8 +199,8 @@ function GameRuntime({
     forceBoardRender();
 
     return () => {
-      if (paletteAnnouncementTimeoutRef.current !== null) {
-        clearTimeout(paletteAnnouncementTimeoutRef.current);
+      if (appearanceAnnouncementTimeoutRef.current !== null) {
+        clearTimeout(appearanceAnnouncementTimeoutRef.current);
       }
     };
   }, [forceBoardRender]);
@@ -339,16 +376,17 @@ function GameRuntime({
   ]);
 
   return (
-    <main className={styles.gameShell}>
+    <main className={styles.gameShell} style={{background: background.css}}>
       <GameHud
         levelId={level.id}
         moveCount={game.context.history.length}
         canUndo={game.context.history.length > 0 && !hasActivePours}
         isAnimating={isHudAnimating}
         isDeadEnd={game.context.isDeadEnd}
-        paletteAnnouncement={paletteAnnouncement}
+        appearanceAnnouncement={appearanceAnnouncement}
         onPreviousPalette={() => cyclePalette(-1)}
         onNextPalette={() => cyclePalette(1)}
+        onCycleBackground={cycleBackground}
         {...(level.development?.optimalMoveCount === undefined
           ? {}
           : {optimalMoveCount: level.development.optimalMoveCount})}

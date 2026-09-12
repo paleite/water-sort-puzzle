@@ -1,24 +1,20 @@
-// Shared geometry for the static vial, animated liquid, stream anchors, and debug guides.
-export const VIAL_VIEWBOX_WIDTH = 100;
-export const VIAL_VIEWBOX_HEIGHT = 272;
+import {
+  DEFAULT_VIAL_LIQUID_BOUNDS,
+  DEFAULT_VIAL_SKIN,
+} from "./vial-skins";
 
-export const VIAL_INNER_LEFT = 16;
-export const VIAL_INNER_RIGHT = 84;
-export const VIAL_INNER_TOP = 12;
-export const VIAL_INNER_BOTTOM = 260;
-export const VIAL_INNER_WIDTH = VIAL_INNER_RIGHT - VIAL_INNER_LEFT;
-export const VIAL_INNER_HEIGHT = VIAL_INNER_BOTTOM - VIAL_INNER_TOP;
+// Shared geometry for static layout, animated liquid, stream anchors, and debug guides.
+export const VIAL_VIEWBOX_WIDTH = DEFAULT_VIAL_SKIN.viewBox.width;
+export const VIAL_VIEWBOX_HEIGHT = DEFAULT_VIAL_SKIN.viewBox.height;
 
-export const VIAL_INTERIOR_PATH =
-  "M 16 12 H 84 V 214 C 84 244 69 260 50 260 C 31 260 16 244 16 214 Z";
+export const VIAL_INNER_LEFT = DEFAULT_VIAL_LIQUID_BOUNDS.left;
+export const VIAL_INNER_RIGHT = DEFAULT_VIAL_LIQUID_BOUNDS.right;
+export const VIAL_INNER_TOP = DEFAULT_VIAL_LIQUID_BOUNDS.top;
+export const VIAL_INNER_BOTTOM = DEFAULT_VIAL_LIQUID_BOUNDS.bottom;
+export const VIAL_INNER_WIDTH = DEFAULT_VIAL_LIQUID_BOUNDS.width;
+export const VIAL_INNER_HEIGHT = DEFAULT_VIAL_LIQUID_BOUNDS.height;
 
-export const VIAL_OUTLINE_PATH =
-  "M 10 12 V 214 C 10 248 28 266 50 266 C 72 266 90 248 90 214 V 12";
-
-export const VIAL_MOUTH = {
-  left: {x: 10, y: VIAL_INNER_TOP},
-  right: {x: 90, y: VIAL_INNER_TOP},
-} as const;
+export const VIAL_MOUTH = DEFAULT_VIAL_SKIN.mouth;
 
 export function fillToVialY(fill: number, capacity: number): number {
   const fraction = Math.max(0, Math.min(1, capacity <= 0 ? 0 : fill / capacity));

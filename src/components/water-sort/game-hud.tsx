@@ -5,6 +5,7 @@ import {
   ArrowLeftIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ImageIcon,
   RotateCcwIcon,
   Undo2Icon,
 } from "lucide-react";
@@ -18,9 +19,10 @@ export function GameHud({
   isAnimating,
   isDeadEnd,
   optimalMoveCount,
-  paletteAnnouncement,
+  appearanceAnnouncement,
   onPreviousPalette,
   onNextPalette,
+  onCycleBackground,
   onUndo,
   onRestart,
 }: {
@@ -30,9 +32,10 @@ export function GameHud({
   isAnimating: boolean;
   isDeadEnd: boolean;
   optimalMoveCount?: number;
-  paletteAnnouncement: string | null;
+  appearanceAnnouncement: string | null;
   onPreviousPalette: () => void;
   onNextPalette: () => void;
+  onCycleBackground: () => void;
   onUndo: () => void;
   onRestart: () => void;
 }) {
@@ -40,40 +43,53 @@ export function GameHud({
 
   return (
     <header className="relative mx-auto w-full max-w-3xl px-4 pb-3 pt-2">
-      <div
-        role="group"
-        aria-label="Liquid color palette"
-        className="mx-auto mb-1 flex w-fit overflow-hidden rounded-lg border border-white/20 bg-black/15"
-      >
+      <div className="mx-auto mb-1 flex w-fit items-center gap-2">
+        <div
+          role="group"
+          aria-label="Liquid color palette"
+          className="flex overflow-hidden rounded-lg border border-white/20 bg-black/15"
+        >
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="rounded-none border-r border-white/15"
+            aria-label="Previous color palette"
+            onClick={onPreviousPalette}
+          >
+            <ChevronLeftIcon />
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="rounded-none"
+            aria-label="Next color palette"
+            onClick={onNextPalette}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </div>
+
         <Button
           type="button"
           variant="ghost"
           size="icon"
-          className="rounded-none border-r border-white/15"
-          aria-label="Previous color palette"
-          onClick={onPreviousPalette}
+          className="border border-white/20 bg-black/15"
+          aria-label="Change background"
+          onClick={onCycleBackground}
         >
-          <ChevronLeftIcon />
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="rounded-none"
-          aria-label="Next color palette"
-          onClick={onNextPalette}
-        >
-          <ChevronRightIcon />
+          <ImageIcon />
         </Button>
       </div>
 
-      {paletteAnnouncement !== null && (
+      {appearanceAnnouncement !== null && (
         <div
           role="status"
           aria-live="polite"
           className="pointer-events-none absolute left-1/2 top-full z-50 -translate-x-1/2 whitespace-nowrap rounded-full bg-black/75 px-3 py-1 text-xs font-medium text-white shadow-lg"
         >
-          {paletteAnnouncement}
+          {appearanceAnnouncement}
         </div>
       )}
 
