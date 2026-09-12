@@ -19,8 +19,9 @@ import {
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
 import { GAME_TIMING } from "@/lib/water-sort/animation/timing";
-import type { AppliedTurn, Board } from "@/lib/water-sort/domain/types";
+import type { AppliedMove, AppliedTurn, Board } from "@/lib/water-sort/domain/types";
 import type { ActiveMovePresentation } from "@/lib/water-sort/machine/game-machine";
+import { applyPresentationMoveToBoard } from "@/lib/water-sort/presentation/visual-board";
 import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
 import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
 import {
@@ -43,6 +44,8 @@ interface PresentationRuntime {
   presentation: PourPresentation;
   snapshot: PourPresentationSnapshot;
   started: boolean;
+  contentCommitted: boolean;
+  expeditedReturnRequested: boolean;
 }
 
 function setVialRef(
@@ -77,23 +80,41 @@ function getAffectedVialIndices(turn: AppliedTurn): readonly number[] {
   return [turn.move.sourceVialIndex, turn.move.destinationVialIndex];
 }
 
+function presentationIsBlockedBy(
+  candidate: ActiveMovePresentation,
+  blocker: ActiveMovePresentation,
+): boolean {
+  if (blocker.id >= candidate.id) return false;
+
+  const candidateSource = candidate.move.move.sourceVialIndex;
+  const candidateDestination = candidate.move.move.destinationVialIndex;
+  const blockerSource = blocker.move.move.sourceVialIndex;
+  const blockerDestination = blocker.move.move.destinationVialIndex;
+
+  return (
+    candidateSource === blockerSource
+    || candidateSource === blockerDestination
+    || candidateDestination === blockerSource
+  );
+}
+
 function presentationIsBlocked(
   candidate: ActiveMovePresentation,
   activePresentations: readonly ActiveMovePresentation[],
 ): boolean {
-  const candidateSource = candidate.move.move.sourceVialIndex;
-  const candidateDestination = candidate.move.move.destinationVialIndex;
+  return activePresentations.some((earlier) => presentationIsBlockedBy(candidate, earlier));
+}
 
-  return activePresentations.some((earlier) => {
-    if (earlier.id >= candidate.id) return false;
-    const earlierSource = earlier.move.move.sourceVialIndex;
-    const earlierDestination = earlier.move.move.destinationVialIndex;
-
-    return (
-      candidateSource === earlierSource
-      || candidateSource === earlierDestination
-      || candidateDestination === earlierSource
-    );
+function presentationHasQueuedDependent(
+  blocker: ActiveMovePresentation,
+  activePresentations: readonly ActiveMovePresentation[],
+  runtimes: ReadonlyMap<number, PresentationRuntime>,
+): boolean {
+  return activePresentations.some((candidate) => {
+    const runtime = runtimes.get(candidate.id);
+    return runtime !== undefined
+      && !runtime.started
+      && presentationIsBlockedBy(candidate, blocker);
   });
 }
 
@@ -125,10 +146,12 @@ export function GameBoard({
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
   const rendererRef = useRef<PixiBoardRenderer | null>(null);
   const presentationRuntimesRef = useRef(new Map<number, PresentationRuntime>());
+  const visibleBoardRef = useRef<Board>(board);
   const transientStateBuilderRef = useRef<TransientStateBuilder | null>(null);
   const renderLatestRef = useRef<() => void>(() => {});
   const debugSequenceRef = useRef(0);
   const previousPhaseRef = useRef<GamePhase | null>(null);
+  const [visibleBoard, setVisibleBoard] = useState<Board>(board);
   const [debugEntries, setDebugEntries] = useState<string[]>([]);
 
   const appendDebugLog = useCallback((message: string): void => {
@@ -140,6 +163,24 @@ export function GameBoard({
   const clearDebugLogs = useCallback((): void => {
     setDebugEntries([]);
   }, []);
+
+  const commitPresentationContent = useCallback((
+    presentationId: number,
+    move: AppliedMove,
+  ): void => {
+    const runtime = presentationRuntimesRef.current.get(presentationId);
+    if (runtime === undefined || runtime.contentCommitted) return;
+
+    const nextVisibleBoard = applyPresentationMoveToBoard(
+      visibleBoardRef.current,
+      move,
+      capacity,
+    );
+    runtime.contentCommitted = true;
+    visibleBoardRef.current = nextVisibleBoard;
+    setVisibleBoard(nextVisibleBoard);
+    appendDebugLog(`p${presentationId} content:commit`);
+  }, [appendDebugLog, capacity]);
 
   const logBoardPositions = useCallback((label: string): void => {
     const boardElement = boardRef.current;
@@ -162,7 +203,12 @@ export function GameBoard({
     const boardElement = boardRef.current;
     if (renderer === null || boardElement === null) return;
 
-    const anchors = measureVialAnchors(boardElement, vialRefs.current, board.length);
+    const settledVisibleBoard = visibleBoardRef.current;
+    const anchors = measureVialAnchors(
+      boardElement,
+      vialRefs.current,
+      settledVisibleBoard.length,
+    );
     const transientStateBuilder = transientStateBuilderRef.current;
 
     if (transientStateBuilder !== null) {
@@ -178,28 +224,36 @@ export function GameBoard({
             move: active.move,
             geometry: runtime.geometry,
             presentation: runtime.snapshot,
+            started: runtime.started,
+            contentCommitted: runtime.contentCommitted,
           }];
     });
 
     renderer.render(
       presentations.length === 0
         ? buildStaticBoardRenderState({
-            board,
+            board: settledVisibleBoard,
             anchors,
             selectedSourceVialIndex,
             capacity,
           })
         : buildConcurrentPourBoardRenderState({
-            board,
+            board: settledVisibleBoard,
             anchors,
             presentations,
             selectedSourceVialIndex,
             capacity,
           }),
     );
-  }, [activePresentations, board, capacity, selectedSourceVialIndex]);
+  }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
+
+  useLayoutEffect(() => {
+    if (activePresentations.length !== 0) return;
+    visibleBoardRef.current = board;
+    setVisibleBoard(board);
+  }, [activePresentations.length, board]);
 
   useLayoutEffect(() => {
     const boardElement = boardRef.current;
@@ -266,13 +320,22 @@ export function GameBoard({
         paused: true,
         onFrame: (snapshot) => {
           const currentRuntime = presentationRuntimesRef.current.get(active.id);
-          if (currentRuntime !== undefined) currentRuntime.snapshot = snapshot;
+          if (currentRuntime !== undefined) {
+            currentRuntime.snapshot = snapshot;
+            if (
+              !currentRuntime.contentCommitted
+              && snapshot.timeSeconds >= GAME_TIMING.pour.transferEndSeconds - 0.0001
+            ) {
+              commitPresentationContent(active.id, active.move);
+            }
+          }
           renderLatestRef.current();
         },
         onDebug: (event, timeSeconds) => {
           appendDebugLog(`p${active.id} t=${timeSeconds.toFixed(3)} ${event}`);
         },
         onComplete: () => {
+          commitPresentationContent(active.id, active.move);
           appendDebugLog(`p${active.id} complete`);
           onMovePresentationFinished(active.id);
         },
@@ -284,6 +347,8 @@ export function GameBoard({
         presentation,
         snapshot: presentation.getSnapshot(),
         started: false,
+        contentCommitted: false,
+        expeditedReturnRequested: false,
       };
       presentationRuntimesRef.current.set(active.id, runtime);
 
@@ -309,8 +374,33 @@ export function GameBoard({
       runtime.presentation.timeline.play(0);
     }
 
+    for (const active of activePresentations) {
+      const runtime = presentationRuntimesRef.current.get(active.id);
+      if (
+        runtime === undefined
+        || !runtime.started
+        || runtime.expeditedReturnRequested
+        || !presentationHasQueuedDependent(
+          active,
+          activePresentations,
+          presentationRuntimesRef.current,
+        )
+      ) {
+        continue;
+      }
+
+      runtime.expeditedReturnRequested = true;
+      runtime.presentation.requestExpeditedReturn();
+      appendDebugLog(`p${active.id} return:expedited`);
+    }
+
     renderLatestRef.current();
-  }, [activePresentations, appendDebugLog, onMovePresentationFinished]);
+  }, [
+    activePresentations,
+    appendDebugLog,
+    commitPresentationContent,
+    onMovePresentationFinished,
+  ]);
 
   useEffect(() => () => {
     for (const runtime of presentationRuntimesRef.current.values()) {
@@ -438,7 +528,7 @@ export function GameBoard({
         <div ref={canvasHostRef} className={styles.pixiCanvasHost} aria-hidden="true" />
 
         <div className={styles.vialGrid}>
-          {board.map((vial, vialIndex) => (
+          {visibleBoard.map((vial, vialIndex) => (
             <VialSlotButton
               key={vialIndex}
               ref={(element) => setVialRef(vialRefs, vialIndex, element)}
