@@ -25,6 +25,27 @@ import { GameCompleteOverlay } from "./game-complete-overlay";
 import { GameHud } from "./game-hud";
 import styles from "./water-sort.module.css";
 
+const DRAG_THRESHOLD_PIXELS = 8;
+const DRAG_CLICK_SUPPRESSION_MILLISECONDS = 250;
+
+function getVialSlot(target: EventTarget | null): HTMLElement | null {
+  return target instanceof Element
+    ? target.closest<HTMLElement>("[data-vial-slot]")
+    : null;
+}
+
+function getVialSlotAtPoint(clientX: number, clientY: number): HTMLElement | null {
+  return document
+    .elementFromPoint(clientX, clientY)
+    ?.closest<HTMLElement>("[data-vial-slot]") ?? null;
+}
+
+function getVialIndex(slot: HTMLElement | null): number | null {
+  if (slot === null) return null;
+  const vialIndex = Number(slot.dataset.vialSlot);
+  return Number.isInteger(vialIndex) ? vialIndex : null;
+}
+
 export function GameScreen({levelId}: {levelId: string}) {
   const [level, setLevel] = useState<Level | null>(null);
   const [manifest, setManifest] = useState<LevelManifest | null>(null);
@@ -80,6 +101,7 @@ function GameRuntime({
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
   const [paletteAnnouncement, setPaletteAnnouncement] = useState<string | null>(null);
   const paletteAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const suppressDragClickUntilRef = useRef(0);
   const manifestIndex = manifest.levels.findIndex((entry) => entry.id === level.id);
   const nextLevelId =
     manifestIndex < 0 ? null : (manifest.levels[manifestIndex + 1]?.id ?? null);
@@ -145,6 +167,135 @@ function GameRuntime({
       }
     };
   }, [forceBoardRender]);
+
+  useEffect(() => {
+    if (game.phase !== "idle" && game.phase !== "sourceSelected") return;
+
+    let activePointerId: number | null = null;
+    let sourceVialIndex: number | null = null;
+    let sourceSlot: HTMLElement | null = null;
+    let dragTargetSlot: HTMLElement | null = null;
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let dragging = false;
+
+    const clearDragVisuals = (): void => {
+      sourceSlot?.removeAttribute("data-drag-source");
+      dragTargetSlot?.removeAttribute("data-drag-target");
+      dragTargetSlot = null;
+    };
+
+    const resetGesture = (): void => {
+      clearDragVisuals();
+      activePointerId = null;
+      sourceVialIndex = null;
+      sourceSlot = null;
+      dragging = false;
+    };
+
+    const setDragTarget = (nextTarget: HTMLElement | null): void => {
+      if (dragTargetSlot === nextTarget) return;
+      dragTargetSlot?.removeAttribute("data-drag-target");
+      dragTargetSlot = nextTarget;
+      dragTargetSlot?.setAttribute("data-drag-target", "true");
+    };
+
+    const onPointerDown = (event: PointerEvent): void => {
+      if (!event.isPrimary || event.button !== 0 || activePointerId !== null) return;
+
+      const slot = getVialSlot(event.target);
+      const vialIndex = getVialIndex(slot);
+      if (slot === null || vialIndex === null) return;
+      if ((game.context.board[vialIndex]?.length ?? 0) === 0) return;
+
+      activePointerId = event.pointerId;
+      sourceVialIndex = vialIndex;
+      sourceSlot = slot;
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+    };
+
+    const onPointerMove = (event: PointerEvent): void => {
+      if (event.pointerId !== activePointerId || sourceVialIndex === null) return;
+
+      if (!dragging) {
+        const distance = Math.hypot(
+          event.clientX - pointerStartX,
+          event.clientY - pointerStartY,
+        );
+        if (distance < DRAG_THRESHOLD_PIXELS) return;
+
+        dragging = true;
+        sourceSlot?.setAttribute("data-drag-source", "true");
+      }
+
+      event.preventDefault();
+      const targetSlot = getVialSlotAtPoint(event.clientX, event.clientY);
+      const targetIndex = getVialIndex(targetSlot);
+      setDragTarget(
+        targetIndex !== null && targetIndex !== sourceVialIndex
+          ? targetSlot
+          : null,
+      );
+    };
+
+    const onPointerUp = (event: PointerEvent): void => {
+      if (event.pointerId !== activePointerId || sourceVialIndex === null) return;
+
+      const dragSourceVialIndex = sourceVialIndex;
+      const wasDragging = dragging;
+      const targetVialIndex = wasDragging
+        ? getVialIndex(getVialSlotAtPoint(event.clientX, event.clientY))
+        : null;
+
+      resetGesture();
+      if (!wasDragging) return;
+
+      event.preventDefault();
+      suppressDragClickUntilRef.current =
+        performance.now() + DRAG_CLICK_SUPPRESSION_MILLISECONDS;
+
+      if (targetVialIndex === null || targetVialIndex === dragSourceVialIndex) return;
+
+      if (game.context.selectedSourceVialIndex !== dragSourceVialIndex) {
+        game.pressVial(dragSourceVialIndex);
+      }
+      game.pressVial(targetVialIndex);
+    };
+
+    const onPointerCancel = (event: PointerEvent): void => {
+      if (event.pointerId === activePointerId) resetGesture();
+    };
+
+    const onClickCapture = (event: MouseEvent): void => {
+      if (performance.now() > suppressDragClickUntilRef.current) return;
+      if (getVialSlot(event.target) === null) return;
+
+      suppressDragClickUntilRef.current = 0;
+      event.preventDefault();
+      event.stopPropagation();
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("pointermove", onPointerMove, {passive: false});
+    window.addEventListener("pointerup", onPointerUp, {passive: false});
+    window.addEventListener("pointercancel", onPointerCancel);
+    document.addEventListener("click", onClickCapture, true);
+
+    return () => {
+      resetGesture();
+      document.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerCancel);
+      document.removeEventListener("click", onClickCapture, true);
+    };
+  }, [
+    game.context.board,
+    game.context.selectedSourceVialIndex,
+    game.phase,
+    game.pressVial,
+  ]);
 
   useEffect(() => {
     if (
