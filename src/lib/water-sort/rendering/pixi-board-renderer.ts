@@ -158,9 +158,7 @@ export class PixiBoardRenderer {
       resizeTo: this.boardElement,
     });
 
-    this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource, {
-      resolution: 3,
-    });
+    this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource);
 
     if (this.destroyRequested) {
       this.destroyApplication();
