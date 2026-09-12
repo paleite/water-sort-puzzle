@@ -75,6 +75,43 @@
   min-width: 0;
 }
 
+.vialSlot::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  box-shadow: 0 0 0 0 rgb(255 255 255 / 0);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease,
+    opacity 120ms ease;
+}
+
+.vialSlot[data-selected="true"]::after {
+  border-color: rgb(255 255 255 / 0.88);
+  box-shadow:
+    0 0 0 2px rgb(255 255 255 / 0.12),
+    0 0 18px 5px rgb(255 255 255 / 0.2);
+  opacity: 1;
+}
+
+.vialSlot[data-drag-source="true"]::after {
+  border-color: rgb(255 255 255 / 0.62);
+  box-shadow: 0 0 14px 3px rgb(255 255 255 / 0.14);
+  opacity: 1;
+}
+
+.vialSlot[data-drag-target="true"]::after {
+  border-color: rgb(255 255 255 / 0.96);
+  box-shadow:
+    0 0 0 3px rgb(255 255 255 / 0.14),
+    0 0 24px 7px rgb(255 255 255 / 0.28);
+  opacity: 1;
+}
+
 .vialButton {
   position: absolute;
   top: 0;
