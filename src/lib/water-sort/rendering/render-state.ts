@@ -60,6 +60,8 @@ export interface ConcurrentPourPresentation {
   move: AppliedMove;
   geometry: PourGeometry;
   presentation: PourPresentationSnapshot;
+  started: boolean;
+  contentCommitted: boolean;
 }
 
 function clamp(value: number, minimum: number, maximum: number): number {
@@ -194,23 +196,27 @@ export function buildConcurrentPourBoardRenderState({
   capacity: number;
   debugGeometry?: boolean;
 }): BoardRenderState {
+  const renderablePresentations = presentations.filter(({started}) => started);
   const visualBands = board.map((vial) => staticBands(vial));
   const presentationBySource = new Map<number, ConcurrentPourPresentation>();
   const incomingByDestination = new Map<number, ConcurrentPourPresentation[]>();
 
-  for (const entry of presentations) {
-    const transferProgress = getTransferProgress(entry.presentation.timeSeconds);
-    const remainingAmount = entry.move.amount * (1 - transferProgress);
+  for (const entry of renderablePresentations) {
     const sourceIndex = entry.move.move.sourceVialIndex;
     const destinationIndex = entry.move.move.destinationVialIndex;
 
-    const sourceBands = visualBands[sourceIndex];
-    const destinationBands = visualBands[destinationIndex];
-    if (sourceBands !== undefined) {
-      addVolumeToTop(sourceBands, entry.move.color, remainingAmount);
-    }
-    if (destinationBands !== undefined) {
-      removeVolumeFromTop(destinationBands, entry.move.color, remainingAmount);
+    if (!entry.contentCommitted) {
+      const transferProgress = getTransferProgress(entry.presentation.timeSeconds);
+      const transferredAmount = entry.move.amount * transferProgress;
+      const sourceBands = visualBands[sourceIndex];
+      const destinationBands = visualBands[destinationIndex];
+
+      if (sourceBands !== undefined) {
+        removeVolumeFromTop(sourceBands, entry.move.color, transferredAmount);
+      }
+      if (destinationBands !== undefined) {
+        addVolumeToTop(destinationBands, entry.move.color, transferredAmount);
+      }
     }
 
     presentationBySource.set(sourceIndex, entry);
@@ -286,7 +292,7 @@ export function buildConcurrentPourBoardRenderState({
     );
   }
 
-  const streams = presentations.flatMap(({move, geometry, presentation}) =>
+  const streams = renderablePresentations.flatMap(({move, geometry, presentation}) =>
     presentation.streamOpacity <= 0.001
       ? []
       : [{
@@ -329,9 +335,15 @@ export function buildPourBoardRenderState({
   debugGeometry?: boolean;
 }): BoardRenderState {
   return buildConcurrentPourBoardRenderState({
-    board: move.nextBoard,
+    board: move.previousBoard,
     anchors,
-    presentations: [{move, geometry, presentation}],
+    presentations: [{
+      move,
+      geometry,
+      presentation,
+      started: true,
+      contentCommitted: false,
+    }],
     selectedSourceVialIndex,
     capacity,
     debugGeometry,
