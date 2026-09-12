@@ -80,6 +80,8 @@ The browser runtime only consumes `public/levels/*.json`; it does not ship or ru
 - [ ] Improve pouring animation.
 - [ ] Add froth.
 - [ ] Add waves to animations.
+- [ ] Highlight the currently selected board cell regardless of where its vial is visually animating, for example with a white highlight or glow.
+- [ ] Add drag interaction so a player can drag from a source vial to a destination instead of requiring two clicks.
 - [ ] Try different bubbles for different colors as a way to improve accessibility.
 - [ ] Add GA to A/B test which color scheme performs best.
 - [ ] Make the vials replaceable with other images/SVGs and try which ones work best.
