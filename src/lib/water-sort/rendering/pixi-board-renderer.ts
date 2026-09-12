@@ -37,6 +37,8 @@ interface VialVisual {
 const VIAL_CENTER_X = VIAL_VIEWBOX_WIDTH / 2;
 const VIAL_CENTER_Y = VIAL_VIEWBOX_HEIGHT / 2;
 const SURFACE_SAMPLE_COUNT = 11;
+const SURFACE_WAVE_VISUAL_GAIN = 2.15;
+const MAX_NORMALIZED_WAVE_OFFSET = 0.075;
 
 function hexToPackedColor(hex: string): number {
   return Number.parseInt(hex.replace("#", ""), 16);
@@ -311,7 +313,12 @@ export class PixiBoardRenderer {
     }
 
     const normalizedWave = Array.from({length: SURFACE_SAMPLE_COUNT}, (_, index) =>
-      (state.surface.waveSamples[index] ?? 0) / VIAL_INNER_HEIGHT
+      clamp(
+        ((state.surface.waveSamples[index] ?? 0) * SURFACE_WAVE_VISUAL_GAIN)
+          / VIAL_INNER_HEIGHT,
+        -MAX_NORMALIZED_WAVE_OFFSET,
+        MAX_NORMALIZED_WAVE_OFFSET,
+      )
     );
     fillArray(uniforms.uWave0 as Float32Array, normalizedWave.slice(0, 4));
     fillArray(uniforms.uWave1 as Float32Array, normalizedWave.slice(4, 8));
