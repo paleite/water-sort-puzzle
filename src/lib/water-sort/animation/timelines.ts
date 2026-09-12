@@ -38,6 +38,7 @@ export interface PourPresentation {
   timeline: gsap.core.Timeline;
   seek(timeSeconds: number): void;
   getSnapshot(): PourPresentationSnapshot;
+  requestExpeditedReturn(): void;
 }
 
 export function createPourTimeline({
@@ -77,43 +78,37 @@ export function createPourTimeline({
 
   const debugMarkers: PourDebugMarker[] = [
     {label: "tilt:start", timeSeconds: GAME_TIMING.pour.tiltStartSeconds},
-    {label: "travel:end", timeSeconds: GAME_TIMING.pour.travelSeconds},
+    {label: "travel:end", timeSeconds: GAME_TIMING.pour.travelEndSeconds},
     {label: "stream:start", timeSeconds: GAME_TIMING.pour.streamStartSeconds},
-    {
-      label: "tilt:end",
-      timeSeconds: GAME_TIMING.pour.tiltStartSeconds + GAME_TIMING.pour.tiltSeconds,
-    },
+    {label: "tilt:end", timeSeconds: GAME_TIMING.pour.tiltEndSeconds},
     {label: "transfer:start", timeSeconds: GAME_TIMING.pour.transferStartSeconds},
-    {
-      label: "transfer:end",
-      timeSeconds: GAME_TIMING.pour.transferStartSeconds + GAME_TIMING.pour.transferSeconds,
-    },
+    {label: "transfer:end", timeSeconds: GAME_TIMING.pour.transferEndSeconds},
     {label: "stream:close:start", timeSeconds: GAME_TIMING.pour.streamCloseSeconds},
-    {
-      label: "stream:close:end",
-      timeSeconds: GAME_TIMING.pour.streamCloseSeconds + GAME_TIMING.pour.streamCloseDurationSeconds,
-    },
+    {label: "stream:close:end", timeSeconds: GAME_TIMING.pour.streamCloseEndSeconds},
     {label: "return:rotation:start", timeSeconds: GAME_TIMING.pour.returnRotationSeconds},
     {label: "return:travel:start", timeSeconds: GAME_TIMING.pour.returnTravelSeconds},
-    {
-      label: "return:rotation:end",
-      timeSeconds:
-        GAME_TIMING.pour.returnRotationSeconds
-        + GAME_TIMING.pour.returnRotationDurationSeconds,
-    },
-    {
-      label: "return:travel:end",
-      timeSeconds:
-        GAME_TIMING.pour.returnTravelSeconds
-        + GAME_TIMING.pour.returnTravelDurationSeconds,
-    },
+    {label: "return:rotation:end", timeSeconds: GAME_TIMING.pour.returnRotationEndSeconds},
+    {label: "return:travel:end", timeSeconds: GAME_TIMING.pour.returnTravelEndSeconds},
   ].sort((first, second) => first.timeSeconds - second.timeSeconds);
   let nextDebugMarkerIndex = 0;
+  let expeditedReturnRequested = false;
 
   const timeline = gsap.timeline({
     defaults: {overwrite: "auto"},
     paused,
   });
+
+  function updateTimelineSpeed(): void {
+    const shouldExpedite =
+      expeditedReturnRequested
+      && timeline.time() >= GAME_TIMING.pour.returnStartSeconds;
+    const targetTimeScale = shouldExpedite
+      ? GAME_TIMING.pour.expeditedReturnTimeScale
+      : 1;
+    if (Math.abs(timeline.timeScale() - targetTimeScale) > 0.001) {
+      timeline.timeScale(targetTimeScale);
+    }
+  }
 
   function getSnapshot(): PourPresentationSnapshot {
     const timeSeconds = timeline.time();
@@ -137,6 +132,7 @@ export function createPourTimeline({
 
   timeline.eventCallback("onStart", () => onDebug?.("timeline:start", 0));
   timeline.eventCallback("onUpdate", () => {
+    updateTimelineSpeed();
     const timeSeconds = timeline.time();
     liquidSimulation.update(timeSeconds);
     emitFrame();
@@ -245,6 +241,7 @@ export function createPourTimeline({
     const targetTime = gsap.utils.clamp(0, GAME_TIMING.pour.totalSeconds, timeSeconds);
 
     timeline.pause();
+    timeline.timeScale(1);
     timeline.time(0, true);
     liquidSimulation.reset();
     liquidSimulation.update(0);
@@ -274,7 +271,12 @@ export function createPourTimeline({
     emitFrame();
   }
 
-  return {timeline, seek, getSnapshot};
+  function requestExpeditedReturn(): void {
+    expeditedReturnRequested = true;
+    updateTimelineSpeed();
+  }
+
+  return {timeline, seek, getSnapshot, requestExpeditedReturn};
 }
 
 export function createUndoTimeline(
