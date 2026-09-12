@@ -5,8 +5,8 @@
     max(16px, env(safe-area-inset-right))
     max(48px, env(safe-area-inset-bottom))
     max(16px, env(safe-area-inset-left));
-  background: #eef7fc;
-  color: #173749;
+  background: #222;
+  color: #e2e8f0;
 }
 
 .header {
@@ -23,7 +23,6 @@
 
 .header p {
   max-width: 720px;
-  margin: 0;
 }
 
 .eyebrow {
@@ -38,10 +37,10 @@
   width: min(100%, 1120px);
   margin: 0 auto 36px;
   padding: 20px;
-  border: 1px solid rgb(47 88 111 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.1);
   border-radius: 18px;
-  background: rgb(255 255 255 / 0.72);
-  box-shadow: 0 12px 32px rgb(42 91 117 / 0.07);
+  background: rgb(255 255 255 / 0.045);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.18);
 }
 
 .sectionTitle {
@@ -52,7 +51,7 @@
 .sectionDescription {
   max-width: 760px;
   margin: 6px 0 18px;
-  color: rgb(23 55 73 / 0.7);
+  color: rgb(226 232 240 / 0.7);
 }
 
 .scenarioRow {
@@ -72,9 +71,9 @@
 .scenarioControl select {
   min-height: 42px;
   padding: 0 12px;
-  border: 1px solid rgb(47 88 111 / 0.22);
+  border: 1px solid rgb(255 255 255 / 0.16);
   border-radius: 10px;
-  background: white;
+  background: #181818;
   color: inherit;
   font: inherit;
 }
@@ -105,7 +104,7 @@
   min-height: 210px;
   overflow: visible;
   border-radius: 12px;
-  background: white;
+  background: #181818;
   isolation: isolate;
 }
 
@@ -145,8 +144,8 @@
   background:
     radial-gradient(
       circle at 50% 20%,
-      #fff,
-      #e8f4fb 72%
+      #2d2d2d,
+      #181818 72%
     );
   isolation: isolate;
 }
@@ -192,9 +191,9 @@
 .checkpointButtons button {
   min-height: 34px;
   padding: 5px 10px;
-  border: 1px solid rgb(47 88 111 / 0.22);
+  border: 1px solid rgb(255 255 255 / 0.16);
   border-radius: 8px;
-  background: white;
+  background: #181818;
   color: inherit;
   font: inherit;
   cursor: pointer;
@@ -221,7 +220,7 @@
   gap: 0;
   margin: 0;
   overflow: hidden;
-  border: 1px solid rgb(47 88 111 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.1);
   border-radius: 12px;
   background: #102a38;
   color: #dff5ff;
@@ -257,9 +256,9 @@
 
 .checkpointCard {
   overflow: hidden;
-  border: 1px solid rgb(47 88 111 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.1);
   border-radius: 12px;
-  background: white;
+  background: #181818;
 }
 
 .checkpointCard > header {
@@ -267,7 +266,7 @@
   justify-content: space-between;
   gap: 12px;
   padding: 9px 11px;
-  border-bottom: 1px solid rgb(47 88 111 / 0.1);
+  border-bottom: 1px solid rgb(255 255 255 / 0.08);
   font-size: 0.78rem;
 }
 
