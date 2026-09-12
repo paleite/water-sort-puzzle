@@ -31,7 +31,11 @@ export const VialSlotButton = forwardRef<HTMLButtonElement, {
     : `Vial ${vialIndex + 1}, ${vial.length} of ${capacity} filled, top color ${topColor}`;
 
   return (
-    <span className={styles.vialSlot} data-vial-slot={vialIndex}>
+    <span
+      className={styles.vialSlot}
+      data-vial-slot={vialIndex}
+      data-selected={selected ? "true" : "false"}
+    >
       <button
         ref={ref}
         type="button"
