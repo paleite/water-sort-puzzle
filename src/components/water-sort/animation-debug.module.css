@@ -23,6 +23,7 @@
 
 .header p {
   max-width: 720px;
+  margin: 0;
 }
 
 .eyebrow {
