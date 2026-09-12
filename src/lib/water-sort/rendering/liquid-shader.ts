@@ -62,6 +62,14 @@ float sampleWave(float x) {
   return mix(waveSample(firstIndex), waveSample(secondIndex), t);
 }
 
+float waveEnergy() {
+  float energy = 0.0;
+  for (int index = 0; index < 11; index++) {
+    energy = max(energy, abs(waveSample(index)));
+  }
+  return energy;
+}
+
 vec4 chooseBand(float unitsFromBottom) {
   float cursor = clamp(unitsFromBottom, 0.0, max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0));
 
@@ -83,16 +91,42 @@ vec4 chooseBand(float unitsFromBottom) {
   return uBand0;
 }
 
+float frothCells(float surfaceY, float intensity) {
+  float cells = 0.0;
+
+  for (int index = 0; index < 10; index++) {
+    float fi = float(index);
+    float cellX = fract(0.08 + fi * 0.173 + sin(fi * 3.17) * 0.09);
+    float cellY = surfaceY
+      + 0.006
+      + mod(fi, 3.0) * 0.007
+      + sin(uTime * (3.2 + mod(fi, 4.0) * 0.35) + fi * 1.9) * 0.0025;
+    float radiusX = 0.024 + mod(fi, 4.0) * 0.005;
+    float radiusY = 0.007 + mod(fi, 3.0) * 0.003;
+    vec2 delta = vec2(
+      (vUV.x - cellX) / radiusX,
+      (vUV.y - cellY) / radiusY
+    );
+    float cell = 1.0 - smoothstep(0.62, 1.0, length(delta));
+    cells = max(cells, cell);
+  }
+
+  return cells * intensity;
+}
+
 void main() {
   float totalUnits = uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w;
   if (totalUnits <= 0.0001 || uFill <= 0.0001) discard;
 
   float centeredX = vUV.x - 0.5;
   float curvatureShape = sin(clamp(vUV.x, 0.0, 1.0) * 3.14159265359);
+  float agitation = smoothstep(0.002, 0.026, waveEnergy());
   float surfaceY = 1.0 - uFill;
   surfaceY += centeredX * uSurfaceSlope;
   surfaceY += curvatureShape * uCurvature;
   surfaceY += sampleWave(vUV.x);
+  surfaceY += sin(vUV.x * 12.5663706144 - uTime * 9.5) * 0.0075 * agitation;
+  surfaceY += sin(vUV.x * 25.1327412287 + uTime * 6.5) * 0.0035 * agitation;
 
   if (vUV.y < surfaceY) discard;
 
@@ -119,10 +153,15 @@ void main() {
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);
 
-  float distanceToSurface = abs(vUV.y - surfaceY);
-  float foam = (1.0 - smoothstep(0.0, 0.018, distanceToSurface)) * step(surfaceY, vUV.y);
-  float foamNoise = 0.65 + hash(floor(vec2(vUV.x * 90.0, uTime * 8.0))) * 0.35;
-  color = mix(color, vec3(0.98), foam * foamNoise * 0.70);
+  float distanceBelowSurface = max(0.0, vUV.y - surfaceY);
+  float frothBand = 1.0 - smoothstep(0.0, 0.032, distanceBelowSurface);
+  float frothNoise = 0.55
+    + hash(floor(vec2(vUV.x * 72.0, uTime * 7.0))) * 0.45;
+  float froth = max(
+    frothBand * frothNoise * 0.72,
+    frothCells(surfaceY, agitation)
+  ) * agitation;
+  color = mix(color, vec3(0.99), froth * 0.86);
 
   gl_FragColor = vec4(color, 0.96);
 }
