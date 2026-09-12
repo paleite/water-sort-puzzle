@@ -14,6 +14,10 @@ import {
 import type { GamePhase } from "@/hooks/use-water-sort-game";
 import { calculatePourGeometry } from "@/lib/water-sort/animation/pour-geometry";
 import {
+  presentationHasQueuedFinishDependent,
+  presentationIsReady,
+} from "@/lib/water-sort/animation/presentation-scheduler";
+import {
   createPourTimeline,
   type PourPresentation,
   type PourPresentationSnapshot,
@@ -80,44 +84,6 @@ function getAffectedVialIndices(turn: AppliedTurn): readonly number[] {
   return [turn.move.sourceVialIndex, turn.move.destinationVialIndex];
 }
 
-function presentationIsBlockedBy(
-  candidate: ActiveMovePresentation,
-  blocker: ActiveMovePresentation,
-): boolean {
-  if (blocker.id >= candidate.id) return false;
-
-  const candidateSource = candidate.move.move.sourceVialIndex;
-  const candidateDestination = candidate.move.move.destinationVialIndex;
-  const blockerSource = blocker.move.move.sourceVialIndex;
-  const blockerDestination = blocker.move.move.destinationVialIndex;
-
-  return (
-    candidateSource === blockerSource
-    || candidateSource === blockerDestination
-    || candidateDestination === blockerSource
-  );
-}
-
-function presentationIsBlocked(
-  candidate: ActiveMovePresentation,
-  activePresentations: readonly ActiveMovePresentation[],
-): boolean {
-  return activePresentations.some((earlier) => presentationIsBlockedBy(candidate, earlier));
-}
-
-function presentationHasQueuedDependent(
-  blocker: ActiveMovePresentation,
-  activePresentations: readonly ActiveMovePresentation[],
-  runtimes: ReadonlyMap<number, PresentationRuntime>,
-): boolean {
-  return activePresentations.some((candidate) => {
-    const runtime = runtimes.get(candidate.id);
-    return runtime !== undefined
-      && !runtime.started
-      && presentationIsBlockedBy(candidate, blocker);
-  });
-}
-
 export function GameBoard({
   board,
   capacity,
@@ -149,6 +115,7 @@ export function GameBoard({
   const visibleBoardRef = useRef<Board>(board);
   const transientStateBuilderRef = useRef<TransientStateBuilder | null>(null);
   const renderLatestRef = useRef<() => void>(() => {});
+  const startReadyPresentationsRef = useRef<() => void>(() => {});
   const debugSequenceRef = useRef(0);
   const previousPhaseRef = useRef<GamePhase | null>(null);
   const [visibleBoard, setVisibleBoard] = useState<Board>(board);
@@ -180,6 +147,7 @@ export function GameBoard({
     visibleBoardRef.current = nextVisibleBoard;
     setVisibleBoard(nextVisibleBoard);
     appendDebugLog(`p${presentationId} content:commit`);
+    startReadyPresentationsRef.current();
   }, [appendDebugLog, capacity]);
 
   const logBoardPositions = useCallback((label: string): void => {
@@ -248,6 +216,44 @@ export function GameBoard({
   }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
+
+  const startReadyPresentations = useCallback((): void => {
+    const runtimes = presentationRuntimesRef.current;
+
+    for (const active of activePresentations) {
+      const runtime = runtimes.get(active.id);
+      if (runtime === undefined || runtime.started) continue;
+      if (!presentationIsReady(active, activePresentations, runtimes)) continue;
+
+      runtime.started = true;
+      appendDebugLog(`p${active.id} presentation:start`);
+      runtime.presentation.timeline.play(0);
+    }
+
+    for (const active of activePresentations) {
+      const runtime = runtimes.get(active.id);
+      if (
+        runtime === undefined
+        || !runtime.started
+        || runtime.expeditedReturnRequested
+        || !presentationHasQueuedFinishDependent(
+          active,
+          activePresentations,
+          runtimes,
+        )
+      ) {
+        continue;
+      }
+
+      runtime.expeditedReturnRequested = true;
+      runtime.presentation.requestExpeditedReturn();
+      appendDebugLog(`p${active.id} return:expedited`);
+    }
+
+    renderLatestRef.current();
+  }, [activePresentations, appendDebugLog]);
+
+  startReadyPresentationsRef.current = startReadyPresentations;
 
   useLayoutEffect(() => {
     if (activePresentations.length !== 0) return;
@@ -361,40 +367,7 @@ export function GameBoard({
       );
     }
 
-    for (const active of activePresentations) {
-      const runtime = presentationRuntimesRef.current.get(active.id);
-      if (runtime === undefined || runtime.started) continue;
-      if (presentationIsBlocked(active, activePresentations)) {
-        appendDebugLog(`p${active.id} queued for vial dependency`);
-        continue;
-      }
-
-      runtime.started = true;
-      appendDebugLog(`p${active.id} presentation:start`);
-      runtime.presentation.timeline.play(0);
-    }
-
-    for (const active of activePresentations) {
-      const runtime = presentationRuntimesRef.current.get(active.id);
-      if (
-        runtime === undefined
-        || !runtime.started
-        || runtime.expeditedReturnRequested
-        || !presentationHasQueuedDependent(
-          active,
-          activePresentations,
-          presentationRuntimesRef.current,
-        )
-      ) {
-        continue;
-      }
-
-      runtime.expeditedReturnRequested = true;
-      runtime.presentation.requestExpeditedReturn();
-      appendDebugLog(`p${active.id} return:expedited`);
-    }
-
-    renderLatestRef.current();
+    startReadyPresentationsRef.current();
   }, [
     activePresentations,
     appendDebugLog,
