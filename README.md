@@ -78,8 +78,6 @@ The browser runtime only consumes `public/levels/*.json`; it does not ship or ru
 ## TODO
 
 - [ ] Improve pouring animation.
-- [ ] Add froth.
-- [ ] Add waves to animations.
 - [ ] Try different bubbles for different colors as a way to improve accessibility.
 - [ ] Add GA to A/B test which color scheme performs best.
 - [ ] Make the vials replaceable with other images/SVGs and try which ones work best.
