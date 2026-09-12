@@ -4,650 +4,850 @@
       "id": "001",
       "file": "001.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 7726,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 56100,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260913,
+        "solverElapsedMilliseconds": 1444.61,
+        "difficultyScore": 0.6563,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "002",
       "file": "002.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 4781,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 19709,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260914,
+        "solverElapsedMilliseconds": 492.8,
+        "difficultyScore": 0.4193,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "003",
       "file": "003.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 16826,
+        "optimalMoveCount": 41,
+        "exploredStateCount": 57964,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260915,
+        "solverElapsedMilliseconds": 1438.65,
+        "difficultyScore": 0.709,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "004",
       "file": "004.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 4341,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 12133,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260916,
+        "solverElapsedMilliseconds": 274.26,
+        "difficultyScore": 0.429,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "005",
       "file": "005.json",
       "development": {
-        "optimalMoveCount": 24,
-        "exploredStateCount": 189,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 128755,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4426065103715944,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260917,
+        "solverElapsedMilliseconds": 3589.03,
+        "difficultyScore": 0.6753,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "006",
       "file": "006.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 7671,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 35706,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260918,
+        "solverElapsedMilliseconds": 1019.81,
+        "difficultyScore": 0.5187,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "007",
       "file": "007.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 5922,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 8816,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260919,
+        "solverElapsedMilliseconds": 194.57,
+        "difficultyScore": 0.4024,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "008",
       "file": "008.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 6417,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 52271,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8176065103715944,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260920,
+        "solverElapsedMilliseconds": 1318.83,
+        "difficultyScore": 0.5504,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "009",
       "file": "009.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 2259,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 8739,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4583333333333333,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260921,
+        "solverElapsedMilliseconds": 203.92,
+        "difficultyScore": 0.4017,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "010",
       "file": "010.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 118,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 19791,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.8888888888888888,
+        "totalRunCount": 44,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260922,
+        "solverElapsedMilliseconds": 461.25,
+        "difficultyScore": 0.3696,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "011",
       "file": "011.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 12493,
+        "optimalMoveCount": 35,
+        "exploredStateCount": 15721,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.8888888888888888,
+        "totalRunCount": 44,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260923,
+        "solverElapsedMilliseconds": 405.49,
+        "difficultyScore": 0.3005,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "012",
       "file": "012.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 10487,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 51554,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.3852130207431887,
-        "boundaryRate": 0.6111111111111112,
-        "totalRunCount": 34,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260924,
+        "solverElapsedMilliseconds": 1453.12,
+        "difficultyScore": 0.5492,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "013",
       "file": "013.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 9629,
+        "optimalMoveCount": 41,
+        "exploredStateCount": 13674,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260925,
+        "solverElapsedMilliseconds": 307.34,
+        "difficultyScore": 0.5889,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "014",
       "file": "014.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 8549,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 36613,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4842731770382611,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260926,
+        "solverElapsedMilliseconds": 943.98,
+        "difficultyScore": 0.4708,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "015",
       "file": "015.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 14312,
+        "optimalMoveCount": 33,
+        "exploredStateCount": 17498,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.8333333333333334,
+        "totalRunCount": 42,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260927,
+        "solverElapsedMilliseconds": 459.83,
+        "difficultyScore": 0.2094,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "016",
       "file": "016.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 3305,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 20543,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260928,
+        "solverElapsedMilliseconds": 507.84,
+        "difficultyScore": 0.4227,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "017",
       "file": "017.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 9906,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 40938,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260929,
+        "solverElapsedMilliseconds": 1028.16,
+        "difficultyScore": 0.5301,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "018",
       "file": "018.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 4174,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 47633,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260930,
+        "solverElapsedMilliseconds": 1170.27,
+        "difficultyScore": 0.6427,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "019",
       "file": "019.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 6176,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 41959,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.75,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260931,
+        "solverElapsedMilliseconds": 941.84,
+        "difficultyScore": 0.5321,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "020",
       "file": "020.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 9950,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 26222,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.75,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260932,
+        "solverElapsedMilliseconds": 636.07,
+        "difficultyScore": 0.443,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "021",
       "file": "021.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 12027,
+        "optimalMoveCount": 41,
+        "exploredStateCount": 16072,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260933,
+        "solverElapsedMilliseconds": 361.23,
+        "difficultyScore": 0.6023,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "022",
       "file": "022.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 8153,
+        "optimalMoveCount": 41,
+        "exploredStateCount": 44710,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4583333333333333,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 1,
+        "totalRunCount": 48,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260934,
+        "solverElapsedMilliseconds": 1014.2,
+        "difficultyScore": 0.6874,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "023",
       "file": "023.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 23606,
+        "optimalMoveCount": 35,
+        "exploredStateCount": 40001,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.625,
+        "boundaryRate": 0.8611111111111112,
+        "totalRunCount": 43,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260935,
+        "solverElapsedMilliseconds": 1064.57,
+        "difficultyScore": 0.3781,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "024",
       "file": "024.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 6268,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 13232,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4583333333333333,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8176065103715944,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260936,
+        "solverElapsedMilliseconds": 332.63,
+        "difficultyScore": 0.3362,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "025",
       "file": "025.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 10227,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 31206,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.8888888888888888,
+        "totalRunCount": 44,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260937,
+        "solverElapsedMilliseconds": 784,
+        "difficultyScore": 0.4575,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "026",
       "file": "026.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 7019,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 11085,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260938,
+        "solverElapsedMilliseconds": 250.9,
+        "difficultyScore": 0.3714,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "027",
       "file": "027.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 3805,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 15879,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260939,
+        "solverElapsedMilliseconds": 381.36,
+        "difficultyScore": 0.5013,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "028",
       "file": "028.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 4857,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 33049,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260940,
+        "solverElapsedMilliseconds": 820.26,
+        "difficultyScore": 0.5123,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "029",
       "file": "029.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 182,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 13672,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4842731770382611,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260941,
+        "solverElapsedMilliseconds": 283.08,
+        "difficultyScore": 0.4389,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "030",
       "file": "030.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 169,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 16141,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260942,
+        "solverElapsedMilliseconds": 409.31,
+        "difficultyScore": 0.4527,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "031",
       "file": "031.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 9761,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 2105,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260943,
+        "solverElapsedMilliseconds": 44.98,
+        "difficultyScore": 0.2834,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "032",
       "file": "032.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 4102,
+        "optimalMoveCount": 34,
+        "exploredStateCount": 4545,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7083333333333333,
+        "boundaryRate": 0.8611111111111112,
+        "totalRunCount": 43,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260944,
+        "solverElapsedMilliseconds": 99.43,
+        "difficultyScore": 0.1473,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "033",
       "file": "033.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 5619,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 6264,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260945,
+        "solverElapsedMilliseconds": 143.97,
+        "difficultyScore": 0.274,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "034",
       "file": "034.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 8129,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 11426,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8592731770382611,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260946,
+        "solverElapsedMilliseconds": 252.86,
+        "difficultyScore": 0.324,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "035",
       "file": "035.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 15821,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 20122,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260947,
+        "solverElapsedMilliseconds": 466.86,
+        "difficultyScore": 0.521,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "036",
       "file": "036.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 13133,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 17778,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.75,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260948,
+        "solverElapsedMilliseconds": 406.52,
+        "difficultyScore": 0.4607,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "037",
       "file": "037.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 4210,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 28295,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260949,
+        "solverElapsedMilliseconds": 650.98,
+        "difficultyScore": 0.4494,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "038",
       "file": "038.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 3076,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 23240,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260950,
+        "solverElapsedMilliseconds": 570.61,
+        "difficultyScore": 0.533,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "039",
       "file": "039.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 8276,
+        "optimalMoveCount": 38,
+        "exploredStateCount": 64276,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260951,
+        "solverElapsedMilliseconds": 1716.73,
+        "difficultyScore": 0.5676,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "040",
       "file": "040.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 4609,
+        "optimalMoveCount": 37,
+        "exploredStateCount": 28976,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.8888888888888888,
+        "totalRunCount": 44,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260952,
+        "solverElapsedMilliseconds": 733.12,
+        "difficultyScore": 0.4513,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "041",
       "file": "041.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 6755,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 12112,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260953,
+        "solverElapsedMilliseconds": 291.72,
+        "difficultyScore": 0.3288,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "042",
       "file": "042.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 16260,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 33214,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.6666666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260954,
+        "solverElapsedMilliseconds": 820.5,
+        "difficultyScore": 0.5627,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "043",
       "file": "043.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 6183,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 33264,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4583333333333333,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.7916666666666667,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260955,
+        "solverElapsedMilliseconds": 844.94,
+        "difficultyScore": 0.5628,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "044",
       "file": "044.json",
       "development": {
-        "optimalMoveCount": 28,
-        "exploredStateCount": 6712,
+        "optimalMoveCount": 36,
+        "exploredStateCount": 14821,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9166666666666666,
+        "totalRunCount": 45,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260956,
+        "solverElapsedMilliseconds": 354.94,
+        "difficultyScore": 0.3456,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "045",
       "file": "045.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 7925,
+        "optimalMoveCount": 41,
+        "exploredStateCount": 38231,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.875,
+        "boundaryRate": 1,
+        "totalRunCount": 48,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260957,
+        "solverElapsedMilliseconds": 990.02,
+        "difficultyScore": 0.6744,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "046",
       "file": "046.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 218,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 19991,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4842731770382611,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 1,
+        "totalRunCount": 48,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260958,
+        "solverElapsedMilliseconds": 432.38,
+        "difficultyScore": 0.5705,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "047",
       "file": "047.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 8521,
+        "optimalMoveCount": 39,
+        "exploredStateCount": 39935,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5,
-        "boundaryRate": 0.6666666666666666,
-        "totalRunCount": 36,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260959,
+        "solverElapsedMilliseconds": 944.72,
+        "difficultyScore": 0.578,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "048",
       "file": "048.json",
       "development": {
-        "optimalMoveCount": 25,
-        "exploredStateCount": 4964,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 30423,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4426065103715944,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.9166666666666667,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260960,
+        "solverElapsedMilliseconds": 711.12,
+        "difficultyScore": 0.6054,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "049",
       "file": "049.json",
       "development": {
-        "optimalMoveCount": 27,
-        "exploredStateCount": 2431,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 44170,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.5416666666666667,
-        "boundaryRate": 0.6944444444444444,
-        "totalRunCount": 37,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9444444444444444,
+        "totalRunCount": 46,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260961,
+        "solverElapsedMilliseconds": 1117.04,
+        "difficultyScore": 0.6364,
+        "difficultyScoreVersion": 1
       }
     },
     {
       "id": "050",
       "file": "050.json",
       "development": {
-        "optimalMoveCount": 26,
-        "exploredStateCount": 7845,
+        "optimalMoveCount": 40,
+        "exploredStateCount": 30354,
         "maximumBranchingFactor": 24,
-        "meanVialEntropy": 1.4426065103715944,
-        "boundaryRate": 0.6388888888888888,
-        "totalRunCount": 35,
-        "generationDepth": 24
+        "meanVialEntropy": 1.8333333333333333,
+        "boundaryRate": 0.9722222222222222,
+        "totalRunCount": 47,
+        "generator": "uniform-shuffle",
+        "generationSeed": 20260962,
+        "solverElapsedMilliseconds": 675.39,
+        "difficultyScore": 0.6052,
+        "difficultyScoreVersion": 1
       }
     }
   ]

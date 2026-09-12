@@ -2,88 +2,32 @@
   "id": "030",
   "capacity": 4,
   "vials": [
-    [
-      "amber",
-      "cocoa",
-      "coral",
-      "coral"
-    ],
-    [
-      "lime",
-      "lemon",
-      "lemon",
-      "amber"
-    ],
-    [
-      "sky",
-      "violet",
-      "violet",
-      "coral"
-    ],
-    [
-      "magenta",
-      "rose",
-      "lime",
-      "lime"
-    ],
-    [
-      "sky",
-      "magenta",
-      "emerald",
-      "emerald"
-    ],
-    [
-      "cobalt",
-      "lemon",
-      "teal",
-      "teal"
-    ],
-    [
-      "lemon",
-      "lime",
-      "sky",
-      "sky"
-    ],
-    [
-      "rose",
-      "coral",
-      "cobalt",
-      "cobalt"
-    ],
-    [
-      "teal",
-      "emerald",
-      "violet",
-      "violet"
-    ],
-    [
-      "cocoa",
-      "amber",
-      "magenta",
-      "magenta"
-    ],
-    [
-      "emerald",
-      "cobalt",
-      "rose",
-      "rose"
-    ],
-    [
-      "amber",
-      "teal",
-      "cocoa",
-      "cocoa"
-    ],
+    ["lemon", "rose", "lemon", "teal"],
+    ["magenta", "rose", "magenta", "amber"],
+    ["cocoa", "sky", "sky", "violet"],
+    ["emerald", "cobalt", "amber", "violet"],
+    ["emerald", "amber", "lemon", "amber"],
+    ["lemon", "cocoa", "coral", "rose"],
+    ["coral", "violet", "coral", "teal"],
+    ["coral", "teal", "lime", "magenta"],
+    ["cobalt", "lime", "cocoa", "cobalt"],
+    ["sky", "teal", "rose", "emerald"],
+    ["cocoa", "lime", "violet", "lime"],
+    ["cobalt", "emerald", "magenta", "sky"],
     [],
     []
   ],
   "development": {
-    "optimalMoveCount": 25,
-    "exploredStateCount": 169,
+    "optimalMoveCount": 38,
+    "exploredStateCount": 16141,
     "maximumBranchingFactor": 24,
-    "meanVialEntropy": 1.5,
-    "boundaryRate": 0.6666666666666666,
-    "totalRunCount": 36,
-    "generationDepth": 24
+    "meanVialEntropy": 1.7083333333333333,
+    "boundaryRate": 0.9722222222222222,
+    "totalRunCount": 47,
+    "generator": "uniform-shuffle",
+    "generationSeed": 20260942,
+    "solverElapsedMilliseconds": 409.31,
+    "difficultyScore": 0.4527,
+    "difficultyScoreVersion": 1
   }
 }

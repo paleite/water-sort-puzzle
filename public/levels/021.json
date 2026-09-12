@@ -2,88 +2,32 @@
   "id": "021",
   "capacity": 4,
   "vials": [
-    [
-      "sky",
-      "rose",
-      "coral",
-      "coral"
-    ],
-    [
-      "teal",
-      "rose",
-      "amber",
-      "amber"
-    ],
-    [
-      "amber",
-      "violet",
-      "lemon",
-      "lemon"
-    ],
-    [
-      "emerald",
-      "cocoa",
-      "lime",
-      "lime"
-    ],
-    [
-      "emerald",
-      "rose",
-      "sky",
-      "emerald"
-    ],
-    [
-      "cobalt",
-      "amber",
-      "teal",
-      "teal"
-    ],
-    [
-      "rose",
-      "cobalt",
-      "sky",
-      "sky"
-    ],
-    [
-      "cocoa",
-      "coral",
-      "cobalt",
-      "cobalt"
-    ],
-    [
-      "coral",
-      "magenta",
-      "violet",
-      "violet"
-    ],
-    [
-      "lime",
-      "emerald",
-      "magenta",
-      "magenta"
-    ],
-    [
-      "teal",
-      "cocoa",
-      "cocoa",
-      "violet"
-    ],
-    [
-      "magenta",
-      "lime",
-      "lemon",
-      "lemon"
-    ],
+    ["emerald", "teal", "sky", "amber"],
+    ["coral", "rose", "amber", "sky"],
+    ["lime", "amber", "violet", "sky"],
+    ["lemon", "emerald", "cocoa", "emerald"],
+    ["violet", "sky", "cocoa", "coral"],
+    ["rose", "magenta", "teal", "magenta"],
+    ["lemon", "cobalt", "amber", "cocoa"],
+    ["coral", "cobalt", "teal", "lemon"],
+    ["emerald", "violet", "rose", "cobalt"],
+    ["teal", "lime", "lime", "cocoa"],
+    ["violet", "lemon", "magenta", "coral"],
+    ["cobalt", "rose", "lime", "magenta"],
     [],
     []
   ],
   "development": {
-    "optimalMoveCount": 28,
-    "exploredStateCount": 12027,
+    "optimalMoveCount": 41,
+    "exploredStateCount": 16072,
     "maximumBranchingFactor": 24,
-    "meanVialEntropy": 1.5,
-    "boundaryRate": 0.6944444444444444,
-    "totalRunCount": 37,
-    "generationDepth": 24
+    "meanVialEntropy": 1.875,
+    "boundaryRate": 0.9722222222222222,
+    "totalRunCount": 47,
+    "generator": "uniform-shuffle",
+    "generationSeed": 20260933,
+    "solverElapsedMilliseconds": 361.23,
+    "difficultyScore": 0.6023,
+    "difficultyScoreVersion": 1
   }
 }

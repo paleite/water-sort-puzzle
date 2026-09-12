@@ -2,88 +2,32 @@
   "id": "002",
   "capacity": 4,
   "vials": [
-    [
-      "amber",
-      "amber",
-      "teal",
-      "coral"
-    ],
-    [
-      "sky",
-      "sky",
-      "violet",
-      "amber"
-    ],
-    [
-      "emerald",
-      "coral",
-      "lemon",
-      "lemon"
-    ],
-    [
-      "magenta",
-      "teal",
-      "lime",
-      "lime"
-    ],
-    [
-      "sky",
-      "lime",
-      "emerald",
-      "emerald"
-    ],
-    [
-      "violet",
-      "cocoa",
-      "teal",
-      "teal"
-    ],
-    [
-      "lemon",
-      "magenta",
-      "magenta",
-      "cobalt"
-    ],
-    [
-      "lemon",
-      "coral",
-      "cobalt",
-      "cobalt"
-    ],
-    [
-      "coral",
-      "sky",
-      "violet",
-      "violet"
-    ],
+    ["sky", "rose", "emerald", "teal"],
+    ["cocoa", "lime", "coral", "violet"],
+    ["rose", "rose", "magenta", "cocoa"],
+    ["amber", "emerald", "sky", "lemon"],
+    ["magenta", "coral", "lemon", "violet"],
+    ["cobalt", "amber", "magenta", "teal"],
+    ["cobalt", "cobalt", "teal", "sky"],
+    ["rose", "emerald", "cobalt", "cocoa"],
+    ["violet", "amber", "violet", "lime"],
+    ["cocoa", "lemon", "amber", "coral"],
+    ["sky", "coral", "lemon", "magenta"],
+    ["emerald", "teal", "lime", "lime"],
     [],
-    [
-      "cocoa",
-      "emerald",
-      "rose",
-      "rose"
-    ],
-    [
-      "lime",
-      "magenta",
-      "cocoa",
-      "cocoa"
-    ],
-    [],
-    [
-      "cobalt",
-      "amber",
-      "rose",
-      "rose"
-    ]
+    []
   ],
   "development": {
-    "optimalMoveCount": 26,
-    "exploredStateCount": 4781,
+    "optimalMoveCount": 37,
+    "exploredStateCount": 19709,
     "maximumBranchingFactor": 24,
-    "meanVialEntropy": 1.5,
-    "boundaryRate": 0.6666666666666666,
-    "totalRunCount": 36,
-    "generationDepth": 24
+    "meanVialEntropy": 1.8333333333333333,
+    "boundaryRate": 0.9166666666666666,
+    "totalRunCount": 45,
+    "generator": "uniform-shuffle",
+    "generationSeed": 20260914,
+    "solverElapsedMilliseconds": 492.8,
+    "difficultyScore": 0.4193,
+    "difficultyScoreVersion": 1
   }
 }

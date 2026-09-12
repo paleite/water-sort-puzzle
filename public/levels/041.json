@@ -2,88 +2,32 @@
   "id": "041",
   "capacity": 4,
   "vials": [
-    [
-      "lemon",
-      "emerald",
-      "coral",
-      "coral"
-    ],
-    [
-      "lime",
-      "rose",
-      "amber",
-      "amber"
-    ],
-    [
-      "magenta",
-      "rose",
-      "lemon",
-      "lemon"
-    ],
-    [
-      "magenta",
-      "magenta",
-      "cocoa",
-      "lime"
-    ],
-    [
-      "rose",
-      "amber",
-      "emerald",
-      "emerald"
-    ],
-    [
-      "cocoa",
-      "violet",
-      "teal",
-      "teal"
-    ],
-    [
-      "coral",
-      "lime",
-      "sky",
-      "sky"
-    ],
-    [
-      "amber",
-      "magenta",
-      "cobalt",
-      "cobalt"
-    ],
-    [
-      "lime",
-      "cobalt",
-      "violet",
-      "violet"
-    ],
-    [
-      "teal",
-      "emerald",
-      "rose",
-      "coral"
-    ],
-    [
-      "cobalt",
-      "lemon",
-      "cocoa",
-      "cocoa"
-    ],
-    [
-      "violet",
-      "teal",
-      "sky",
-      "sky"
-    ],
+    ["teal", "violet", "sky", "lime"],
+    ["magenta", "lime", "emerald", "cocoa"],
+    ["lemon", "rose", "coral", "cobalt"],
+    ["lemon", "emerald", "cobalt", "amber"],
+    ["magenta", "emerald", "cobalt", "sky"],
+    ["violet", "coral", "rose", "rose"],
+    ["lemon", "sky", "amber", "magenta"],
+    ["lime", "magenta", "amber", "violet"],
+    ["lime", "teal", "cobalt", "teal"],
+    ["amber", "teal", "cocoa", "rose"],
+    ["cocoa", "cocoa", "coral", "coral"],
+    ["violet", "sky", "lemon", "emerald"],
     [],
     []
   ],
   "development": {
-    "optimalMoveCount": 27,
-    "exploredStateCount": 6755,
+    "optimalMoveCount": 36,
+    "exploredStateCount": 12112,
     "maximumBranchingFactor": 24,
-    "meanVialEntropy": 1.5416666666666667,
-    "boundaryRate": 0.6944444444444444,
-    "totalRunCount": 37,
-    "generationDepth": 24
+    "meanVialEntropy": 1.8333333333333333,
+    "boundaryRate": 0.9166666666666666,
+    "totalRunCount": 45,
+    "generator": "uniform-shuffle",
+    "generationSeed": 20260953,
+    "solverElapsedMilliseconds": 291.72,
+    "difficultyScore": 0.3288,
+    "difficultyScoreVersion": 1
   }
 }
