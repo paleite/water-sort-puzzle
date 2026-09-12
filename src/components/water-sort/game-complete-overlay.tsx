@@ -25,11 +25,11 @@ export function GameCompleteOverlay({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-40 grid place-items-center bg-slate-900/15 p-5 backdrop-blur-[2px]">
-      <section className="grid w-full max-w-sm gap-5 rounded-3xl bg-white/95 p-6 text-center shadow-2xl ring-1 ring-slate-900/10">
+    <div className="fixed inset-0 z-40 grid place-items-center bg-black/45 p-5 backdrop-blur-[2px]">
+      <section className="grid w-full max-w-sm gap-5 rounded-3xl bg-slate-900/95 p-6 text-center text-slate-100 shadow-2xl ring-1 ring-white/10">
         <div>
           <h2 className="text-2xl font-bold">Level complete</h2>
-          <p className="mt-1 text-sm text-slate-500">Level {levelId} solved.</p>
+          <p className="mt-1 text-sm text-slate-400">Level {levelId} solved.</p>
         </div>
         <div className="grid gap-2">
           {nextLevelId !== null && (
