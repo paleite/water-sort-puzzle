@@ -15,7 +15,7 @@ import {
   POUR_DEBUG_CHECKPOINTS,
   type AnimationDebugScenario,
 } from "@/lib/water-sort/animation/debug-fixtures";
-import {calculatePourGeometry} from "@/lib/water-sort/animation/pour-geometry";
+import {calculatePourGeometry, type PourGeometry} from "@/lib/water-sort/animation/pour-geometry";
 import {getPourVisualPhase} from "@/lib/water-sort/animation/pour-visuals";
 import {
   createPourTimeline,
@@ -23,12 +23,13 @@ import {
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
 import {GAME_TIMING} from "@/lib/water-sort/animation/timing";
-import type {Board} from "@/lib/water-sort/domain/types";
+import type {AppliedMove, Board} from "@/lib/water-sort/domain/types";
 import {measureVialAnchors} from "@/lib/water-sort/rendering/dom-anchors";
 import {PixiBoardRenderer} from "@/lib/water-sort/rendering/pixi-board-renderer";
 import {
-  buildPourBoardRenderState,
+  buildConcurrentPourBoardRenderState,
   buildStaticBoardRenderState,
+  type ConcurrentPourPresentation,
 } from "@/lib/water-sort/rendering/render-state";
 
 import debugStyles from "./animation-debug.module.css";
@@ -36,18 +37,67 @@ import {VialSlotButton} from "./vial-slot-button";
 
 const PLAYBACK_RATES = [0.1, 0.25, 0.5, 1] as const;
 
+interface DebugPresentationController {
+  play(): void;
+  pause(): void;
+  seek(timeSeconds: number): void;
+  setPlaybackRate(playbackRate: number): void;
+  getTime(): number;
+  getSnapshot(): PourPresentationSnapshot | null;
+}
+
+interface DebugPresentationRuntime {
+  move: AppliedMove;
+  geometry: PourGeometry;
+  presentation: PourPresentation;
+  snapshot: PourPresentationSnapshot;
+}
+
 interface PourStageProps {
   scenario: AnimationDebugScenario;
   initialTimeSeconds: number;
   committed?: boolean;
   debugGeometry?: boolean;
   playbackRate?: number;
-  onPresentationReady?: (presentation: PourPresentation | null) => void;
+  onPresentationReady?: (controller: DebugPresentationController | null) => void;
   onFrame?: (snapshot: PourPresentationSnapshot) => void;
 }
 
 function formatNumber(value: number): string {
   return value.toFixed(3);
+}
+
+function createDebugController(
+  runtimes: readonly DebugPresentationRuntime[],
+): DebugPresentationController {
+  return {
+    play(): void {
+      for (const runtime of runtimes) {
+        runtime.presentation.timeline.play();
+      }
+    },
+    pause(): void {
+      for (const runtime of runtimes) {
+        runtime.presentation.timeline.pause();
+      }
+    },
+    seek(timeSeconds: number): void {
+      for (const runtime of runtimes) {
+        runtime.presentation.seek(timeSeconds);
+      }
+    },
+    setPlaybackRate(playbackRate: number): void {
+      for (const runtime of runtimes) {
+        runtime.presentation.setPlaybackRate(playbackRate);
+      }
+    },
+    getTime(): number {
+      return runtimes[0]?.presentation.timeline.time() ?? 0;
+    },
+    getSnapshot(): PourPresentationSnapshot | null {
+      return runtimes[0]?.presentation.getSnapshot() ?? null;
+    },
+  };
 }
 
 function PourStage({
@@ -62,15 +112,14 @@ function PourStage({
   const boardRef = useRef<HTMLDivElement>(null);
   const canvasHostRef = useRef<HTMLDivElement>(null);
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
-  const latestSnapshotRef = useRef<PourPresentationSnapshot | null>(null);
-  const presentationRef = useRef<PourPresentation | null>(null);
+  const runtimesRef = useRef<DebugPresentationRuntime[]>([]);
 
   useLayoutEffect(() => {
     const boardElement = boardRef.current;
     const canvasHost = canvasHostRef.current;
     if (boardElement === null || canvasHost === null) return;
 
-    const displayBoard = committed ? scenario.move.nextBoard : scenario.initialBoard;
+    const displayBoard = committed ? scenario.settledBoard : scenario.initialBoard;
     const renderer = new PixiBoardRenderer({boardElement, canvasHost});
     void renderer.initialize().catch((error: unknown) => {
       console.error("Failed to initialize Pixi debug renderer.", error);
@@ -78,9 +127,9 @@ function PourStage({
 
     const renderCurrent = (): void => {
       const anchors = measureVialAnchors(boardElement, vialRefs.current, displayBoard.length);
-      const snapshot = latestSnapshotRef.current;
+      const runtimes = runtimesRef.current;
 
-      if (committed || snapshot === null) {
+      if (committed || runtimes.length === 0) {
         renderer.render(buildStaticBoardRenderState({
           board: displayBoard,
           anchors,
@@ -91,17 +140,19 @@ function PourStage({
         return;
       }
 
-      const sourceElement = vialRefs.current.get(scenario.move.move.sourceVialIndex);
-      const destinationElement = vialRefs.current.get(scenario.move.move.destinationVialIndex);
-      if (sourceElement === undefined || destinationElement === undefined) return;
-      const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
+      const presentations: ConcurrentPourPresentation[] = runtimes.map((runtime) => ({
+        move: runtime.move,
+        geometry: runtime.geometry,
+        presentation: runtime.snapshot,
+        started: true,
+        contentCommitted: false,
+      }));
 
-      renderer.render(buildPourBoardRenderState({
-        move: scenario.move,
+      renderer.render(buildConcurrentPourBoardRenderState({
+        board: scenario.initialBoard,
         anchors,
+        presentations,
         selectedSourceVialIndex: null,
-        geometry,
-        presentation: snapshot,
         capacity: scenario.capacity,
         debugGeometry,
       }));
@@ -121,45 +172,59 @@ function PourStage({
     for (const element of vialRefs.current.values()) observer.observe(element);
     window.addEventListener("resize", scheduleRender);
 
-    let presentation: PourPresentation | null = null;
     if (!committed) {
-      const sourceElement = vialRefs.current.get(scenario.move.move.sourceVialIndex);
-      const destinationElement = vialRefs.current.get(scenario.move.move.destinationVialIndex);
+      const runtimes: DebugPresentationRuntime[] = [];
 
-      if (sourceElement !== undefined && destinationElement !== undefined) {
-        const geometry = calculatePourGeometry(boardElement, sourceElement, destinationElement);
-        presentation = createPourTimeline({
+      scenario.moves.forEach((move, moveIndex) => {
+        const sourceVialIndex = move.move.sourceVialIndex;
+        const destinationVialIndex = move.move.destinationVialIndex;
+        const sourceElement = vialRefs.current.get(sourceVialIndex);
+        const destinationElement = vialRefs.current.get(destinationVialIndex);
+        if (sourceElement === undefined || destinationElement === undefined) {
+          throw new Error("Missing DOM slot required for debug pour presentation.");
+        }
+
+        const sourceFillUnits = move.previousBoard[sourceVialIndex]?.length;
+        const geometry = calculatePourGeometry(
+          boardElement,
+          sourceElement,
+          destinationElement,
+          undefined,
+          sourceFillUnits,
+          move.amount,
+          scenario.capacity,
+        );
+        const presentation = createPourTimeline({
           geometry,
-          move: scenario.move,
+          move,
           sourceWidthPixels: sourceElement.getBoundingClientRect().width,
           paused: true,
           onComplete: () => {},
           onFrame: (nextSnapshot) => {
-            latestSnapshotRef.current = nextSnapshot;
-            const anchors = measureVialAnchors(
-              boardElement,
-              vialRefs.current,
-              scenario.initialBoard.length,
-            );
-            renderer.render(buildPourBoardRenderState({
-              move: scenario.move,
-              anchors,
-              selectedSourceVialIndex: null,
-              geometry,
-              presentation: nextSnapshot,
-              capacity: scenario.capacity,
-              debugGeometry,
-            }));
-            onFrame?.(nextSnapshot);
+            const runtime = runtimesRef.current[moveIndex];
+            if (runtime !== undefined) {
+              runtime.snapshot = nextSnapshot;
+            }
+            renderCurrent();
+            if (moveIndex === 0) onFrame?.(nextSnapshot);
           },
         });
-        presentationRef.current = presentation;
-        presentation.setPlaybackRate(playbackRate);
-        presentation.seek(initialTimeSeconds);
-        onPresentationReady?.(presentation);
-      }
+
+        runtimes.push({
+          move,
+          geometry,
+          presentation,
+          snapshot: presentation.getSnapshot(),
+        });
+      });
+
+      runtimesRef.current = runtimes;
+      const controller = createDebugController(runtimes);
+      controller.setPlaybackRate(playbackRate);
+      controller.seek(initialTimeSeconds);
+      onPresentationReady?.(controller);
     } else {
-      latestSnapshotRef.current = null;
+      runtimesRef.current = [];
       onPresentationReady?.(null);
       renderCurrent();
     }
@@ -170,9 +235,10 @@ function PourStage({
       if (frame !== 0) cancelAnimationFrame(frame);
       window.removeEventListener("resize", scheduleRender);
       observer.disconnect();
-      presentation?.timeline.kill();
-      if (presentationRef.current === presentation) presentationRef.current = null;
-      latestSnapshotRef.current = null;
+      for (const runtime of runtimesRef.current) {
+        runtime.presentation.timeline.kill();
+      }
+      runtimesRef.current = [];
       onPresentationReady?.(null);
       renderer.destroy();
     };
@@ -186,15 +252,24 @@ function PourStage({
   ]);
 
   useEffect(() => {
-    presentationRef.current?.setPlaybackRate(playbackRate);
+    for (const runtime of runtimesRef.current) {
+      runtime.presentation.setPlaybackRate(playbackRate);
+    }
   }, [playbackRate]);
 
-  const displayBoard = committed ? scenario.move.nextBoard : scenario.initialBoard;
+  const displayBoard = committed ? scenario.settledBoard : scenario.initialBoard;
+  const columnCount = Math.max(1, Math.min(displayBoard.length, 4));
 
   return (
     <div ref={boardRef} className={debugStyles.stageBoard} data-debug-stage="">
       <div ref={canvasHostRef} className={debugStyles.pixiCanvasHost} aria-hidden="true" />
-      <div className={debugStyles.stageGrid}>
+      <div
+        className={debugStyles.stageGrid}
+        style={{
+          gridTemplateColumns: `repeat(${columnCount}, var(--vial-width))`,
+          gap: displayBoard.length > 2 ? "clamp(18px, 5vw, 52px)" : undefined,
+        }}
+      >
         {displayBoard.map((vial, vialIndex) => (
           <VialSlotButton
             key={vialIndex}
@@ -338,17 +413,17 @@ export function AnimationDebugLabSafe() {
     [defaultCheckpoint, selectedCheckpointId],
   );
 
-  const presentationRef = useRef<PourPresentation | null>(null);
+  const controllerRef = useRef<DebugPresentationController | null>(null);
   const requestedTimeRef = useRef(0);
   const [playheadTime, setPlayheadTime] = useState(0);
   const [snapshot, setSnapshot] = useState<PourPresentationSnapshot | null>(null);
 
-  const handlePresentationReady = useCallback((presentation: PourPresentation | null): void => {
-    presentationRef.current = presentation;
-    if (presentation === null) return;
-    presentation.setPlaybackRate(playbackRate);
-    presentation.seek(requestedTimeRef.current);
-    setSnapshot(presentation.getSnapshot());
+  const handlePresentationReady = useCallback((controller: DebugPresentationController | null): void => {
+    controllerRef.current = controller;
+    if (controller === null) return;
+    controller.setPlaybackRate(playbackRate);
+    controller.seek(requestedTimeRef.current);
+    setSnapshot(controller.getSnapshot());
   }, [playbackRate]);
 
   const handleFrame = useCallback((nextSnapshot: PourPresentationSnapshot): void => {
@@ -360,14 +435,14 @@ export function AnimationDebugLabSafe() {
     const clamped = gsap.utils.clamp(0, GAME_TIMING.pour.totalSeconds, timeSeconds);
     requestedTimeRef.current = clamped;
     setPlayheadTime(clamped);
-    const presentation = presentationRef.current;
-    if (presentation === null) return;
-    presentation.seek(clamped);
-    setSnapshot(presentation.getSnapshot());
+    const controller = controllerRef.current;
+    if (controller === null) return;
+    controller.seek(clamped);
+    setSnapshot(controller.getSnapshot());
   }, []);
 
   useEffect(() => {
-    presentationRef.current?.setPlaybackRate(playbackRate);
+    controllerRef.current?.setPlaybackRate(playbackRate);
   }, [playbackRate]);
 
   if (selectedScenario === undefined || selectedCheckpoint === undefined) return null;
@@ -445,22 +520,22 @@ export function AnimationDebugLabSafe() {
               <button
                 type="button"
                 onClick={() => {
-                  const presentation = presentationRef.current;
-                  if (presentation === null) return;
-                  if (presentation.timeline.time() >= GAME_TIMING.pour.totalSeconds - 0.0001) {
-                    presentation.seek(0);
+                  const controller = controllerRef.current;
+                  if (controller === null) return;
+                  if (controller.getTime() >= GAME_TIMING.pour.totalSeconds - 0.0001) {
+                    controller.seek(0);
                   }
-                  presentation.timeline.play();
+                  controller.play();
                 }}
               >Play</button>
-              <button type="button" onClick={() => presentationRef.current?.timeline.pause()}>
+              <button type="button" onClick={() => controllerRef.current?.pause()}>
                 Pause
               </button>
               <button
                 type="button"
                 onClick={() => {
                   seek(0);
-                  presentationRef.current?.timeline.play();
+                  controllerRef.current?.play();
                 }}
               >Restart</button>
             </div>
