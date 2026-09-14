@@ -3,7 +3,7 @@
 import { forwardRef } from "react";
 
 import type { Vial as VialState } from "@/lib/water-sort/domain/types";
-import { getTopColor } from "@/lib/water-sort/domain/vial";
+import { getTopColor, getTopRunLength } from "@/lib/water-sort/domain/vial";
 
 import styles from "./water-sort.module.css";
 
@@ -41,6 +41,9 @@ export const VialSlotButton = forwardRef<HTMLButtonElement, {
         type="button"
         className={styles.vialButton}
         data-selected={selected ? "true" : "false"}
+        data-vial-fill-units={vial.length}
+        data-vial-top-run-length={getTopRunLength(vial)}
+        data-vial-capacity={capacity}
         aria-pressed={interactive ? selected : undefined}
         aria-label={label}
         tabIndex={interactive ? 0 : -1}
