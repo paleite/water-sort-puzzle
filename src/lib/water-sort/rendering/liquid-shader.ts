@@ -226,8 +226,11 @@ void main() {
 
   if (vUV.y < surfaceY) discard;
 
-  float internalSlope = uSurfaceSlope * 0.18;
-  float internalY = vUV.y - centeredX * internalSlope;
+  // Keep all color-band interfaces aligned with gravity while the vial tilts.
+  // The free surface can have waves and curvature, but the bulk liquid layers
+  // must use the same rigid-body slope or the colors visibly jump when a band
+  // reaches zero volume during transfer.
+  float internalY = vUV.y - centeredX * uSurfaceSlope;
   float unitsFromBottom = (1.0 - internalY) * uCapacity;
   vec4 band = chooseBand(unitsFromBottom);
   float patternId = choosePattern(unitsFromBottom);
