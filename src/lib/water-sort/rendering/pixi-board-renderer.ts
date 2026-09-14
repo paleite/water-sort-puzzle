@@ -11,8 +11,8 @@ import {
   UniformGroup,
 } from "pixi.js";
 
-import { LIQUID_PATTERN_IDS } from "../presentation/liquid-patterns";
-import { LIQUID_COLORS } from "../presentation/palette";
+import {LIQUID_PATTERN_IDS} from "../presentation/liquid-patterns";
+import {LIQUID_COLORS} from "../presentation/palette";
 import {
   fillToVialY,
   VIAL_INNER_BOTTOM,
@@ -25,13 +25,14 @@ import {
   VIAL_VIEWBOX_HEIGHT,
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
-import { DEFAULT_VIAL_SKIN } from "../presentation/vial-skins";
+import {DEFAULT_VIAL_SKIN} from "../presentation/vial-skins";
+import {calculateLiquidProjectionGeometry} from "./liquid-projection";
 import type {
   BoardRenderState,
   PourStreamRenderState,
   VialRenderState,
 } from "./render-state";
-import { liquidFragmentShader, liquidVertexShader } from "./liquid-shader";
+import {liquidFragmentShader, liquidVertexShader} from "./liquid-shader";
 
 interface VialVisual {
   liquidContainer: Container;
@@ -112,10 +113,14 @@ function createVialArtwork(texture: Texture): Sprite {
 function createLiquidGeometry(): MeshGeometry {
   return new MeshGeometry({
     positions: new Float32Array([
-      VIAL_INNER_LEFT, VIAL_INNER_TOP,
-      VIAL_INNER_RIGHT, VIAL_INNER_TOP,
-      VIAL_INNER_RIGHT, VIAL_INNER_BOTTOM,
-      VIAL_INNER_LEFT, VIAL_INNER_BOTTOM,
+      VIAL_INNER_LEFT,
+      VIAL_INNER_TOP,
+      VIAL_INNER_RIGHT,
+      VIAL_INNER_TOP,
+      VIAL_INNER_RIGHT,
+      VIAL_INNER_BOTTOM,
+      VIAL_INNER_LEFT,
+      VIAL_INNER_BOTTOM,
     ]),
     uvs: new Float32Array([0, 0, 1, 0, 1, 1, 0, 1]),
     indices: new Uint32Array([0, 1, 2, 0, 2, 3]),
@@ -125,10 +130,11 @@ function createLiquidGeometry(): MeshGeometry {
 function createUniforms(): UniformGroup {
   return new UniformGroup({
     uTime: {value: 0, type: "f32"},
-    uCapacity: {value: 4, type: "f32"},
     uFill: {value: 0, type: "f32"},
     uSurfaceNormal: {value: new Float32Array([0, 1]), type: "vec2<f32>"},
     uInteriorAspect: {value: VIAL_INNER_WIDTH / VIAL_INNER_HEIGHT, type: "f32"},
+    uFreeSurfaceThreshold: {value: 0, type: "f32"},
+    uBandThresholds: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uCurvature: {value: 0, type: "f32"},
     uBand0: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uBand1: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
@@ -373,21 +379,36 @@ export class PixiBoardRenderer {
     this.applyVialTransform(visual.artworkContainer, state, baseScale, pivotPoint);
 
     const bands = state.bands.slice(0, 4);
-    const totalUnits = bands.reduce((sum, band) => sum + clamp(band.volume, 0, 1), 0);
+    const bandVolumes = bands.map((band) => clamp(band.volume, 0, 1));
+    const totalUnits = bandVolumes.reduce((sum, volume) => sum + volume, 0);
+    const projectionGeometry = calculateLiquidProjectionGeometry({
+      surfaceAngleDegrees: state.surface.freeSurfaceAngleDegrees,
+      bandVolumes,
+      capacity,
+    });
+
     const uniforms = visual.uniforms.uniforms;
     uniforms.uTime = this.elapsedSeconds;
-    uniforms.uCapacity = capacity;
     uniforms.uFill = clamp(totalUnits / capacity, 0, 1);
+    uniforms.uInteriorAspect = projectionGeometry.interiorAspect;
+    uniforms.uFreeSurfaceThreshold = projectionGeometry.freeSurfaceThreshold;
 
-    const surfaceAngleRadians =
-      (state.surface.freeSurfaceAngleDegrees * Math.PI) / 180;
     const surfaceNormal = uniforms.uSurfaceNormal as Float32Array;
-    surfaceNormal[0] = -Math.sin(surfaceAngleRadians);
-    surfaceNormal[1] = Math.cos(surfaceAngleRadians);
+    surfaceNormal[0] = projectionGeometry.normal.x;
+    surfaceNormal[1] = projectionGeometry.normal.y;
+    fillArray(
+      uniforms.uBandThresholds as Float32Array,
+      projectionGeometry.bandThresholds,
+    );
 
     uniforms.uCurvature = state.surface.curvatureAmplitude / VIAL_INNER_HEIGHT;
 
-    const colors = [uniforms.uBand0, uniforms.uBand1, uniforms.uBand2, uniforms.uBand3] as Float32Array[];
+    const colors = [
+      uniforms.uBand0,
+      uniforms.uBand1,
+      uniforms.uBand2,
+      uniforms.uBand3,
+    ] as Float32Array[];
     const volumes = uniforms.uBandVolumes as Float32Array;
     const patterns = uniforms.uBandPatterns as Float32Array;
     volumes.fill(0);
@@ -400,7 +421,7 @@ export class PixiBoardRenderer {
         continue;
       }
       colors[index]?.set(hexToRgba(LIQUID_COLORS[band.color]));
-      volumes[index] = clamp(band.volume, 0, 1);
+      volumes[index] = bandVolumes[index] ?? 0;
       patterns[index] = LIQUID_PATTERN_IDS[band.color];
     }
 
@@ -410,7 +431,7 @@ export class PixiBoardRenderer {
           / VIAL_INNER_HEIGHT,
         -MAX_NORMALIZED_WAVE_OFFSET,
         MAX_NORMALIZED_WAVE_OFFSET,
-      )
+      ),
     );
     fillArray(uniforms.uWave0 as Float32Array, normalizedWave.slice(0, 4));
     fillArray(uniforms.uWave1 as Float32Array, normalizedWave.slice(4, 8));
@@ -428,7 +449,10 @@ export class PixiBoardRenderer {
     }
   }
 
-  private renderStreams(streamStates: readonly PourStreamRenderState[], state: BoardRenderState): void {
+  private renderStreams(
+    streamStates: readonly PourStreamRenderState[],
+    state: BoardRenderState,
+  ): void {
     const activeStreamIndexes = new Set<number>();
 
     streamStates.forEach((streamState, streamIndex) => {
@@ -458,16 +482,15 @@ export class PixiBoardRenderer {
 
       const destinationScale =
         (destinationState.anchor.width / VIAL_VIEWBOX_WIDTH) * destinationState.scale;
-      const destinationLocalX = VIAL_INNER_LEFT
-        + VIAL_INNER_WIDTH * streamState.impactXNormalized;
+      const destinationLocalX =
+        VIAL_INNER_LEFT + VIAL_INNER_WIDTH * streamState.impactXNormalized;
       const destinationWavePixels =
         sampleWaveAt(
           destinationState.surface.waveSamples,
           streamState.impactXNormalized,
         ) * SURFACE_WAVE_VISUAL_GAIN;
       const destinationLocalY =
-        fillToVialY(streamState.destinationFill, state.capacity)
-        + destinationWavePixels;
+        fillToVialY(streamState.destinationFill, state.capacity) + destinationWavePixels;
       const destinationX =
         destinationState.anchor.x
         + (destinationLocalX - VIAL_CENTER_X) * destinationScale
@@ -604,8 +627,7 @@ export class PixiBoardRenderer {
       const dropletProgress =
         0.68 + 0.32 * streamState.terminalDropletProgress;
       const dropletPoint = quadraticPoint(curve, dropletProgress);
-      const dropletRadius =
-        1.8 - 0.45 * streamState.terminalDropletProgress;
+      const dropletRadius = 1.8 - 0.45 * streamState.terminalDropletProgress;
       graphics
         .circle(dropletPoint.x, dropletPoint.y, dropletRadius)
         .fill({color, alpha: streamState.terminalDropletOpacity});
