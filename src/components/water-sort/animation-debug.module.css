@@ -101,6 +101,8 @@
 .selectionPreviewStage {
   --vial-width: 58px;
   --vial-height: calc(var(--vial-width) * 2.72);
+  --vial-column-gap: 2px;
+  --vial-visual-overhang: 6px;
   position: relative;
   min-height: 210px;
   overflow: visible;
@@ -126,6 +128,10 @@
   gap: 10px;
 }
 
+.selectionPreviewItem > :last-child {
+  width: var(--vial-width);
+}
+
 .interactiveLayout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
@@ -136,6 +142,8 @@
 .stageBoard {
   --vial-width: 58px;
   --vial-height: calc(var(--vial-width) * 2.72);
+  --vial-column-gap: 2px;
+  --vial-visual-overhang: 6px;
   position: relative;
   display: grid;
   place-items: center;
