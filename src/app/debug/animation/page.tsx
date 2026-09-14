@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { AnimationDebugLab } from "@/components/water-sort/animation-debug-lab";
+import { AnimationDebugLabSingleContext } from "@/components/water-sort/animation-debug-lab-single-context";
 
 export const metadata: Metadata = {
   title: "Animation Debug Lab · Water Sort",
@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function AnimationDebugPage() {
-  return <AnimationDebugLab />;
+  return <AnimationDebugLabSingleContext />;
 }
