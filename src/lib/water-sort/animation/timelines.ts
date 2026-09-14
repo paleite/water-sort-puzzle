@@ -87,7 +87,7 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   const tiltSettleSeconds = GAME_TIMING.pour.tiltSeconds - tiltOvershootSeconds;
   timeline.to(motion, {rotationDegrees: geometry.rotationDegrees * 1.012, duration: tiltOvershootSeconds, ease: "power2.inOut"}, GAME_TIMING.pour.tiltStartSeconds);
   timeline.to(motion, {rotationDegrees: geometry.rotationDegrees, duration: tiltSettleSeconds, ease: "power1.out"}, GAME_TIMING.pour.tiltStartSeconds + tiltOvershootSeconds);
-  timeline.to(motion, {rotationDegrees: geometry.drainRotationDegrees, duration: GAME_TIMING.pour.transferSeconds, ease: "power1.inOut"}, GAME_TIMING.pour.transferStartSeconds);
+  timeline.to(motion, {rotationDegrees: geometry.drainRotationDegrees ?? geometry.rotationDegrees, duration: GAME_TIMING.pour.transferSeconds, ease: "power1.inOut"}, GAME_TIMING.pour.transferStartSeconds);
   timeline.to(motion, {streamOpacity: 1, duration: GAME_TIMING.pour.streamOpenSeconds, ease: "power1.out"}, GAME_TIMING.pour.streamStartSeconds);
   timeline.to(motion, {streamOpacity: 0, duration: GAME_TIMING.pour.streamCloseDurationSeconds, ease: "power1.in"}, GAME_TIMING.pour.streamCloseSeconds);
   if (move.newlyCompletedVialIndices.includes(destinationVialIndex)) {
