@@ -4,7 +4,7 @@ const POUR_SEGMENTS = {
   travelSeconds: 0.23,
   tiltStartSeconds: 0.09,
   tiltSeconds: 0.24,
-  streamStartSeconds: 0.3,
+  streamStartSeconds: 0.33,
   streamOpenSeconds: 0.07,
   transferStartSeconds: 0.35,
   transferSeconds: 0.34,
