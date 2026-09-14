@@ -41,6 +41,15 @@ function vialLocalPointInRect(rect: DOMRect, point: Point): Point {
   };
 }
 
+function readFiniteDataNumber(
+  element: HTMLElement,
+  key: string,
+  fallback: number,
+): number {
+  const value = Number(element.dataset[key]);
+  return Number.isFinite(value) ? value : fallback;
+}
+
 function getUnsignedPourAngleDegrees(fillUnits: number, capacity: number): number {
   if (capacity <= 0) return 84;
 
@@ -59,9 +68,9 @@ export function calculatePourGeometry(
   sourceElement: HTMLElement,
   destinationElement: HTMLElement,
   preferredDirection?: PourDirection,
-  sourceFillUnits = 2,
-  transferAmount = 1,
-  capacity = 4,
+  sourceFillUnits?: number,
+  transferAmount?: number,
+  capacity?: number,
 ): PourGeometry {
   const boardRect = boardElement.getBoundingClientRect();
   const sourceRect = sourceElement.getBoundingClientRect();
@@ -76,11 +85,24 @@ export function calculatePourGeometry(
   const destinationMouth = relativePoint(vialLocalPointInRect(destinationRect, destinationMouthLocal), boardRect);
   const targetMouth = {x: destinationMouth.x, y: destinationMouth.y - 28};
   const directionSign = direction === "right" ? 1 : -1;
-  const startAngle = getUnsignedPourAngleDegrees(sourceFillUnits, capacity);
-  const remainingFillUnits = Math.max(0, sourceFillUnits - transferAmount);
+
+  const resolvedCapacity = capacity
+    ?? readFiniteDataNumber(sourceElement, "vialCapacity", 4);
+  const resolvedSourceFillUnits = sourceFillUnits
+    ?? readFiniteDataNumber(sourceElement, "vialFillUnits", 2);
+  const resolvedTransferAmount = transferAmount
+    ?? readFiniteDataNumber(sourceElement, "vialTopRunLength", 1);
+  const startAngle = getUnsignedPourAngleDegrees(
+    resolvedSourceFillUnits,
+    resolvedCapacity,
+  );
+  const remainingFillUnits = Math.max(
+    0,
+    resolvedSourceFillUnits - resolvedTransferAmount,
+  );
   const drainAngle = Math.max(
     startAngle,
-    getUnsignedPourAngleDegrees(remainingFillUnits, capacity),
+    getUnsignedPourAngleDegrees(remainingFillUnits, resolvedCapacity),
   );
 
   return {
