@@ -25,7 +25,8 @@ varying vec2 vUV;
 uniform float uTime;
 uniform float uCapacity;
 uniform float uFill;
-uniform float uSurfaceSlope;
+uniform vec2 uSurfaceNormal;
+uniform float uInteriorAspect;
 uniform float uCurvature;
 uniform vec4 uBand0;
 uniform vec4 uBand1;
@@ -187,21 +188,27 @@ float liquidPattern(float patternId) {
   return smoothstep(0.72, 0.88, speckle);
 }
 
-float foamCells(float surfaceY, float agitation) {
+float wrappedDistance(float first, float second) {
+  float direct = abs(first - second);
+  return min(direct, 1.0 - direct);
+}
+
+float foamCells(float surfaceCoordinate, float surfaceDepth, float agitation) {
   float cells = 0.0;
+  float surfaceU = fract(surfaceCoordinate / max(uInteriorAspect, 0.001) + 0.5);
 
   for (int index = 0; index < 12; index++) {
     float fi = float(index);
     float drift = sin(uTime * (0.55 + mod(fi, 4.0) * 0.08) + fi * 1.7) * 0.012;
     float cellX = fract(0.07 + fi * 0.151 + sin(fi * 2.91) * 0.08 + drift);
     float bob = sin(uTime * (1.1 + mod(fi, 3.0) * 0.14) + fi * 2.2) * 0.0018;
-    float cellY = surfaceY + 0.006 + mod(fi, 3.0) * 0.0065 + bob;
+    float cellDepth = 0.006 + mod(fi, 3.0) * 0.0065 + bob;
     float agitationScale = 1.0 + agitation * 0.28;
     float radiusX = (0.020 + mod(fi, 4.0) * 0.004) * agitationScale;
     float radiusY = (0.006 + mod(fi, 3.0) * 0.0024) * agitationScale;
     vec2 delta = vec2(
-      (vUV.x - cellX) / radiusX,
-      (vUV.y - cellY) / radiusY
+      wrappedDistance(surfaceU, cellX) / radiusX,
+      (surfaceDepth - cellDepth) / radiusY
     );
     float cell = 1.0 - smoothstep(0.58, 1.0, length(delta));
     cells = max(cells, cell);
@@ -214,24 +221,32 @@ void main() {
   float totalUnits = uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w;
   if (totalUnits <= 0.0001 || uFill <= 0.0001) discard;
 
+  vec2 surfaceNormal = normalize(uSurfaceNormal);
+  vec2 surfaceTangent = vec2(surfaceNormal.y, -surfaceNormal.x);
   float centeredX = vUV.x - 0.5;
   float curvatureShape = sin(clamp(vUV.x, 0.0, 1.0) * 3.14159265359);
   float agitation = smoothstep(0.002, 0.026, waveEnergy());
-  float surfaceY = 1.0 - uFill;
-  surfaceY += centeredX * uSurfaceSlope;
-  surfaceY += curvatureShape * uCurvature;
-  surfaceY += sampleWave(vUV.x);
-  surfaceY += sin(vUV.x * 12.5663706144 - uTime * 9.5) * 0.0075 * agitation;
-  surfaceY += sin(vUV.x * 25.1327412287 + uTime * 6.5) * 0.0035 * agitation;
+  float baseSurfaceY = 1.0 - uFill;
+  vec2 surfaceRelative = vec2(
+    centeredX * uInteriorAspect,
+    vUV.y - baseSurfaceY
+  );
+  float rigidSurfaceDepth = dot(surfaceRelative, surfaceNormal);
+  float surfaceOffset = curvatureShape * uCurvature;
+  surfaceOffset += sampleWave(vUV.x);
+  surfaceOffset += sin(vUV.x * 12.5663706144 - uTime * 9.5) * 0.0075 * agitation;
+  surfaceOffset += sin(vUV.x * 25.1327412287 + uTime * 6.5) * 0.0035 * agitation;
+  float surfaceDepth = rigidSurfaceDepth - surfaceOffset;
 
-  if (vUV.y < surfaceY) discard;
+  // Use an implicit surface plane instead of y = mx + b. This remains finite
+  // when the liquid surface is vertical in vial-local space and preserves the
+  // correct liquid side as the angle crosses +/- 90 degrees.
+  if (surfaceDepth < 0.0) discard;
 
-  // Keep all color-band interfaces aligned with gravity while the vial tilts.
-  // The free surface can have waves and curvature, but the bulk liquid layers
-  // must use the same rigid-body slope or the colors visibly jump when a band
-  // reaches zero volume during transfer.
-  float internalY = vUV.y - centeredX * uSurfaceSlope;
-  float unitsFromBottom = (1.0 - internalY) * uCapacity;
+  // Color-band interfaces use the same gravity-aligned plane normal as the
+  // free surface. Waves and curvature affect only the exposed free surface.
+  float unitsFromTop = max(rigidSurfaceDepth, 0.0) * uCapacity;
+  float unitsFromBottom = totalUnits - unitsFromTop;
   vec4 band = chooseBand(unitsFromBottom);
   float patternId = choosePattern(unitsFromBottom);
 
@@ -260,14 +275,16 @@ void main() {
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);
 
-  float distanceBelowSurface = max(0.0, vUV.y - surfaceY);
+  float distanceBelowSurface = max(0.0, surfaceDepth);
+  float surfaceCoordinate = dot(surfaceRelative, surfaceTangent);
   float foamBand = 1.0 - smoothstep(0.0, 0.021 + agitation * 0.009, distanceBelowSurface);
+  float foamCoordinate = surfaceCoordinate / max(uInteriorAspect, 0.001) + 0.5;
   float foamTexture = 0.72
-    + 0.18 * sin(vUV.x * 58.0 + uTime * 1.25)
-    + 0.10 * sin(vUV.x * 103.0 - uTime * 0.72);
+    + 0.18 * sin(foamCoordinate * 58.0 + uTime * 1.25)
+    + 0.10 * sin(foamCoordinate * 103.0 - uTime * 0.72);
   float foam = max(
     foamBand * clamp(foamTexture, 0.45, 1.0) * (0.38 + agitation * 0.22),
-    foamCells(surfaceY, agitation) * (0.58 + agitation * 0.22)
+    foamCells(surfaceCoordinate, distanceBelowSurface, agitation) * (0.58 + agitation * 0.22)
   );
 
   vec3 topColor = topBandColor().rgb;
