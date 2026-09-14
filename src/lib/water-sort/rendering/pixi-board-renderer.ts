@@ -127,7 +127,8 @@ function createUniforms(): UniformGroup {
     uTime: {value: 0, type: "f32"},
     uCapacity: {value: 4, type: "f32"},
     uFill: {value: 0, type: "f32"},
-    uSurfaceSlope: {value: 0, type: "f32"},
+    uSurfaceNormal: {value: new Float32Array([0, 1]), type: "vec2<f32>"},
+    uInteriorAspect: {value: VIAL_INNER_WIDTH / VIAL_INNER_HEIGHT, type: "f32"},
     uCurvature: {value: 0, type: "f32"},
     uBand0: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
     uBand1: {value: new Float32Array([0, 0, 0, 0]), type: "vec4<f32>"},
@@ -377,9 +378,13 @@ export class PixiBoardRenderer {
     uniforms.uTime = this.elapsedSeconds;
     uniforms.uCapacity = capacity;
     uniforms.uFill = clamp(totalUnits / capacity, 0, 1);
-    uniforms.uSurfaceSlope =
-      Math.tan((state.surface.freeSurfaceAngleDegrees * Math.PI) / 180)
-      * (VIAL_INNER_WIDTH / VIAL_INNER_HEIGHT);
+
+    const surfaceAngleRadians =
+      (state.surface.freeSurfaceAngleDegrees * Math.PI) / 180;
+    const surfaceNormal = uniforms.uSurfaceNormal as Float32Array;
+    surfaceNormal[0] = -Math.sin(surfaceAngleRadians);
+    surfaceNormal[1] = Math.cos(surfaceAngleRadians);
+
     uniforms.uCurvature = state.surface.curvatureAmplitude / VIAL_INNER_HEIGHT;
 
     const colors = [uniforms.uBand0, uniforms.uBand1, uniforms.uBand2, uniforms.uBand3] as Float32Array[];
