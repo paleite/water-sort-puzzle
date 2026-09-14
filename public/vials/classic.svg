@@ -1,33 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="272" viewBox="0 0 100 272" fill="none">
-  <path
-    d="M10 12H90V214C90 248 72 266 50 266C28 266 10 248 10 214V12Z"
-    fill="#dff5ff"
-    fill-opacity="0.07"
-  />
-  <path
-    d="M10 12V214C10 248 28 266 50 266C72 266 90 248 90 214V12"
-    stroke="#405c6f"
-    stroke-opacity="0.62"
-    stroke-width="5"
-    stroke-linecap="round"
-  />
-  <rect
-    x="24"
-    y="2"
-    width="52"
-    height="10"
-    rx="5"
-    fill="#ffffff"
-    fill-opacity="0.48"
-    stroke="#405c6f"
-    stroke-opacity="0.66"
-    stroke-width="5"
-  />
-  <path
-    d="M18 28V205C18 228 27 244 39 252"
-    stroke="#ffffff"
-    stroke-opacity="0.18"
-    stroke-width="3"
-    stroke-linecap="round"
-  />
+  <defs>
+    <linearGradient id="glassBody" x1="10" y1="136" x2="90" y2="136">
+      <stop offset="0" stop-color="#dff7ff" stop-opacity="0.10"/>
+      <stop offset="0.18" stop-color="#ffffff" stop-opacity="0.025"/>
+      <stop offset="0.72" stop-color="#8ddcff" stop-opacity="0.015"/>
+      <stop offset="1" stop-color="#bcecff" stop-opacity="0.09"/>
+    </linearGradient>
+    <linearGradient id="glassEdge" x1="10" y1="0" x2="90" y2="0">
+      <stop offset="0" stop-color="#9edcf5" stop-opacity="0.78"/>
+      <stop offset="0.5" stop-color="#5d8fa8" stop-opacity="0.60"/>
+      <stop offset="1" stop-color="#9edcf5" stop-opacity="0.78"/>
+    </linearGradient>
+  </defs>
+  <path d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18Z" fill="url(#glassBody)"/>
+  <path d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18" stroke="url(#glassEdge)" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="50" cy="18" rx="38" ry="7.5" fill="#07131c" fill-opacity="0.27" stroke="#9edcf5" stroke-opacity="0.66" stroke-width="3.5"/>
+  <ellipse cx="50" cy="18" rx="32.5" ry="4.7" fill="#061018" fill-opacity="0.32" stroke="#effbff" stroke-opacity="0.26" stroke-width="1.4"/>
+  <path d="M12 18C20 27 80 27 88 18" stroke="#f1fbff" stroke-opacity="0.62" stroke-width="2.1" stroke-linecap="round"/>
+  <path d="M19 34V198C19 224 28 242 40 250" stroke="#ffffff" stroke-opacity="0.27" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M82 40V188" stroke="#d5f4ff" stroke-opacity="0.10" stroke-width="2" stroke-linecap="round"/>
+  <path d="M31 250C41 257 59 257 69 250" stroke="#e7f9ff" stroke-opacity="0.15" stroke-width="2.2" stroke-linecap="round"/>
 </svg>
