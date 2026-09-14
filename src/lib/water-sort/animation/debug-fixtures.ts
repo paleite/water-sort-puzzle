@@ -57,6 +57,8 @@ const EMPTY_DESTINATION_BOARD: Board = [
 const MULTI_UNIT_BOARD: Board = [
   ["coral", "violet", "violet"],
   ["amber", "violet"],
+  ["teal", "sky", "coral"],
+  [],
 ];
 
 export const ANIMATION_DEBUG_SCENARIOS: readonly AnimationDebugScenario[] = [
@@ -81,7 +83,7 @@ export const ANIMATION_DEBUG_SCENARIOS: readonly AnimationDebugScenario[] = [
   createScenario({
     id: "multi-unit",
     title: "Multi-unit pour",
-    description: "Moves a two-unit violet run into a partially filled violet destination.",
+    description: "Moves a two-unit violet run in a four-vial board so the preview also shows unaffected neighboring vials.",
     capacity: 4,
     board: MULTI_UNIT_BOARD,
     sourceVialIndex: 0,
