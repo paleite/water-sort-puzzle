@@ -1,4 +1,4 @@
-import type { AppliedMove, Board } from "../domain/types";
+import type { AppliedMove, Board, Move } from "../domain/types";
 import { applyMove } from "../domain/moves";
 import { GAME_TIMING } from "./timing";
 
@@ -9,6 +9,8 @@ export interface AnimationDebugScenario {
   capacity: number;
   initialBoard: Board;
   move: AppliedMove;
+  moves: readonly AppliedMove[];
+  settledBoard: Board;
 }
 
 export interface PourDebugCheckpoint {
@@ -34,13 +36,57 @@ function createScenario({
   sourceVialIndex: number;
   destinationVialIndex: number;
 }): AnimationDebugScenario {
+  const move = applyMove(board, {sourceVialIndex, destinationVialIndex}, capacity);
   return {
     id,
     title,
     description,
     capacity,
     initialBoard: board,
-    move: applyMove(board, {sourceVialIndex, destinationVialIndex}, capacity),
+    move,
+    moves: [move],
+    settledBoard: move.nextBoard,
+  };
+}
+
+function createConcurrentScenario({
+  id,
+  title,
+  description,
+  capacity,
+  board,
+  requestedMoves,
+}: {
+  id: string;
+  title: string;
+  description: string;
+  capacity: number;
+  board: Board;
+  requestedMoves: readonly Move[];
+}): AnimationDebugScenario {
+  let currentBoard = board;
+  const moves: AppliedMove[] = [];
+
+  for (const requestedMove of requestedMoves) {
+    const move = applyMove(currentBoard, requestedMove, capacity);
+    moves.push(move);
+    currentBoard = move.nextBoard;
+  }
+
+  const primaryMove = moves[0];
+  if (primaryMove === undefined) {
+    throw new Error("A concurrent debug scenario must contain at least one move.");
+  }
+
+  return {
+    id,
+    title,
+    description,
+    capacity,
+    initialBoard: board,
+    move: primaryMove,
+    moves,
+    settledBoard: currentBoard,
   };
 }
 
@@ -54,11 +100,11 @@ const EMPTY_DESTINATION_BOARD: Board = [
   [],
 ];
 
-const MULTI_UNIT_BOARD: Board = [
-  ["coral", "violet", "violet"],
-  ["amber", "violet"],
-  ["teal", "sky", "coral"],
-  [],
+const MULTI_POUR_BOARD: Board = [
+  ["coral", "violet"],
+  ["violet", "violet"],
+  ["teal", "violet"],
+  ["amber", "sky"],
 ];
 
 export const ANIMATION_DEBUG_SCENARIOS: readonly AnimationDebugScenario[] = [
@@ -80,14 +126,16 @@ export const ANIMATION_DEBUG_SCENARIOS: readonly AnimationDebugScenario[] = [
     sourceVialIndex: 0,
     destinationVialIndex: 1,
   }),
-  createScenario({
+  createConcurrentScenario({
     id: "multi-unit",
-    title: "Multi-unit pour",
-    description: "Moves a two-unit violet run in a four-vial board so the preview also shows unaffected neighboring vials.",
+    title: "Two-source parallel pour",
+    description: "Runs two independent violet source presentations at the same time into one shared destination.",
     capacity: 4,
-    board: MULTI_UNIT_BOARD,
-    sourceVialIndex: 0,
-    destinationVialIndex: 1,
+    board: MULTI_POUR_BOARD,
+    requestedMoves: [
+      {sourceVialIndex: 0, destinationVialIndex: 1},
+      {sourceVialIndex: 2, destinationVialIndex: 1},
+    ],
   }),
 ] as const;
 
