@@ -13,7 +13,7 @@ export interface PourGeometry {
   translationX: number;
   translationY: number;
   rotationDegrees: number;
-  drainRotationDegrees: number;
+  drainRotationDegrees?: number;
   streamStart: Point;
   streamEnd: Point;
 }
