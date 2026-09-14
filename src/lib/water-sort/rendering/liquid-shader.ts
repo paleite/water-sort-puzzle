@@ -23,10 +23,11 @@ precision highp float;
 varying vec2 vUV;
 
 uniform float uTime;
-uniform float uCapacity;
 uniform float uFill;
 uniform vec2 uSurfaceNormal;
 uniform float uInteriorAspect;
+uniform float uFreeSurfaceThreshold;
+uniform vec4 uBandThresholds;
 uniform float uCurvature;
 uniform vec4 uBand0;
 uniform vec4 uBand1;
@@ -72,50 +73,24 @@ float waveEnergy() {
   return energy;
 }
 
-vec4 chooseBand(float unitsFromBottom) {
-  float cursor = clamp(
-    unitsFromBottom,
-    0.0,
-    max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0)
-  );
+vec4 chooseBand(float projection) {
+  if (uBandVolumes.x > 0.0001 && projection >= uBandThresholds.x) return uBand0;
+  if (uBandVolumes.y > 0.0001 && projection >= uBandThresholds.y) return uBand1;
+  if (uBandVolumes.z > 0.0001 && projection >= uBandThresholds.z) return uBand2;
+  if (uBandVolumes.w > 0.0001 && projection >= uBandThresholds.w) return uBand3;
 
-  if (uBandVolumes.x > 0.0001) {
-    if (cursor < uBandVolumes.x) return uBand0;
-    cursor -= uBandVolumes.x;
-  }
-  if (uBandVolumes.y > 0.0001) {
-    if (cursor < uBandVolumes.y) return uBand1;
-    cursor -= uBandVolumes.y;
-  }
-  if (uBandVolumes.z > 0.0001) {
-    if (cursor < uBandVolumes.z) return uBand2;
-    cursor -= uBandVolumes.z;
-  }
   if (uBandVolumes.w > 0.0001) return uBand3;
   if (uBandVolumes.z > 0.0001) return uBand2;
   if (uBandVolumes.y > 0.0001) return uBand1;
   return uBand0;
 }
 
-float choosePattern(float unitsFromBottom) {
-  float cursor = clamp(
-    unitsFromBottom,
-    0.0,
-    max(uBandVolumes.x + uBandVolumes.y + uBandVolumes.z + uBandVolumes.w - 0.0001, 0.0)
-  );
+float choosePattern(float projection) {
+  if (uBandVolumes.x > 0.0001 && projection >= uBandThresholds.x) return uBandPatterns.x;
+  if (uBandVolumes.y > 0.0001 && projection >= uBandThresholds.y) return uBandPatterns.y;
+  if (uBandVolumes.z > 0.0001 && projection >= uBandThresholds.z) return uBandPatterns.z;
+  if (uBandVolumes.w > 0.0001 && projection >= uBandThresholds.w) return uBandPatterns.w;
 
-  if (uBandVolumes.x > 0.0001) {
-    if (cursor < uBandVolumes.x) return uBandPatterns.x;
-    cursor -= uBandVolumes.x;
-  }
-  if (uBandVolumes.y > 0.0001) {
-    if (cursor < uBandVolumes.y) return uBandPatterns.y;
-    cursor -= uBandVolumes.y;
-  }
-  if (uBandVolumes.z > 0.0001) {
-    if (cursor < uBandVolumes.z) return uBandPatterns.z;
-    cursor -= uBandVolumes.z;
-  }
   if (uBandVolumes.w > 0.0001) return uBandPatterns.w;
   if (uBandVolumes.z > 0.0001) return uBandPatterns.z;
   if (uBandVolumes.y > 0.0001) return uBandPatterns.y;
@@ -223,32 +198,24 @@ void main() {
 
   vec2 surfaceNormal = normalize(uSurfaceNormal);
   vec2 surfaceTangent = vec2(surfaceNormal.y, -surfaceNormal.x);
-  float centeredX = vUV.x - 0.5;
+  vec2 liquidPoint = vec2(vUV.x * uInteriorAspect, vUV.y);
+  float liquidProjection = dot(liquidPoint, surfaceNormal);
   float curvatureShape = sin(clamp(vUV.x, 0.0, 1.0) * 3.14159265359);
   float agitation = smoothstep(0.002, 0.026, waveEnergy());
-  float baseSurfaceY = 1.0 - uFill;
-  vec2 surfaceRelative = vec2(
-    centeredX * uInteriorAspect,
-    vUV.y - baseSurfaceY
-  );
-  float rigidSurfaceDepth = dot(surfaceRelative, surfaceNormal);
   float surfaceOffset = curvatureShape * uCurvature;
   surfaceOffset += sampleWave(vUV.x);
   surfaceOffset += sin(vUV.x * 12.5663706144 - uTime * 9.5) * 0.0075 * agitation;
   surfaceOffset += sin(vUV.x * 25.1327412287 + uTime * 6.5) * 0.0035 * agitation;
-  float surfaceDepth = rigidSurfaceDepth - surfaceOffset;
+  float surfaceDepth = liquidProjection - uFreeSurfaceThreshold - surfaceOffset;
 
-  // Use an implicit surface plane instead of y = mx + b. This remains finite
-  // when the liquid surface is vertical in vial-local space and preserves the
-  // correct liquid side as the angle crosses +/- 90 degrees.
+  // The free surface and each internal color boundary are independent
+  // half-plane cuts through the real vial polygon. Their thresholds are
+  // solved on the CPU from polygon area, so every band keeps its requested
+  // volume while the vial crosses vertical or any other orientation.
   if (surfaceDepth < 0.0) discard;
 
-  // Color-band interfaces use the same gravity-aligned plane normal as the
-  // free surface. Waves and curvature affect only the exposed free surface.
-  float unitsFromTop = max(rigidSurfaceDepth, 0.0) * uCapacity;
-  float unitsFromBottom = totalUnits - unitsFromTop;
-  vec4 band = chooseBand(unitsFromBottom);
-  float patternId = choosePattern(unitsFromBottom);
+  vec4 band = chooseBand(liquidProjection);
+  float patternId = choosePattern(liquidProjection);
 
   float sideLight = smoothstep(0.0, 0.24, vUV.x) * smoothstep(1.0, 0.76, vUV.x);
   vec3 color = band.rgb * (0.88 + sideLight * 0.12);
@@ -276,7 +243,7 @@ void main() {
   color = mix(color, bubbleColor, bubbleMask * 0.58);
 
   float distanceBelowSurface = max(0.0, surfaceDepth);
-  float surfaceCoordinate = dot(surfaceRelative, surfaceTangent);
+  float surfaceCoordinate = dot(liquidPoint, surfaceTangent);
   float foamBand = 1.0 - smoothstep(0.0, 0.021 + agitation * 0.009, distanceBelowSurface);
   float foamCoordinate = surfaceCoordinate / max(uInteriorAspect, 0.001) + 0.5;
   float foamTexture = 0.72
