@@ -5,8 +5,9 @@ import {
 } from "../presentation/vial-geometry";
 
 export interface Point {x: number; y: number}
+export type PourDirection = "left" | "right";
 export interface PourGeometry {
-  direction: "left" | "right";
+  direction: PourDirection;
   translationX: number;
   translationY: number;
   rotationDegrees: number;
@@ -14,18 +15,16 @@ export interface PourGeometry {
   streamEnd: Point;
 }
 
+export function getDestinationImpactXNormalized(direction: PourDirection): number {
+  return direction === "right" ? 0.28 : 0.72;
+}
+
 function centerOfRect(rect: DOMRect): Point {
-  return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
-  };
+  return {x: rect.left + rect.width / 2, y: rect.top + rect.height / 2};
 }
 
 function relativePoint(point: Point, containerRect: DOMRect): Point {
-  return {
-    x: point.x - containerRect.left,
-    y: point.y - containerRect.top,
-  };
+  return {x: point.x - containerRect.left, y: point.y - containerRect.top};
 }
 
 function vialLocalPointInRect(rect: DOMRect, point: Point): Point {
@@ -39,7 +38,7 @@ export function calculatePourGeometry(
   boardElement: HTMLElement,
   sourceElement: HTMLElement,
   destinationElement: HTMLElement,
-  preferredDirection?: "left" | "right",
+  preferredDirection?: PourDirection,
 ): PourGeometry {
   const boardRect = boardElement.getBoundingClientRect();
   const sourceRect = sourceElement.getBoundingClientRect();
@@ -48,18 +47,11 @@ export function calculatePourGeometry(
   const destinationCenter = centerOfRect(destinationRect);
   const direction = preferredDirection
     ?? (destinationCenter.x >= sourceCenter.x ? "right" : "left");
-
   const sourceMouthLocal = direction === "right" ? VIAL_MOUTH.right : VIAL_MOUTH.left;
   const destinationMouthLocal = direction === "right" ? VIAL_MOUTH.left : VIAL_MOUTH.right;
   const sourceMouth = relativePoint(vialLocalPointInRect(sourceRect, sourceMouthLocal), boardRect);
-  const destinationMouth = relativePoint(
-    vialLocalPointInRect(destinationRect, destinationMouthLocal),
-    boardRect,
-  );
-  const targetMouth = {
-    x: destinationMouth.x,
-    y: destinationMouth.y - 28,
-  };
+  const destinationMouth = relativePoint(vialLocalPointInRect(destinationRect, destinationMouthLocal), boardRect);
+  const targetMouth = {x: destinationMouth.x, y: destinationMouth.y - 28};
 
   return {
     direction,
