@@ -37,6 +37,7 @@ import {liquidFragmentShader, liquidVertexShader} from "./liquid-shader";
 interface VialVisual {
   liquidContainer: Container;
   artworkContainer: Container;
+  movingContainer: Container;
   uniforms: UniformGroup;
   debug: Graphics;
 }
@@ -211,6 +212,7 @@ export class PixiBoardRenderer {
   private readonly liquidLayer = new Container();
   private readonly streamLayer = new Container();
   private readonly artworkLayer = new Container();
+  private readonly movingVialLayer = new Container();
   private readonly visuals = new Map<number, VialVisual>();
   private readonly streams = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
@@ -247,7 +249,13 @@ export class PixiBoardRenderer {
     this.initializationState = "ready";
     this.liquidLayer.sortableChildren = true;
     this.artworkLayer.sortableChildren = true;
-    this.app.stage.addChild(this.liquidLayer, this.streamLayer, this.artworkLayer);
+    this.movingVialLayer.sortableChildren = true;
+    this.app.stage.addChild(
+      this.liquidLayer,
+      this.streamLayer,
+      this.artworkLayer,
+      this.movingVialLayer,
+    );
     this.canvasHost.replaceChildren(this.app.canvas);
     this.app.ticker.add((ticker) => {
       this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
@@ -276,7 +284,12 @@ export class PixiBoardRenderer {
     this.app.stage.alpha = state.boardAlpha;
 
     const boardRect = this.boardElement.getBoundingClientRect();
-    for (const layer of [this.liquidLayer, this.streamLayer, this.artworkLayer]) {
+    for (const layer of [
+      this.liquidLayer,
+      this.streamLayer,
+      this.artworkLayer,
+      this.movingVialLayer,
+    ]) {
       layer.pivot.set(boardRect.width / 2, boardRect.height / 2);
       layer.position.set(boardRect.width / 2, boardRect.height / 2);
       layer.scale.set(state.boardScale);
@@ -319,6 +332,7 @@ export class PixiBoardRenderer {
 
     const liquidContainer = new Container();
     const artworkContainer = new Container();
+    const movingContainer = new Container();
     const mask = createInteriorMask();
     const uniforms = createUniforms();
     uniforms.uniforms.uTime = this.elapsedSeconds;
@@ -335,10 +349,36 @@ export class PixiBoardRenderer {
     artworkContainer.addChild(artwork, debug);
     this.liquidLayer.addChild(liquidContainer);
     this.artworkLayer.addChild(artworkContainer);
+    this.movingVialLayer.addChild(movingContainer);
 
-    const visual = {liquidContainer, artworkContainer, uniforms, debug};
+    const visual = {
+      liquidContainer,
+      artworkContainer,
+      movingContainer,
+      uniforms,
+      debug,
+    };
     this.visuals.set(vialIndex, visual);
     return visual;
+  }
+
+  private placeVialVisual(visual: VialVisual, moving: boolean): void {
+    if (moving) {
+      if (visual.liquidContainer.parent !== visual.movingContainer) {
+        visual.movingContainer.addChild(
+          visual.liquidContainer,
+          visual.artworkContainer,
+        );
+      }
+      return;
+    }
+
+    if (visual.liquidContainer.parent !== this.liquidLayer) {
+      this.liquidLayer.addChild(visual.liquidContainer);
+    }
+    if (visual.artworkContainer.parent !== this.artworkLayer) {
+      this.artworkLayer.addChild(visual.artworkContainer);
+    }
   }
 
   private applyVialTransform(
@@ -375,6 +415,7 @@ export class PixiBoardRenderer {
         ? VIAL_MOUTH.right
         : {x: VIAL_CENTER_X, y: VIAL_CENTER_Y};
 
+    this.placeVialVisual(visual, state.pivot !== "center");
     this.applyVialTransform(visual.liquidContainer, state, baseScale, pivotPoint);
     this.applyVialTransform(visual.artworkContainer, state, baseScale, pivotPoint);
 
