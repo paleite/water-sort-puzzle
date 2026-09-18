@@ -1,8 +1,8 @@
 import { GameScreen } from "@/components/water-sort/game-screen";
-import manifest from "../../../../public/levels/manifest.json";
+import { LEVEL_IDS } from "@/lib/water-sort/levels/levels.generated";
 
 export function generateStaticParams() {
-  return manifest.levels.map(({id}) => ({levelId: id}));
+  return LEVEL_IDS.map((levelId) => ({levelId}));
 }
 
 export default async function GamePage({

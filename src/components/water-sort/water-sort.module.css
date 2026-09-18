@@ -53,7 +53,7 @@
   --vial-column-gap: clamp(1px, 0.35vw, 4px);
   --vial-visual-overhang: clamp(4px, 0.8vw, 7px);
   position: relative;
-  z-index: 3;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-template-rows: repeat(2, auto);

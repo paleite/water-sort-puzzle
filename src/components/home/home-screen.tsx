@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { loadLevelManifest } from "@/lib/water-sort/levels/load-level";
+import { isLevelId, LEVEL_IDS } from "@/lib/water-sort/levels/load-level";
 import { loadProgress } from "@/lib/water-sort/persistence/progress";
 
 import styles from "@/components/water-sort/water-sort.module.css";
@@ -14,20 +14,14 @@ export function HomeScreen() {
   const [continueLevelId, setContinueLevelId] = useState<string | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
+    const progress = loadProgress();
+    const requested = progress.currentLevelId;
 
-    void loadLevelManifest(controller.signal).then((manifest) => {
-      const progress = loadProgress();
-      const requested = progress.currentLevelId;
-      const levelExists =
-        requested !== null && manifest.levels.some((entry) => entry.id === requested);
-
-      setContinueLevelId(
-        levelExists ? requested : (manifest.levels[0]?.id ?? null),
-      );
-    });
-
-    return () => controller.abort();
+    setContinueLevelId(
+      requested !== null && isLevelId(requested)
+        ? requested
+        : (LEVEL_IDS[0] ?? null),
+    );
   }, []);
 
   return (

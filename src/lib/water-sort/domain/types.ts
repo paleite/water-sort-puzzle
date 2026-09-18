@@ -32,4 +32,4 @@ export interface LevelDevelopmentMetadata {
   difficultyScoreVersion?: number;
 }
 
-export interface Level { id: string; capacity: number; board: Board; development?: LevelDevelopmentMetadata; }
+export interface Level { id: string; capacity: number; board: Board; development?: LevelRuntimeMetadata; }

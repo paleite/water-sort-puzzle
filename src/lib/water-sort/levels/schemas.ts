@@ -30,7 +30,7 @@ export const RawLevelSchema = z.object({
   for (const [color, count] of counts) if (count !== level.capacity) context.addIssue({code: "custom", path: ["vials"], message: `Color "${color}" occurs ${count} times; expected ${level.capacity}.`});
 });
 export type RawLevel = z.infer<typeof RawLevelSchema>;
-export const LevelManifestSchema = z.object({levels: z.array(z.object({id: z.string().min(1), file: z.string().min(1), development: DevelopmentMetadataSchema.optional()}))});
+export const LevelManifestSchema = z.object({levels: z.array(z.object({id: z.string().min(1)}))});
 export type LevelManifest = z.infer<typeof LevelManifestSchema>;
 export function rawLevelToLevel(rawLevel: RawLevel): Level {
   const orderedVials = [...rawLevel.vials.filter((vial) => vial.length > 0), ...rawLevel.vials.filter((vial) => vial.length === 0)];

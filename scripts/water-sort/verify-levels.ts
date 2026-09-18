@@ -12,7 +12,7 @@ interface RawLevel {
   development?: {optimalMoveCount?: number};
 }
 interface Manifest {
-  levels: Array<{id: string; file: string; development?: {optimalMoveCount?: number}}>;
+  levels: Array<{id: string}>;
 }
 
 async function readJson<T>(file: string): Promise<T> {
@@ -21,14 +21,11 @@ async function readJson<T>(file: string): Promise<T> {
 
 function hasCleanStartingShape(raw: RawLevel): boolean {
   if (raw.capacity <= 0) return false;
-
   const totalUnits = raw.vials.reduce((sum, vial) => sum + vial.length, 0);
   if (totalUnits % raw.capacity !== 0) return false;
-
   const expectedFullVials = totalUnits / raw.capacity;
   const fullVials = raw.vials.filter((vial) => vial.length === raw.capacity).length;
   const emptyVials = raw.vials.filter((vial) => vial.length === 0).length;
-
   return (
     raw.vials.every((vial) => vial.length === 0 || vial.length === raw.capacity)
     && fullVials === expectedFullVials
@@ -37,13 +34,17 @@ function hasCleanStartingShape(raw: RawLevel): boolean {
 }
 
 async function main(): Promise<void> {
-  const directory = path.resolve(process.argv[2] ?? "public/levels");
+  const directory = path.resolve(process.argv[2] ?? "levels");
   const manifest = await readJson<Manifest>(path.join(directory, "manifest.json"));
   let failed = false;
 
   for (const entry of manifest.levels) {
-    const raw = await readJson<RawLevel>(path.join(directory, entry.file));
-
+    const raw = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
+    if (raw.id !== entry.id) {
+      console.error(`${entry.id}: FAIL · file id is ${raw.id}`);
+      failed = true;
+      continue;
+    }
     if (!hasCleanStartingShape(raw)) {
       console.error(`${entry.id}: FAIL · dirty starting shape`);
       failed = true;
@@ -58,7 +59,7 @@ async function main(): Promise<void> {
       continue;
     }
 
-    const expected = entry.development?.optimalMoveCount;
+    const expected = raw.development?.optimalMoveCount;
     if (expected !== undefined && expected !== result.solution.length) {
       console.error(`${entry.id}: expected ${expected}, got ${result.solution.length}`);
       failed = true;

@@ -55,34 +55,35 @@ function getVialIndex(slot: HTMLElement | null): number | null {
 }
 
 export function GameScreen({levelId}: {levelId: string}) {
-  const [level, setLevel] = useState<Level | null>(null);
-  const [manifest, setManifest] = useState<LevelManifest | null>(null);
+  const level = getLevel(levelId);
+  const [progressLoaded, setProgressLoaded] = useState(false);
   const [savedGame, setSavedGame] = useState<SavedGame | undefined>();
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const controller = new AbortController();
+    if (level === null) {
+      setSavedGame(undefined);
+      setProgressLoaded(true);
+      return;
+    }
 
-    void Promise.all([
-      loadLevel(levelId, controller.signal),
-      loadLevelManifest(controller.signal),
-    ]).then(([loadedLevel, loadedManifest]) => {
-      const progress = loadProgress();
-      setSavedGame(progress.savedGame?.levelId === levelId ? progress.savedGame : undefined);
-      setLevel(loadedLevel);
-      setManifest(loadedManifest);
-    }).catch((loadError: unknown) => {
-      if (controller.signal.aborted) return;
-      setError(loadError instanceof Error ? loadError.message : "Failed to load level.");
-    });
+    const progress = loadProgress();
+    setSavedGame(
+      progress.savedGame?.levelId === level.id
+        ? progress.savedGame
+        : undefined,
+    );
+    setProgressLoaded(true);
+  }, [level]);
 
-    return () => controller.abort();
-  }, [levelId]);
-
-  if (error !== null) {
-    return <main className="grid min-h-dvh place-items-center p-6">{error}</main>;
+  if (level === null) {
+    return (
+      <main className="grid min-h-dvh place-items-center p-6">
+        Level not found.
+      </main>
+    );
   }
-  if (level === null || manifest === null) {
+
+  if (!progressLoaded) {
     return <main className="grid min-h-dvh place-items-center p-6">Loading level…</main>;
   }
 
@@ -90,7 +91,6 @@ export function GameScreen({levelId}: {levelId: string}) {
     <GameRuntime
       key={level.id}
       level={level}
-      manifest={manifest}
       {...(savedGame === undefined ? {} : {savedGame})}
     />
   );
@@ -98,11 +98,9 @@ export function GameScreen({levelId}: {levelId: string}) {
 
 function GameRuntime({
   level,
-  manifest,
   savedGame,
 }: {
   level: Level;
-  manifest: LevelManifest;
   savedGame?: SavedGame;
 }) {
   const game = useWaterSortGame(level, savedGame);
@@ -113,9 +111,7 @@ function GameRuntime({
   const [appearanceAnnouncement, setAppearanceAnnouncement] = useState<string | null>(null);
   const appearanceAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suppressDragClickUntilRef = useRef(0);
-  const manifestIndex = manifest.levels.findIndex((entry) => entry.id === level.id);
-  const nextLevelId =
-    manifestIndex < 0 ? null : (manifest.levels[manifestIndex + 1]?.id ?? null);
+  const nextLevelId = getNextLevelId(level.id);
   const background = getGameBackground(backgroundId);
 
   const isTransitionAnimating =

@@ -1,34 +1,28 @@
+import type {Level} from "../domain/types";
 import {
-  LevelManifestSchema,
-  RawLevelSchema,
-  rawLevelToLevel,
-  type LevelManifest,
-} from "./schemas";
-import type { Level } from "../domain/types";
+  LEVEL_IDS,
+  LEVELS,
+  type LevelId,
+} from "./levels.generated";
 
-const publicPath = (path: string) =>
-  `${process.env["NEXT_PUBLIC_BASE_PATH"] ?? ""}${path}`;
+export {
+  LEVEL_IDS,
+  type LevelId,
+};
 
-async function fetchJson(url: string, signal?: AbortSignal): Promise<unknown> {
-  const response = await fetch(url, {
-    cache: "no-store",
-    ...(signal === undefined ? {} : {signal}),
-  });
-  if (!response.ok) {
-    throw new Error(`Failed to load ${url}. HTTP ${response.status}.`);
-  }
-  return response.json();
+const LEVEL_ID_SET: ReadonlySet<string> = new Set(LEVEL_IDS);
+
+export function isLevelId(value: string): value is LevelId {
+  return LEVEL_ID_SET.has(value);
 }
 
-export async function loadLevel(levelId: string, signal?: AbortSignal): Promise<Level> {
-  const rawJson = await fetchJson(
-    publicPath(`/levels/${encodeURIComponent(levelId)}.json`),
-    signal,
-  );
-  return rawLevelToLevel(RawLevelSchema.parse(rawJson));
+export function getLevel(levelId: string): Level | null {
+  if (!isLevelId(levelId)) return null;
+  return LEVELS[levelId];
 }
 
-export async function loadLevelManifest(signal?: AbortSignal): Promise<LevelManifest> {
-  const rawJson = await fetchJson(publicPath("/levels/manifest.json"), signal);
-  return LevelManifestSchema.parse(rawJson);
+export function getNextLevelId(levelId: string): LevelId | null {
+  const index = LEVEL_IDS.findIndex((candidate) => candidate === levelId);
+  if (index < 0) return null;
+  return LEVEL_IDS[index + 1] ?? null;
 }

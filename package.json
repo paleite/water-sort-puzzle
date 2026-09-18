@@ -13,7 +13,8 @@
     "test:unit": "tsx --test src/lib/water-sort/rendering/render-state.test.ts src/lib/water-sort/rendering/liquid-projection.test.ts src/lib/water-sort/animation/timing.test.ts",
     "typecheck": "tsc --noEmit",
     "generate:levels": "tsx scripts/water-sort/generate-levels.ts",
-    "verify:levels": "tsx scripts/water-sort/verify-levels.ts"
+    "verify:levels": "tsx scripts/water-sort/verify-levels.ts",
+    "compile:levels": "tsx scripts/water-sort/compile-levels.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",

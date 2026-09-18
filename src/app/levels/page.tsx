@@ -1,9 +1,6 @@
 import { LevelSelect } from "@/components/level-select/level-select";
-import { LevelManifestSchema } from "@/lib/water-sort/levels/schemas";
-import generatedManifest from "../../../public/levels/manifest.json";
+import { LEVEL_INDEX } from "@/lib/water-sort/levels/levels.generated";
 
 export default function LevelsPage() {
-  return (
-    <LevelSelect manifest={LevelManifestSchema.parse(generatedManifest)} />
-  );
+  return <LevelSelect levels={LEVEL_INDEX} />;
 }

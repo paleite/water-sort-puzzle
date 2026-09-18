@@ -5,18 +5,22 @@ import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import type { LevelManifest } from "@/lib/water-sort/levels/schemas";
+import type { LevelId } from "@/lib/water-sort/levels/levels.generated";
 import { loadProgress } from "@/lib/water-sort/persistence/progress";
 
 import styles from "@/components/water-sort/water-sort.module.css";
 
+export interface LevelSelectEntry {
+  id: LevelId;
+  optimalMoveCount: number;
+  difficultyScore?: number;
+}
+
 function getDifficultyProgressByLevelId(
-  levels: LevelManifest["levels"],
+  levels: readonly LevelSelectEntry[],
 ): ReadonlyMap<string, number> {
-  const difficultyScores = levels.flatMap(({ development }) =>
-    development?.difficultyScore === undefined
-      ? []
-      : [development.difficultyScore],
+  const difficultyScores = levels.flatMap(({difficultyScore}) =>
+    difficultyScore === undefined ? [] : [difficultyScore],
   );
   if (difficultyScores.length === 0) {
     return new Map(levels.map((level) => [level.id, 1]));
@@ -27,22 +31,26 @@ function getDifficultyProgressByLevelId(
 
   return new Map(
     levels.map((level) => {
-      const difficultyScore = level.development?.difficultyScore;
+      const difficultyScore = level.difficultyScore;
       if (difficultyScore === undefined) return [level.id, 1];
       if (lowestDifficulty === highestDifficulty) return [level.id, 100];
 
       return [
         level.id,
-        1 +
-          ((difficultyScore - lowestDifficulty) /
-            (highestDifficulty - lowestDifficulty)) *
-            99,
+        1
+          + ((difficultyScore - lowestDifficulty)
+            / (highestDifficulty - lowestDifficulty))
+            * 99,
       ];
     }),
   );
 }
 
-export function LevelSelect({ manifest }: { manifest: LevelManifest }) {
+export function LevelSelect({
+  levels,
+}: {
+  levels: readonly LevelSelectEntry[];
+}) {
   const [completed, setCompleted] = useState<ReadonlySet<string>>(
     () => new Set(),
   );
@@ -52,9 +60,7 @@ export function LevelSelect({ manifest }: { manifest: LevelManifest }) {
   }, []);
 
   const showDebug = process.env.NODE_ENV !== "production";
-  const difficultyProgressByLevelId = getDifficultyProgressByLevelId(
-    manifest.levels,
-  );
+  const difficultyProgressByLevelId = getDifficultyProgressByLevelId(levels);
 
   return (
     <main className="mx-auto min-h-dvh w-full max-w-3xl p-5">
@@ -68,7 +74,7 @@ export function LevelSelect({ manifest }: { manifest: LevelManifest }) {
       </header>
 
       <div className={styles.levelGrid}>
-        {manifest.levels.map((level) => {
+        {levels.map((level) => {
           const difficultyProgress =
             difficultyProgressByLevelId.get(level.id) ?? 1;
 
@@ -81,9 +87,9 @@ export function LevelSelect({ manifest }: { manifest: LevelManifest }) {
                   tabIndex={-1}
                 >
                   <span className="text-base font-semibold">{level.id}</span>
-                  {showDebug && level.development && (
+                  {showDebug && (
                     <span className="text-[10px] font-normal opacity-65">
-                      {level.development.optimalMoveCount} moves
+                      {level.optimalMoveCount} moves
                     </span>
                   )}
                 </Button>
@@ -98,7 +104,7 @@ export function LevelSelect({ manifest }: { manifest: LevelManifest }) {
               >
                 <div
                   className="h-full rounded-full bg-sky-400"
-                  style={{ width: `${difficultyProgress}%` }}
+                  style={{width: `${difficultyProgress}%`}}
                 />
               </div>
             </div>
