@@ -4,8 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
 import type { Level } from "@/lib/water-sort/domain/types";
-import { loadLevel, loadLevelManifest } from "@/lib/water-sort/levels/load-level";
-import type { LevelManifest } from "@/lib/water-sort/levels/schemas";
+import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
 import {
   loadProgress,
   saveProgress,
@@ -56,23 +55,27 @@ function getVialIndex(slot: HTMLElement | null): number | null {
 
 export function GameScreen({levelId}: {levelId: string}) {
   const level = getLevel(levelId);
-  const [progressLoaded, setProgressLoaded] = useState(false);
-  const [savedGame, setSavedGame] = useState<SavedGame | undefined>();
+  const [loadedProgress, setLoadedProgress] = useState<{
+    levelId: string;
+    savedGame?: SavedGame;
+  } | null>(null);
 
   useEffect(() => {
     if (level === null) {
-      setSavedGame(undefined);
-      setProgressLoaded(true);
+      setLoadedProgress(null);
       return;
     }
 
     const progress = loadProgress();
-    setSavedGame(
+    const savedGame =
       progress.savedGame?.levelId === level.id
         ? progress.savedGame
-        : undefined,
-    );
-    setProgressLoaded(true);
+        : undefined;
+
+    setLoadedProgress({
+      levelId: level.id,
+      ...(savedGame === undefined ? {} : {savedGame}),
+    });
   }, [level]);
 
   if (level === null) {
@@ -83,7 +86,7 @@ export function GameScreen({levelId}: {levelId: string}) {
     );
   }
 
-  if (!progressLoaded) {
+  if (loadedProgress?.levelId !== level.id) {
     return <main className="grid min-h-dvh place-items-center p-6">Loading level…</main>;
   }
 
@@ -91,7 +94,9 @@ export function GameScreen({levelId}: {levelId: string}) {
     <GameRuntime
       key={level.id}
       level={level}
-      {...(savedGame === undefined ? {} : {savedGame})}
+      {...(loadedProgress.savedGame === undefined
+        ? {}
+        : {savedGame: loadedProgress.savedGame})}
     />
   );
 }

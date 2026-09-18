@@ -17,8 +17,12 @@ export type InteractionResolution =
   | {type: "invalid-move"; sourceVialIndex: number; destinationVialIndex: number; reason: InvalidMoveReason}
   | {type: "ignored-empty-source"; vialIndex: number};
 
-export interface LevelDevelopmentMetadata {
+export interface LevelRuntimeMetadata {
   optimalMoveCount: number;
+  difficultyScore?: number;
+}
+
+export interface LevelDevelopmentMetadata extends LevelRuntimeMetadata {
   exploredStateCount: number;
   maximumBranchingFactor: number;
   meanVialEntropy: number;
@@ -28,7 +32,6 @@ export interface LevelDevelopmentMetadata {
   generator?: "uniform-shuffle";
   generationSeed?: number;
   solverElapsedMilliseconds?: number;
-  difficultyScore?: number;
   difficultyScoreVersion?: number;
 }
 
