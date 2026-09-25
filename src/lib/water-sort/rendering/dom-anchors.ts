@@ -1,5 +1,7 @@
 import type { VialAnchor } from "./render-state";
 
+const VIAL_VISUAL_WIDTH_SCALE = 1.28;
+
 export function measureVialAnchors(
   boardElement: HTMLElement,
   vialElements: ReadonlyMap<number, HTMLElement>,
@@ -13,8 +15,8 @@ export function measureVialAnchors(
     return {
       x: rect.left - boardRect.left + rect.width / 2,
       y: rect.top - boardRect.top + rect.height / 2,
-      width: rect.width,
-      height: rect.height,
+      width: rect.width * VIAL_VISUAL_WIDTH_SCALE,
+      height: rect.height * VIAL_VISUAL_WIDTH_SCALE,
     };
   });
 }
