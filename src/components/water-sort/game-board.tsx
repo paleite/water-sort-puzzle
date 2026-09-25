@@ -120,6 +120,8 @@ export function GameBoard({
   const previousPhaseRef = useRef<GamePhase | null>(null);
   const [visibleBoard, setVisibleBoard] = useState<Board>(board);
   const [debugEntries, setDebugEntries] = useState<string[]>([]);
+  // Keep the debug data path intact while the overlay JSX is commented out below.
+  void debugEntries;
 
   const appendDebugLog = useCallback((message: string): void => {
     debugSequenceRef.current += 1;
