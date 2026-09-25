@@ -36,7 +36,7 @@ import {
   type VialAnchor,
 } from "@/lib/water-sort/rendering/render-state";
 
-import { DebugLogOverlay } from "./debug-log-overlay";
+// import { DebugLogOverlay } from "./debug-log-overlay";
 import { VialSlotButton } from "./vial-slot-button";
 import styles from "./water-sort.module.css";
 
@@ -127,9 +127,11 @@ export function GameBoard({
     setDebugEntries((current) => [...current.slice(-139), entry]);
   }, []);
 
-  const clearDebugLogs = useCallback((): void => {
-    setDebugEntries([]);
-  }, []);
+  // Debug overlay is temporarily hidden. Keep this with the commented JSX below
+  // so it can be restored without reconstructing the debug UI.
+  // const clearDebugLogs = useCallback((): void => {
+  //   setDebugEntries([]);
+  // }, []);
 
   const commitPresentationContent = useCallback((
     presentationId: number,
@@ -515,11 +517,13 @@ export function GameBoard({
         </div>
       </div>
 
+      {/*
       <DebugLogOverlay
         entries={debugEntries}
         phase={phase}
         onClear={clearDebugLogs}
       />
+      */}
     </>
   );
 }
