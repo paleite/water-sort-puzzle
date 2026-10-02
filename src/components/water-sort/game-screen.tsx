@@ -90,11 +90,7 @@ function GameRuntime({
   savedGame?: SavedGame;
 }) {
   const game = useWaterSortGame(level, savedGame);
-  const hints = useWaterSortHints(
-    game.context.board,
-    level.capacity,
-    level.development?.hintPath,
-  );
+  const hints = useWaterSortHints(game.context.board, level.capacity);
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
   const [backgroundId, setBackgroundId] = useState<GameBackgroundId>(
     DEFAULT_GAME_BACKGROUND_ID,

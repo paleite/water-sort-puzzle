@@ -20,7 +20,6 @@ export type InteractionResolution =
 export interface LevelRuntimeMetadata {
   optimalMoveCount: number;
   difficultyScore?: number;
-  hintPath?: readonly string[];
 }
 
 export interface LevelDevelopmentMetadata extends LevelRuntimeMetadata {

@@ -9,10 +9,7 @@ import {
   gzipSync,
 } from "node:zlib";
 
-import { createCanonicalBoardKey } from "../../src/lib/water-sort/domain/board";
 import type { ColorId } from "../../src/lib/water-sort/domain/colors";
-import { applyMove } from "../../src/lib/water-sort/domain/moves";
-import { solveWithAStarBounded } from "./solver";
 import {
   LevelManifestSchema,
   RawLevelSchema,
@@ -29,7 +26,6 @@ interface RuntimeLevelSource {
   development: {
     optimalMoveCount: number;
     difficultyScore?: number;
-    hintPath?: readonly string[];
   };
 }
 
@@ -177,26 +173,9 @@ async function main(): Promise<void> {
       );
     }
 
-    const runtimeBoard = raw.vials.map((vial) => [...vial].reverse());
-    const hintOutcome = solveWithAStarBounded(runtimeBoard, raw.capacity, {
-      maxExploredStates: 2_000_000,
-      maxElapsedMilliseconds: Number.MAX_SAFE_INTEGER,
-    });
-    if (hintOutcome.status !== "solved") {
-      throw new Error(`Could not compile hint path for level ${id}.`);
-    }
-    const hintBoards = [runtimeBoard];
-    let hintBoard = runtimeBoard;
-    for (const move of hintOutcome.result.solution) {
-      hintBoard = applyMove(hintBoard, move, raw.capacity).nextBoard.map((vial) => [...vial]);
-      hintBoards.push(hintBoard);
-    }
-    const hintPath = hintBoards.map(createCanonicalBoardKey);
-
     const development = {
       optimalMoveCount:
         raw.development.optimalMoveCount,
-      hintPath,
       ...(raw.development.difficultyScore === undefined
         ? {}
         : {
@@ -213,7 +192,9 @@ async function main(): Promise<void> {
     levels[id] = {
       id,
       capacity: raw.capacity,
-      board: runtimeBoard,
+      board: raw.vials.map(
+        (vial) => [...vial].reverse(),
+      ),
       development,
     };
   }
