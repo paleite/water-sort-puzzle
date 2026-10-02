@@ -9,6 +9,7 @@ import {
   LightbulbIcon,
   RotateCcwIcon,
   Undo2Icon,
+  XIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -131,7 +132,7 @@ export function GameHud({
             aria-label={hintSearching ? (hintSlow ? "Cancel hint search" : "Finding hint") : "Hint"}
             onClick={hintSearching ? onCancelHint : onHint}
           >
-            <LightbulbIcon />
+            {hintSearching ? <XIcon /> : <LightbulbIcon />}
           </Button>
           <Button
             type="button"
