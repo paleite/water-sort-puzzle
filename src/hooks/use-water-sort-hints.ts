@@ -22,9 +22,15 @@ export type HintState =
   | {status: "limit-reached"}
   | {status: "error"};
 
-export function useWaterSortHints(board: Board, capacity: number) {
+export function useWaterSortHints(
+  board: Board,
+  capacity: number,
+  initialHintPath: readonly string[] = [],
+) {
   const [state, setState] = useState<HintState>({status: "idle"});
-  const policyRef = useRef<HintPolicy>(new Map());
+  const policyRef = useRef<HintPolicy>(new Map(
+    initialHintPath.slice(0, -1).map((key, index) => [key, initialHintPath[index + 1]!] as const),
+  ));
   const unsolvableKeysRef = useRef(new Set<string>());
   const workerRef = useRef<Worker | null>(null);
   const requestIdRef = useRef(0);
