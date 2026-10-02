@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
+import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
 import type { Level } from "@/lib/water-sort/domain/types";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
 import {
@@ -27,6 +28,7 @@ import {
   type LiquidPaletteId,
 } from "@/lib/water-sort/presentation/palette";
 
+import { DeadStateOverlay } from "./dead-state-overlay";
 import { GameBoard } from "./game-board";
 import { GameCompleteOverlay } from "./game-complete-overlay";
 import { GameHud } from "./game-hud";
@@ -88,6 +90,7 @@ function GameRuntime({
   savedGame?: SavedGame;
 }) {
   const game = useWaterSortGame(level, savedGame);
+  const hints = useWaterSortHints(game.context.board, level.capacity);
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
   const [backgroundId, setBackgroundId] = useState<GameBackgroundId>(
     DEFAULT_GAME_BACKGROUND_ID,
@@ -237,6 +240,10 @@ function GameRuntime({
         onPreviousPalette={() => cyclePalette(-1)}
         onNextPalette={() => cyclePalette(1)}
         onCycleBackground={cycleBackground}
+        onHint={hints.requestHint}
+        onCancelHint={hints.cancel}
+        hintSearching={hints.state.status === "searching"}
+        hintSlow={hints.state.status === "searching" && hints.state.slow}
         {...(level.development?.optimalMoveCount === undefined
           ? {}
           : {optimalMoveCount: level.development.optimalMoveCount})}
@@ -251,6 +258,7 @@ function GameRuntime({
         selectedSourceVialIndex={game.context.selectedSourceVialIndex}
         activePresentations={game.context.activePresentations}
         activeUndo={game.context.activeUndo}
+        hintMove={hints.state.status === "showing" ? hints.state.move : null}
         onVialPress={game.pressVial}
         onMovePresentationFinished={game.finishMovePresentation}
         onUndoPresentationFinished={game.finishUndoPresentation}
@@ -263,6 +271,37 @@ function GameRuntime({
           nextLevelId={nextLevelId}
           onReplay={game.restart}
         />
+      )}
+
+      {game.context.isDeadEnd && game.phase !== "completed" && (
+        <DeadStateOverlay
+          reason="no-moves"
+          canUndo={game.context.history.length > 0}
+          onUndo={game.undo}
+          onRestart={game.restart}
+        />
+      )}
+
+      {hints.state.status === "unsolvable" && !game.context.isDeadEnd && (
+        <DeadStateOverlay
+          reason="unsolvable"
+          canUndo={game.context.history.length > 0}
+          onUndo={game.undo}
+          onRestart={game.restart}
+          onDismiss={hints.dismiss}
+        />
+      )}
+
+      {hints.state.status === "searching" && hints.state.slow && (
+        <div role="status" className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg">
+          This is taking longer than expected. Use the hint button to cancel.
+        </div>
+      )}
+
+      {hints.state.status === "limit-reached" && (
+        <div role="status" className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg">
+          Couldn’t determine a solution from this position.
+        </div>
       )}
     </main>
   );
