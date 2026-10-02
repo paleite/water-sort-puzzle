@@ -23,13 +23,14 @@ import {
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
 import { GAME_TIMING } from "@/lib/water-sort/animation/timing";
-import type { AppliedMove, AppliedTurn, Board } from "@/lib/water-sort/domain/types";
+import type { AppliedMove, AppliedTurn, Board, Move } from "@/lib/water-sort/domain/types";
 import type { ActiveMovePresentation } from "@/lib/water-sort/machine/game-machine";
 import { applyPresentationMoveToBoard } from "@/lib/water-sort/presentation/visual-board";
 import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
 import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
 import {
   buildConcurrentPourBoardRenderState,
+  buildGhostHintRenderState,
   buildStaticBoardRenderState,
   type BoardRenderState,
   type ConcurrentPourPresentation,
@@ -91,6 +92,7 @@ export function GameBoard({
   selectedSourceVialIndex,
   activePresentations,
   activeUndo,
+  hintMove,
   onVialPress,
   onMovePresentationFinished,
   onUndoPresentationFinished,
@@ -102,6 +104,7 @@ export function GameBoard({
   selectedSourceVialIndex: number | null;
   activePresentations: readonly ActiveMovePresentation[];
   activeUndo: AppliedTurn | null;
+  hintMove: Move | null;
   onVialPress: (vialIndex: number) => void;
   onMovePresentationFinished: (presentationId: number) => void;
   onUndoPresentationFinished: () => void;
@@ -220,6 +223,40 @@ export function GameBoard({
   }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
+
+  useEffect(() => {
+    if (hintMove === null || activePresentations.length > 0 || phase !== "idle") return;
+    const renderer = rendererRef.current;
+    const boardElement = boardRef.current;
+    if (renderer === null || boardElement === null) return;
+
+    let animationFrame = 0;
+    const startedAt = performance.now();
+    const durationMilliseconds = 1_150;
+    const animate = (now: number): void => {
+      const progress = Math.min(1, (now - startedAt) / durationMilliseconds);
+      const anchors = measureVialAnchors(
+        boardElement,
+        vialRefs.current,
+        visibleBoardRef.current.length,
+      );
+      renderer.render(buildGhostHintRenderState({
+        board: visibleBoardRef.current,
+        anchors,
+        move: hintMove,
+        capacity,
+        progress,
+      }));
+      if (progress < 1) animationFrame = requestAnimationFrame(animate);
+      else renderLatestRef.current();
+    };
+    animationFrame = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      renderLatestRef.current();
+    };
+  }, [activePresentations.length, capacity, hintMove, phase]);
+
 
   const startReadyPresentations = useCallback((): void => {
     const runtimes = presentationRuntimesRef.current;
