@@ -109,3 +109,47 @@ export function buildPourBoardRenderState({move, anchors, selectedSourceVialInde
 }): BoardRenderState {
   return buildConcurrentPourBoardRenderState({board: move.previousBoard, anchors, presentations: [{move, geometry, presentation, started: true, contentCommitted: false}], selectedSourceVialIndex, capacity, debugGeometry});
 }
+
+
+export function buildGhostHintRenderState({
+  board,
+  anchors,
+  move,
+  capacity,
+  progress,
+}: {
+  board: Board;
+  anchors: readonly VialAnchor[];
+  move: {sourceVialIndex: number; destinationVialIndex: number};
+  capacity: number;
+  progress: number;
+}): BoardRenderState {
+  const state = buildStaticBoardRenderState({
+    board,
+    anchors,
+    selectedSourceVialIndex: null,
+    capacity,
+  });
+  const sourceAnchor = anchors[move.sourceVialIndex];
+  const destinationAnchor = anchors[move.destinationVialIndex];
+  if (sourceAnchor === undefined || destinationAnchor === undefined) return state;
+  const travel = Math.sin(Math.PI * clamp(progress, 0, 1));
+  return {
+    ...state,
+    vials: state.vials.map((vial) => {
+      if (vial.vialIndex === move.sourceVialIndex) {
+        return {
+          ...vial,
+          translationX: (destinationAnchor.x - sourceAnchor.x) * 0.28 * travel,
+          translationY: -18 * travel,
+          rotationDegrees: (destinationAnchor.x >= sourceAnchor.x ? 1 : -1) * 12 * travel,
+          alpha: 0.58 + 0.18 * travel,
+        };
+      }
+      if (vial.vialIndex === move.destinationVialIndex) {
+        return {...vial, scale: 1 + 0.06 * travel, alpha: 0.78 + 0.22 * travel};
+      }
+      return {...vial, alpha: 0.72};
+    }),
+  };
+}
