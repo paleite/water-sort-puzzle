@@ -35,7 +35,7 @@ function reconstruct(nodes: readonly SearchNode[], goalIndex: number): {
   const moves: Move[] = [];
   let index: number | null = goalIndex;
   while (index !== null) {
-    const node = nodes[index];
+    const node: SearchNode | undefined = nodes[index];
     if (node === undefined) throw new Error("Broken hint search parent chain.");
     boards.push(node.board);
     if (node.previousMove !== null) moves.push(node.previousMove);
