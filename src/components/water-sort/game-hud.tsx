@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ImageIcon,
+  LightbulbIcon,
   RotateCcwIcon,
   Undo2Icon,
 } from "lucide-react";
@@ -23,6 +24,10 @@ export function GameHud({
   onPreviousPalette,
   onNextPalette,
   onCycleBackground,
+  onHint,
+  onCancelHint,
+  hintSearching,
+  hintSlow,
   onUndo,
   onRestart,
 }: {
@@ -36,6 +41,10 @@ export function GameHud({
   onPreviousPalette: () => void;
   onNextPalette: () => void;
   onCycleBackground: () => void;
+  onHint: () => void;
+  onCancelHint: () => void;
+  hintSearching: boolean;
+  hintSlow: boolean;
   onUndo: () => void;
   onRestart: () => void;
 }) {
@@ -114,6 +123,16 @@ export function GameHud({
         </div>
 
         <div className="flex justify-self-end gap-1">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-lg"
+            disabled={isAnimating}
+            aria-label={hintSearching ? (hintSlow ? "Cancel hint search" : "Finding hint") : "Hint"}
+            onClick={hintSearching ? onCancelHint : onHint}
+          >
+            <LightbulbIcon />
+          </Button>
           <Button
             type="button"
             variant="ghost"
