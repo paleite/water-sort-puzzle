@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
+import { createCanonicalBoardKey } from "../../src/lib/water-sort/domain/board";
 import type { ColorId } from "../../src/lib/water-sort/domain/colors";
 import type { Board } from "../../src/lib/water-sort/domain/types";
 import { solveWithAStar, verifySolution } from "./solver";
@@ -37,6 +38,7 @@ async function main(): Promise<void> {
   const directory = path.resolve(process.argv[2] ?? "levels");
   const manifest = await readJson<Manifest>(path.join(directory, "manifest.json"));
   let failed = false;
+  const seenBoards = new Map<string, string>();
 
   for (const entry of manifest.levels) {
     const raw = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
@@ -52,6 +54,15 @@ async function main(): Promise<void> {
     }
 
     const board: Board = raw.vials.map((vial) => [...vial].reverse());
+    const canonicalKey = createCanonicalBoardKey(board);
+    const previousLevelId = seenBoards.get(canonicalKey);
+    if (previousLevelId !== undefined) {
+      console.error(`${entry.id}: FAIL · duplicate canonical board of level ${previousLevelId}`);
+      failed = true;
+      continue;
+    }
+    seenBoards.set(canonicalKey, entry.id);
+
     const result = solveWithAStar(board, raw.capacity, 2_000_000);
     if (result === null || !verifySolution(board, result.solution, raw.capacity)) {
       console.error(`${entry.id}: FAIL`);

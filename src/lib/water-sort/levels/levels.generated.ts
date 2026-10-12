@@ -769,8 +769,8 @@ export const LEVEL_INDEX = [
   },
   {
     "id": "101",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3839
+    "optimalMoveCount": 40,
+    "difficultyScore": 0.5613
   },
   {
     "id": "102",
@@ -1609,83 +1609,83 @@ export const LEVELS = {
     "capacity": 4,
     "board": [
       [
+        "lime",
+        "coral",
         "emerald",
-        "teal",
-        "teal",
         "cocoa"
       ],
       [
         "lime",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
         "teal",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "magenta",
-        "lemon"
-      ],
-      [
         "amber",
-        "amber",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "lime",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "emerald",
-        "rose"
-      ],
-      [
-        "sky",
-        "sky",
-        "amber",
-        "violet"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lemon",
-        "rose"
+        "magenta"
       ],
       [
         "violet",
-        "sky",
-        "emerald",
+        "cobalt",
+        "amber",
         "rose"
+      ],
+      [
+        "teal",
+        "lime",
+        "rose",
+        "violet"
+      ],
+      [
+        "emerald",
+        "cocoa",
+        "cobalt",
+        "coral"
+      ],
+      [
+        "lemon",
+        "amber",
+        "rose",
+        "lime"
+      ],
+      [
+        "cocoa",
+        "magenta",
+        "sky",
+        "violet"
+      ],
+      [
+        "lemon",
+        "cobalt",
+        "coral",
+        "sky"
       ],
       [
         "coral",
-        "lemon",
-        "magenta",
-        "coral"
+        "cocoa",
+        "teal",
+        "violet"
       ],
       [
-        "violet",
-        "rose",
+        "teal",
+        "sky",
         "emerald",
-        "coral"
+        "amber"
+      ],
+      [
+        "emerald",
+        "lemon",
+        "magenta",
+        "sky"
+      ],
+      [
+        "magenta",
+        "rose",
+        "cobalt",
+        "lemon"
       ],
       [],
       []
     ],
     "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3839
+      "optimalMoveCount": 40,
+      "difficultyScore": 0.5613
     }
   },
   "102": {
