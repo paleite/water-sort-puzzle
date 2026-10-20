@@ -9,7 +9,7 @@
  *   pnpm compile:levels
  */
 
-import type {Level} from "../domain/types";
+import type { Level } from "../domain/types";
 
 export const LEVEL_IDS = [
   "001",
@@ -361,31163 +361,11663 @@ export const LEVEL_IDS = [
   "347",
   "348",
   "349",
-  "350"
+  "350",
+  "351",
+  "352",
+  "353",
+  "354",
+  "355",
+  "356",
+  "357",
+  "358",
+  "359",
+  "360",
+  "361",
+  "362",
+  "363",
+  "364",
+  "365",
+  "366",
+  "367",
+  "368",
+  "369",
+  "370",
+  "371",
+  "372",
+  "373",
+  "374",
+  "375",
+  "376",
+  "377",
+  "378",
+  "379",
+  "380",
+  "381",
+  "382",
+  "383",
+  "384",
+  "385",
+  "386",
+  "387",
+  "388",
+  "389",
+  "390",
+  "391",
+  "392",
+  "393",
+  "394",
+  "395",
+  "396",
+  "397",
+  "398",
+  "399",
+  "400",
 ] as const;
 
 export type LevelId = (typeof LEVEL_IDS)[number];
 
 export const LEVEL_INDEX = [
   {
-    "id": "001",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6563
+    id: "001",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6563,
   },
   {
-    "id": "002",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4193
+    id: "002",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4193,
   },
   {
-    "id": "003",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.709
+    id: "003",
+    optimalMoveCount: 41,
+    difficultyScore: 0.709,
   },
   {
-    "id": "004",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.429
+    id: "004",
+    optimalMoveCount: 38,
+    difficultyScore: 0.429,
   },
   {
-    "id": "005",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6753
+    id: "005",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6753,
   },
   {
-    "id": "006",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5187
+    id: "006",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5187,
   },
   {
-    "id": "007",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4024
+    id: "007",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4024,
   },
   {
-    "id": "008",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5504
+    id: "008",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5504,
   },
   {
-    "id": "009",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4017
+    id: "009",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4017,
   },
   {
-    "id": "010",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3696
+    id: "010",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3696,
   },
   {
-    "id": "011",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3005
+    id: "011",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3005,
   },
   {
-    "id": "012",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5492
+    id: "012",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5492,
   },
   {
-    "id": "013",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.5889
+    id: "013",
+    optimalMoveCount: 41,
+    difficultyScore: 0.5889,
   },
   {
-    "id": "014",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4708
+    id: "014",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4708,
   },
   {
-    "id": "015",
-    "optimalMoveCount": 33,
-    "difficultyScore": 0.2094
+    id: "015",
+    optimalMoveCount: 33,
+    difficultyScore: 0.2094,
   },
   {
-    "id": "016",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4227
+    id: "016",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4227,
   },
   {
-    "id": "017",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5301
+    id: "017",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5301,
   },
   {
-    "id": "018",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6427
+    id: "018",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6427,
   },
   {
-    "id": "019",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5321
+    id: "019",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5321,
   },
   {
-    "id": "020",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.443
+    id: "020",
+    optimalMoveCount: 37,
+    difficultyScore: 0.443,
   },
   {
-    "id": "021",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6023
+    id: "021",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6023,
   },
   {
-    "id": "022",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6874
+    id: "022",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6874,
   },
   {
-    "id": "023",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3781
+    id: "023",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3781,
   },
   {
-    "id": "024",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3362
+    id: "024",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3362,
   },
   {
-    "id": "025",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4575
+    id: "025",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4575,
   },
   {
-    "id": "026",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3714
+    id: "026",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3714,
   },
   {
-    "id": "027",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5013
+    id: "027",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5013,
   },
   {
-    "id": "028",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5123
+    id: "028",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5123,
   },
   {
-    "id": "029",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4389
+    id: "029",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4389,
   },
   {
-    "id": "030",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4527
+    id: "030",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4527,
   },
   {
-    "id": "031",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.2834
+    id: "031",
+    optimalMoveCount: 38,
+    difficultyScore: 0.2834,
   },
   {
-    "id": "032",
-    "optimalMoveCount": 34,
-    "difficultyScore": 0.1473
+    id: "032",
+    optimalMoveCount: 34,
+    difficultyScore: 0.1473,
   },
   {
-    "id": "033",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.274
+    id: "033",
+    optimalMoveCount: 36,
+    difficultyScore: 0.274,
   },
   {
-    "id": "034",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.324
+    id: "034",
+    optimalMoveCount: 36,
+    difficultyScore: 0.324,
   },
   {
-    "id": "035",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.521
+    id: "035",
+    optimalMoveCount: 39,
+    difficultyScore: 0.521,
   },
   {
-    "id": "036",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4607
+    id: "036",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4607,
   },
   {
-    "id": "037",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4494
+    id: "037",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4494,
   },
   {
-    "id": "038",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.533
+    id: "038",
+    optimalMoveCount: 39,
+    difficultyScore: 0.533,
   },
   {
-    "id": "039",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5676
+    id: "039",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5676,
   },
   {
-    "id": "040",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4513
+    id: "040",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4513,
   },
   {
-    "id": "041",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3288
+    id: "041",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3288,
   },
   {
-    "id": "042",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5627
+    id: "042",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5627,
   },
   {
-    "id": "043",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5628
+    id: "043",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5628,
   },
   {
-    "id": "044",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3456
+    id: "044",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3456,
   },
   {
-    "id": "045",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6744
+    id: "045",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6744,
   },
   {
-    "id": "046",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5705
+    id: "046",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5705,
   },
   {
-    "id": "047",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.578
+    id: "047",
+    optimalMoveCount: 39,
+    difficultyScore: 0.578,
   },
   {
-    "id": "048",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6054
+    id: "048",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6054,
   },
   {
-    "id": "049",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6364
+    id: "049",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6364,
   },
   {
-    "id": "050",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6052
+    id: "050",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6052,
   },
   {
-    "id": "051",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4266
+    id: "051",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4266,
   },
   {
-    "id": "052",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5235
+    id: "052",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5235,
   },
   {
-    "id": "053",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6488
+    id: "053",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6488,
   },
   {
-    "id": "054",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3563
+    id: "054",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3563,
   },
   {
-    "id": "055",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4696
+    id: "055",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4696,
   },
   {
-    "id": "056",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6588
+    id: "056",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6588,
   },
   {
-    "id": "057",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.469
+    id: "057",
+    optimalMoveCount: 38,
+    difficultyScore: 0.469,
   },
   {
-    "id": "058",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.6432
+    id: "058",
+    optimalMoveCount: 38,
+    difficultyScore: 0.6432,
   },
   {
-    "id": "059",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5107
+    id: "059",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5107,
   },
   {
-    "id": "060",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2678
+    id: "060",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2678,
   },
   {
-    "id": "061",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5028
+    id: "061",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5028,
   },
   {
-    "id": "062",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4282
+    id: "062",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4282,
   },
   {
-    "id": "063",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5849
+    id: "063",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5849,
   },
   {
-    "id": "064",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.7165
+    id: "064",
+    optimalMoveCount: 41,
+    difficultyScore: 0.7165,
   },
   {
-    "id": "065",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6578
+    id: "065",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6578,
   },
   {
-    "id": "066",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4176
+    id: "066",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4176,
   },
   {
-    "id": "067",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4462
+    id: "067",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4462,
   },
   {
-    "id": "068",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4053
+    id: "068",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4053,
   },
   {
-    "id": "069",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3486
+    id: "069",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3486,
   },
   {
-    "id": "070",
-    "optimalMoveCount": 42,
-    "difficultyScore": 0.602
+    id: "070",
+    optimalMoveCount: 42,
+    difficultyScore: 0.602,
   },
   {
-    "id": "071",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5488
+    id: "071",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5488,
   },
   {
-    "id": "072",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5359
+    id: "072",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5359,
   },
   {
-    "id": "073",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.554
+    id: "073",
+    optimalMoveCount: 39,
+    difficultyScore: 0.554,
   },
   {
-    "id": "074",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3646
+    id: "074",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3646,
   },
   {
-    "id": "075",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4586
+    id: "075",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4586,
   },
   {
-    "id": "076",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3656
+    id: "076",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3656,
   },
   {
-    "id": "077",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.2612
+    id: "077",
+    optimalMoveCount: 37,
+    difficultyScore: 0.2612,
   },
   {
-    "id": "078",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5781
+    id: "078",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5781,
   },
   {
-    "id": "079",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3438
+    id: "079",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3438,
   },
   {
-    "id": "080",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4409
+    id: "080",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4409,
   },
   {
-    "id": "081",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4218
+    id: "081",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4218,
   },
   {
-    "id": "082",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5198
+    id: "082",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5198,
   },
   {
-    "id": "083",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5574
+    id: "083",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5574,
   },
   {
-    "id": "084",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4311
+    id: "084",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4311,
   },
   {
-    "id": "085",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3728
+    id: "085",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3728,
   },
   {
-    "id": "086",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6009
+    id: "086",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6009,
   },
   {
-    "id": "087",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.1795
+    id: "087",
+    optimalMoveCount: 35,
+    difficultyScore: 0.1795,
   },
   {
-    "id": "088",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4067
+    id: "088",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4067,
   },
   {
-    "id": "089",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4699
+    id: "089",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4699,
   },
   {
-    "id": "090",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6404
+    id: "090",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6404,
   },
   {
-    "id": "091",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.373
+    id: "091",
+    optimalMoveCount: 37,
+    difficultyScore: 0.373,
   },
   {
-    "id": "092",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4389
+    id: "092",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4389,
   },
   {
-    "id": "093",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4043
+    id: "093",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4043,
   },
   {
-    "id": "094",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4167
+    id: "094",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4167,
   },
   {
-    "id": "095",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3901
+    id: "095",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3901,
   },
   {
-    "id": "096",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5486
+    id: "096",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5486,
   },
   {
-    "id": "097",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2579
+    id: "097",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2579,
   },
   {
-    "id": "098",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5173
+    id: "098",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5173,
   },
   {
-    "id": "099",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4509
+    id: "099",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4509,
   },
   {
-    "id": "100",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3839
+    id: "100",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3839,
   },
   {
-    "id": "101",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5613
+    id: "101",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5613,
   },
   {
-    "id": "102",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6031
+    id: "102",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6031,
   },
   {
-    "id": "103",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4633
+    id: "103",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4633,
   },
   {
-    "id": "104",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3854
+    id: "104",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3854,
   },
   {
-    "id": "105",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3479
+    id: "105",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3479,
   },
   {
-    "id": "106",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4884
+    id: "106",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4884,
   },
   {
-    "id": "107",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3237
+    id: "107",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3237,
   },
   {
-    "id": "108",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.7254
+    id: "108",
+    optimalMoveCount: 41,
+    difficultyScore: 0.7254,
   },
   {
-    "id": "109",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4732
+    id: "109",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4732,
   },
   {
-    "id": "110",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5073
+    id: "110",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5073,
   },
   {
-    "id": "111",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.519
+    id: "111",
+    optimalMoveCount: 39,
+    difficultyScore: 0.519,
   },
   {
-    "id": "112",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4231
+    id: "112",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4231,
   },
   {
-    "id": "113",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4432
+    id: "113",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4432,
   },
   {
-    "id": "114",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3145
+    id: "114",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3145,
   },
   {
-    "id": "115",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.2899
+    id: "115",
+    optimalMoveCount: 36,
+    difficultyScore: 0.2899,
   },
   {
-    "id": "116",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2769
+    id: "116",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2769,
   },
   {
-    "id": "117",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5539
+    id: "117",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5539,
   },
   {
-    "id": "118",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4944
+    id: "118",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4944,
   },
   {
-    "id": "119",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5202
+    id: "119",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5202,
   },
   {
-    "id": "120",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3391
+    id: "120",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3391,
   },
   {
-    "id": "121",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5782
+    id: "121",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5782,
   },
   {
-    "id": "122",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6565
+    id: "122",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6565,
   },
   {
-    "id": "123",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4248
+    id: "123",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4248,
   },
   {
-    "id": "124",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4874
+    id: "124",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4874,
   },
   {
-    "id": "125",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4183
+    id: "125",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4183,
   },
   {
-    "id": "126",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4314
+    id: "126",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4314,
   },
   {
-    "id": "127",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6313
+    id: "127",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6313,
   },
   {
-    "id": "128",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5806
+    id: "128",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5806,
   },
   {
-    "id": "129",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5628
+    id: "129",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5628,
   },
   {
-    "id": "130",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3653
+    id: "130",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3653,
   },
   {
-    "id": "131",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3666
+    id: "131",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3666,
   },
   {
-    "id": "132",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5859
+    id: "132",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5859,
   },
   {
-    "id": "133",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.288
+    id: "133",
+    optimalMoveCount: 36,
+    difficultyScore: 0.288,
   },
   {
-    "id": "134",
-    "optimalMoveCount": 42,
-    "difficultyScore": 0.7191
+    id: "134",
+    optimalMoveCount: 42,
+    difficultyScore: 0.7191,
   },
   {
-    "id": "135",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4286
+    id: "135",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4286,
   },
   {
-    "id": "136",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3296
+    id: "136",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3296,
   },
   {
-    "id": "137",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2338
+    id: "137",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2338,
   },
   {
-    "id": "138",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5003
+    id: "138",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5003,
   },
   {
-    "id": "139",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3502
+    id: "139",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3502,
   },
   {
-    "id": "140",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5922
+    id: "140",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5922,
   },
   {
-    "id": "141",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3819
+    id: "141",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3819,
   },
   {
-    "id": "142",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.4786
+    id: "142",
+    optimalMoveCount: 40,
+    difficultyScore: 0.4786,
   },
   {
-    "id": "143",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3942
+    id: "143",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3942,
   },
   {
-    "id": "144",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3554
+    id: "144",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3554,
   },
   {
-    "id": "145",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3312
+    id: "145",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3312,
   },
   {
-    "id": "146",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4789
+    id: "146",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4789,
   },
   {
-    "id": "147",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4466
+    id: "147",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4466,
   },
   {
-    "id": "148",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.2498
+    id: "148",
+    optimalMoveCount: 37,
+    difficultyScore: 0.2498,
   },
   {
-    "id": "149",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.4108
+    id: "149",
+    optimalMoveCount: 35,
+    difficultyScore: 0.4108,
   },
   {
-    "id": "150",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4869
+    id: "150",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4869,
   },
   {
-    "id": "151",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3534
+    id: "151",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3534,
   },
   {
-    "id": "152",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4801
+    id: "152",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4801,
   },
   {
-    "id": "153",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3459
+    id: "153",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3459,
   },
   {
-    "id": "154",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.2988
+    id: "154",
+    optimalMoveCount: 37,
+    difficultyScore: 0.2988,
   },
   {
-    "id": "155",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.7
+    id: "155",
+    optimalMoveCount: 39,
+    difficultyScore: 0.7,
   },
   {
-    "id": "156",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2089
+    id: "156",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2089,
   },
   {
-    "id": "157",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6787
+    id: "157",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6787,
   },
   {
-    "id": "158",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4108
+    id: "158",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4108,
   },
   {
-    "id": "159",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2373
+    id: "159",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2373,
   },
   {
-    "id": "160",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2639
+    id: "160",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2639,
   },
   {
-    "id": "161",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4898
+    id: "161",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4898,
   },
   {
-    "id": "162",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4866
+    id: "162",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4866,
   },
   {
-    "id": "163",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3075
+    id: "163",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3075,
   },
   {
-    "id": "164",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4652
+    id: "164",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4652,
   },
   {
-    "id": "165",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4548
+    id: "165",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4548,
   },
   {
-    "id": "166",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5766
+    id: "166",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5766,
   },
   {
-    "id": "167",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5095
+    id: "167",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5095,
   },
   {
-    "id": "168",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5784
+    id: "168",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5784,
   },
   {
-    "id": "169",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3225
+    id: "169",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3225,
   },
   {
-    "id": "170",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3971
+    id: "170",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3971,
   },
   {
-    "id": "171",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5453
+    id: "171",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5453,
   },
   {
-    "id": "172",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6467
+    id: "172",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6467,
   },
   {
-    "id": "173",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.256
+    id: "173",
+    optimalMoveCount: 35,
+    difficultyScore: 0.256,
   },
   {
-    "id": "174",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4371
+    id: "174",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4371,
   },
   {
-    "id": "175",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.342
+    id: "175",
+    optimalMoveCount: 36,
+    difficultyScore: 0.342,
   },
   {
-    "id": "176",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5139
+    id: "176",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5139,
   },
   {
-    "id": "177",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3778
+    id: "177",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3778,
   },
   {
-    "id": "178",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5532
+    id: "178",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5532,
   },
   {
-    "id": "179",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5698
+    id: "179",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5698,
   },
   {
-    "id": "180",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4206
+    id: "180",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4206,
   },
   {
-    "id": "181",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.681
+    id: "181",
+    optimalMoveCount: 40,
+    difficultyScore: 0.681,
   },
   {
-    "id": "182",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3161
+    id: "182",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3161,
   },
   {
-    "id": "183",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5552
+    id: "183",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5552,
   },
   {
-    "id": "184",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4429
+    id: "184",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4429,
   },
   {
-    "id": "185",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3865
+    id: "185",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3865,
   },
   {
-    "id": "186",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3853
+    id: "186",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3853,
   },
   {
-    "id": "187",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.488
+    id: "187",
+    optimalMoveCount: 38,
+    difficultyScore: 0.488,
   },
   {
-    "id": "188",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4163
+    id: "188",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4163,
   },
   {
-    "id": "189",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.542
+    id: "189",
+    optimalMoveCount: 39,
+    difficultyScore: 0.542,
   },
   {
-    "id": "190",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3741
+    id: "190",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3741,
   },
   {
-    "id": "191",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3561
+    id: "191",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3561,
   },
   {
-    "id": "192",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5881
+    id: "192",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5881,
   },
   {
-    "id": "193",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5093
+    id: "193",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5093,
   },
   {
-    "id": "194",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3196
+    id: "194",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3196,
   },
   {
-    "id": "195",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4002
+    id: "195",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4002,
   },
   {
-    "id": "196",
-    "optimalMoveCount": 34,
-    "difficultyScore": 0.2866
+    id: "196",
+    optimalMoveCount: 34,
+    difficultyScore: 0.2866,
   },
   {
-    "id": "197",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.673
+    id: "197",
+    optimalMoveCount: 40,
+    difficultyScore: 0.673,
   },
   {
-    "id": "198",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4667
+    id: "198",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4667,
   },
   {
-    "id": "199",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4411
+    id: "199",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4411,
   },
   {
-    "id": "200",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3115
+    id: "200",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3115,
   },
   {
-    "id": "201",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.2998
+    id: "201",
+    optimalMoveCount: 37,
+    difficultyScore: 0.2998,
   },
   {
-    "id": "202",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3576
+    id: "202",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3576,
   },
   {
-    "id": "203",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4515
+    id: "203",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4515,
   },
   {
-    "id": "204",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5379
+    id: "204",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5379,
   },
   {
-    "id": "205",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3732
+    id: "205",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3732,
   },
   {
-    "id": "206",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6421
+    id: "206",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6421,
   },
   {
-    "id": "207",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6293
+    id: "207",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6293,
   },
   {
-    "id": "208",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5371
+    id: "208",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5371,
   },
   {
-    "id": "209",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.381
+    id: "209",
+    optimalMoveCount: 37,
+    difficultyScore: 0.381,
   },
   {
-    "id": "210",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5503
+    id: "210",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5503,
   },
   {
-    "id": "211",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6719
+    id: "211",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6719,
   },
   {
-    "id": "212",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.3719
+    id: "212",
+    optimalMoveCount: 38,
+    difficultyScore: 0.3719,
   },
   {
-    "id": "213",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.1884
+    id: "213",
+    optimalMoveCount: 35,
+    difficultyScore: 0.1884,
   },
   {
-    "id": "214",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6636
+    id: "214",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6636,
   },
   {
-    "id": "215",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3781
+    id: "215",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3781,
   },
   {
-    "id": "216",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3962
+    id: "216",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3962,
   },
   {
-    "id": "217",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6257
+    id: "217",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6257,
   },
   {
-    "id": "218",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4035
+    id: "218",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4035,
   },
   {
-    "id": "219",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.7071
+    id: "219",
+    optimalMoveCount: 40,
+    difficultyScore: 0.7071,
   },
   {
-    "id": "220",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.6369
+    id: "220",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6369,
   },
   {
-    "id": "221",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3734
+    id: "221",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3734,
   },
   {
-    "id": "222",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5731
+    id: "222",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5731,
   },
   {
-    "id": "223",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4117
+    id: "223",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4117,
   },
   {
-    "id": "224",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4614
+    id: "224",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4614,
   },
   {
-    "id": "225",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6016
+    id: "225",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6016,
   },
   {
-    "id": "226",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4548
+    id: "226",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4548,
   },
   {
-    "id": "227",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5483
+    id: "227",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5483,
   },
   {
-    "id": "228",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2534
+    id: "228",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2534,
   },
   {
-    "id": "229",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5396
+    id: "229",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5396,
   },
   {
-    "id": "230",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4952
+    id: "230",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4952,
   },
   {
-    "id": "231",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5392
+    id: "231",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5392,
   },
   {
-    "id": "232",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6684
+    id: "232",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6684,
   },
   {
-    "id": "233",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4249
+    id: "233",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4249,
   },
   {
-    "id": "234",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4084
+    id: "234",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4084,
   },
   {
-    "id": "235",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4499
+    id: "235",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4499,
   },
   {
-    "id": "236",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.657
+    id: "236",
+    optimalMoveCount: 40,
+    difficultyScore: 0.657,
   },
   {
-    "id": "237",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.7452
+    id: "237",
+    optimalMoveCount: 41,
+    difficultyScore: 0.7452,
   },
   {
-    "id": "238",
-    "optimalMoveCount": 34,
-    "difficultyScore": 0.3293
+    id: "238",
+    optimalMoveCount: 34,
+    difficultyScore: 0.3293,
   },
   {
-    "id": "239",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4138
+    id: "239",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4138,
   },
   {
-    "id": "240",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4636
+    id: "240",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4636,
   },
   {
-    "id": "241",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4178
+    id: "241",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4178,
   },
   {
-    "id": "242",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5034
+    id: "242",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5034,
   },
   {
-    "id": "243",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5454
+    id: "243",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5454,
   },
   {
-    "id": "244",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5653
+    id: "244",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5653,
   },
   {
-    "id": "245",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.497
+    id: "245",
+    optimalMoveCount: 38,
+    difficultyScore: 0.497,
   },
   {
-    "id": "246",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.392
+    id: "246",
+    optimalMoveCount: 37,
+    difficultyScore: 0.392,
   },
   {
-    "id": "247",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.532
+    id: "247",
+    optimalMoveCount: 39,
+    difficultyScore: 0.532,
   },
   {
-    "id": "248",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4037
+    id: "248",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4037,
   },
   {
-    "id": "249",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.513
+    id: "249",
+    optimalMoveCount: 38,
+    difficultyScore: 0.513,
   },
   {
-    "id": "250",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2692
+    id: "250",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2692,
   },
   {
-    "id": "251",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.2586
+    id: "251",
+    optimalMoveCount: 37,
+    difficultyScore: 0.2586,
   },
   {
-    "id": "252",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4611
+    id: "252",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4611,
   },
   {
-    "id": "253",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5389
+    id: "253",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5389,
   },
   {
-    "id": "254",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.717
+    id: "254",
+    optimalMoveCount: 41,
+    difficultyScore: 0.717,
   },
   {
-    "id": "255",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4012
+    id: "255",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4012,
   },
   {
-    "id": "256",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5786
+    id: "256",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5786,
   },
   {
-    "id": "257",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4175
+    id: "257",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4175,
   },
   {
-    "id": "258",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4358
+    id: "258",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4358,
   },
   {
-    "id": "259",
-    "optimalMoveCount": 34,
-    "difficultyScore": 0.157
+    id: "259",
+    optimalMoveCount: 34,
+    difficultyScore: 0.157,
   },
   {
-    "id": "260",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5486
+    id: "260",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5486,
   },
   {
-    "id": "261",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5308
+    id: "261",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5308,
   },
   {
-    "id": "262",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5679
+    id: "262",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5679,
   },
   {
-    "id": "263",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3721
+    id: "263",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3721,
   },
   {
-    "id": "264",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.558
+    id: "264",
+    optimalMoveCount: 41,
+    difficultyScore: 0.558,
   },
   {
-    "id": "265",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6268
+    id: "265",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6268,
   },
   {
-    "id": "266",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4037
+    id: "266",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4037,
   },
   {
-    "id": "267",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5071
+    id: "267",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5071,
   },
   {
-    "id": "268",
-    "optimalMoveCount": 32,
-    "difficultyScore": 0.1534
+    id: "268",
+    optimalMoveCount: 32,
+    difficultyScore: 0.1534,
   },
   {
-    "id": "269",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.7148
+    id: "269",
+    optimalMoveCount: 40,
+    difficultyScore: 0.7148,
   },
   {
-    "id": "270",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4814
+    id: "270",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4814,
   },
   {
-    "id": "271",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2613
+    id: "271",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2613,
   },
   {
-    "id": "272",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3292
+    id: "272",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3292,
   },
   {
-    "id": "273",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5362
+    id: "273",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5362,
   },
   {
-    "id": "274",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3865
+    id: "274",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3865,
   },
   {
-    "id": "275",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6188
+    id: "275",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6188,
   },
   {
-    "id": "276",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.396
+    id: "276",
+    optimalMoveCount: 37,
+    difficultyScore: 0.396,
   },
   {
-    "id": "277",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5279
+    id: "277",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5279,
   },
   {
-    "id": "278",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4388
+    id: "278",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4388,
   },
   {
-    "id": "279",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3177
+    id: "279",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3177,
   },
   {
-    "id": "280",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5578
+    id: "280",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5578,
   },
   {
-    "id": "281",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.286
+    id: "281",
+    optimalMoveCount: 35,
+    difficultyScore: 0.286,
   },
   {
-    "id": "282",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5876
+    id: "282",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5876,
   },
   {
-    "id": "283",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4002
+    id: "283",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4002,
   },
   {
-    "id": "284",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5662
+    id: "284",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5662,
   },
   {
-    "id": "285",
-    "optimalMoveCount": 34,
-    "difficultyScore": 0.1485
+    id: "285",
+    optimalMoveCount: 34,
+    difficultyScore: 0.1485,
   },
   {
-    "id": "286",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.5497
+    id: "286",
+    optimalMoveCount: 41,
+    difficultyScore: 0.5497,
   },
   {
-    "id": "287",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5084
+    id: "287",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5084,
   },
   {
-    "id": "288",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3882
+    id: "288",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3882,
   },
   {
-    "id": "289",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.6048
+    id: "289",
+    optimalMoveCount: 39,
+    difficultyScore: 0.6048,
   },
   {
-    "id": "290",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3523
+    id: "290",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3523,
   },
   {
-    "id": "291",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5227
+    id: "291",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5227,
   },
   {
-    "id": "292",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4008
+    id: "292",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4008,
   },
   {
-    "id": "293",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.383
+    id: "293",
+    optimalMoveCount: 39,
+    difficultyScore: 0.383,
   },
   {
-    "id": "294",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2161
+    id: "294",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2161,
   },
   {
-    "id": "295",
-    "optimalMoveCount": 32,
-    "difficultyScore": 0.1503
+    id: "295",
+    optimalMoveCount: 32,
+    difficultyScore: 0.1503,
   },
   {
-    "id": "296",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3823
+    id: "296",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3823,
   },
   {
-    "id": "297",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4331
+    id: "297",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4331,
   },
   {
-    "id": "298",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5156
+    id: "298",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5156,
   },
   {
-    "id": "299",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4751
+    id: "299",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4751,
   },
   {
-    "id": "300",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.375
+    id: "300",
+    optimalMoveCount: 36,
+    difficultyScore: 0.375,
   },
   {
-    "id": "301",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.591
+    id: "301",
+    optimalMoveCount: 40,
+    difficultyScore: 0.591,
   },
   {
-    "id": "302",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5509
+    id: "302",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5509,
   },
   {
-    "id": "303",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3502
+    id: "303",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3502,
   },
   {
-    "id": "304",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3744
+    id: "304",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3744,
   },
   {
-    "id": "305",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.3345
+    id: "305",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3345,
   },
   {
-    "id": "306",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3675
+    id: "306",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3675,
   },
   {
-    "id": "307",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4178
+    id: "307",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4178,
   },
   {
-    "id": "308",
-    "optimalMoveCount": 35,
-    "difficultyScore": 0.2647
+    id: "308",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2647,
   },
   {
-    "id": "309",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3223
+    id: "309",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3223,
   },
   {
-    "id": "310",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5219
+    id: "310",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5219,
   },
   {
-    "id": "311",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.42
+    id: "311",
+    optimalMoveCount: 38,
+    difficultyScore: 0.42,
   },
   {
-    "id": "312",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4819
+    id: "312",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4819,
   },
   {
-    "id": "313",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.4176
+    id: "313",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4176,
   },
   {
-    "id": "314",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5811
+    id: "314",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5811,
   },
   {
-    "id": "315",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4501
+    id: "315",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4501,
   },
   {
-    "id": "316",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4276
+    id: "316",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4276,
   },
   {
-    "id": "317",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.2841
+    id: "317",
+    optimalMoveCount: 36,
+    difficultyScore: 0.2841,
   },
   {
-    "id": "318",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3348
+    id: "318",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3348,
   },
   {
-    "id": "319",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5458
+    id: "319",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5458,
   },
   {
-    "id": "320",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5981
+    id: "320",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5981,
   },
   {
-    "id": "321",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5163
+    id: "321",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5163,
   },
   {
-    "id": "322",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5842
+    id: "322",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5842,
   },
   {
-    "id": "323",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3071
+    id: "323",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3071,
   },
   {
-    "id": "324",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3414
+    id: "324",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3414,
   },
   {
-    "id": "325",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3302
+    id: "325",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3302,
   },
   {
-    "id": "326",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4014
+    id: "326",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4014,
   },
   {
-    "id": "327",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3046
+    id: "327",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3046,
   },
   {
-    "id": "328",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3753
+    id: "328",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3753,
   },
   {
-    "id": "329",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.4927
+    id: "329",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4927,
   },
   {
-    "id": "330",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4534
+    id: "330",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4534,
   },
   {
-    "id": "331",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4822
+    id: "331",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4822,
   },
   {
-    "id": "332",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.3614
+    id: "332",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3614,
   },
   {
-    "id": "333",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4697
+    id: "333",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4697,
   },
   {
-    "id": "334",
-    "optimalMoveCount": 39,
-    "difficultyScore": 0.5665
+    id: "334",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5665,
   },
   {
-    "id": "335",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4324
+    id: "335",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4324,
   },
   {
-    "id": "336",
-    "optimalMoveCount": 36,
-    "difficultyScore": 0.2974
+    id: "336",
+    optimalMoveCount: 36,
+    difficultyScore: 0.2974,
   },
   {
-    "id": "337",
-    "optimalMoveCount": 41,
-    "difficultyScore": 0.6729
+    id: "337",
+    optimalMoveCount: 41,
+    difficultyScore: 0.6729,
   },
   {
-    "id": "338",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4265
+    id: "338",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4265,
   },
   {
-    "id": "339",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3645
+    id: "339",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3645,
   },
   {
-    "id": "340",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.4568
+    id: "340",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4568,
   },
   {
-    "id": "341",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.4034
+    id: "341",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4034,
   },
   {
-    "id": "342",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5491
+    id: "342",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5491,
   },
   {
-    "id": "343",
-    "optimalMoveCount": 33,
-    "difficultyScore": 0.2613
+    id: "343",
+    optimalMoveCount: 33,
+    difficultyScore: 0.2613,
   },
   {
-    "id": "344",
-    "optimalMoveCount": 38,
-    "difficultyScore": 0.5171
+    id: "344",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5171,
   },
   {
-    "id": "345",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3602
+    id: "345",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3602,
   },
   {
-    "id": "346",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5283
+    id: "346",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5283,
   },
   {
-    "id": "347",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3009
+    id: "347",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3009,
   },
   {
-    "id": "348",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.477
+    id: "348",
+    optimalMoveCount: 37,
+    difficultyScore: 0.477,
   },
   {
-    "id": "349",
-    "optimalMoveCount": 37,
-    "difficultyScore": 0.3256
+    id: "349",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3256,
   },
   {
-    "id": "350",
-    "optimalMoveCount": 40,
-    "difficultyScore": 0.5885
-  }
+    id: "350",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5885,
+  },
+  {
+    id: "351",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4639,
+  },
+  {
+    id: "352",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5152,
+  },
+  {
+    id: "353",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4879,
+  },
+  {
+    id: "354",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6094,
+  },
+  {
+    id: "355",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4722,
+  },
+  {
+    id: "356",
+    optimalMoveCount: 40,
+    difficultyScore: 0.666,
+  },
+  {
+    id: "357",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4035,
+  },
+  {
+    id: "358",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3802,
+  },
+  {
+    id: "359",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4453,
+  },
+  {
+    id: "360",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6066,
+  },
+  {
+    id: "361",
+    optimalMoveCount: 34,
+    difficultyScore: 0.3247,
+  },
+  {
+    id: "362",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3276,
+  },
+  {
+    id: "363",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4035,
+  },
+  {
+    id: "364",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5991,
+  },
+  {
+    id: "365",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5772,
+  },
+  {
+    id: "366",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5188,
+  },
+  {
+    id: "367",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5544,
+  },
+  {
+    id: "368",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3476,
+  },
+  {
+    id: "369",
+    optimalMoveCount: 41,
+    difficultyScore: 0.7068,
+  },
+  {
+    id: "370",
+    optimalMoveCount: 38,
+    difficultyScore: 0.45,
+  },
+  {
+    id: "371",
+    optimalMoveCount: 40,
+    difficultyScore: 0.6948,
+  },
+  {
+    id: "372",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5314,
+  },
+  {
+    id: "373",
+    optimalMoveCount: 40,
+    difficultyScore: 0.618,
+  },
+  {
+    id: "374",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4266,
+  },
+  {
+    id: "375",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5471,
+  },
+  {
+    id: "376",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4873,
+  },
+  {
+    id: "377",
+    optimalMoveCount: 37,
+    difficultyScore: 0.4314,
+  },
+  {
+    id: "378",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3148,
+  },
+  {
+    id: "379",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4447,
+  },
+  {
+    id: "380",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5153,
+  },
+  {
+    id: "381",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3509,
+  },
+  {
+    id: "382",
+    optimalMoveCount: 40,
+    difficultyScore: 0.5477,
+  },
+  {
+    id: "383",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4127,
+  },
+  {
+    id: "384",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3435,
+  },
+  {
+    id: "385",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2303,
+  },
+  {
+    id: "386",
+    optimalMoveCount: 37,
+    difficultyScore: 0.3419,
+  },
+  {
+    id: "387",
+    optimalMoveCount: 39,
+    difficultyScore: 0.4464,
+  },
+  {
+    id: "388",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5021,
+  },
+  {
+    id: "389",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5093,
+  },
+  {
+    id: "390",
+    optimalMoveCount: 34,
+    difficultyScore: 0.1497,
+  },
+  {
+    id: "391",
+    optimalMoveCount: 39,
+    difficultyScore: 0.567,
+  },
+  {
+    id: "392",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5562,
+  },
+  {
+    id: "393",
+    optimalMoveCount: 36,
+    difficultyScore: 0.4402,
+  },
+  {
+    id: "394",
+    optimalMoveCount: 35,
+    difficultyScore: 0.3059,
+  },
+  {
+    id: "395",
+    optimalMoveCount: 35,
+    difficultyScore: 0.2168,
+  },
+  {
+    id: "396",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5703,
+  },
+  {
+    id: "397",
+    optimalMoveCount: 38,
+    difficultyScore: 0.4245,
+  },
+  {
+    id: "398",
+    optimalMoveCount: 38,
+    difficultyScore: 0.5128,
+  },
+  {
+    id: "399",
+    optimalMoveCount: 39,
+    difficultyScore: 0.5436,
+  },
+  {
+    id: "400",
+    optimalMoveCount: 36,
+    difficultyScore: 0.3406,
+  },
 ] as const;
 
 export const LEVELS = {
   "100": {
-    "id": "100",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "teal",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "amber",
-        "amber",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "lime",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "emerald",
-        "rose"
-      ],
-      [
-        "sky",
-        "sky",
-        "amber",
-        "violet"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lemon",
-        "rose"
-      ],
-      [
-        "violet",
-        "sky",
-        "emerald",
-        "rose"
-      ],
-      [
-        "coral",
-        "lemon",
-        "magenta",
-        "coral"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "coral"
-      ],
+    id: "100",
+    capacity: 4,
+    board: [
+      ["emerald", "teal", "teal", "cocoa"],
+      ["lime", "magenta", "lime", "cobalt"],
+      ["teal", "sky", "teal", "coral"],
+      ["cocoa", "cobalt", "magenta", "lemon"],
+      ["amber", "amber", "lime", "cocoa"],
+      ["lemon", "cobalt", "lime", "violet"],
+      ["cobalt", "magenta", "emerald", "rose"],
+      ["sky", "sky", "amber", "violet"],
+      ["amber", "cocoa", "lemon", "rose"],
+      ["violet", "sky", "emerald", "rose"],
+      ["coral", "lemon", "magenta", "coral"],
+      ["violet", "rose", "emerald", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3839
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3839,
+    },
   },
   "101": {
-    "id": "101",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "coral",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "amber",
-        "magenta"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "amber",
-        "rose"
-      ],
-      [
-        "teal",
-        "lime",
-        "rose",
-        "violet"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "lemon",
-        "amber",
-        "rose",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "sky",
-        "violet"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "coral",
-        "sky"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "teal",
-        "violet"
-      ],
-      [
-        "teal",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "magenta",
-        "sky"
-      ],
-      [
-        "magenta",
-        "rose",
-        "cobalt",
-        "lemon"
-      ],
+    id: "101",
+    capacity: 4,
+    board: [
+      ["lime", "coral", "emerald", "cocoa"],
+      ["lime", "teal", "amber", "magenta"],
+      ["violet", "cobalt", "amber", "rose"],
+      ["teal", "lime", "rose", "violet"],
+      ["emerald", "cocoa", "cobalt", "coral"],
+      ["lemon", "amber", "rose", "lime"],
+      ["cocoa", "magenta", "sky", "violet"],
+      ["lemon", "cobalt", "coral", "sky"],
+      ["coral", "cocoa", "teal", "violet"],
+      ["teal", "sky", "emerald", "amber"],
+      ["emerald", "lemon", "magenta", "sky"],
+      ["magenta", "rose", "cobalt", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5613
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5613,
+    },
   },
   "102": {
-    "id": "102",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "sky",
-        "emerald",
-        "violet"
-      ],
-      [
-        "amber",
-        "magenta",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "teal",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "coral",
-        "violet"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "rose",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "sky",
-        "sky"
-      ],
-      [
-        "rose",
-        "lime",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "lime",
-        "emerald",
-        "teal"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "magenta"
-      ],
-      [
-        "amber",
-        "coral",
-        "rose",
-        "lemon"
-      ],
+    id: "102",
+    capacity: 4,
+    board: [
+      ["coral", "cocoa", "violet", "cobalt"],
+      ["violet", "sky", "emerald", "violet"],
+      ["amber", "magenta", "cobalt", "magenta"],
+      ["amber", "emerald", "teal", "emerald"],
+      ["amber", "lemon", "coral", "violet"],
+      ["lime", "cobalt", "rose", "teal"],
+      ["coral", "rose", "sky", "sky"],
+      ["rose", "lime", "cobalt", "cocoa"],
+      ["sky", "lime", "emerald", "teal"],
+      ["magenta", "lemon", "teal", "cocoa"],
+      ["lemon", "cocoa", "lime", "magenta"],
+      ["amber", "coral", "rose", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6031
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6031,
+    },
   },
   "103": {
-    "id": "103",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "cocoa",
-        "amber",
-        "coral"
-      ],
-      [
-        "amber",
-        "rose",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "teal"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "sky",
-        "amber"
-      ],
-      [
-        "amber",
-        "sky",
-        "teal",
-        "rose"
-      ],
-      [
-        "violet",
-        "lime",
-        "lemon",
-        "lime"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "lemon",
-        "sky",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "coral",
-        "lime",
-        "magenta"
-      ],
-      [
-        "teal",
-        "sky",
-        "teal",
-        "emerald"
-      ],
+    id: "103",
+    capacity: 4,
+    board: [
+      ["lime", "cocoa", "amber", "coral"],
+      ["amber", "rose", "magenta", "emerald"],
+      ["violet", "rose", "emerald", "teal"],
+      ["emerald", "cobalt", "lemon", "cobalt"],
+      ["cobalt", "coral", "coral", "cocoa"],
+      ["magenta", "cocoa", "sky", "amber"],
+      ["amber", "sky", "teal", "rose"],
+      ["violet", "lime", "lemon", "lime"],
+      ["rose", "cobalt", "cocoa", "violet"],
+      ["lemon", "sky", "violet", "magenta"],
+      ["lemon", "coral", "lime", "magenta"],
+      ["teal", "sky", "teal", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4633
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4633,
+    },
   },
   "104": {
-    "id": "104",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "magenta",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "lime",
-        "teal"
-      ],
-      [
-        "magenta",
-        "violet",
-        "amber",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lemon",
-        "amber"
-      ],
-      [
-        "coral",
-        "rose",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "lemon",
-        "coral"
-      ],
-      [
-        "sky",
-        "magenta",
-        "teal",
-        "amber"
-      ],
-      [
-        "teal",
-        "sky",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "rose",
-        "rose"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "sky",
-        "lemon"
-      ],
+    id: "104",
+    capacity: 4,
+    board: [
+      ["rose", "magenta", "violet", "cocoa"],
+      ["cocoa", "sky", "lime", "teal"],
+      ["magenta", "violet", "amber", "emerald"],
+      ["emerald", "lime", "lemon", "amber"],
+      ["coral", "rose", "magenta", "violet"],
+      ["cobalt", "emerald", "lemon", "coral"],
+      ["sky", "magenta", "teal", "amber"],
+      ["teal", "sky", "cobalt", "amber"],
+      ["lime", "cobalt", "rose", "rose"],
+      ["coral", "cobalt", "cocoa", "lime"],
+      ["violet", "teal", "emerald", "lemon"],
+      ["cocoa", "coral", "sky", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3854
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3854,
+    },
   },
   "105": {
-    "id": "105",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "sky",
-        "lime",
-        "rose"
-      ],
-      [
-        "coral",
-        "lemon",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "magenta",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lime",
-        "amber",
-        "amber",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "violet",
-        "teal",
-        "emerald"
-      ],
-      [
-        "rose",
-        "lime",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "rose",
-        "violet",
-        "violet",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "coral",
-        "teal",
-        "emerald"
-      ],
-      [
-        "sky",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
+    id: "105",
+    capacity: 4,
+    board: [
+      ["violet", "sky", "lime", "rose"],
+      ["coral", "lemon", "sky", "cobalt"],
+      ["amber", "cobalt", "magenta", "amber"],
+      ["cocoa", "magenta", "magenta", "lemon"],
+      ["lime", "amber", "amber", "magenta"],
+      ["lemon", "violet", "teal", "emerald"],
+      ["rose", "lime", "cobalt", "sky"],
+      ["cocoa", "teal", "cocoa", "teal"],
+      ["rose", "violet", "violet", "lime"],
+      ["cobalt", "rose", "cocoa", "coral"],
+      ["emerald", "coral", "teal", "emerald"],
+      ["sky", "coral", "emerald", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3479
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3479,
+    },
   },
   "106": {
-    "id": "106",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "rose",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "violet",
-        "sky"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "emerald",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "coral",
-        "rose",
-        "amber",
-        "lemon"
-      ],
-      [
-        "coral",
-        "magenta",
-        "rose",
-        "lemon"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "rose",
-        "lime"
-      ],
-      [
-        "amber",
-        "amber",
-        "sky",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "magenta",
-        "cobalt"
-      ],
+    id: "106",
+    capacity: 4,
+    board: [
+      ["teal", "rose", "amber", "cocoa"],
+      ["lemon", "emerald", "cocoa", "sky"],
+      ["magenta", "emerald", "violet", "sky"],
+      ["lemon", "teal", "cocoa", "violet"],
+      ["emerald", "violet", "coral", "sky"],
+      ["coral", "rose", "amber", "lemon"],
+      ["coral", "magenta", "rose", "lemon"],
+      ["violet", "cobalt", "rose", "lime"],
+      ["amber", "amber", "sky", "teal"],
+      ["magenta", "cobalt", "lime", "emerald"],
+      ["coral", "lime", "cobalt", "cocoa"],
+      ["lime", "teal", "magenta", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4884
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4884,
+    },
   },
   "107": {
-    "id": "107",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "coral",
-        "sky",
-        "emerald"
-      ],
-      [
-        "lime",
-        "lemon",
-        "teal",
-        "amber"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "emerald",
-        "teal"
-      ],
-      [
-        "amber",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lemon",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "emerald",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "teal",
-        "rose"
-      ],
-      [
-        "rose",
-        "rose",
-        "teal",
-        "lime"
-      ],
-      [
-        "violet",
-        "amber",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "sky",
-        "rose"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "magenta"
-      ],
+    id: "107",
+    capacity: 4,
+    board: [
+      ["cobalt", "coral", "sky", "emerald"],
+      ["lime", "lemon", "teal", "amber"],
+      ["violet", "cocoa", "emerald", "teal"],
+      ["amber", "magenta", "violet", "violet"],
+      ["lemon", "cocoa", "lime", "magenta"],
+      ["coral", "lemon", "coral", "cobalt"],
+      ["coral", "emerald", "cobalt", "emerald"],
+      ["cobalt", "amber", "teal", "rose"],
+      ["rose", "rose", "teal", "lime"],
+      ["violet", "amber", "magenta", "lemon"],
+      ["cocoa", "lime", "sky", "rose"],
+      ["sky", "sky", "cocoa", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3237
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3237,
+    },
   },
   "108": {
-    "id": "108",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "cobalt",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "coral",
-        "sky"
-      ],
-      [
-        "emerald",
-        "rose",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "violet",
-        "amber",
-        "sky",
-        "rose"
-      ],
-      [
-        "magenta",
-        "teal",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "amber",
-        "coral",
-        "rose"
-      ],
-      [
-        "violet",
-        "amber",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "violet",
-        "coral"
-      ],
-      [
-        "lemon",
-        "lime",
-        "sky",
-        "emerald"
-      ],
-      [
-        "teal",
-        "magenta",
-        "lemon",
-        "lime"
-      ],
+    id: "108",
+    capacity: 4,
+    board: [
+      ["lemon", "cobalt", "cocoa", "amber"],
+      ["cocoa", "cobalt", "coral", "sky"],
+      ["emerald", "rose", "coral", "emerald"],
+      ["cocoa", "rose", "lime", "lime"],
+      ["violet", "amber", "sky", "rose"],
+      ["magenta", "teal", "sky", "violet"],
+      ["magenta", "lemon", "emerald", "cobalt"],
+      ["teal", "amber", "coral", "rose"],
+      ["violet", "amber", "cocoa", "teal"],
+      ["magenta", "cobalt", "violet", "coral"],
+      ["lemon", "lime", "sky", "emerald"],
+      ["teal", "magenta", "lemon", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.7254
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.7254,
+    },
   },
   "109": {
-    "id": "109",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "cobalt",
-        "rose",
-        "rose"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "rose"
-      ],
-      [
-        "amber",
-        "magenta",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "violet",
-        "sky",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "teal",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "lime",
-        "sky",
-        "rose"
-      ],
-      [
-        "emerald",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "violet",
-        "coral",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "lime",
-        "violet",
-        "teal"
-      ],
-      [
-        "magenta",
-        "teal",
-        "coral",
-        "sky"
-      ],
+    id: "109",
+    capacity: 4,
+    board: [
+      ["cobalt", "cobalt", "rose", "rose"],
+      ["amber", "cobalt", "coral", "rose"],
+      ["amber", "magenta", "amber", "cobalt"],
+      ["cocoa", "emerald", "magenta", "lemon"],
+      ["violet", "sky", "cocoa", "coral"],
+      ["cocoa", "amber", "magenta", "emerald"],
+      ["lemon", "teal", "violet", "teal"],
+      ["lime", "lime", "sky", "rose"],
+      ["emerald", "sky", "lime", "lemon"],
+      ["violet", "coral", "emerald", "cocoa"],
+      ["lemon", "lime", "violet", "teal"],
+      ["magenta", "teal", "coral", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4732
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4732,
+    },
   },
   "110": {
-    "id": "110",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "rose",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "sky",
-        "coral"
-      ],
-      [
-        "rose",
-        "teal",
-        "violet",
-        "emerald"
-      ],
-      [
-        "coral",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "amber",
-        "teal",
-        "rose",
-        "amber"
-      ],
-      [
-        "violet",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "violet",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "coral",
-        "amber",
-        "lime",
-        "teal"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "emerald",
-        "sky",
-        "lemon",
-        "sky"
-      ],
+    id: "110",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "lemon", "cobalt"],
+      ["cocoa", "cobalt", "sky", "coral"],
+      ["rose", "teal", "violet", "emerald"],
+      ["coral", "sky", "lime", "lemon"],
+      ["amber", "teal", "rose", "amber"],
+      ["violet", "lime", "rose", "magenta"],
+      ["magenta", "lemon", "violet", "teal"],
+      ["cocoa", "violet", "coral", "emerald"],
+      ["coral", "amber", "lime", "teal"],
+      ["emerald", "cobalt", "magenta", "lime"],
+      ["cobalt", "cocoa", "cocoa", "amber"],
+      ["emerald", "sky", "lemon", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5073
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5073,
+    },
   },
   "111": {
-    "id": "111",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "coral",
-        "sky"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "violet",
-        "lemon",
-        "magenta",
-        "coral"
-      ],
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "emerald"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "amber"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "sky",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "magenta",
-        "amber"
-      ],
+    id: "111",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "coral", "sky"],
+      ["coral", "cobalt", "rose", "sky"],
+      ["emerald", "lime", "lime", "teal"],
+      ["violet", "lemon", "magenta", "coral"],
+      ["amber", "lemon", "violet", "emerald"],
+      ["rose", "cocoa", "cobalt", "cobalt"],
+      ["amber", "cocoa", "sky", "magenta"],
+      ["cocoa", "magenta", "cocoa", "cobalt"],
+      ["lime", "emerald", "lemon", "amber"],
+      ["emerald", "rose", "violet", "teal"],
+      ["lime", "lemon", "sky", "teal"],
+      ["coral", "rose", "magenta", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.519
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.519,
+    },
   },
   "112": {
-    "id": "112",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "coral",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "amber",
-        "violet",
-        "sky",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "coral",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "violet",
-        "sky",
-        "rose",
-        "teal"
-      ],
-      [
-        "rose",
-        "coral",
-        "lemon",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "violet"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "emerald",
-        "rose"
-      ],
-      [
-        "sky",
-        "amber",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lime",
-        "emerald",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "teal",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "sky",
-        "lime"
-      ],
+    id: "112",
+    capacity: 4,
+    board: [
+      ["cobalt", "coral", "lemon", "amber"],
+      ["cobalt", "lemon", "amber", "lime"],
+      ["amber", "violet", "sky", "lemon"],
+      ["magenta", "coral", "cobalt", "magenta"],
+      ["violet", "sky", "rose", "teal"],
+      ["rose", "coral", "lemon", "lime"],
+      ["teal", "cocoa", "coral", "violet"],
+      ["emerald", "emerald", "emerald", "rose"],
+      ["sky", "amber", "violet", "magenta"],
+      ["lime", "emerald", "cocoa", "cocoa"],
+      ["rose", "teal", "cocoa", "magenta"],
+      ["teal", "cobalt", "sky", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4231
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4231,
+    },
   },
   "113": {
-    "id": "113",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "violet",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "teal",
-        "sky"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "sky",
-        "emerald",
-        "rose",
-        "violet"
-      ],
-      [
-        "coral",
-        "teal",
-        "lime",
-        "rose"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "lemon",
-        "amber"
-      ],
-      [
-        "teal",
-        "magenta",
-        "emerald",
-        "violet"
-      ],
-      [
-        "lime",
-        "lemon",
-        "rose",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "rose",
-        "sky"
-      ],
-      [
-        "lime",
-        "violet",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "lime",
-        "amber"
-      ],
+    id: "113",
+    capacity: 4,
+    board: [
+      ["lemon", "violet", "cobalt", "coral"],
+      ["amber", "cobalt", "teal", "sky"],
+      ["coral", "cocoa", "cocoa", "emerald"],
+      ["sky", "emerald", "rose", "violet"],
+      ["coral", "teal", "lime", "rose"],
+      ["magenta", "magenta", "teal", "sky"],
+      ["cobalt", "magenta", "lemon", "amber"],
+      ["teal", "magenta", "emerald", "violet"],
+      ["lime", "lemon", "rose", "coral"],
+      ["emerald", "lemon", "rose", "sky"],
+      ["lime", "violet", "amber", "cocoa"],
+      ["cocoa", "cobalt", "lime", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4432
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4432,
+    },
   },
   "114": {
-    "id": "114",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "lemon",
-        "coral",
-        "rose"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "teal",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "coral",
-        "rose",
-        "sky",
-        "magenta"
-      ],
-      [
-        "violet",
-        "lime",
-        "amber",
-        "emerald"
-      ],
-      [
-        "amber",
-        "coral",
-        "teal",
-        "lime"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "violet",
-        "teal"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "amber",
-        "magenta"
-      ],
+    id: "114",
+    capacity: 4,
+    board: [
+      ["lime", "lemon", "coral", "rose"],
+      ["sky", "magenta", "cobalt", "lime"],
+      ["rose", "teal", "cocoa", "coral"],
+      ["coral", "rose", "sky", "magenta"],
+      ["violet", "lime", "amber", "emerald"],
+      ["amber", "coral", "teal", "lime"],
+      ["teal", "rose", "cobalt", "emerald"],
+      ["cocoa", "amber", "lemon", "emerald"],
+      ["emerald", "lemon", "sky", "cobalt"],
+      ["violet", "cocoa", "violet", "cocoa"],
+      ["cobalt", "sky", "violet", "teal"],
+      ["lemon", "magenta", "amber", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3145
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3145,
+    },
   },
   "115": {
-    "id": "115",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "teal",
-        "sky"
-      ],
-      [
-        "rose",
-        "rose",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lime",
-        "violet",
-        "amber",
-        "lime"
-      ],
-      [
-        "coral",
-        "coral",
-        "rose",
-        "emerald"
-      ],
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "violet",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "violet",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "magenta",
-        "teal"
-      ],
+    id: "115",
+    capacity: 4,
+    board: [
+      ["lemon", "rose", "cocoa", "lime"],
+      ["coral", "cocoa", "teal", "sky"],
+      ["rose", "rose", "sky", "cobalt"],
+      ["emerald", "magenta", "lemon", "amber"],
+      ["lime", "violet", "amber", "lime"],
+      ["coral", "coral", "rose", "emerald"],
+      ["teal", "violet", "emerald", "cobalt"],
+      ["amber", "amber", "magenta", "coral"],
+      ["emerald", "cobalt", "violet", "sky"],
+      ["magenta", "lemon", "cocoa", "teal"],
+      ["cobalt", "lemon", "violet", "lime"],
+      ["cocoa", "sky", "magenta", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.2899
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.2899,
+    },
   },
   "116": {
-    "id": "116",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "sky",
-        "amber"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "violet"
-      ],
-      [
-        "violet",
-        "amber",
-        "amber",
-        "emerald"
-      ],
-      [
-        "violet",
-        "rose",
-        "violet",
-        "coral"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "sky"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lemon",
-        "sky"
-      ],
-      [
-        "magenta",
-        "amber",
-        "teal",
-        "rose"
-      ],
-      [
-        "lime",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "coral"
-      ],
+    id: "116",
+    capacity: 4,
+    board: [
+      ["emerald", "cocoa", "cocoa", "lime"],
+      ["teal", "cobalt", "emerald", "lemon"],
+      ["cocoa", "cocoa", "sky", "amber"],
+      ["magenta", "magenta", "teal", "violet"],
+      ["violet", "amber", "amber", "emerald"],
+      ["violet", "rose", "violet", "coral"],
+      ["coral", "lemon", "rose", "sky"],
+      ["sky", "cobalt", "lemon", "sky"],
+      ["magenta", "amber", "teal", "rose"],
+      ["lime", "lime", "rose", "cobalt"],
+      ["lime", "cobalt", "teal", "lemon"],
+      ["coral", "emerald", "magenta", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2769
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2769,
+    },
   },
   "117": {
-    "id": "117",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "teal",
-        "amber",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "teal",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "violet",
-        "coral",
-        "emerald",
-        "lime"
-      ],
-      [
-        "rose",
-        "magenta",
-        "magenta",
-        "lime"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "magenta",
-        "rose"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "violet",
-        "teal"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "sky",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "sky",
-        "amber",
-        "teal",
-        "rose"
-      ],
+    id: "117",
+    capacity: 4,
+    board: [
+      ["coral", "teal", "amber", "magenta"],
+      ["lemon", "teal", "emerald", "cobalt"],
+      ["violet", "lime", "sky", "lemon"],
+      ["emerald", "rose", "cobalt", "amber"],
+      ["violet", "coral", "emerald", "lime"],
+      ["rose", "magenta", "magenta", "lime"],
+      ["sky", "cocoa", "lemon", "coral"],
+      ["cobalt", "amber", "magenta", "rose"],
+      ["violet", "cobalt", "violet", "teal"],
+      ["lemon", "cocoa", "sky", "lime"],
+      ["cocoa", "cocoa", "coral", "emerald"],
+      ["sky", "amber", "teal", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5539
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5539,
+    },
   },
   "118": {
-    "id": "118",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "rose",
-        "violet",
-        "violet",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "teal",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "lime",
-        "coral",
-        "sky",
-        "lime"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "amber"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "emerald",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "teal",
-        "coral",
-        "lemon",
-        "amber"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "teal",
-        "emerald"
-      ],
-      [
-        "teal",
-        "emerald",
-        "violet",
-        "rose"
-      ],
+    id: "118",
+    capacity: 4,
+    board: [
+      ["sky", "magenta", "cobalt", "lemon"],
+      ["rose", "violet", "violet", "magenta"],
+      ["magenta", "teal", "cobalt", "coral"],
+      ["lime", "coral", "sky", "lime"],
+      ["rose", "sky", "amber", "amber"],
+      ["violet", "cocoa", "magenta", "emerald"],
+      ["cocoa", "lemon", "cocoa", "lime"],
+      ["emerald", "amber", "lemon", "coral"],
+      ["cobalt", "rose", "cocoa", "lime"],
+      ["teal", "coral", "lemon", "amber"],
+      ["sky", "cobalt", "teal", "emerald"],
+      ["teal", "emerald", "violet", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4944
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4944,
+    },
   },
   "119": {
-    "id": "119",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "emerald",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lime",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "coral",
-        "amber",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "sky",
-        "amber",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "rose",
-        "emerald",
-        "coral",
-        "violet"
-      ],
-      [
-        "teal",
-        "violet",
-        "rose",
-        "amber"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "lime"
-      ],
-      [
-        "sky",
-        "emerald",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "emerald",
-        "teal"
-      ],
+    id: "119",
+    capacity: 4,
+    board: [
+      ["rose", "emerald", "lime", "cobalt"],
+      ["violet", "lime", "cocoa", "lime"],
+      ["coral", "amber", "cocoa", "sky"],
+      ["sky", "amber", "cocoa", "cobalt"],
+      ["lemon", "coral", "sky", "violet"],
+      ["rose", "emerald", "coral", "violet"],
+      ["teal", "violet", "rose", "amber"],
+      ["magenta", "magenta", "teal", "magenta"],
+      ["cobalt", "coral", "lemon", "rose"],
+      ["cocoa", "amber", "lemon", "lime"],
+      ["sky", "emerald", "teal", "cobalt"],
+      ["magenta", "lemon", "emerald", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5202
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5202,
+    },
   },
   "120": {
-    "id": "120",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "sky",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "sky",
-        "coral",
-        "emerald"
-      ],
-      [
-        "teal",
-        "rose",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lemon",
-        "amber"
-      ],
-      [
-        "coral",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "violet",
-        "violet",
-        "teal",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "coral",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lime",
-        "emerald",
-        "teal",
-        "teal"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "rose",
-        "coral"
-      ],
+    id: "120",
+    capacity: 4,
+    board: [
+      ["lime", "sky", "cocoa", "rose"],
+      ["cobalt", "sky", "sky", "magenta"],
+      ["cobalt", "violet", "emerald", "cobalt"],
+      ["amber", "sky", "coral", "emerald"],
+      ["teal", "rose", "cocoa", "magenta"],
+      ["amber", "lemon", "lemon", "amber"],
+      ["coral", "lime", "amber", "violet"],
+      ["cocoa", "cobalt", "cocoa", "lime"],
+      ["violet", "violet", "teal", "emerald"],
+      ["magenta", "coral", "magenta", "rose"],
+      ["lime", "emerald", "teal", "teal"],
+      ["lemon", "lemon", "rose", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3391
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3391,
+    },
   },
   "121": {
-    "id": "121",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lime",
-        "rose",
-        "amber"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lime",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "teal",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "teal"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "amber",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lime",
-        "lemon",
-        "lemon",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "rose",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "coral",
-        "rose"
-      ],
+    id: "121",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "rose", "amber"],
+      ["lemon", "emerald", "violet", "cocoa"],
+      ["sky", "emerald", "lime", "rose"],
+      ["cocoa", "magenta", "teal", "lime"],
+      ["cobalt", "cobalt", "violet", "cobalt"],
+      ["magenta", "sky", "violet", "teal"],
+      ["magenta", "emerald", "cocoa", "sky"],
+      ["cobalt", "teal", "amber", "coral"],
+      ["magenta", "cocoa", "coral", "emerald"],
+      ["lime", "lemon", "lemon", "sky"],
+      ["coral", "amber", "rose", "teal"],
+      ["lemon", "amber", "coral", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5782
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5782,
+    },
   },
   "122": {
-    "id": "122",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "coral",
-        "rose"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "teal",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "coral",
-        "magenta"
-      ],
-      [
-        "sky",
-        "amber",
-        "emerald",
-        "violet"
-      ],
-      [
-        "teal",
-        "amber",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "violet",
-        "lime",
-        "emerald",
-        "violet"
-      ],
-      [
-        "rose",
-        "amber",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lime",
-        "coral",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "magenta",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "coral",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "rose"
-      ],
+    id: "122",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "coral", "rose"],
+      ["lemon", "emerald", "teal", "emerald"],
+      ["cobalt", "cocoa", "coral", "magenta"],
+      ["sky", "amber", "emerald", "violet"],
+      ["teal", "amber", "cobalt", "teal"],
+      ["lime", "sky", "magenta", "lemon"],
+      ["violet", "lime", "emerald", "violet"],
+      ["rose", "amber", "cocoa", "teal"],
+      ["lime", "coral", "sky", "cocoa"],
+      ["cocoa", "violet", "magenta", "rose"],
+      ["cobalt", "lime", "coral", "lemon"],
+      ["magenta", "amber", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6565
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6565,
+    },
   },
   "123": {
-    "id": "123",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "emerald",
-        "violet",
-        "magenta"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "lime",
-        "magenta",
-        "teal"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "coral",
-        "rose"
-      ],
-      [
-        "lemon",
-        "lime",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "amber",
-        "lemon",
-        "sky"
-      ],
-      [
-        "sky",
-        "violet",
-        "emerald",
-        "lime"
-      ],
-      [
-        "magenta",
-        "violet",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "sky",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lime",
-        "sky",
-        "coral"
-      ],
+    id: "123",
+    capacity: 4,
+    board: [
+      ["teal", "emerald", "violet", "magenta"],
+      ["amber", "magenta", "coral", "cobalt"],
+      ["cobalt", "emerald", "rose", "cobalt"],
+      ["rose", "lime", "magenta", "teal"],
+      ["rose", "cocoa", "coral", "rose"],
+      ["lemon", "lime", "lemon", "lemon"],
+      ["emerald", "amber", "lemon", "sky"],
+      ["sky", "violet", "emerald", "lime"],
+      ["magenta", "violet", "teal", "cocoa"],
+      ["coral", "cocoa", "sky", "amber"],
+      ["cobalt", "teal", "violet", "cocoa"],
+      ["amber", "lime", "sky", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4248
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4248,
+    },
   },
   "124": {
-    "id": "124",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cocoa",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lime",
-        "rose",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "emerald",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "amber",
-        "lime"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "teal",
-        "violet",
-        "coral"
-      ],
-      [
-        "amber",
-        "sky",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "teal",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lime",
-        "violet",
-        "rose"
-      ],
-      [
-        "lime",
-        "lemon",
-        "magenta",
-        "magenta"
-      ],
+    id: "124",
+    capacity: 4,
+    board: [
+      ["sky", "cocoa", "emerald", "amber"],
+      ["lime", "rose", "coral", "cobalt"],
+      ["magenta", "cobalt", "emerald", "sky"],
+      ["lemon", "amber", "rose", "cobalt"],
+      ["emerald", "emerald", "amber", "lime"],
+      ["coral", "cocoa", "violet", "lemon"],
+      ["rose", "teal", "violet", "coral"],
+      ["amber", "sky", "coral", "cocoa"],
+      ["lemon", "teal", "violet", "cobalt"],
+      ["teal", "cocoa", "sky", "magenta"],
+      ["teal", "lime", "violet", "rose"],
+      ["lime", "lemon", "magenta", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4874
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4874,
+    },
   },
   "125": {
-    "id": "125",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "rose",
-        "sky",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "sky",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "lime",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "teal",
-        "coral",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "teal",
-        "amber"
-      ],
-      [
-        "sky",
-        "coral",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "amber",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "magenta",
-        "lime",
-        "lime",
-        "cocoa"
-      ],
+    id: "125",
+    capacity: 4,
+    board: [
+      ["coral", "rose", "sky", "violet"],
+      ["cobalt", "violet", "sky", "coral"],
+      ["magenta", "lemon", "lime", "lime"],
+      ["cocoa", "emerald", "violet", "cocoa"],
+      ["lemon", "rose", "cobalt", "sky"],
+      ["magenta", "emerald", "rose", "lemon"],
+      ["amber", "teal", "coral", "magenta"],
+      ["teal", "lemon", "teal", "amber"],
+      ["sky", "coral", "violet", "emerald"],
+      ["cobalt", "amber", "amber", "emerald"],
+      ["cocoa", "teal", "cobalt", "rose"],
+      ["magenta", "lime", "lime", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4183
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4183,
+    },
   },
   "126": {
-    "id": "126",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cocoa",
-        "coral",
-        "amber"
-      ],
-      [
-        "lime",
-        "coral",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "rose",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "sky",
-        "amber",
-        "violet"
-      ],
-      [
-        "coral",
-        "coral",
-        "lime",
-        "amber"
-      ],
-      [
-        "rose",
-        "emerald",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "violet",
-        "magenta",
-        "rose",
-        "lime"
-      ],
-      [
-        "teal",
-        "violet",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "lime"
-      ],
-      [
-        "magenta",
-        "sky",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lemon",
-        "cobalt"
-      ],
+    id: "126",
+    capacity: 4,
+    board: [
+      ["violet", "cocoa", "coral", "amber"],
+      ["lime", "coral", "cocoa", "amber"],
+      ["teal", "cobalt", "rose", "lemon"],
+      ["emerald", "sky", "amber", "violet"],
+      ["coral", "coral", "lime", "amber"],
+      ["rose", "emerald", "lemon", "lemon"],
+      ["violet", "magenta", "rose", "lime"],
+      ["teal", "violet", "cocoa", "teal"],
+      ["cobalt", "sky", "teal", "lime"],
+      ["magenta", "sky", "sky", "cobalt"],
+      ["magenta", "emerald", "cocoa", "rose"],
+      ["emerald", "magenta", "lemon", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4314
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4314,
+    },
   },
   "127": {
-    "id": "127",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "coral",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "emerald",
-        "sky",
-        "coral"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "teal",
-        "coral",
-        "violet",
-        "violet"
-      ],
-      [
-        "lime",
-        "rose",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "emerald",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "violet",
-        "rose",
-        "teal"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "lime",
-        "teal"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "rose",
-        "lime",
-        "amber",
-        "emerald"
-      ],
+    id: "127",
+    capacity: 4,
+    board: [
+      ["lemon", "coral", "sky", "magenta"],
+      ["sky", "emerald", "sky", "coral"],
+      ["lemon", "cocoa", "cobalt", "violet"],
+      ["cobalt", "amber", "magenta", "lemon"],
+      ["teal", "coral", "violet", "violet"],
+      ["lime", "rose", "magenta", "sky"],
+      ["coral", "emerald", "amber", "cobalt"],
+      ["teal", "violet", "rose", "teal"],
+      ["lemon", "emerald", "rose", "cocoa"],
+      ["magenta", "cocoa", "lime", "teal"],
+      ["amber", "cobalt", "cocoa", "lime"],
+      ["rose", "lime", "amber", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6313
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6313,
+    },
   },
   "128": {
-    "id": "128",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "sky",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "violet",
-        "emerald",
-        "sky"
-      ],
-      [
-        "rose",
-        "coral",
-        "lime",
-        "sky"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "sky"
-      ],
-      [
-        "coral",
-        "violet",
-        "coral",
-        "rose"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "magenta",
-        "teal"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "amber",
-        "lemon"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "rose",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "emerald",
-        "teal"
-      ],
-      [
-        "teal",
-        "lime",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "violet",
-        "teal",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "cocoa",
-        "amber"
-      ],
+    id: "128",
+    capacity: 4,
+    board: [
+      ["magenta", "sky", "lime", "cocoa"],
+      ["magenta", "violet", "emerald", "sky"],
+      ["rose", "coral", "lime", "sky"],
+      ["lime", "emerald", "lemon", "sky"],
+      ["coral", "violet", "coral", "rose"],
+      ["amber", "cobalt", "magenta", "teal"],
+      ["coral", "cobalt", "amber", "lemon"],
+      ["rose", "cobalt", "rose", "lemon"],
+      ["cocoa", "lemon", "emerald", "teal"],
+      ["teal", "lime", "cobalt", "amber"],
+      ["violet", "teal", "emerald", "magenta"],
+      ["violet", "cocoa", "cocoa", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5806
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5806,
+    },
   },
   "129": {
-    "id": "129",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "sky",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "emerald",
-        "rose",
-        "sky",
-        "rose"
-      ],
-      [
-        "teal",
-        "rose",
-        "magenta",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "amber",
-        "magenta"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "violet",
-        "amber"
-      ],
-      [
-        "amber",
-        "rose",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lime",
-        "sky",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cocoa",
-        "lime"
-      ],
+    id: "129",
+    capacity: 4,
+    board: [
+      ["coral", "sky", "cocoa", "lime"],
+      ["cobalt", "violet", "cocoa", "violet"],
+      ["lemon", "teal", "cobalt", "coral"],
+      ["emerald", "rose", "sky", "rose"],
+      ["teal", "rose", "magenta", "teal"],
+      ["magenta", "cocoa", "magenta", "emerald"],
+      ["lemon", "coral", "amber", "lime"],
+      ["violet", "teal", "amber", "magenta"],
+      ["coral", "cobalt", "violet", "amber"],
+      ["amber", "rose", "lemon", "cobalt"],
+      ["lemon", "lime", "sky", "emerald"],
+      ["emerald", "sky", "cocoa", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5628
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5628,
+    },
   },
   "130": {
-    "id": "130",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "teal",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "amber",
-        "sky",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "lime",
-        "magenta",
-        "magenta",
-        "coral"
-      ],
-      [
-        "rose",
-        "amber",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "teal",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "rose",
-        "coral",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "magenta",
-        "amber"
-      ],
-      [
-        "rose",
-        "rose",
-        "sky",
-        "sky"
-      ],
+    id: "130",
+    capacity: 4,
+    board: [
+      ["lemon", "teal", "cocoa", "cobalt"],
+      ["coral", "emerald", "magenta", "emerald"],
+      ["cobalt", "coral", "violet", "cocoa"],
+      ["lime", "emerald", "sky", "lime"],
+      ["amber", "sky", "cocoa", "lemon"],
+      ["emerald", "amber", "violet", "lime"],
+      ["lime", "magenta", "magenta", "coral"],
+      ["rose", "amber", "teal", "cobalt"],
+      ["lemon", "teal", "lemon", "cobalt"],
+      ["violet", "rose", "coral", "teal"],
+      ["cocoa", "violet", "magenta", "amber"],
+      ["rose", "rose", "sky", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3653
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3653,
+    },
   },
   "131": {
-    "id": "131",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "coral",
-        "amber",
-        "violet"
-      ],
-      [
-        "sky",
-        "rose",
-        "sky",
-        "sky"
-      ],
-      [
-        "magenta",
-        "violet",
-        "rose",
-        "emerald"
-      ],
-      [
-        "teal",
-        "coral",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "amber",
-        "teal",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lime",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "amber",
-        "teal"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lime",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "coral",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "cocoa"
-      ],
+    id: "131",
+    capacity: 4,
+    board: [
+      ["sky", "coral", "amber", "violet"],
+      ["sky", "rose", "sky", "sky"],
+      ["magenta", "violet", "rose", "emerald"],
+      ["teal", "coral", "cocoa", "cobalt"],
+      ["rose", "amber", "teal", "rose"],
+      ["cobalt", "lemon", "lime", "violet"],
+      ["cocoa", "violet", "lemon", "amber"],
+      ["cobalt", "magenta", "amber", "teal"],
+      ["emerald", "teal", "lime", "emerald"],
+      ["emerald", "coral", "coral", "cocoa"],
+      ["lime", "cobalt", "magenta", "lime"],
+      ["lemon", "lemon", "magenta", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3666
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3666,
+    },
   },
   "132": {
-    "id": "132",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "magenta",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "rose",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "coral",
-        "lime"
-      ],
-      [
-        "amber",
-        "teal",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "rose"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "violet",
-        "coral"
-      ],
-      [
-        "coral",
-        "sky",
-        "magenta",
-        "sky"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "lime",
-        "amber"
-      ],
-      [
-        "lime",
-        "rose",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "magenta",
-        "coral"
-      ],
-      [
-        "violet",
-        "amber",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "cobalt",
-        "rose"
-      ],
+    id: "132",
+    capacity: 4,
+    board: [
+      ["teal", "magenta", "teal", "emerald"],
+      ["lemon", "rose", "violet", "cocoa"],
+      ["cocoa", "violet", "coral", "lime"],
+      ["amber", "teal", "sky", "cobalt"],
+      ["lemon", "cobalt", "magenta", "rose"],
+      ["emerald", "emerald", "violet", "coral"],
+      ["coral", "sky", "magenta", "sky"],
+      ["lime", "cocoa", "lime", "amber"],
+      ["lime", "rose", "cocoa", "amber"],
+      ["sky", "cobalt", "magenta", "coral"],
+      ["violet", "amber", "teal", "emerald"],
+      ["lemon", "lemon", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5859
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5859,
+    },
   },
   "133": {
-    "id": "133",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "teal",
-        "amber",
-        "coral",
-        "rose"
-      ],
-      [
-        "coral",
-        "violet",
-        "lime",
-        "amber"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lemon",
-        "rose"
-      ],
-      [
-        "lime",
-        "violet",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "rose",
-        "emerald",
-        "amber"
-      ],
-      [
-        "emerald",
-        "teal",
-        "magenta",
-        "sky"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "lime"
-      ],
-      [
-        "violet",
-        "emerald",
-        "cobalt",
-        "cobalt"
-      ],
+    id: "133",
+    capacity: 4,
+    board: [
+      ["cocoa", "teal", "violet", "lime"],
+      ["teal", "amber", "coral", "rose"],
+      ["coral", "violet", "lime", "amber"],
+      ["coral", "magenta", "lemon", "rose"],
+      ["lime", "violet", "emerald", "cobalt"],
+      ["cobalt", "coral", "amber", "cocoa"],
+      ["lemon", "lemon", "lemon", "cocoa"],
+      ["teal", "magenta", "sky", "cocoa"],
+      ["sky", "rose", "emerald", "amber"],
+      ["emerald", "teal", "magenta", "sky"],
+      ["magenta", "sky", "rose", "lime"],
+      ["violet", "emerald", "cobalt", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.288
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.288,
+    },
   },
   "134": {
-    "id": "134",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "amber"
-      ],
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "amber",
-        "coral"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "rose",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "lime",
-        "rose",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "sky",
-        "violet",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lemon",
-        "violet",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "lime",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "violet",
-        "magenta",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "lemon"
-      ],
+    id: "134",
+    capacity: 4,
+    board: [
+      ["cocoa", "coral", "emerald", "amber"],
+      ["sky", "lime", "lemon", "emerald"],
+      ["violet", "cobalt", "amber", "coral"],
+      ["teal", "cobalt", "cocoa", "rose"],
+      ["rose", "amber", "magenta", "coral"],
+      ["lime", "rose", "cobalt", "magenta"],
+      ["sky", "violet", "coral", "teal"],
+      ["teal", "cocoa", "cobalt", "rose"],
+      ["lemon", "violet", "cocoa", "lime"],
+      ["lime", "sky", "emerald", "amber"],
+      ["violet", "magenta", "emerald", "lemon"],
+      ["teal", "magenta", "sky", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 42,
-      "difficultyScore": 0.7191
-    }
+    development: {
+      optimalMoveCount: 42,
+      difficultyScore: 0.7191,
+    },
   },
   "135": {
-    "id": "135",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "violet",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "teal",
-        "emerald",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lemon",
-        "amber",
-        "amber",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "emerald",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "magenta",
-        "rose",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "lime",
-        "rose",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "coral"
-      ],
-      [
-        "coral",
-        "coral",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "magenta",
-        "violet",
-        "magenta"
-      ],
+    id: "135",
+    capacity: 4,
+    board: [
+      ["amber", "violet", "cobalt", "sky"],
+      ["teal", "emerald", "cocoa", "sky"],
+      ["sky", "cobalt", "magenta", "rose"],
+      ["lemon", "amber", "amber", "amber"],
+      ["teal", "cobalt", "lemon", "rose"],
+      ["cocoa", "emerald", "emerald", "lime"],
+      ["teal", "cocoa", "cobalt", "violet"],
+      ["magenta", "rose", "violet", "lemon"],
+      ["emerald", "lime", "rose", "lime"],
+      ["lemon", "cocoa", "lime", "coral"],
+      ["coral", "coral", "teal", "coral"],
+      ["sky", "magenta", "violet", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4286
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4286,
+    },
   },
   "136": {
-    "id": "136",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "cobalt",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "teal",
-        "amber",
-        "sky"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "lime",
-        "rose",
-        "lemon",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lime",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "amber",
-        "violet",
-        "lime",
-        "sky"
-      ],
-      [
-        "magenta",
-        "teal",
-        "emerald",
-        "teal"
-      ],
-      [
-        "magenta",
-        "lime",
-        "amber",
-        "teal"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "emerald",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "sky",
-        "sky"
-      ],
-      [
-        "rose",
-        "amber",
-        "coral",
-        "magenta"
-      ],
+    id: "136",
+    capacity: 4,
+    board: [
+      ["cocoa", "cobalt", "cobalt", "cobalt"],
+      ["violet", "teal", "amber", "sky"],
+      ["violet", "rose", "emerald", "rose"],
+      ["cocoa", "cobalt", "cocoa", "violet"],
+      ["lime", "rose", "lemon", "coral"],
+      ["magenta", "lime", "lemon", "lemon"],
+      ["amber", "violet", "lime", "sky"],
+      ["magenta", "teal", "emerald", "teal"],
+      ["magenta", "lime", "amber", "teal"],
+      ["coral", "cocoa", "emerald", "coral"],
+      ["emerald", "lemon", "sky", "sky"],
+      ["rose", "amber", "coral", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3296
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3296,
+    },
   },
   "137": {
-    "id": "137",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "emerald",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "coral",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "rose",
-        "coral",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "magenta",
-        "amber"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "amber",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "magenta",
-        "sky"
-      ],
-      [
-        "lime",
-        "teal",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "sky",
-        "teal",
-        "violet",
-        "emerald"
-      ],
-      [
-        "lime",
-        "magenta",
-        "sky",
-        "rose"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "teal",
-        "rose"
-      ],
+    id: "137",
+    capacity: 4,
+    board: [
+      ["emerald", "emerald", "teal", "cobalt"],
+      ["coral", "coral", "coral", "cocoa"],
+      ["cocoa", "lime", "lemon", "cobalt"],
+      ["violet", "rose", "coral", "lime"],
+      ["cobalt", "cobalt", "magenta", "amber"],
+      ["violet", "cocoa", "amber", "lemon"],
+      ["lemon", "emerald", "magenta", "sky"],
+      ["lime", "teal", "cocoa", "rose"],
+      ["sky", "teal", "violet", "emerald"],
+      ["lime", "magenta", "sky", "rose"],
+      ["magenta", "amber", "violet", "sky"],
+      ["lemon", "amber", "teal", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2338
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2338,
+    },
   },
   "138": {
-    "id": "138",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lemon",
-        "magenta",
-        "violet"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "amber",
-        "emerald",
-        "amber"
-      ],
-      [
-        "emerald",
-        "sky",
-        "rose",
-        "sky"
-      ],
-      [
-        "teal",
-        "lime",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "rose",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "rose",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "violet",
-        "violet",
-        "coral"
-      ],
+    id: "138",
+    capacity: 4,
+    board: [
+      ["amber", "lemon", "magenta", "violet"],
+      ["lemon", "rose", "cobalt", "amber"],
+      ["violet", "cobalt", "teal", "lemon"],
+      ["emerald", "coral", "lime", "cocoa"],
+      ["sky", "amber", "emerald", "amber"],
+      ["emerald", "sky", "rose", "sky"],
+      ["teal", "lime", "coral", "cocoa"],
+      ["teal", "magenta", "magenta", "cobalt"],
+      ["lemon", "rose", "teal", "cocoa"],
+      ["lime", "rose", "cocoa", "sky"],
+      ["coral", "lime", "emerald", "cobalt"],
+      ["magenta", "violet", "violet", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5003
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5003,
+    },
   },
   "139": {
-    "id": "139",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "amber",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "rose",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lemon",
-        "rose"
-      ],
-      [
-        "violet",
-        "lime",
-        "violet",
-        "teal"
-      ],
-      [
-        "magenta",
-        "violet",
-        "rose",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lemon",
-        "sky"
-      ],
-      [
-        "emerald",
-        "teal",
-        "coral",
-        "magenta"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "amber"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lime",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "amber",
-        "cobalt"
-      ],
+    id: "139",
+    capacity: 4,
+    board: [
+      ["cobalt", "amber", "sky", "magenta"],
+      ["sky", "cobalt", "rose", "lime"],
+      ["cobalt", "coral", "cocoa", "emerald"],
+      ["teal", "cocoa", "lemon", "rose"],
+      ["violet", "lime", "violet", "teal"],
+      ["magenta", "violet", "rose", "magenta"],
+      ["coral", "lemon", "lemon", "sky"],
+      ["emerald", "teal", "coral", "magenta"],
+      ["coral", "emerald", "sky", "amber"],
+      ["lime", "emerald", "violet", "lemon"],
+      ["rose", "lime", "teal", "cocoa"],
+      ["cocoa", "amber", "amber", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3502
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3502,
+    },
   },
   "140": {
-    "id": "140",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cocoa",
-        "sky",
-        "coral"
-      ],
-      [
-        "coral",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "lemon",
-        "teal",
-        "coral",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "teal",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "sky"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "rose",
-        "amber",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "lime",
-        "magenta",
-        "lime",
-        "amber"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
+    id: "140",
+    capacity: 4,
+    board: [
+      ["violet", "cocoa", "sky", "coral"],
+      ["coral", "teal", "lemon", "rose"],
+      ["lemon", "teal", "coral", "magenta"],
+      ["cocoa", "amber", "teal", "emerald"],
+      ["emerald", "rose", "teal", "sky"],
+      ["violet", "cobalt", "cocoa", "cobalt"],
+      ["lemon", "rose", "amber", "violet"],
+      ["cobalt", "rose", "cocoa", "sky"],
+      ["magenta", "lime", "amber", "violet"],
+      ["lime", "magenta", "lime", "amber"],
+      ["emerald", "emerald", "sky", "lime"],
+      ["cobalt", "coral", "lemon", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5922
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5922,
+    },
   },
   "141": {
-    "id": "141",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "teal",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "violet",
-        "coral"
-      ],
-      [
-        "coral",
-        "coral",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "teal",
-        "violet",
-        "teal",
-        "rose"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "rose",
-        "amber",
-        "sky",
-        "sky"
-      ],
+    id: "141",
+    capacity: 4,
+    board: [
+      ["cobalt", "lime", "lime", "teal"],
+      ["lime", "violet", "sky", "cocoa"],
+      ["lemon", "cobalt", "emerald", "lemon"],
+      ["magenta", "teal", "emerald", "amber"],
+      ["cocoa", "amber", "rose", "cocoa"],
+      ["sky", "magenta", "cocoa", "coral"],
+      ["magenta", "amber", "violet", "lime"],
+      ["cobalt", "emerald", "violet", "coral"],
+      ["coral", "coral", "cobalt", "rose"],
+      ["teal", "violet", "teal", "rose"],
+      ["lemon", "magenta", "lemon", "emerald"],
+      ["rose", "amber", "sky", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3819
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3819,
+    },
   },
   "142": {
-    "id": "142",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "magenta",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lime",
-        "rose",
-        "amber",
-        "amber"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "amber",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "lime",
-        "rose"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "violet",
-        "lemon",
-        "teal",
-        "sky"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "sky",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "teal",
-        "coral"
-      ],
+    id: "142",
+    capacity: 4,
+    board: [
+      ["lime", "magenta", "coral", "magenta"],
+      ["lime", "rose", "amber", "amber"],
+      ["sky", "cocoa", "amber", "violet"],
+      ["cobalt", "violet", "lime", "rose"],
+      ["teal", "cocoa", "amber", "cocoa"],
+      ["cobalt", "emerald", "rose", "cobalt"],
+      ["magenta", "lemon", "rose", "cobalt"],
+      ["coral", "lemon", "teal", "emerald"],
+      ["emerald", "lime", "sky", "lemon"],
+      ["violet", "lemon", "teal", "sky"],
+      ["magenta", "emerald", "sky", "coral"],
+      ["cocoa", "violet", "teal", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.4786
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.4786,
+    },
   },
   "143": {
-    "id": "143",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "rose",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "rose",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "lemon",
-        "teal",
-        "magenta",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "sky",
-        "violet"
-      ],
-      [
-        "lemon",
-        "coral",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "sky",
-        "teal",
-        "amber"
-      ],
-      [
-        "rose",
-        "rose",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "sky",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "magenta",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "amber",
-        "sky"
-      ],
+    id: "143",
+    capacity: 4,
+    board: [
+      ["violet", "rose", "coral", "cobalt"],
+      ["amber", "rose", "cocoa", "coral"],
+      ["lemon", "teal", "magenta", "amber"],
+      ["cocoa", "lemon", "sky", "violet"],
+      ["lemon", "coral", "lime", "cocoa"],
+      ["teal", "sky", "teal", "amber"],
+      ["rose", "rose", "magenta", "cobalt"],
+      ["lime", "sky", "cocoa", "violet"],
+      ["lime", "emerald", "violet", "teal"],
+      ["cobalt", "emerald", "emerald", "emerald"],
+      ["lime", "magenta", "magenta", "lemon"],
+      ["cobalt", "coral", "amber", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3942
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3942,
+    },
   },
   "144": {
-    "id": "144",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cocoa",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "rose"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "amber",
-        "rose",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "teal",
-        "coral"
-      ],
-      [
-        "lime",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "emerald",
-        "violet",
-        "lime",
-        "rose"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
+    id: "144",
+    capacity: 4,
+    board: [
+      ["teal", "cocoa", "cobalt", "emerald"],
+      ["cocoa", "cobalt", "lime", "cocoa"],
+      ["magenta", "teal", "violet", "rose"],
+      ["rose", "violet", "sky", "sky"],
+      ["lemon", "amber", "amber", "cobalt"],
+      ["coral", "magenta", "teal", "magenta"],
+      ["amber", "emerald", "lemon", "cobalt"],
+      ["coral", "amber", "rose", "lemon"],
+      ["emerald", "lemon", "teal", "coral"],
+      ["lime", "violet", "coral", "sky"],
+      ["emerald", "violet", "lime", "rose"],
+      ["lime", "cocoa", "sky", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3554
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3554,
+    },
   },
   "145": {
-    "id": "145",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "cobalt",
-        "coral",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "teal",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "teal",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "lime",
-        "amber"
-      ],
-      [
-        "rose",
-        "lime",
-        "amber",
-        "sky"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "rose",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "sky",
-        "coral"
-      ],
-      [
-        "violet",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
+    id: "145",
+    capacity: 4,
+    board: [
+      ["lemon", "cobalt", "coral", "lemon"],
+      ["lemon", "cocoa", "teal", "magenta"],
+      ["magenta", "magenta", "violet", "violet"],
+      ["cocoa", "amber", "teal", "teal"],
+      ["lime", "violet", "lime", "amber"],
+      ["rose", "lime", "amber", "sky"],
+      ["magenta", "cocoa", "rose", "lemon"],
+      ["coral", "cobalt", "rose", "sky"],
+      ["emerald", "rose", "teal", "emerald"],
+      ["emerald", "sky", "coral", "cobalt"],
+      ["lime", "cobalt", "sky", "coral"],
+      ["violet", "amber", "cocoa", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3312
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3312,
+    },
   },
   "146": {
-    "id": "146",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "rose",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "lime",
-        "sky",
-        "violet"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "teal",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lime",
-        "coral",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "violet",
-        "sky",
-        "lemon",
-        "violet"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "rose",
-        "teal",
-        "magenta",
-        "sky"
-      ],
+    id: "146",
+    capacity: 4,
+    board: [
+      ["cocoa", "rose", "lemon", "coral"],
+      ["cobalt", "cobalt", "cobalt", "lime"],
+      ["rose", "lime", "sky", "violet"],
+      ["lemon", "magenta", "cocoa", "violet"],
+      ["teal", "sky", "emerald", "amber"],
+      ["lime", "cocoa", "amber", "cobalt"],
+      ["coral", "rose", "teal", "magenta"],
+      ["amber", "lime", "coral", "emerald"],
+      ["teal", "cocoa", "coral", "emerald"],
+      ["violet", "sky", "lemon", "violet"],
+      ["amber", "emerald", "lemon", "magenta"],
+      ["rose", "teal", "magenta", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4789
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4789,
+    },
   },
   "147": {
-    "id": "147",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "teal",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "magenta",
-        "sky"
-      ],
-      [
-        "teal",
-        "sky",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "lime",
-        "magenta",
-        "coral"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "magenta",
-        "rose"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lime",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "magenta",
-        "violet",
-        "sky"
-      ],
-      [
-        "coral",
-        "lemon",
-        "teal",
-        "sky"
-      ],
-      [
-        "violet",
-        "emerald",
-        "coral",
-        "rose"
-      ],
+    id: "147",
+    capacity: 4,
+    board: [
+      ["teal", "teal", "coral", "cobalt"],
+      ["emerald", "cobalt", "magenta", "sky"],
+      ["teal", "sky", "amber", "cobalt"],
+      ["rose", "lime", "magenta", "coral"],
+      ["amber", "lemon", "cocoa", "emerald"],
+      ["lemon", "emerald", "magenta", "rose"],
+      ["rose", "cocoa", "lime", "amber"],
+      ["cocoa", "violet", "lime", "lemon"],
+      ["lime", "cocoa", "violet", "cobalt"],
+      ["amber", "magenta", "violet", "sky"],
+      ["coral", "lemon", "teal", "sky"],
+      ["violet", "emerald", "coral", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4466
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4466,
+    },
   },
   "148": {
-    "id": "148",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "amber",
-        "coral",
-        "sky"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "sky",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "amber",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lime",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "lime",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "violet",
-        "coral",
-        "teal"
-      ],
-      [
-        "emerald",
-        "violet",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "coral",
-        "rose"
-      ],
-      [
-        "violet",
-        "sky",
-        "rose",
-        "teal"
-      ],
+    id: "148",
+    capacity: 4,
+    board: [
+      ["cobalt", "amber", "coral", "sky"],
+      ["rose", "magenta", "lime", "cobalt"],
+      ["rose", "sky", "magenta", "cocoa"],
+      ["sky", "emerald", "lemon", "amber"],
+      ["cocoa", "magenta", "lime", "lemon"],
+      ["coral", "amber", "teal", "emerald"],
+      ["lime", "amber", "cocoa", "emerald"],
+      ["lemon", "lime", "cobalt", "cocoa"],
+      ["teal", "violet", "coral", "teal"],
+      ["emerald", "violet", "violet", "cobalt"],
+      ["magenta", "lemon", "coral", "rose"],
+      ["violet", "sky", "rose", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.2498
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.2498,
+    },
   },
   "149": {
-    "id": "149",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cobalt",
-        "coral",
-        "lime"
-      ],
-      [
-        "magenta",
-        "coral",
-        "amber",
-        "rose"
-      ],
-      [
-        "rose",
-        "lime",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "coral",
-        "lemon",
-        "violet"
-      ],
-      [
-        "sky",
-        "teal",
-        "sky",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "violet",
-        "rose"
-      ],
-      [
-        "coral",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lemon",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "lemon",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "emerald",
-        "violet"
-      ],
-      [
-        "amber",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "amber"
-      ],
+    id: "149",
+    capacity: 4,
+    board: [
+      ["teal", "cobalt", "coral", "lime"],
+      ["magenta", "coral", "amber", "rose"],
+      ["rose", "lime", "cocoa", "cocoa"],
+      ["magenta", "coral", "lemon", "violet"],
+      ["sky", "teal", "sky", "sky"],
+      ["cobalt", "lime", "violet", "rose"],
+      ["coral", "lemon", "teal", "emerald"],
+      ["teal", "lemon", "cocoa", "emerald"],
+      ["cobalt", "cobalt", "lemon", "lime"],
+      ["cocoa", "emerald", "emerald", "violet"],
+      ["amber", "sky", "rose", "violet"],
+      ["amber", "magenta", "magenta", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.4108
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.4108,
+    },
   },
   "150": {
-    "id": "150",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "sky",
-        "emerald",
-        "rose"
-      ],
-      [
-        "emerald",
-        "sky",
-        "lime",
-        "violet"
-      ],
-      [
-        "coral",
-        "lemon",
-        "amber",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "magenta",
-        "coral"
-      ],
-      [
-        "sky",
-        "lime",
-        "violet",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "amber",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "teal",
-        "teal"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "teal",
-        "amber"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "lime",
-        "rose"
-      ],
-      [
-        "rose",
-        "coral",
-        "magenta",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "lemon",
-        "amber",
-        "cobalt"
-      ],
+    id: "150",
+    capacity: 4,
+    board: [
+      ["violet", "sky", "emerald", "rose"],
+      ["emerald", "sky", "lime", "violet"],
+      ["coral", "lemon", "amber", "lemon"],
+      ["lime", "cobalt", "magenta", "coral"],
+      ["sky", "lime", "violet", "magenta"],
+      ["sky", "cobalt", "amber", "rose"],
+      ["cocoa", "cocoa", "teal", "teal"],
+      ["violet", "cobalt", "teal", "amber"],
+      ["lemon", "emerald", "lime", "rose"],
+      ["rose", "coral", "magenta", "coral"],
+      ["emerald", "magenta", "cocoa", "cocoa"],
+      ["teal", "lemon", "amber", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4869
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4869,
+    },
   },
   "151": {
-    "id": "151",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "lime",
-        "coral"
-      ],
-      [
-        "emerald",
-        "amber",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "teal",
-        "teal",
-        "rose",
-        "rose"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "lime",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "violet",
-        "coral",
-        "teal",
-        "amber"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "teal",
-        "lime"
-      ],
-      [
-        "coral",
-        "magenta",
-        "amber",
-        "coral"
-      ],
+    id: "151",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "lime", "coral"],
+      ["emerald", "amber", "emerald", "cobalt"],
+      ["cocoa", "cobalt", "cocoa", "sky"],
+      ["teal", "teal", "rose", "rose"],
+      ["violet", "magenta", "lemon", "cocoa"],
+      ["violet", "sky", "emerald", "magenta"],
+      ["cobalt", "rose", "sky", "violet"],
+      ["amber", "lime", "magenta", "lemon"],
+      ["violet", "coral", "teal", "amber"],
+      ["lemon", "cocoa", "emerald", "rose"],
+      ["lime", "cobalt", "teal", "lime"],
+      ["coral", "magenta", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3534
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3534,
+    },
   },
   "152": {
-    "id": "152",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "amber",
-        "lime",
-        "violet"
-      ],
-      [
-        "rose",
-        "lemon",
-        "violet",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "emerald",
-        "lime"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "coral",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "lemon",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "teal",
-        "teal",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "rose"
-      ],
+    id: "152",
+    capacity: 4,
+    board: [
+      ["amber", "lemon", "violet", "cobalt"],
+      ["lime", "amber", "lime", "violet"],
+      ["rose", "lemon", "violet", "lime"],
+      ["cocoa", "cocoa", "emerald", "lime"],
+      ["sky", "cobalt", "sky", "magenta"],
+      ["sky", "coral", "teal", "magenta"],
+      ["amber", "amber", "magenta", "coral"],
+      ["cocoa", "violet", "coral", "emerald"],
+      ["lemon", "magenta", "lemon", "coral"],
+      ["rose", "emerald", "cobalt", "emerald"],
+      ["teal", "teal", "rose", "cocoa"],
+      ["cobalt", "sky", "teal", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4801
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4801,
+    },
   },
   "153": {
-    "id": "153",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "rose",
-        "teal",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "amber",
-        "coral"
-      ],
-      [
-        "coral",
-        "sky",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "teal",
-        "teal",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "emerald",
-        "lime"
-      ],
-      [
-        "lime",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "coral",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lemon",
-        "rose",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "violet",
-        "amber",
-        "magenta"
-      ],
+    id: "153",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "teal", "teal"],
+      ["coral", "rose", "cocoa", "cocoa"],
+      ["rose", "sky", "amber", "lime"],
+      ["cobalt", "lemon", "amber", "coral"],
+      ["coral", "sky", "cobalt", "emerald"],
+      ["lemon", "teal", "teal", "sky"],
+      ["cobalt", "violet", "emerald", "lime"],
+      ["lime", "emerald", "sky", "lime"],
+      ["coral", "violet", "cobalt", "cocoa"],
+      ["amber", "lemon", "rose", "violet"],
+      ["cocoa", "magenta", "lemon", "magenta"],
+      ["emerald", "violet", "amber", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3459
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3459,
+    },
   },
   "154": {
-    "id": "154",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "teal",
-        "lime",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "teal",
-        "sky"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "sky",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "rose",
-        "magenta",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "rose",
-        "lime"
-      ],
-      [
-        "sky",
-        "teal",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "coral",
-        "rose"
-      ],
+    id: "154",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "cocoa", "lime"],
+      ["amber", "lemon", "cobalt", "violet"],
+      ["teal", "lime", "magenta", "lemon"],
+      ["lemon", "cobalt", "teal", "sky"],
+      ["sky", "rose", "cocoa", "violet"],
+      ["sky", "amber", "violet", "lime"],
+      ["cobalt", "coral", "emerald", "emerald"],
+      ["rose", "magenta", "cobalt", "amber"],
+      ["magenta", "emerald", "rose", "lime"],
+      ["sky", "teal", "cocoa", "emerald"],
+      ["coral", "amber", "coral", "magenta"],
+      ["cocoa", "lemon", "coral", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.2988
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.2988,
+    },
   },
   "155": {
-    "id": "155",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "violet",
-        "sky",
-        "rose"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "teal",
-        "sky"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "lemon",
-        "teal"
-      ],
-      [
-        "violet",
-        "rose",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "coral",
-        "emerald",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "violet",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "coral",
-        "rose"
-      ],
+    id: "155",
+    capacity: 4,
+    board: [
+      ["sky", "violet", "sky", "rose"],
+      ["amber", "magenta", "coral", "lemon"],
+      ["emerald", "magenta", "teal", "sky"],
+      ["lemon", "emerald", "lemon", "teal"],
+      ["violet", "rose", "cocoa", "cobalt"],
+      ["teal", "cocoa", "lime", "cobalt"],
+      ["amber", "amber", "violet", "lime"],
+      ["coral", "emerald", "emerald", "magenta"],
+      ["sky", "lime", "coral", "cocoa"],
+      ["magenta", "teal", "cobalt", "lemon"],
+      ["violet", "lime", "rose", "cobalt"],
+      ["amber", "cocoa", "coral", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.7
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.7,
+    },
   },
   "156": {
-    "id": "156",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "magenta"
-      ],
-      [
-        "violet",
-        "emerald",
-        "coral",
-        "lime"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "emerald"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "rose",
-        "amber",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lemon",
-        "rose",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "teal",
-        "teal"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "violet",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "violet",
-        "coral"
-      ],
-      [
-        "emerald",
-        "violet",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lime",
-        "cocoa"
-      ],
+    id: "156",
+    capacity: 4,
+    board: [
+      ["teal", "magenta", "sky", "magenta"],
+      ["violet", "emerald", "coral", "lime"],
+      ["sky", "lime", "coral", "emerald"],
+      ["rose", "emerald", "cocoa", "amber"],
+      ["rose", "amber", "cobalt", "cobalt"],
+      ["amber", "lemon", "lemon", "amber"],
+      ["lemon", "rose", "magenta", "sky"],
+      ["cobalt", "lime", "teal", "teal"],
+      ["magenta", "lemon", "violet", "coral"],
+      ["sky", "cobalt", "violet", "coral"],
+      ["emerald", "violet", "teal", "cocoa"],
+      ["cocoa", "rose", "lime", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2089
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2089,
+    },
   },
   "157": {
-    "id": "157",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "coral",
-        "teal",
-        "emerald"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "lime",
-        "rose",
-        "teal"
-      ],
-      [
-        "amber",
-        "lime",
-        "amber",
-        "magenta"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "coral",
-        "lemon",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "rose",
-        "violet"
-      ],
-      [
-        "coral",
-        "teal",
-        "emerald",
-        "sky"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "rose",
-        "emerald"
-      ],
+    id: "157",
+    capacity: 4,
+    board: [
+      ["magenta", "coral", "teal", "emerald"],
+      ["amber", "sky", "lime", "cocoa"],
+      ["coral", "cocoa", "violet", "cobalt"],
+      ["sky", "lime", "rose", "teal"],
+      ["amber", "lime", "amber", "magenta"],
+      ["teal", "rose", "cobalt", "magenta"],
+      ["lemon", "magenta", "violet", "emerald"],
+      ["lemon", "lemon", "cobalt", "amber"],
+      ["coral", "lemon", "cocoa", "violet"],
+      ["cocoa", "lime", "rose", "violet"],
+      ["coral", "teal", "emerald", "sky"],
+      ["sky", "cobalt", "rose", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6787
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6787,
+    },
   },
   "158": {
-    "id": "158",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "teal",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "coral",
-        "sky",
-        "magenta"
-      ],
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "amber"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "sky",
-        "coral"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "rose",
-        "emerald"
-      ],
+    id: "158",
+    capacity: 4,
+    board: [
+      ["magenta", "violet", "cobalt", "lime"],
+      ["rose", "teal", "violet", "cocoa"],
+      ["rose", "cocoa", "cocoa", "lemon"],
+      ["magenta", "emerald", "cobalt", "lemon"],
+      ["magenta", "coral", "sky", "magenta"],
+      ["teal", "violet", "emerald", "amber"],
+      ["amber", "sky", "lime", "teal"],
+      ["lime", "lemon", "sky", "coral"],
+      ["lemon", "amber", "emerald", "sky"],
+      ["coral", "lime", "teal", "amber"],
+      ["cobalt", "coral", "rose", "cobalt"],
+      ["cocoa", "violet", "rose", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4108
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4108,
+    },
   },
   "159": {
-    "id": "159",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "rose",
-        "violet",
-        "teal"
-      ],
-      [
-        "amber",
-        "amber",
-        "rose",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "amber",
-        "magenta",
-        "violet"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "rose",
-        "sky",
-        "sky",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "violet",
-        "coral",
-        "lime"
-      ],
-      [
-        "sky",
-        "emerald",
-        "coral",
-        "rose"
-      ],
-      [
-        "emerald",
-        "coral",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "coral",
-        "teal",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "lime",
-        "lime",
-        "cocoa",
-        "teal"
-      ],
+    id: "159",
+    capacity: 4,
+    board: [
+      ["lime", "rose", "violet", "teal"],
+      ["amber", "amber", "rose", "lemon"],
+      ["lemon", "amber", "magenta", "violet"],
+      ["teal", "cobalt", "cobalt", "lemon"],
+      ["rose", "sky", "sky", "emerald"],
+      ["lemon", "violet", "coral", "lime"],
+      ["sky", "emerald", "coral", "rose"],
+      ["emerald", "coral", "magenta", "emerald"],
+      ["coral", "teal", "sky", "cobalt"],
+      ["amber", "cocoa", "cobalt", "cocoa"],
+      ["cocoa", "violet", "magenta", "magenta"],
+      ["lime", "lime", "cocoa", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2373
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2373,
+    },
   },
   "160": {
-    "id": "160",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "lemon",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "violet",
-        "magenta",
-        "amber",
-        "amber"
-      ],
-      [
-        "amber",
-        "coral",
-        "lemon",
-        "sky"
-      ],
-      [
-        "rose",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "sky"
-      ],
-      [
-        "lemon",
-        "coral",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "rose",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "teal"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "lime",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "violet",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "lime",
-        "cobalt"
-      ],
+    id: "160",
+    capacity: 4,
+    board: [
+      ["cocoa", "lemon", "cobalt", "amber"],
+      ["violet", "magenta", "amber", "amber"],
+      ["amber", "coral", "lemon", "sky"],
+      ["rose", "lemon", "teal", "emerald"],
+      ["emerald", "sky", "coral", "sky"],
+      ["lemon", "coral", "cobalt", "violet"],
+      ["emerald", "rose", "rose", "cocoa"],
+      ["coral", "emerald", "magenta", "teal"],
+      ["magenta", "teal", "violet", "lime"],
+      ["lime", "lime", "rose", "magenta"],
+      ["cobalt", "sky", "violet", "teal"],
+      ["cocoa", "cocoa", "lime", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2639
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2639,
+    },
   },
   "161": {
-    "id": "161",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lime",
-        "teal",
-        "lemon"
-      ],
-      [
-        "violet",
-        "amber",
-        "violet",
-        "lemon"
-      ],
-      [
-        "lime",
-        "emerald",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "amber",
-        "rose"
-      ],
-      [
-        "lemon",
-        "coral",
-        "magenta",
-        "amber"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "teal",
-        "emerald"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "sky"
-      ],
-      [
-        "teal",
-        "sky",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "magenta",
-        "coral"
-      ],
-      [
-        "lime",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "rose",
-        "coral"
-      ],
-      [
-        "rose",
-        "violet",
-        "cocoa",
-        "lime"
-      ],
+    id: "161",
+    capacity: 4,
+    board: [
+      ["sky", "lime", "teal", "lemon"],
+      ["violet", "amber", "violet", "lemon"],
+      ["lime", "emerald", "cocoa", "cobalt"],
+      ["amber", "cocoa", "amber", "rose"],
+      ["lemon", "coral", "magenta", "amber"],
+      ["emerald", "magenta", "teal", "emerald"],
+      ["violet", "rose", "emerald", "sky"],
+      ["teal", "sky", "sky", "magenta"],
+      ["cobalt", "cocoa", "magenta", "coral"],
+      ["lime", "teal", "cobalt", "lemon"],
+      ["cobalt", "coral", "rose", "coral"],
+      ["rose", "violet", "cocoa", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4898
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4898,
+    },
   },
   "162": {
-    "id": "162",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lime",
-        "lemon",
-        "rose"
-      ],
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "coral",
-        "violet"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "rose",
-        "sky"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "coral",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "lime",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "rose",
-        "amber",
-        "violet"
-      ],
+    id: "162",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "lemon", "rose"],
+      ["magenta", "amber", "lime", "emerald"],
+      ["magenta", "sky", "violet", "rose"],
+      ["cocoa", "cobalt", "coral", "violet"],
+      ["lemon", "lemon", "teal", "emerald"],
+      ["lemon", "magenta", "teal", "amber"],
+      ["cobalt", "teal", "rose", "sky"],
+      ["coral", "cocoa", "emerald", "cobalt"],
+      ["teal", "coral", "sky", "cocoa"],
+      ["coral", "cobalt", "sky", "emerald"],
+      ["magenta", "lime", "lime", "cocoa"],
+      ["amber", "rose", "amber", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4866
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4866,
+    },
   },
   "163": {
-    "id": "163",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cocoa",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "magenta",
-        "rose",
-        "amber"
-      ],
-      [
-        "teal",
-        "rose",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "sky",
-        "amber"
-      ],
-      [
-        "rose",
-        "amber",
-        "violet",
-        "coral"
-      ],
-      [
-        "lime",
-        "violet",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "coral",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "rose",
-        "violet"
-      ],
-      [
-        "lime",
-        "emerald",
-        "teal",
-        "sky"
-      ],
+    id: "163",
+    capacity: 4,
+    board: [
+      ["teal", "cocoa", "lime", "cobalt"],
+      ["lime", "sky", "teal", "cocoa"],
+      ["amber", "magenta", "rose", "amber"],
+      ["teal", "rose", "lemon", "lemon"],
+      ["cocoa", "emerald", "sky", "violet"],
+      ["magenta", "magenta", "sky", "amber"],
+      ["rose", "amber", "violet", "coral"],
+      ["lime", "violet", "cobalt", "cobalt"],
+      ["coral", "coral", "cocoa", "coral"],
+      ["emerald", "cobalt", "magenta", "emerald"],
+      ["lemon", "lemon", "rose", "violet"],
+      ["lime", "emerald", "teal", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3075
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3075,
+    },
   },
   "164": {
-    "id": "164",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "violet",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "emerald",
-        "sky",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "violet"
-      ],
-      [
-        "magenta",
-        "teal",
-        "coral",
-        "violet"
-      ],
-      [
-        "sky",
-        "emerald",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lime",
-        "rose",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "coral",
-        "amber",
-        "magenta",
-        "rose"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "coral"
-      ],
+    id: "164",
+    capacity: 4,
+    board: [
+      ["cobalt", "violet", "cocoa", "rose"],
+      ["emerald", "sky", "cocoa", "cocoa"],
+      ["lemon", "magenta", "violet", "cobalt"],
+      ["teal", "lime", "emerald", "lime"],
+      ["emerald", "sky", "amber", "cobalt"],
+      ["coral", "lemon", "rose", "violet"],
+      ["magenta", "teal", "coral", "violet"],
+      ["sky", "emerald", "magenta", "lemon"],
+      ["lime", "rose", "cobalt", "amber"],
+      ["coral", "amber", "magenta", "rose"],
+      ["amber", "cocoa", "lemon", "teal"],
+      ["lime", "sky", "teal", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4652
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4652,
+    },
   },
   "165": {
-    "id": "165",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "teal",
-        "magenta",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "rose",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "rose",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "teal",
-        "lime",
-        "violet"
-      ],
-      [
-        "coral",
-        "emerald",
-        "violet",
-        "amber"
-      ],
-      [
-        "rose",
-        "amber",
-        "amber",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "coral",
-        "sky",
-        "lemon"
-      ],
+    id: "165",
+    capacity: 4,
+    board: [
+      ["coral", "emerald", "magenta", "sky"],
+      ["cocoa", "lime", "coral", "cocoa"],
+      ["cocoa", "lime", "sky", "lemon"],
+      ["lemon", "cobalt", "magenta", "emerald"],
+      ["teal", "magenta", "teal", "cobalt"],
+      ["violet", "rose", "magenta", "cocoa"],
+      ["teal", "rose", "sky", "violet"],
+      ["amber", "teal", "lime", "violet"],
+      ["coral", "emerald", "violet", "amber"],
+      ["rose", "amber", "amber", "lemon"],
+      ["cobalt", "emerald", "cobalt", "rose"],
+      ["lime", "coral", "sky", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4548
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4548,
+    },
   },
   "166": {
-    "id": "166",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "magenta",
-        "teal",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "lemon",
-        "lime"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "rose",
-        "lime"
-      ],
-      [
-        "violet",
-        "emerald",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "magenta",
-        "coral"
-      ],
-      [
-        "emerald",
-        "amber",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "rose",
-        "sky",
-        "emerald"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "sky",
-        "violet",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "teal",
-        "amber",
-        "coral",
-        "rose"
-      ],
+    id: "166",
+    capacity: 4,
+    board: [
+      ["sky", "teal", "lime", "amber"],
+      ["magenta", "teal", "emerald", "rose"],
+      ["cocoa", "coral", "lemon", "lime"],
+      ["magenta", "magenta", "rose", "lime"],
+      ["violet", "emerald", "lime", "cobalt"],
+      ["lemon", "cocoa", "magenta", "coral"],
+      ["emerald", "amber", "teal", "cobalt"],
+      ["amber", "rose", "sky", "emerald"],
+      ["violet", "cocoa", "violet", "cobalt"],
+      ["lemon", "sky", "violet", "lemon"],
+      ["cocoa", "sky", "cobalt", "coral"],
+      ["teal", "amber", "coral", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5766
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5766,
+    },
   },
   "167": {
-    "id": "167",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "coral",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "sky",
-        "lemon"
-      ],
-      [
-        "amber",
-        "emerald",
-        "rose",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lime",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "violet",
-        "magenta"
-      ],
-      [
-        "coral",
-        "coral",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "teal",
-        "amber",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "violet"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lime",
-        "magenta",
-        "lime",
-        "teal"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "magenta",
-        "violet"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "amber",
-        "cobalt"
-      ],
+    id: "167",
+    capacity: 4,
+    board: [
+      ["sky", "coral", "magenta", "cocoa"],
+      ["emerald", "lemon", "sky", "lemon"],
+      ["amber", "emerald", "rose", "emerald"],
+      ["teal", "lime", "emerald", "lemon"],
+      ["sky", "cobalt", "violet", "magenta"],
+      ["coral", "coral", "amber", "cobalt"],
+      ["lemon", "teal", "amber", "rose"],
+      ["cocoa", "sky", "teal", "violet"],
+      ["violet", "coral", "cocoa", "rose"],
+      ["lime", "magenta", "lime", "teal"],
+      ["rose", "cobalt", "magenta", "violet"],
+      ["lime", "cocoa", "amber", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5095
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5095,
+    },
   },
   "168": {
-    "id": "168",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "cobalt",
-        "amber",
-        "magenta"
-      ],
-      [
-        "teal",
-        "rose",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "lemon"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "emerald",
-        "rose"
-      ],
-      [
-        "emerald",
-        "teal",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lime",
-        "lemon",
-        "coral",
-        "violet"
-      ],
-      [
-        "lime",
-        "amber",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "coral",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "sky",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
+    id: "168",
+    capacity: 4,
+    board: [
+      ["magenta", "cobalt", "amber", "magenta"],
+      ["teal", "rose", "violet", "lemon"],
+      ["rose", "sky", "amber", "lemon"],
+      ["teal", "rose", "cobalt", "emerald"],
+      ["coral", "lime", "emerald", "rose"],
+      ["emerald", "teal", "emerald", "lemon"],
+      ["cocoa", "sky", "violet", "magenta"],
+      ["lime", "lemon", "coral", "violet"],
+      ["lime", "amber", "violet", "magenta"],
+      ["cocoa", "coral", "coral", "lime"],
+      ["teal", "cocoa", "sky", "amber"],
+      ["cobalt", "cobalt", "cocoa", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5784
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5784,
+    },
   },
   "169": {
-    "id": "169",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "rose",
-        "lemon",
-        "sky"
-      ],
-      [
-        "sky",
-        "rose",
-        "magenta",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "lime",
-        "magenta"
-      ],
-      [
-        "rose",
-        "emerald",
-        "lime",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "teal",
-        "emerald"
-      ],
-      [
-        "violet",
-        "sky",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "coral",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "amber",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "rose",
-        "lemon"
-      ],
-      [
-        "lime",
-        "lime",
-        "magenta",
-        "sky"
-      ],
-      [
-        "lemon",
-        "teal",
-        "emerald",
-        "amber"
-      ],
+    id: "169",
+    capacity: 4,
+    board: [
+      ["emerald", "rose", "lemon", "sky"],
+      ["sky", "rose", "magenta", "teal"],
+      ["cobalt", "violet", "lime", "magenta"],
+      ["rose", "emerald", "lime", "coral"],
+      ["cobalt", "amber", "teal", "emerald"],
+      ["violet", "sky", "violet", "cocoa"],
+      ["lemon", "coral", "violet", "cocoa"],
+      ["magenta", "cocoa", "cobalt", "coral"],
+      ["coral", "cocoa", "amber", "amber"],
+      ["teal", "cobalt", "rose", "lemon"],
+      ["lime", "lime", "magenta", "sky"],
+      ["lemon", "teal", "emerald", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3225
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3225,
+    },
   },
   "170": {
-    "id": "170",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "violet",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "sky",
-        "amber",
-        "rose",
-        "sky"
-      ],
-      [
-        "teal",
-        "magenta",
-        "coral",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "rose",
-        "rose",
-        "rose",
-        "amber"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "coral",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "lime",
-        "emerald"
-      ],
+    id: "170",
+    capacity: 4,
+    board: [
+      ["lemon", "violet", "lime", "teal"],
+      ["lime", "lemon", "teal", "emerald"],
+      ["sky", "amber", "rose", "sky"],
+      ["teal", "magenta", "coral", "coral"],
+      ["magenta", "cocoa", "emerald", "cocoa"],
+      ["lime", "cocoa", "coral", "cocoa"],
+      ["lemon", "violet", "sky", "magenta"],
+      ["rose", "rose", "rose", "amber"],
+      ["lemon", "teal", "cobalt", "violet"],
+      ["violet", "cobalt", "coral", "magenta"],
+      ["amber", "amber", "emerald", "sky"],
+      ["cobalt", "cobalt", "lime", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3971
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3971,
+    },
   },
   "171": {
-    "id": "171",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "violet",
-        "emerald"
-      ],
-      [
-        "coral",
-        "teal",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "sky",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "amber",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "coral",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "lime",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "lime",
-        "magenta",
-        "emerald",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "violet",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "teal",
-        "magenta"
-      ],
+    id: "171",
+    capacity: 4,
+    board: [
+      ["amber", "amber", "lemon", "coral"],
+      ["coral", "cobalt", "violet", "emerald"],
+      ["coral", "teal", "cobalt", "magenta"],
+      ["lemon", "sky", "amber", "cocoa"],
+      ["cocoa", "rose", "amber", "rose"],
+      ["cobalt", "teal", "coral", "lemon"],
+      ["lemon", "lime", "violet", "teal"],
+      ["lime", "sky", "emerald", "cocoa"],
+      ["sky", "sky", "cocoa", "lime"],
+      ["lime", "magenta", "emerald", "violet"],
+      ["magenta", "emerald", "violet", "rose"],
+      ["cobalt", "rose", "teal", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5453
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5453,
+    },
   },
   "172": {
-    "id": "172",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "teal",
-        "lime"
-      ],
-      [
-        "sky",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lime",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "rose",
-        "violet",
-        "emerald",
-        "coral"
-      ],
-      [
-        "emerald",
-        "amber",
-        "sky",
-        "magenta"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "violet",
-        "amber"
-      ],
-      [
-        "sky",
-        "coral",
-        "coral",
-        "violet"
-      ],
+    id: "172",
+    capacity: 4,
+    board: [
+      ["magenta", "violet", "cobalt", "emerald"],
+      ["magenta", "lemon", "emerald", "sky"],
+      ["cobalt", "rose", "lemon", "rose"],
+      ["cocoa", "amber", "lime", "teal"],
+      ["lime", "cocoa", "teal", "lime"],
+      ["sky", "teal", "cobalt", "lemon"],
+      ["cocoa", "teal", "lime", "rose"],
+      ["cobalt", "coral", "magenta", "lemon"],
+      ["rose", "violet", "emerald", "coral"],
+      ["emerald", "amber", "sky", "magenta"],
+      ["amber", "cocoa", "violet", "amber"],
+      ["sky", "coral", "coral", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6467
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6467,
+    },
   },
   "173": {
-    "id": "173",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "rose"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "magenta"
-      ],
-      [
-        "coral",
-        "teal",
-        "lime",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "sky",
-        "teal",
-        "rose"
-      ],
-      [
-        "coral",
-        "emerald",
-        "lime",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "violet",
-        "lime"
-      ],
-      [
-        "sky",
-        "lemon",
-        "violet",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "sky",
-        "cocoa"
-      ],
+    id: "173",
+    capacity: 4,
+    board: [
+      ["magenta", "amber", "lime", "rose"],
+      ["emerald", "rose", "teal", "magenta"],
+      ["coral", "teal", "lime", "coral"],
+      ["amber", "amber", "lemon", "coral"],
+      ["teal", "cobalt", "amber", "violet"],
+      ["cocoa", "rose", "magenta", "cobalt"],
+      ["lemon", "sky", "teal", "rose"],
+      ["coral", "emerald", "lime", "emerald"],
+      ["emerald", "magenta", "cobalt", "lemon"],
+      ["cocoa", "cocoa", "violet", "lime"],
+      ["sky", "lemon", "violet", "violet"],
+      ["cobalt", "sky", "sky", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.256
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.256,
+    },
   },
   "174": {
-    "id": "174",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "violet",
-        "amber",
-        "rose"
-      ],
-      [
-        "teal",
-        "coral",
-        "coral",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lime",
-        "emerald",
-        "sky"
-      ],
-      [
-        "violet",
-        "teal",
-        "teal",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "rose",
-        "lemon"
-      ],
-      [
-        "rose",
-        "amber",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "magenta",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lime",
-        "sky",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "magenta",
-        "violet"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lime",
-        "coral"
-      ],
+    id: "174",
+    capacity: 4,
+    board: [
+      ["sky", "violet", "amber", "rose"],
+      ["teal", "coral", "coral", "amber"],
+      ["emerald", "lime", "emerald", "sky"],
+      ["violet", "teal", "teal", "lime"],
+      ["cocoa", "coral", "rose", "lemon"],
+      ["rose", "amber", "lemon", "cocoa"],
+      ["amber", "magenta", "emerald", "rose"],
+      ["lemon", "cocoa", "cobalt", "violet"],
+      ["lime", "sky", "emerald", "cobalt"],
+      ["lemon", "magenta", "magenta", "violet"],
+      ["magenta", "cobalt", "cocoa", "teal"],
+      ["sky", "cobalt", "lime", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4371
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4371,
+    },
   },
   "175": {
-    "id": "175",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "emerald",
-        "lime",
-        "amber"
-      ],
-      [
-        "rose",
-        "lemon",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "amber",
-        "sky",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "coral",
-        "lime",
-        "magenta"
-      ],
-      [
-        "teal",
-        "rose",
-        "rose",
-        "violet"
-      ],
-      [
-        "emerald",
-        "coral",
-        "coral",
-        "teal"
-      ],
-      [
-        "magenta",
-        "teal",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "magenta",
-        "teal"
-      ],
+    id: "175",
+    capacity: 4,
+    board: [
+      ["cobalt", "emerald", "lime", "amber"],
+      ["rose", "lemon", "cocoa", "lime"],
+      ["amber", "lemon", "cocoa", "cobalt"],
+      ["magenta", "amber", "sky", "coral"],
+      ["cobalt", "emerald", "emerald", "lemon"],
+      ["rose", "violet", "sky", "violet"],
+      ["amber", "coral", "lime", "magenta"],
+      ["teal", "rose", "rose", "violet"],
+      ["emerald", "coral", "coral", "teal"],
+      ["magenta", "teal", "cobalt", "violet"],
+      ["sky", "sky", "cocoa", "lime"],
+      ["cocoa", "lemon", "magenta", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.342
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.342,
+    },
   },
   "176": {
-    "id": "176",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "teal",
-        "violet"
-      ],
-      [
-        "violet",
-        "amber",
-        "coral",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "teal",
-        "sky"
-      ],
-      [
-        "sky",
-        "emerald",
-        "teal",
-        "magenta"
-      ],
-      [
-        "violet",
-        "magenta",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "lime",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "amber",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "lemon",
-        "lemon",
-        "coral"
-      ],
-      [
-        "coral",
-        "rose",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "amber"
-      ],
-      [
-        "emerald",
-        "rose",
-        "sky",
-        "lime"
-      ],
+    id: "176",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "teal", "violet"],
+      ["violet", "amber", "coral", "lemon"],
+      ["lemon", "cobalt", "teal", "sky"],
+      ["sky", "emerald", "teal", "magenta"],
+      ["violet", "magenta", "cobalt", "emerald"],
+      ["lime", "lime", "rose", "magenta"],
+      ["cocoa", "cobalt", "amber", "emerald"],
+      ["cocoa", "amber", "cocoa", "cobalt"],
+      ["rose", "lemon", "lemon", "coral"],
+      ["coral", "rose", "magenta", "lime"],
+      ["cocoa", "sky", "coral", "amber"],
+      ["emerald", "rose", "sky", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5139
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5139,
+    },
   },
   "177": {
-    "id": "177",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "emerald",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "magenta",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "coral",
-        "emerald"
-      ],
-      [
-        "rose",
-        "emerald",
-        "amber",
-        "coral"
-      ],
-      [
-        "teal",
-        "lime",
-        "amber",
-        "sky"
-      ],
-      [
-        "sky",
-        "coral",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "emerald"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "amber",
-        "sky"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "lime",
-        "teal",
-        "lime",
-        "lemon"
-      ],
+    id: "177",
+    capacity: 4,
+    board: [
+      ["lime", "emerald", "cobalt", "cocoa"],
+      ["violet", "cocoa", "magenta", "teal"],
+      ["cocoa", "violet", "magenta", "magenta"],
+      ["coral", "lemon", "rose", "cobalt"],
+      ["cobalt", "lemon", "coral", "emerald"],
+      ["rose", "emerald", "amber", "coral"],
+      ["teal", "lime", "amber", "sky"],
+      ["sky", "coral", "teal", "cobalt"],
+      ["rose", "sky", "amber", "emerald"],
+      ["rose", "cocoa", "amber", "sky"],
+      ["lemon", "magenta", "violet", "violet"],
+      ["lime", "teal", "lime", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3778
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3778,
+    },
   },
   "178": {
-    "id": "178",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "rose"
-      ],
-      [
-        "rose",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "violet",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "emerald",
-        "teal",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "amber",
-        "coral",
-        "teal",
-        "sky"
-      ],
-      [
-        "coral",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "rose",
-        "magenta"
-      ],
-      [
-        "amber",
-        "violet",
-        "lime",
-        "magenta"
-      ],
+    id: "178",
+    capacity: 4,
+    board: [
+      ["sky", "emerald", "sky", "lemon"],
+      ["emerald", "cocoa", "cocoa", "coral"],
+      ["cobalt", "violet", "magenta", "lemon"],
+      ["lime", "sky", "teal", "rose"],
+      ["rose", "amber", "lemon", "cobalt"],
+      ["lime", "violet", "cobalt", "rose"],
+      ["emerald", "teal", "emerald", "coral"],
+      ["lemon", "cocoa", "cobalt", "violet"],
+      ["amber", "coral", "teal", "sky"],
+      ["coral", "teal", "amber", "lime"],
+      ["magenta", "cocoa", "rose", "magenta"],
+      ["amber", "violet", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5532
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5532,
+    },
   },
   "179": {
-    "id": "179",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "rose",
-        "magenta",
-        "rose",
-        "amber"
-      ],
-      [
-        "violet",
-        "amber",
-        "lime",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "teal",
-        "violet"
-      ],
-      [
-        "emerald",
-        "teal",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "coral",
-        "sky",
-        "lemon",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "amber",
-        "teal"
-      ],
-      [
-        "lemon",
-        "lime",
-        "violet",
-        "coral"
-      ],
-      [
-        "amber",
-        "lime",
-        "teal",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "coral",
-        "magenta"
-      ],
+    id: "179",
+    capacity: 4,
+    board: [
+      ["cocoa", "violet", "cobalt", "sky"],
+      ["rose", "magenta", "rose", "amber"],
+      ["violet", "amber", "lime", "sky"],
+      ["cobalt", "lemon", "teal", "violet"],
+      ["emerald", "teal", "emerald", "emerald"],
+      ["magenta", "cobalt", "lemon", "magenta"],
+      ["coral", "sky", "lemon", "lime"],
+      ["cocoa", "emerald", "sky", "cocoa"],
+      ["rose", "cocoa", "amber", "teal"],
+      ["lemon", "lime", "violet", "coral"],
+      ["amber", "lime", "teal", "coral"],
+      ["cobalt", "rose", "coral", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5698
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5698,
+    },
   },
   "180": {
-    "id": "180",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "magenta",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "lemon",
-        "amber",
-        "teal"
-      ],
-      [
-        "sky",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "violet",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "violet",
-        "sky"
-      ],
-      [
-        "magenta",
-        "violet",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "coral",
-        "emerald"
-      ],
-      [
-        "rose",
-        "amber",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "coral"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "magenta",
-        "teal"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "lime",
-        "amber"
-      ],
+    id: "180",
+    capacity: 4,
+    board: [
+      ["cocoa", "magenta", "emerald", "emerald"],
+      ["coral", "lime", "cobalt", "rose"],
+      ["lime", "lemon", "amber", "teal"],
+      ["sky", "lime", "rose", "magenta"],
+      ["sky", "cobalt", "violet", "sky"],
+      ["cobalt", "rose", "violet", "sky"],
+      ["magenta", "violet", "amber", "cocoa"],
+      ["cocoa", "lemon", "coral", "emerald"],
+      ["rose", "amber", "coral", "cocoa"],
+      ["teal", "violet", "emerald", "coral"],
+      ["teal", "cobalt", "magenta", "teal"],
+      ["lemon", "lemon", "lime", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4206
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4206,
+    },
   },
   "181": {
-    "id": "181",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "teal",
-        "sky"
-      ],
-      [
-        "teal",
-        "lemon",
-        "rose",
-        "emerald"
-      ],
-      [
-        "rose",
-        "teal",
-        "magenta",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "sky",
-        "lime"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "magenta",
-        "sky"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "violet",
-        "rose",
-        "coral"
-      ],
-      [
-        "lime",
-        "lemon",
-        "emerald",
-        "cocoa"
-      ],
+    id: "181",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "lemon", "emerald"],
+      ["violet", "magenta", "lime", "coral"],
+      ["rose", "cocoa", "teal", "sky"],
+      ["teal", "lemon", "rose", "emerald"],
+      ["rose", "teal", "magenta", "amber"],
+      ["violet", "cobalt", "cobalt", "lime"],
+      ["cobalt", "coral", "sky", "lime"],
+      ["amber", "cocoa", "sky", "magenta"],
+      ["cobalt", "amber", "magenta", "sky"],
+      ["lemon", "emerald", "coral", "cocoa"],
+      ["amber", "violet", "rose", "coral"],
+      ["lime", "lemon", "emerald", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.681
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.681,
+    },
   },
   "182": {
-    "id": "182",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "emerald",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "coral",
-        "amber"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "teal",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "lime",
-        "lime"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "lime",
-        "amber",
-        "teal",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "rose",
-        "rose"
-      ],
-      [
-        "violet",
-        "lemon",
-        "rose",
-        "magenta"
-      ],
+    id: "182",
+    capacity: 4,
+    board: [
+      ["violet", "emerald", "magenta", "emerald"],
+      ["emerald", "emerald", "coral", "amber"],
+      ["magenta", "rose", "lemon", "amber"],
+      ["cocoa", "cobalt", "violet", "cocoa"],
+      ["lemon", "cocoa", "teal", "magenta"],
+      ["cobalt", "cobalt", "lime", "lime"],
+      ["lemon", "amber", "cocoa", "sky"],
+      ["lime", "amber", "teal", "teal"],
+      ["lime", "sky", "coral", "teal"],
+      ["sky", "coral", "sky", "violet"],
+      ["cobalt", "coral", "rose", "rose"],
+      ["violet", "lemon", "rose", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3161
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3161,
+    },
   },
   "183": {
-    "id": "183",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "cocoa",
-        "lemon",
-        "lime"
-      ],
-      [
-        "rose",
-        "emerald",
-        "amber",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "lime",
-        "sky"
-      ],
-      [
-        "violet",
-        "sky",
-        "rose",
-        "lime"
-      ],
-      [
-        "teal",
-        "violet",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "teal",
-        "coral",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "amber",
-        "emerald"
-      ],
-      [
-        "rose",
-        "lime",
-        "violet",
-        "sky"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "coral",
-        "teal",
-        "amber",
-        "emerald"
-      ],
+    id: "183",
+    capacity: 4,
+    board: [
+      ["lemon", "cocoa", "lemon", "lime"],
+      ["rose", "emerald", "amber", "magenta"],
+      ["magenta", "cobalt", "lime", "sky"],
+      ["violet", "sky", "rose", "lime"],
+      ["teal", "violet", "coral", "cobalt"],
+      ["teal", "amber", "cocoa", "cocoa"],
+      ["emerald", "rose", "cobalt", "violet"],
+      ["lemon", "teal", "coral", "lemon"],
+      ["magenta", "cocoa", "amber", "emerald"],
+      ["rose", "lime", "violet", "sky"],
+      ["sky", "magenta", "cobalt", "coral"],
+      ["coral", "teal", "amber", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5552
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5552,
+    },
   },
   "184": {
-    "id": "184",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cocoa",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "lime",
-        "lime",
-        "emerald",
-        "teal"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "teal",
-        "violet"
-      ],
-      [
-        "sky",
-        "lemon",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "amber",
-        "coral",
-        "lime"
-      ],
-      [
-        "magenta",
-        "coral",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "sky",
-        "teal",
-        "coral",
-        "lime"
-      ],
-      [
-        "rose",
-        "lemon",
-        "lemon",
-        "violet"
-      ],
-      [
-        "rose",
-        "violet",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "teal",
-        "rose"
-      ],
+    id: "184",
+    capacity: 4,
+    board: [
+      ["violet", "cocoa", "cobalt", "amber"],
+      ["lime", "lime", "emerald", "teal"],
+      ["emerald", "emerald", "teal", "violet"],
+      ["sky", "lemon", "sky", "magenta"],
+      ["sky", "amber", "coral", "lime"],
+      ["magenta", "coral", "coral", "cobalt"],
+      ["cobalt", "cocoa", "amber", "cocoa"],
+      ["magenta", "amber", "cobalt", "rose"],
+      ["sky", "teal", "coral", "lime"],
+      ["rose", "lemon", "lemon", "violet"],
+      ["rose", "violet", "emerald", "cocoa"],
+      ["lemon", "magenta", "teal", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4429
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4429,
+    },
   },
   "185": {
-    "id": "185",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "cocoa",
-        "rose",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "rose",
-        "coral"
-      ],
-      [
-        "lemon",
-        "lime",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "teal",
-        "magenta",
-        "teal"
-      ],
-      [
-        "teal",
-        "lime",
-        "violet",
-        "amber"
-      ],
-      [
-        "lemon",
-        "lime",
-        "lemon",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "lemon",
-        "coral",
-        "coral",
-        "emerald"
-      ],
-      [
-        "violet",
-        "teal",
-        "lime",
-        "magenta"
-      ],
-      [
-        "sky",
-        "magenta",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "violet",
-        "coral",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "amber",
-        "rose"
-      ],
+    id: "185",
+    capacity: 4,
+    board: [
+      ["cocoa", "cocoa", "rose", "sky"],
+      ["cobalt", "rose", "rose", "coral"],
+      ["lemon", "lime", "emerald", "cocoa"],
+      ["magenta", "teal", "magenta", "teal"],
+      ["teal", "lime", "violet", "amber"],
+      ["lemon", "lime", "lemon", "violet"],
+      ["cocoa", "amber", "cobalt", "sky"],
+      ["lemon", "coral", "coral", "emerald"],
+      ["violet", "teal", "lime", "magenta"],
+      ["sky", "magenta", "emerald", "emerald"],
+      ["violet", "coral", "sky", "cobalt"],
+      ["cobalt", "amber", "amber", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3865
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3865,
+    },
   },
   "186": {
-    "id": "186",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "emerald",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "violet",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "amber",
-        "coral",
-        "violet",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "teal",
-        "lime"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "lime",
-        "amber"
-      ],
-      [
-        "rose",
-        "lime",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "rose",
-        "coral",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "rose",
-        "amber",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "magenta"
-      ],
-      [
-        "sky",
-        "sky",
-        "lime",
-        "cobalt"
-      ],
+    id: "186",
+    capacity: 4,
+    board: [
+      ["emerald", "emerald", "sky", "cobalt"],
+      ["amber", "violet", "cocoa", "teal"],
+      ["amber", "coral", "violet", "violet"],
+      ["cocoa", "lemon", "teal", "lime"],
+      ["magenta", "lemon", "lime", "amber"],
+      ["rose", "lime", "emerald", "cocoa"],
+      ["violet", "sky", "magenta", "emerald"],
+      ["coral", "cocoa", "cobalt", "magenta"],
+      ["rose", "coral", "cobalt", "lemon"],
+      ["lemon", "rose", "amber", "teal"],
+      ["coral", "rose", "teal", "magenta"],
+      ["sky", "sky", "lime", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3853
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3853,
+    },
   },
   "187": {
-    "id": "187",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cocoa",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "lime",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "sky",
-        "rose"
-      ],
-      [
-        "lime",
-        "coral",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "magenta",
-        "lime",
-        "sky",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "teal",
-        "violet"
-      ],
-      [
-        "emerald",
-        "sky",
-        "amber",
-        "teal"
-      ],
-      [
-        "teal",
-        "amber",
-        "rose",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "coral",
-        "magenta",
-        "magenta",
-        "teal"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "rose",
-        "sky"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cocoa",
-        "violet"
-      ],
+    id: "187",
+    capacity: 4,
+    board: [
+      ["coral", "cocoa", "violet", "lemon"],
+      ["emerald", "lime", "cocoa", "lemon"],
+      ["cocoa", "lemon", "sky", "rose"],
+      ["lime", "coral", "cobalt", "lime"],
+      ["magenta", "lime", "sky", "magenta"],
+      ["amber", "emerald", "teal", "violet"],
+      ["emerald", "sky", "amber", "teal"],
+      ["teal", "amber", "rose", "lemon"],
+      ["emerald", "amber", "cobalt", "coral"],
+      ["coral", "magenta", "magenta", "teal"],
+      ["violet", "cobalt", "rose", "sky"],
+      ["rose", "cobalt", "cocoa", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.488
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.488,
+    },
   },
   "188": {
-    "id": "188",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "lime",
-        "coral",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "teal",
-        "teal"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "violet",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "lime",
-        "emerald",
-        "emerald",
-        "teal"
-      ],
-      [
-        "lime",
-        "magenta",
-        "sky",
-        "emerald"
-      ],
-      [
-        "coral",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "amber",
-        "sky"
-      ],
-      [
-        "emerald",
-        "rose",
-        "rose",
-        "amber"
-      ],
+    id: "188",
+    capacity: 4,
+    board: [
+      ["coral", "lime", "coral", "teal"],
+      ["cobalt", "magenta", "sky", "lemon"],
+      ["lemon", "cocoa", "teal", "teal"],
+      ["magenta", "amber", "violet", "rose"],
+      ["cocoa", "violet", "violet", "sky"],
+      ["rose", "violet", "cobalt", "lime"],
+      ["lemon", "cobalt", "cocoa", "magenta"],
+      ["lime", "emerald", "emerald", "teal"],
+      ["lime", "magenta", "sky", "emerald"],
+      ["coral", "amber", "lemon", "cobalt"],
+      ["cocoa", "coral", "amber", "sky"],
+      ["emerald", "rose", "rose", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4163
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4163,
+    },
   },
   "189": {
-    "id": "189",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "magenta",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "emerald",
-        "rose"
-      ],
-      [
-        "rose",
-        "amber",
-        "sky",
-        "rose"
-      ],
-      [
-        "violet",
-        "teal",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "lime",
-        "coral",
-        "teal",
-        "sky"
-      ],
-      [
-        "sky",
-        "coral",
-        "magenta",
-        "amber"
-      ],
-      [
-        "amber",
-        "violet",
-        "coral",
-        "teal"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "teal",
-        "violet"
-      ],
+    id: "189",
+    capacity: 4,
+    board: [
+      ["emerald", "magenta", "cobalt", "rose"],
+      ["cobalt", "coral", "emerald", "rose"],
+      ["rose", "amber", "sky", "rose"],
+      ["violet", "teal", "lemon", "amber"],
+      ["lime", "cocoa", "lemon", "cobalt"],
+      ["lime", "cocoa", "cocoa", "magenta"],
+      ["lime", "coral", "teal", "sky"],
+      ["sky", "coral", "magenta", "amber"],
+      ["amber", "violet", "coral", "teal"],
+      ["magenta", "sky", "lemon", "emerald"],
+      ["cocoa", "lime", "emerald", "lemon"],
+      ["violet", "cobalt", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.542
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.542,
+    },
   },
   "190": {
-    "id": "190",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "magenta",
-        "teal",
-        "rose"
-      ],
-      [
-        "lime",
-        "amber",
-        "magenta",
-        "sky"
-      ],
-      [
-        "teal",
-        "amber",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "violet",
-        "lime",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "violet",
-        "rose",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "coral",
-        "sky",
-        "amber",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "teal",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "coral",
-        "lime"
-      ],
+    id: "190",
+    capacity: 4,
+    board: [
+      ["coral", "magenta", "teal", "rose"],
+      ["lime", "amber", "magenta", "sky"],
+      ["teal", "amber", "cocoa", "lime"],
+      ["violet", "lime", "cobalt", "cocoa"],
+      ["amber", "violet", "rose", "teal"],
+      ["cobalt", "emerald", "rose", "cocoa"],
+      ["cocoa", "rose", "emerald", "emerald"],
+      ["coral", "sky", "amber", "lemon"],
+      ["magenta", "lemon", "emerald", "sky"],
+      ["cobalt", "violet", "cobalt", "coral"],
+      ["teal", "violet", "sky", "magenta"],
+      ["lemon", "lemon", "coral", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3741
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3741,
+    },
   },
   "191": {
-    "id": "191",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lime",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "sky",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "magenta",
-        "teal"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lime",
-        "amber"
-      ],
-      [
-        "magenta",
-        "rose",
-        "sky",
-        "amber"
-      ],
-      [
-        "coral",
-        "teal",
-        "sky",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "lime",
-        "coral"
-      ],
-      [
-        "sky",
-        "amber",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "lemon",
-        "amber"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "violet",
-        "rose"
-      ],
+    id: "191",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "violet", "emerald"],
+      ["cobalt", "rose", "sky", "teal"],
+      ["cocoa", "magenta", "magenta", "teal"],
+      ["violet", "coral", "cocoa", "teal"],
+      ["lime", "emerald", "lime", "amber"],
+      ["magenta", "rose", "sky", "amber"],
+      ["coral", "teal", "sky", "emerald"],
+      ["emerald", "lemon", "lime", "coral"],
+      ["sky", "amber", "cobalt", "coral"],
+      ["cocoa", "cocoa", "lemon", "amber"],
+      ["magenta", "cobalt", "rose", "cobalt"],
+      ["lemon", "lemon", "violet", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3561
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3561,
+    },
   },
   "192": {
-    "id": "192",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cobalt",
-        "coral",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "lime",
-        "violet"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "lime",
-        "sky"
-      ],
-      [
-        "magenta",
-        "sky",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "sky",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "lemon",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "emerald",
-        "violet",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "amber",
-        "emerald",
-        "violet"
-      ],
+    id: "192",
+    capacity: 4,
+    board: [
+      ["coral", "cobalt", "coral", "teal"],
+      ["lime", "lemon", "lime", "violet"],
+      ["magenta", "magenta", "lime", "sky"],
+      ["magenta", "sky", "amber", "cocoa"],
+      ["coral", "sky", "lemon", "teal"],
+      ["lime", "sky", "teal", "emerald"],
+      ["rose", "cocoa", "emerald", "cobalt"],
+      ["teal", "lemon", "cocoa", "rose"],
+      ["rose", "lemon", "amber", "violet"],
+      ["cocoa", "magenta", "cobalt", "coral"],
+      ["emerald", "violet", "amber", "cobalt"],
+      ["rose", "amber", "emerald", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5881
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5881,
+    },
   },
   "193": {
-    "id": "193",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "magenta",
-        "emerald",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "emerald",
-        "teal"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "lemon",
-        "sky"
-      ],
-      [
-        "lime",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "emerald",
-        "lemon",
-        "rose"
-      ],
-      [
-        "magenta",
-        "violet",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "sky",
-        "lime"
-      ],
-      [
-        "lime",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "teal"
-      ],
+    id: "193",
+    capacity: 4,
+    board: [
+      ["lemon", "magenta", "emerald", "teal"],
+      ["cobalt", "cocoa", "emerald", "rose"],
+      ["coral", "cocoa", "magenta", "sky"],
+      ["coral", "amber", "emerald", "teal"],
+      ["violet", "cobalt", "lemon", "sky"],
+      ["lime", "amber", "violet", "sky"],
+      ["rose", "emerald", "lemon", "rose"],
+      ["magenta", "violet", "lemon", "magenta"],
+      ["rose", "cocoa", "cocoa", "coral"],
+      ["violet", "cobalt", "sky", "lime"],
+      ["lime", "teal", "lime", "amber"],
+      ["amber", "cobalt", "coral", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5093
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5093,
+    },
   },
   "194": {
-    "id": "194",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "lemon",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "violet",
-        "rose",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "amber",
-        "violet"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "emerald",
-        "teal"
-      ],
-      [
-        "lime",
-        "teal",
-        "sky",
-        "sky"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "amber",
-        "lime"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "lime",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "teal",
-        "emerald",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "amber",
-        "emerald",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "sky",
-        "violet"
-      ],
+    id: "194",
+    capacity: 4,
+    board: [
+      ["cobalt", "lemon", "magenta", "cocoa"],
+      ["lime", "violet", "rose", "rose"],
+      ["cobalt", "lemon", "amber", "violet"],
+      ["magenta", "magenta", "emerald", "teal"],
+      ["lime", "teal", "sky", "sky"],
+      ["magenta", "cobalt", "amber", "lime"],
+      ["coral", "lemon", "rose", "cocoa"],
+      ["rose", "lime", "coral", "amber"],
+      ["violet", "teal", "emerald", "coral"],
+      ["emerald", "lemon", "cocoa", "teal"],
+      ["amber", "emerald", "cobalt", "sky"],
+      ["cocoa", "coral", "sky", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3196
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3196,
+    },
   },
   "195": {
-    "id": "195",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "cobalt",
-        "rose",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "lime",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "amber",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "teal"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "coral",
-        "violet"
-      ],
-      [
-        "lemon",
-        "lime",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "sky",
-        "coral",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lime",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "coral",
-        "amber",
-        "violet"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "violet",
-        "teal"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "lime",
-        "magenta",
-        "rose",
-        "emerald"
-      ],
+    id: "195",
+    capacity: 4,
+    board: [
+      ["amber", "cobalt", "rose", "lemon"],
+      ["emerald", "lime", "cobalt", "magenta"],
+      ["cobalt", "rose", "amber", "emerald"],
+      ["cocoa", "sky", "teal", "teal"],
+      ["lemon", "emerald", "coral", "violet"],
+      ["lemon", "lime", "magenta", "cobalt"],
+      ["sky", "sky", "coral", "lemon"],
+      ["rose", "lime", "magenta", "cocoa"],
+      ["teal", "coral", "amber", "violet"],
+      ["violet", "cocoa", "violet", "teal"],
+      ["sky", "coral", "cocoa", "amber"],
+      ["lime", "magenta", "rose", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4002
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4002,
+    },
   },
   "196": {
-    "id": "196",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "emerald",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "teal",
-        "teal",
-        "teal"
-      ],
-      [
-        "rose",
-        "coral",
-        "violet",
-        "coral"
-      ],
-      [
-        "lime",
-        "emerald",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "rose",
-        "coral",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lime",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lime",
-        "magenta",
-        "sky"
-      ],
-      [
-        "violet",
-        "amber",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "rose",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
+    id: "196",
+    capacity: 4,
+    board: [
+      ["magenta", "emerald", "lemon", "lemon"],
+      ["cobalt", "amber", "sky", "cocoa"],
+      ["lemon", "teal", "cobalt", "cocoa"],
+      ["violet", "emerald", "sky", "violet"],
+      ["amber", "teal", "teal", "teal"],
+      ["rose", "coral", "violet", "coral"],
+      ["lime", "emerald", "magenta", "cobalt"],
+      ["rose", "rose", "coral", "amber"],
+      ["emerald", "lime", "lime", "coral"],
+      ["magenta", "lime", "magenta", "sky"],
+      ["violet", "amber", "cobalt", "lemon"],
+      ["rose", "sky", "cocoa", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 34,
-      "difficultyScore": 0.2866
-    }
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.2866,
+    },
   },
   "197": {
-    "id": "197",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "cocoa",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "coral",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "rose",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "sky",
-        "magenta",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "magenta",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "teal",
-        "emerald",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lemon",
-        "rose"
-      ],
+    id: "197",
+    capacity: 4,
+    board: [
+      ["rose", "cocoa", "lemon", "emerald"],
+      ["coral", "violet", "sky", "magenta"],
+      ["amber", "amber", "lime", "cocoa"],
+      ["lime", "rose", "lime", "cocoa"],
+      ["cobalt", "teal", "cobalt", "emerald"],
+      ["magenta", "sky", "magenta", "coral"],
+      ["lemon", "violet", "magenta", "teal"],
+      ["cobalt", "amber", "lime", "coral"],
+      ["rose", "teal", "emerald", "teal"],
+      ["cobalt", "violet", "coral", "sky"],
+      ["lemon", "cocoa", "sky", "violet"],
+      ["amber", "emerald", "lemon", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.673
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.673,
+    },
   },
   "198": {
-    "id": "198",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "amber",
-        "rose",
-        "amber"
-      ],
-      [
-        "amber",
-        "magenta",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "rose",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "magenta",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "sky",
-        "coral"
-      ],
-      [
-        "magenta",
-        "teal",
-        "lemon",
-        "violet"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "violet",
-        "violet",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "sky",
-        "magenta"
-      ],
-      [
-        "violet",
-        "lemon",
-        "lime",
-        "lime"
-      ],
+    id: "198",
+    capacity: 4,
+    board: [
+      ["lime", "amber", "rose", "amber"],
+      ["amber", "magenta", "lemon", "emerald"],
+      ["rose", "coral", "amber", "emerald"],
+      ["cocoa", "teal", "magenta", "coral"],
+      ["rose", "emerald", "sky", "coral"],
+      ["magenta", "teal", "lemon", "violet"],
+      ["coral", "lemon", "lime", "cobalt"],
+      ["cocoa", "sky", "cobalt", "cocoa"],
+      ["emerald", "sky", "cobalt", "rose"],
+      ["violet", "violet", "teal", "cocoa"],
+      ["cobalt", "teal", "sky", "magenta"],
+      ["violet", "lemon", "lime", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4667
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4667,
+    },
   },
   "199": {
-    "id": "199",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "amber",
-        "coral",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "magenta",
-        "lime",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "sky",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "rose",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "magenta"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "emerald",
-        "rose",
-        "rose"
-      ],
-      [
-        "sky",
-        "emerald",
-        "teal",
-        "lime"
-      ],
-      [
-        "lime",
-        "amber",
-        "violet",
-        "coral"
-      ],
-      [
-        "teal",
-        "emerald",
-        "amber",
-        "teal"
-      ],
+    id: "199",
+    capacity: 4,
+    board: [
+      ["lime", "amber", "coral", "lemon"],
+      ["magenta", "cocoa", "emerald", "rose"],
+      ["magenta", "lime", "cobalt", "violet"],
+      ["lemon", "sky", "lemon", "lemon"],
+      ["magenta", "cocoa", "cocoa", "cobalt"],
+      ["teal", "rose", "coral", "cobalt"],
+      ["cocoa", "sky", "violet", "magenta"],
+      ["coral", "cobalt", "sky", "violet"],
+      ["amber", "emerald", "rose", "rose"],
+      ["sky", "emerald", "teal", "lime"],
+      ["lime", "amber", "violet", "coral"],
+      ["teal", "emerald", "amber", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4411
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4411,
+    },
   },
   "200": {
-    "id": "200",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "teal",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lime",
-        "teal",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "sky",
-        "magenta",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "teal",
-        "rose",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "violet",
-        "lemon",
-        "magenta",
-        "coral"
-      ],
-      [
-        "violet",
-        "amber",
-        "amber",
-        "amber"
-      ],
-      [
-        "sky",
-        "rose",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "violet",
-        "lemon",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "sky",
-        "rose",
-        "cocoa"
-      ],
+    id: "200",
+    capacity: 4,
+    board: [
+      ["magenta", "teal", "cocoa", "rose"],
+      ["lime", "teal", "lemon", "lemon"],
+      ["cocoa", "coral", "cobalt", "lime"],
+      ["sky", "magenta", "magenta", "emerald"],
+      ["cobalt", "amber", "coral", "violet"],
+      ["cocoa", "lime", "emerald", "lime"],
+      ["teal", "rose", "emerald", "emerald"],
+      ["violet", "lemon", "magenta", "coral"],
+      ["violet", "amber", "amber", "amber"],
+      ["sky", "rose", "cobalt", "sky"],
+      ["violet", "lemon", "teal", "cobalt"],
+      ["coral", "sky", "rose", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3115
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3115,
+    },
   },
   "201": {
-    "id": "201",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lemon",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "violet",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "amber",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lime",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "rose",
-        "emerald"
-      ],
-      [
-        "coral",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "sky",
-        "coral",
-        "sky",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "amber",
-        "sky"
-      ],
-      [
-        "sky",
-        "lime",
-        "rose",
-        "teal"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "violet",
-        "teal"
-      ],
+    id: "201",
+    capacity: 4,
+    board: [
+      ["amber", "lemon", "magenta", "cobalt"],
+      ["cobalt", "emerald", "lemon", "cocoa"],
+      ["emerald", "violet", "lemon", "teal"],
+      ["lime", "violet", "amber", "coral"],
+      ["magenta", "lime", "coral", "cobalt"],
+      ["lemon", "cocoa", "cobalt", "violet"],
+      ["cocoa", "rose", "rose", "emerald"],
+      ["coral", "teal", "amber", "lime"],
+      ["sky", "coral", "sky", "magenta"],
+      ["rose", "cocoa", "amber", "sky"],
+      ["sky", "lime", "rose", "teal"],
+      ["magenta", "emerald", "violet", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.2998
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.2998,
+    },
   },
   "202": {
-    "id": "202",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "magenta",
-        "lemon",
-        "teal"
-      ],
-      [
-        "violet",
-        "amber",
-        "coral",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "rose"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "violet"
-      ],
-      [
-        "rose",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "coral",
-        "amber",
-        "magenta",
-        "amber"
-      ],
-      [
-        "coral",
-        "sky",
-        "emerald",
-        "violet"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lime",
-        "magenta"
-      ],
+    id: "202",
+    capacity: 4,
+    board: [
+      ["emerald", "magenta", "lemon", "teal"],
+      ["violet", "amber", "coral", "lemon"],
+      ["magenta", "sky", "rose", "rose"],
+      ["sky", "lime", "coral", "violet"],
+      ["rose", "teal", "cobalt", "lemon"],
+      ["cobalt", "sky", "cobalt", "teal"],
+      ["cocoa", "lemon", "lime", "emerald"],
+      ["teal", "rose", "cobalt", "emerald"],
+      ["coral", "amber", "magenta", "amber"],
+      ["coral", "sky", "emerald", "violet"],
+      ["lime", "cocoa", "cocoa", "violet"],
+      ["amber", "cocoa", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3576
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3576,
+    },
   },
   "203": {
-    "id": "203",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "violet",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "rose",
-        "sky",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lemon",
-        "rose",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "magenta",
-        "magenta",
-        "amber"
-      ],
-      [
-        "magenta",
-        "violet",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "emerald",
-        "violet",
-        "amber",
-        "coral"
-      ],
+    id: "203",
+    capacity: 4,
+    board: [
+      ["cobalt", "violet", "teal", "cobalt"],
+      ["violet", "rose", "sky", "teal"],
+      ["cocoa", "rose", "amber", "cobalt"],
+      ["magenta", "lemon", "lime", "lemon"],
+      ["coral", "cocoa", "lemon", "emerald"],
+      ["teal", "lemon", "rose", "rose"],
+      ["amber", "sky", "lime", "emerald"],
+      ["coral", "emerald", "sky", "cocoa"],
+      ["lime", "magenta", "magenta", "amber"],
+      ["magenta", "violet", "lime", "cobalt"],
+      ["cocoa", "sky", "teal", "coral"],
+      ["emerald", "violet", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4515
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4515,
+    },
   },
   "204": {
-    "id": "204",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "teal",
-        "lime",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lemon",
-        "teal",
-        "sky",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "magenta",
-        "teal"
-      ],
-      [
-        "rose",
-        "amber",
-        "magenta",
-        "violet"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "sky",
-        "emerald",
-        "amber",
-        "violet"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "violet",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "coral",
-        "sky"
-      ],
-      [
-        "violet",
-        "teal",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "coral",
-        "lemon",
-        "lime"
-      ],
+    id: "204",
+    capacity: 4,
+    board: [
+      ["cocoa", "rose", "lime", "lime"],
+      ["teal", "lime", "magenta", "rose"],
+      ["lemon", "teal", "sky", "coral"],
+      ["cocoa", "amber", "magenta", "teal"],
+      ["rose", "amber", "magenta", "violet"],
+      ["rose", "cobalt", "cobalt", "emerald"],
+      ["sky", "emerald", "amber", "violet"],
+      ["emerald", "emerald", "cobalt", "coral"],
+      ["cocoa", "magenta", "violet", "amber"],
+      ["cocoa", "lemon", "coral", "sky"],
+      ["violet", "teal", "sky", "cobalt"],
+      ["lemon", "coral", "lemon", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5379
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5379,
+    },
   },
   "205": {
-    "id": "205",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "coral",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "teal",
-        "emerald",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lemon",
-        "sky",
-        "violet",
-        "teal"
-      ],
-      [
-        "rose",
-        "violet",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "amber",
-        "amber"
-      ],
-      [
-        "violet",
-        "teal",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lime",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "amber",
-        "violet",
-        "emerald"
-      ],
+    id: "205",
+    capacity: 4,
+    board: [
+      ["magenta", "coral", "cobalt", "lime"],
+      ["teal", "emerald", "cocoa", "teal"],
+      ["lemon", "sky", "violet", "teal"],
+      ["rose", "violet", "magenta", "cocoa"],
+      ["coral", "lemon", "rose", "emerald"],
+      ["sky", "cobalt", "lemon", "amber"],
+      ["cobalt", "sky", "magenta", "magenta"],
+      ["cobalt", "coral", "amber", "amber"],
+      ["violet", "teal", "rose", "sky"],
+      ["emerald", "coral", "lime", "rose"],
+      ["cocoa", "lemon", "lime", "cocoa"],
+      ["lime", "amber", "violet", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3732
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3732,
+    },
   },
   "206": {
-    "id": "206",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lime",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "rose",
-        "lime"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "sky",
-        "violet",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
-      [
-        "rose",
-        "sky",
-        "rose",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "amber",
-        "coral"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "teal",
-        "sky"
-      ],
-      [
-        "lime",
-        "rose",
-        "lemon",
-        "teal"
-      ],
+    id: "206",
+    capacity: 4,
+    board: [
+      ["amber", "lime", "lemon", "cocoa"],
+      ["emerald", "lemon", "rose", "lime"],
+      ["magenta", "cocoa", "lime", "emerald"],
+      ["cobalt", "magenta", "violet", "emerald"],
+      ["cocoa", "violet", "coral", "amber"],
+      ["sky", "violet", "coral", "teal"],
+      ["teal", "cobalt", "sky", "emerald"],
+      ["rose", "sky", "rose", "coral"],
+      ["cocoa", "magenta", "amber", "coral"],
+      ["magenta", "amber", "cobalt", "lemon"],
+      ["cobalt", "violet", "teal", "sky"],
+      ["lime", "rose", "lemon", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6421
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6421,
+    },
   },
   "207": {
-    "id": "207",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "rose",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "teal",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "amber",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "lime",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "violet",
-        "rose",
-        "coral"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "magenta",
-        "amber"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "violet",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "emerald",
-        "coral",
-        "teal"
-      ],
-      [
-        "amber",
-        "sky",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "violet",
-        "teal",
-        "lime",
-        "sky"
-      ],
+    id: "207",
+    capacity: 4,
+    board: [
+      ["coral", "rose", "cobalt", "cocoa"],
+      ["magenta", "teal", "teal", "cocoa"],
+      ["rose", "amber", "emerald", "lemon"],
+      ["lime", "sky", "magenta", "cocoa"],
+      ["violet", "lime", "cobalt", "lemon"],
+      ["emerald", "violet", "rose", "coral"],
+      ["magenta", "emerald", "magenta", "amber"],
+      ["rose", "cobalt", "amber", "cobalt"],
+      ["sky", "violet", "lime", "lemon"],
+      ["coral", "emerald", "coral", "teal"],
+      ["amber", "sky", "cocoa", "lemon"],
+      ["violet", "teal", "lime", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6293
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6293,
+    },
   },
   "208": {
-    "id": "208",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
-      [
-        "lime",
-        "emerald",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "lemon",
-        "amber",
-        "violet"
-      ],
-      [
-        "lime",
-        "teal",
-        "lemon",
-        "sky"
-      ],
-      [
-        "emerald",
-        "rose",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "teal",
-        "amber"
-      ],
-      [
-        "lime",
-        "magenta",
-        "lemon",
-        "rose"
-      ],
-      [
-        "lemon",
-        "sky",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "magenta",
-        "teal"
-      ],
-      [
-        "teal",
-        "violet",
-        "magenta",
-        "coral"
-      ],
-      [
-        "rose",
-        "amber",
-        "lime",
-        "magenta"
-      ],
-      [
-        "sky",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
+    id: "208",
+    capacity: 4,
+    board: [
+      ["cocoa", "cobalt", "sky", "emerald"],
+      ["lime", "emerald", "coral", "amber"],
+      ["violet", "lemon", "amber", "violet"],
+      ["lime", "teal", "lemon", "sky"],
+      ["emerald", "rose", "coral", "cobalt"],
+      ["coral", "cobalt", "teal", "amber"],
+      ["lime", "magenta", "lemon", "rose"],
+      ["lemon", "sky", "rose", "cocoa"],
+      ["cocoa", "emerald", "magenta", "teal"],
+      ["teal", "violet", "magenta", "coral"],
+      ["rose", "amber", "lime", "magenta"],
+      ["sky", "violet", "cobalt", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5371
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5371,
+    },
   },
   "209": {
-    "id": "209",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "amber",
-        "amber",
-        "rose"
-      ],
-      [
-        "lemon",
-        "teal",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "sky",
-        "coral",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "coral",
-        "teal"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "violet",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "teal",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "violet",
-        "sky",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "teal",
-        "coral"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lime",
-        "sky"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "cocoa",
-        "coral"
-      ],
+    id: "209",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "amber", "rose"],
+      ["lemon", "teal", "emerald", "emerald"],
+      ["lime", "sky", "coral", "lemon"],
+      ["lemon", "cobalt", "coral", "teal"],
+      ["emerald", "magenta", "violet", "emerald"],
+      ["magenta", "teal", "magenta", "lime"],
+      ["cocoa", "rose", "violet", "cocoa"],
+      ["violet", "violet", "sky", "rose"],
+      ["cobalt", "amber", "teal", "coral"],
+      ["lemon", "amber", "cocoa", "cobalt"],
+      ["rose", "magenta", "lime", "sky"],
+      ["lime", "cobalt", "cocoa", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.381
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.381,
+    },
   },
   "210": {
-    "id": "210",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "rose",
-        "sky"
-      ],
-      [
-        "lemon",
-        "teal",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "violet",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "emerald",
-        "coral",
-        "rose"
-      ],
-      [
-        "teal",
-        "coral",
-        "violet",
-        "amber"
-      ],
-      [
-        "lime",
-        "emerald",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "amber",
-        "lime",
-        "cobalt",
-        "amber"
-      ],
+    id: "210",
+    capacity: 4,
+    board: [
+      ["magenta", "violet", "coral", "emerald"],
+      ["cocoa", "rose", "rose", "sky"],
+      ["lemon", "teal", "sky", "cocoa"],
+      ["cocoa", "magenta", "rose", "cobalt"],
+      ["emerald", "coral", "sky", "violet"],
+      ["amber", "violet", "cocoa", "cobalt"],
+      ["teal", "emerald", "coral", "rose"],
+      ["teal", "coral", "violet", "amber"],
+      ["lime", "emerald", "magenta", "lime"],
+      ["lime", "cobalt", "teal", "lemon"],
+      ["magenta", "sky", "lemon", "lemon"],
+      ["amber", "lime", "cobalt", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5503
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5503,
+    },
   },
   "211": {
-    "id": "211",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "amber",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "lime",
-        "coral",
-        "magenta",
-        "coral"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "violet",
-        "amber"
-      ],
-      [
-        "rose",
-        "lime",
-        "violet",
-        "teal"
-      ],
-      [
-        "sky",
-        "coral",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "teal",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "violet",
-        "lemon"
-      ],
-      [
-        "amber",
-        "emerald",
-        "magenta",
-        "cobalt"
-      ],
+    id: "211",
+    capacity: 4,
+    board: [
+      ["amber", "amber", "cocoa", "lime"],
+      ["lime", "coral", "magenta", "coral"],
+      ["emerald", "teal", "lemon", "rose"],
+      ["rose", "lemon", "magenta", "cocoa"],
+      ["cobalt", "teal", "violet", "amber"],
+      ["rose", "lime", "violet", "teal"],
+      ["sky", "coral", "violet", "cocoa"],
+      ["sky", "teal", "cocoa", "lime"],
+      ["cobalt", "rose", "sky", "lemon"],
+      ["emerald", "sky", "cobalt", "coral"],
+      ["emerald", "magenta", "violet", "lemon"],
+      ["amber", "emerald", "magenta", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6719
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6719,
+    },
   },
   "212": {
-    "id": "212",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "coral",
-        "violet",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "coral"
-      ],
-      [
-        "violet",
-        "sky",
-        "amber",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lemon",
-        "sky"
-      ],
-      [
-        "lime",
-        "emerald",
-        "amber",
-        "rose"
-      ],
-      [
-        "lime",
-        "violet",
-        "teal",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lemon",
-        "sky"
-      ],
-      [
-        "teal",
-        "teal",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "rose",
-        "violet",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cobalt",
-        "emerald"
-      ],
+    id: "212",
+    capacity: 4,
+    board: [
+      ["rose", "coral", "violet", "coral"],
+      ["rose", "emerald", "amber", "cocoa"],
+      ["coral", "emerald", "sky", "coral"],
+      ["violet", "sky", "amber", "amber"],
+      ["cobalt", "cocoa", "lemon", "sky"],
+      ["lime", "emerald", "amber", "rose"],
+      ["lime", "violet", "teal", "lime"],
+      ["cocoa", "magenta", "lemon", "cobalt"],
+      ["teal", "cocoa", "lemon", "sky"],
+      ["teal", "teal", "magenta", "magenta"],
+      ["rose", "violet", "cobalt", "lime"],
+      ["magenta", "lemon", "cobalt", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3719
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3719,
+    },
   },
   "213": {
-    "id": "213",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "lime",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lime",
-        "coral",
-        "coral",
-        "coral"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "teal",
-        "amber",
-        "teal",
-        "violet"
-      ],
-      [
-        "lime",
-        "rose",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "emerald"
-      ],
+    id: "213",
+    capacity: 4,
+    board: [
+      ["amber", "lime", "rose", "cobalt"],
+      ["cocoa", "violet", "lime", "emerald"],
+      ["emerald", "lemon", "teal", "cocoa"],
+      ["magenta", "sky", "rose", "lemon"],
+      ["coral", "cocoa", "emerald", "magenta"],
+      ["magenta", "sky", "lemon", "amber"],
+      ["lime", "coral", "coral", "coral"],
+      ["amber", "lemon", "cobalt", "cobalt"],
+      ["violet", "violet", "sky", "magenta"],
+      ["teal", "amber", "teal", "violet"],
+      ["lime", "rose", "cobalt", "teal"],
+      ["sky", "rose", "cocoa", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.1884
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.1884,
+    },
   },
   "214": {
-    "id": "214",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cobalt",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "lime",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "lime"
-      ],
-      [
-        "rose",
-        "teal",
-        "amber",
-        "coral"
-      ],
-      [
-        "violet",
-        "emerald",
-        "amber",
-        "rose"
-      ],
-      [
-        "lemon",
-        "sky",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "violet"
-      ],
-      [
-        "lemon",
-        "rose",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "teal",
-        "lemon",
-        "amber",
-        "cobalt"
-      ],
+    id: "214",
+    capacity: 4,
+    board: [
+      ["emerald", "cobalt", "cocoa", "rose"],
+      ["emerald", "lemon", "lime", "magenta"],
+      ["cobalt", "violet", "cocoa", "violet"],
+      ["cocoa", "coral", "magenta", "emerald"],
+      ["sky", "lime", "coral", "lime"],
+      ["rose", "teal", "amber", "coral"],
+      ["violet", "emerald", "amber", "rose"],
+      ["lemon", "sky", "coral", "teal"],
+      ["teal", "magenta", "sky", "violet"],
+      ["lemon", "rose", "magenta", "lime"],
+      ["cocoa", "amber", "cobalt", "sky"],
+      ["teal", "lemon", "amber", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6636
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6636,
+    },
   },
   "215": {
-    "id": "215",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "emerald",
-        "emerald",
-        "sky"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "coral",
-        "teal"
-      ],
-      [
-        "violet",
-        "lemon",
-        "sky",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "violet",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "coral",
-        "amber"
-      ],
-      [
-        "lime",
-        "violet",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "rose",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "coral",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "magenta",
-        "violet"
-      ],
-      [
-        "rose",
-        "lemon",
-        "lime",
-        "amber"
-      ],
-      [
-        "magenta",
-        "coral",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "amber",
-        "amber"
-      ],
+    id: "215",
+    capacity: 4,
+    board: [
+      ["cocoa", "emerald", "emerald", "sky"],
+      ["lime", "cocoa", "coral", "teal"],
+      ["violet", "lemon", "sky", "emerald"],
+      ["lemon", "violet", "emerald", "sky"],
+      ["cobalt", "magenta", "coral", "amber"],
+      ["lime", "violet", "rose", "cobalt"],
+      ["teal", "rose", "magenta", "cocoa"],
+      ["teal", "coral", "lemon", "cocoa"],
+      ["lime", "teal", "magenta", "violet"],
+      ["rose", "lemon", "lime", "amber"],
+      ["magenta", "coral", "cobalt", "rose"],
+      ["sky", "cobalt", "amber", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3781
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3781,
+    },
   },
   "216": {
-    "id": "216",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "cobalt",
-        "rose",
-        "amber"
-      ],
-      [
-        "teal",
-        "rose",
-        "lime",
-        "violet"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "rose",
-        "lemon"
-      ],
-      [
-        "coral",
-        "teal",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "magenta",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "coral",
-        "emerald",
-        "lime",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "violet"
-      ],
-      [
-        "lime",
-        "violet",
-        "lime",
-        "sky"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
+    id: "216",
+    capacity: 4,
+    board: [
+      ["lemon", "cobalt", "rose", "amber"],
+      ["teal", "rose", "lime", "violet"],
+      ["magenta", "sky", "rose", "violet"],
+      ["magenta", "cobalt", "rose", "lemon"],
+      ["coral", "teal", "cocoa", "lemon"],
+      ["cobalt", "coral", "coral", "emerald"],
+      ["amber", "magenta", "teal", "amber"],
+      ["cobalt", "emerald", "magenta", "emerald"],
+      ["coral", "emerald", "lime", "teal"],
+      ["cocoa", "amber", "lemon", "violet"],
+      ["lime", "violet", "lime", "sky"],
+      ["sky", "sky", "cocoa", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3962
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3962,
+    },
   },
   "217": {
-    "id": "217",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "lime",
-        "lime",
-        "rose"
-      ],
-      [
-        "coral",
-        "lemon",
-        "magenta",
-        "teal"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "emerald",
-        "lime"
-      ],
-      [
-        "emerald",
-        "sky",
-        "violet",
-        "rose"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "amber",
-        "violet",
-        "rose",
-        "teal"
-      ],
-      [
-        "emerald",
-        "lime",
-        "emerald",
-        "coral"
-      ],
+    id: "217",
+    capacity: 4,
+    board: [
+      ["cocoa", "lime", "lime", "rose"],
+      ["coral", "lemon", "magenta", "teal"],
+      ["sky", "cocoa", "violet", "cocoa"],
+      ["sky", "cobalt", "lemon", "magenta"],
+      ["rose", "magenta", "lemon", "coral"],
+      ["amber", "amber", "violet", "sky"],
+      ["amber", "cobalt", "emerald", "lime"],
+      ["emerald", "sky", "violet", "rose"],
+      ["teal", "cocoa", "coral", "cobalt"],
+      ["lemon", "magenta", "cobalt", "teal"],
+      ["amber", "violet", "rose", "teal"],
+      ["emerald", "lime", "emerald", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6257
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6257,
+    },
   },
   "218": {
-    "id": "218",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "lime",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "lemon",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "rose",
-        "sky"
-      ],
-      [
-        "teal",
-        "rose",
-        "rose",
-        "amber"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "teal",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "violet",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "emerald",
-        "amber",
-        "violet",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "coral",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "magenta"
-      ],
+    id: "218",
+    capacity: 4,
+    board: [
+      ["lime", "lime", "coral", "cocoa"],
+      ["violet", "sky", "teal", "magenta"],
+      ["rose", "lemon", "cocoa", "coral"],
+      ["amber", "cocoa", "sky", "magenta"],
+      ["cocoa", "lemon", "rose", "sky"],
+      ["teal", "rose", "rose", "amber"],
+      ["coral", "cobalt", "sky", "cobalt"],
+      ["teal", "teal", "violet", "cobalt"],
+      ["lime", "violet", "cobalt", "amber"],
+      ["emerald", "amber", "violet", "emerald"],
+      ["lemon", "coral", "emerald", "magenta"],
+      ["lime", "emerald", "lemon", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4035
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4035,
+    },
   },
   "219": {
-    "id": "219",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "cocoa",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "rose",
-        "lemon"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "coral",
-        "sky"
-      ],
-      [
-        "amber",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "teal",
-        "lemon",
-        "emerald",
-        "violet"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lime",
-        "magenta"
-      ],
-      [
-        "coral",
-        "sky",
-        "lime",
-        "rose"
-      ],
-      [
-        "teal",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "violet",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "emerald",
-        "coral",
-        "emerald",
-        "emerald"
-      ],
+    id: "219",
+    capacity: 4,
+    board: [
+      ["amber", "cocoa", "cocoa", "violet"],
+      ["magenta", "lime", "sky", "cocoa"],
+      ["cobalt", "sky", "rose", "lemon"],
+      ["teal", "cobalt", "coral", "sky"],
+      ["amber", "rose", "magenta", "lemon"],
+      ["teal", "lemon", "emerald", "violet"],
+      ["violet", "magenta", "lime", "magenta"],
+      ["coral", "sky", "lime", "rose"],
+      ["teal", "lemon", "amber", "lime"],
+      ["teal", "cobalt", "amber", "cobalt"],
+      ["coral", "violet", "cocoa", "rose"],
+      ["emerald", "coral", "emerald", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.7071
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.7071,
+    },
   },
   "220": {
-    "id": "220",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "lime",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "amber",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "rose"
-      ],
-      [
-        "emerald",
-        "violet",
-        "coral",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lime",
-        "rose"
-      ],
-      [
-        "sky",
-        "rose",
-        "lime",
-        "sky"
-      ],
-      [
-        "amber",
-        "sky",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "amber"
-      ],
+    id: "220",
+    capacity: 4,
+    board: [
+      ["violet", "magenta", "violet", "violet"],
+      ["cobalt", "emerald", "magenta", "sky"],
+      ["cocoa", "coral", "cobalt", "magenta"],
+      ["lemon", "lime", "teal", "cobalt"],
+      ["coral", "amber", "cocoa", "teal"],
+      ["coral", "lime", "teal", "rose"],
+      ["emerald", "violet", "coral", "lemon"],
+      ["emerald", "magenta", "lime", "rose"],
+      ["sky", "rose", "lime", "sky"],
+      ["amber", "sky", "cocoa", "amber"],
+      ["lemon", "teal", "cocoa", "lemon"],
+      ["emerald", "rose", "cobalt", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6369
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6369,
+    },
   },
   "221": {
-    "id": "221",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "violet",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "emerald",
-        "violet",
-        "rose",
-        "rose"
-      ],
-      [
-        "magenta",
-        "coral",
-        "lemon",
-        "sky"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "rose",
-        "lime"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "amber",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lime",
-        "teal",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "sky",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "magenta",
-        "amber"
-      ],
-      [
-        "coral",
-        "lemon",
-        "emerald",
-        "amber"
-      ],
+    id: "221",
+    capacity: 4,
+    board: [
+      ["violet", "violet", "cobalt", "teal"],
+      ["emerald", "violet", "rose", "rose"],
+      ["magenta", "coral", "lemon", "sky"],
+      ["sky", "cocoa", "rose", "lime"],
+      ["magenta", "cobalt", "amber", "magenta"],
+      ["coral", "lemon", "lime", "emerald"],
+      ["cocoa", "cocoa", "coral", "emerald"],
+      ["lime", "teal", "teal", "cobalt"],
+      ["lime", "cocoa", "lemon", "teal"],
+      ["sky", "amber", "violet", "sky"],
+      ["rose", "cobalt", "magenta", "amber"],
+      ["coral", "lemon", "emerald", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3734
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3734,
+    },
   },
   "222": {
-    "id": "222",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "violet",
-        "lime",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "coral",
-        "rose",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "magenta",
-        "amber"
-      ],
-      [
-        "violet",
-        "rose",
-        "amber",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "sky",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "violet",
-        "emerald",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "teal",
-        "amber",
-        "coral",
-        "coral"
-      ],
-      [
-        "emerald",
-        "sky",
-        "sky",
-        "magenta"
-      ],
+    id: "222",
+    capacity: 4,
+    board: [
+      ["cocoa", "violet", "lime", "coral"],
+      ["emerald", "lemon", "cobalt", "rose"],
+      ["lime", "coral", "rose", "lime"],
+      ["teal", "cocoa", "magenta", "amber"],
+      ["violet", "rose", "amber", "lemon"],
+      ["cocoa", "violet", "sky", "lemon"],
+      ["magenta", "emerald", "cocoa", "rose"],
+      ["violet", "emerald", "teal", "amber"],
+      ["cobalt", "sky", "teal", "magenta"],
+      ["cobalt", "lime", "cobalt", "lemon"],
+      ["teal", "amber", "coral", "coral"],
+      ["emerald", "sky", "sky", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5731
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5731,
+    },
   },
   "223": {
-    "id": "223",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "magenta",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "coral",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "amber",
-        "rose"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "violet",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "amber",
-        "teal",
-        "rose",
-        "lime"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "violet",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "rose"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "sky",
-        "emerald",
-        "sky",
-        "lime"
-      ],
+    id: "223",
+    capacity: 4,
+    board: [
+      ["rose", "magenta", "magenta", "sky"],
+      ["coral", "coral", "magenta", "cocoa"],
+      ["lemon", "violet", "coral", "emerald"],
+      ["cobalt", "lime", "amber", "rose"],
+      ["emerald", "magenta", "cobalt", "cocoa"],
+      ["amber", "violet", "cocoa", "coral"],
+      ["sky", "cobalt", "teal", "lemon"],
+      ["amber", "teal", "rose", "lime"],
+      ["teal", "cobalt", "violet", "emerald"],
+      ["amber", "lemon", "violet", "rose"],
+      ["lime", "cocoa", "lemon", "teal"],
+      ["sky", "emerald", "sky", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4117
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4117,
+    },
   },
   "224": {
-    "id": "224",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "magenta",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "rose",
-        "lemon",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "sky",
-        "lime",
-        "amber",
-        "sky"
-      ],
-      [
-        "coral",
-        "teal",
-        "teal",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "amber",
-        "rose"
-      ],
-      [
-        "emerald",
-        "violet",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "teal",
-        "lime",
-        "coral"
-      ],
-      [
-        "violet",
-        "lemon",
-        "sky",
-        "rose"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "coral",
-        "violet"
-      ],
+    id: "224",
+    capacity: 4,
+    board: [
+      ["amber", "magenta", "cocoa", "magenta"],
+      ["rose", "lemon", "violet", "magenta"],
+      ["cobalt", "teal", "cocoa", "lemon"],
+      ["sky", "lime", "amber", "sky"],
+      ["coral", "teal", "teal", "lime"],
+      ["cocoa", "coral", "emerald", "sky"],
+      ["cobalt", "magenta", "amber", "rose"],
+      ["emerald", "violet", "emerald", "emerald"],
+      ["lemon", "teal", "lime", "coral"],
+      ["violet", "lemon", "sky", "rose"],
+      ["amber", "cobalt", "cocoa", "rose"],
+      ["lime", "cobalt", "coral", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4614
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4614,
+    },
   },
   "225": {
-    "id": "225",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "rose",
-        "violet",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "teal",
-        "lemon"
-      ],
-      [
-        "coral",
-        "amber",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "rose",
-        "coral"
-      ],
-      [
-        "coral",
-        "amber",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lime",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "amber",
-        "rose"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lime",
-        "sky"
-      ],
-      [
-        "teal",
-        "coral",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "lime"
-      ],
+    id: "225",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "violet", "magenta"],
+      ["emerald", "sky", "cobalt", "teal"],
+      ["cobalt", "lemon", "teal", "lemon"],
+      ["coral", "amber", "violet", "cocoa"],
+      ["cocoa", "amber", "rose", "coral"],
+      ["coral", "amber", "magenta", "cobalt"],
+      ["violet", "lime", "teal", "cocoa"],
+      ["sky", "emerald", "sky", "violet"],
+      ["emerald", "magenta", "amber", "rose"],
+      ["lemon", "rose", "lime", "sky"],
+      ["teal", "coral", "lime", "cocoa"],
+      ["emerald", "cobalt", "lemon", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6016
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6016,
+    },
   },
   "226": {
-    "id": "226",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "emerald",
-        "lemon",
-        "rose"
-      ],
-      [
-        "teal",
-        "magenta",
-        "amber",
-        "teal"
-      ],
-      [
-        "rose",
-        "teal",
-        "emerald",
-        "rose"
-      ],
-      [
-        "violet",
-        "teal",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "violet",
-        "magenta"
-      ],
-      [
-        "violet",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "coral",
-        "amber"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lemon",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lime",
-        "lime"
-      ],
+    id: "226",
+    capacity: 4,
+    board: [
+      ["magenta", "emerald", "lemon", "rose"],
+      ["teal", "magenta", "amber", "teal"],
+      ["rose", "teal", "emerald", "rose"],
+      ["violet", "teal", "lime", "cobalt"],
+      ["coral", "cocoa", "emerald", "rose"],
+      ["amber", "sky", "sky", "cobalt"],
+      ["violet", "cobalt", "cocoa", "lime"],
+      ["sky", "cocoa", "violet", "magenta"],
+      ["violet", "coral", "lemon", "magenta"],
+      ["cocoa", "emerald", "coral", "amber"],
+      ["coral", "lemon", "lemon", "sky"],
+      ["cobalt", "amber", "lime", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4548
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4548,
+    },
   },
   "227": {
-    "id": "227",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "coral",
-        "rose",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "coral",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "sky",
-        "teal",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "amber",
-        "emerald",
-        "magenta",
-        "violet"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "coral",
-        "coral"
-      ],
-      [
-        "sky",
-        "amber",
-        "violet",
-        "lemon"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lime",
-        "sky",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "rose",
-        "rose",
-        "teal"
-      ],
+    id: "227",
+    capacity: 4,
+    board: [
+      ["amber", "coral", "rose", "magenta"],
+      ["magenta", "coral", "cobalt", "violet"],
+      ["sky", "teal", "cocoa", "teal"],
+      ["cocoa", "emerald", "lemon", "emerald"],
+      ["amber", "emerald", "magenta", "violet"],
+      ["emerald", "lime", "lime", "teal"],
+      ["cobalt", "cocoa", "coral", "coral"],
+      ["sky", "amber", "violet", "lemon"],
+      ["sky", "cobalt", "lime", "lemon"],
+      ["lime", "sky", "cobalt", "violet"],
+      ["magenta", "lemon", "rose", "cocoa"],
+      ["amber", "rose", "rose", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5483
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5483,
+    },
   },
   "228": {
-    "id": "228",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "coral"
-      ],
-      [
-        "lime",
-        "magenta",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "rose",
-        "teal"
-      ],
-      [
-        "rose",
-        "violet",
-        "emerald",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "coral",
-        "coral"
-      ],
-      [
-        "rose",
-        "magenta",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "amber",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "sky",
-        "amber",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "lime",
-        "lime",
-        "teal",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "sky",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "violet",
-        "lime"
-      ],
+    id: "228",
+    capacity: 4,
+    board: [
+      ["lemon", "lemon", "magenta", "coral"],
+      ["lime", "magenta", "violet", "emerald"],
+      ["cobalt", "cocoa", "cocoa", "lemon"],
+      ["emerald", "cobalt", "rose", "teal"],
+      ["rose", "violet", "emerald", "teal"],
+      ["violet", "magenta", "coral", "coral"],
+      ["rose", "magenta", "rose", "cobalt"],
+      ["sky", "amber", "cocoa", "sky"],
+      ["sky", "amber", "lemon", "emerald"],
+      ["lime", "lime", "teal", "amber"],
+      ["teal", "cobalt", "sky", "coral"],
+      ["cocoa", "amber", "violet", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2534
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2534,
+    },
   },
   "229": {
-    "id": "229",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "amber",
-        "violet",
-        "coral"
-      ],
-      [
-        "magenta",
-        "violet",
-        "teal",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "violet",
-        "rose",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "coral",
-        "rose"
-      ],
-      [
-        "sky",
-        "teal",
-        "lime",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "magenta",
-        "emerald"
-      ],
+    id: "229",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "violet", "coral"],
+      ["magenta", "violet", "teal", "teal"],
+      ["cocoa", "lime", "lemon", "cobalt"],
+      ["amber", "sky", "lime", "lemon"],
+      ["cobalt", "cocoa", "cobalt", "lime"],
+      ["rose", "emerald", "cobalt", "cocoa"],
+      ["teal", "magenta", "violet", "lemon"],
+      ["emerald", "violet", "rose", "coral"],
+      ["cocoa", "lemon", "rose", "sky"],
+      ["emerald", "magenta", "coral", "rose"],
+      ["sky", "teal", "lime", "coral"],
+      ["amber", "amber", "magenta", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5396
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5396,
+    },
   },
   "230": {
-    "id": "230",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "lemon",
-        "lime",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lime",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lime",
-        "lemon",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "emerald",
-        "rose",
-        "amber"
-      ],
-      [
-        "teal",
-        "sky",
-        "rose",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "amber",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "amber",
-        "emerald",
-        "cocoa",
-        "magenta"
-      ],
+    id: "230",
+    capacity: 4,
+    board: [
+      ["lime", "lemon", "lime", "magenta"],
+      ["sky", "cobalt", "teal", "cocoa"],
+      ["emerald", "lime", "emerald", "coral"],
+      ["lime", "lemon", "amber", "cocoa"],
+      ["coral", "emerald", "rose", "amber"],
+      ["teal", "sky", "rose", "magenta"],
+      ["teal", "lemon", "cocoa", "violet"],
+      ["violet", "cobalt", "amber", "coral"],
+      ["lemon", "violet", "violet", "sky"],
+      ["rose", "cobalt", "magenta", "cobalt"],
+      ["rose", "sky", "teal", "coral"],
+      ["amber", "emerald", "cocoa", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4952
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4952,
+    },
   },
   "231": {
-    "id": "231",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "teal",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "teal",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lime",
-        "lemon",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "lemon",
-        "coral",
-        "rose"
-      ],
-      [
-        "rose",
-        "emerald",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "coral",
-        "amber",
-        "coral"
-      ],
-      [
-        "lime",
-        "violet",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "teal",
-        "sky",
-        "lemon"
-      ],
-      [
-        "amber",
-        "magenta",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "rose",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "sky",
-        "cobalt"
-      ],
+    id: "231",
+    capacity: 4,
+    board: [
+      ["sky", "teal", "emerald", "cocoa"],
+      ["violet", "cobalt", "sky", "cocoa"],
+      ["coral", "teal", "emerald", "amber"],
+      ["lime", "lemon", "amber", "teal"],
+      ["violet", "lemon", "coral", "rose"],
+      ["rose", "emerald", "magenta", "cobalt"],
+      ["magenta", "coral", "amber", "coral"],
+      ["lime", "violet", "lime", "cobalt"],
+      ["lemon", "teal", "sky", "lemon"],
+      ["amber", "magenta", "violet", "cocoa"],
+      ["rose", "rose", "lime", "emerald"],
+      ["cocoa", "magenta", "sky", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5392
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5392,
+    },
   },
   "232": {
-    "id": "232",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "violet",
-        "rose",
-        "amber"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "sky",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "rose",
-        "violet",
-        "lime",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "rose",
-        "amber",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "amber",
-        "rose"
-      ],
-      [
-        "lime",
-        "coral",
-        "lime",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "cocoa"
-      ],
+    id: "232",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "rose", "amber"],
+      ["magenta", "lemon", "sky", "coral"],
+      ["cobalt", "teal", "cobalt", "coral"],
+      ["rose", "violet", "lime", "lime"],
+      ["cocoa", "sky", "coral", "cocoa"],
+      ["emerald", "rose", "amber", "teal"],
+      ["cobalt", "magenta", "emerald", "lemon"],
+      ["magenta", "lemon", "amber", "rose"],
+      ["lime", "coral", "lime", "emerald"],
+      ["amber", "lemon", "violet", "cocoa"],
+      ["cobalt", "sky", "teal", "emerald"],
+      ["magenta", "sky", "violet", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6684
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6684,
+    },
   },
   "233": {
-    "id": "233",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "teal",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "teal",
-        "rose",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "amber"
-      ],
-      [
-        "sky",
-        "lemon",
-        "violet",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "rose",
-        "amber"
-      ],
-      [
-        "lime",
-        "coral",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "sky",
-        "magenta",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "amber",
-        "emerald",
-        "rose",
-        "coral"
-      ],
-      [
-        "lemon",
-        "coral",
-        "lime",
-        "magenta"
-      ],
+    id: "233",
+    capacity: 4,
+    board: [
+      ["emerald", "teal", "cobalt", "violet"],
+      ["teal", "rose", "emerald", "cocoa"],
+      ["rose", "cocoa", "violet", "cocoa"],
+      ["magenta", "lime", "teal", "amber"],
+      ["sky", "lemon", "violet", "sky"],
+      ["coral", "lime", "cobalt", "teal"],
+      ["cobalt", "lemon", "rose", "amber"],
+      ["lime", "coral", "cobalt", "amber"],
+      ["cocoa", "emerald", "sky", "violet"],
+      ["sky", "magenta", "magenta", "lemon"],
+      ["amber", "emerald", "rose", "coral"],
+      ["lemon", "coral", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4249
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4249,
+    },
   },
   "234": {
-    "id": "234",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "rose",
-        "teal",
-        "lime"
-      ],
-      [
-        "teal",
-        "amber",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "lime",
-        "amber"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "rose",
-        "lime"
-      ],
-      [
-        "lemon",
-        "rose",
-        "violet",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "emerald",
-        "coral"
-      ],
-      [
-        "violet",
-        "lime",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "lemon",
-        "coral",
-        "coral"
-      ],
+    id: "234",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "teal", "lime"],
+      ["teal", "amber", "teal", "magenta"],
+      ["rose", "cobalt", "lime", "amber"],
+      ["sky", "cocoa", "cocoa", "emerald"],
+      ["cobalt", "sky", "rose", "lime"],
+      ["lemon", "rose", "violet", "sky"],
+      ["cocoa", "violet", "emerald", "coral"],
+      ["violet", "lime", "teal", "magenta"],
+      ["amber", "emerald", "magenta", "lemon"],
+      ["magenta", "amber", "cobalt", "lemon"],
+      ["violet", "cocoa", "emerald", "cobalt"],
+      ["coral", "lemon", "coral", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4084
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4084,
+    },
   },
   "235": {
-    "id": "235",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "teal",
-        "amber",
-        "magenta",
-        "teal"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lemon",
-        "sky"
-      ],
-      [
-        "amber",
-        "violet",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "emerald",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "lime",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "rose",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lemon",
-        "emerald",
-        "lime"
-      ],
-      [
-        "violet",
-        "magenta",
-        "rose",
-        "rose"
-      ],
+    id: "235",
+    capacity: 4,
+    board: [
+      ["cocoa", "coral", "violet", "magenta"],
+      ["teal", "cobalt", "cocoa", "sky"],
+      ["teal", "amber", "magenta", "teal"],
+      ["emerald", "lime", "lemon", "sky"],
+      ["amber", "violet", "lemon", "cobalt"],
+      ["amber", "emerald", "coral", "emerald"],
+      ["cobalt", "lemon", "coral", "amber"],
+      ["violet", "lime", "cocoa", "rose"],
+      ["lime", "sky", "teal", "cobalt"],
+      ["sky", "cocoa", "rose", "magenta"],
+      ["coral", "lemon", "emerald", "lime"],
+      ["violet", "magenta", "rose", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4499
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4499,
+    },
   },
   "236": {
-    "id": "236",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cobalt",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lime",
-        "magenta",
-        "teal",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lime",
-        "emerald",
-        "teal"
-      ],
-      [
-        "sky",
-        "rose",
-        "magenta",
-        "violet"
-      ],
-      [
-        "rose",
-        "amber",
-        "coral",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "rose",
-        "magenta"
-      ],
-      [
-        "violet",
-        "lemon",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "sky",
-        "amber",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "lemon",
-        "amber",
-        "lemon",
-        "coral"
-      ],
+    id: "236",
+    capacity: 4,
+    board: [
+      ["teal", "cobalt", "emerald", "coral"],
+      ["lime", "magenta", "teal", "sky"],
+      ["magenta", "lime", "emerald", "teal"],
+      ["sky", "rose", "magenta", "violet"],
+      ["rose", "amber", "coral", "lime"],
+      ["emerald", "cocoa", "violet", "cobalt"],
+      ["violet", "teal", "amber", "lime"],
+      ["cocoa", "cobalt", "rose", "magenta"],
+      ["violet", "lemon", "cocoa", "lemon"],
+      ["sky", "amber", "cobalt", "sky"],
+      ["rose", "emerald", "cocoa", "coral"],
+      ["lemon", "amber", "lemon", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.657
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.657,
+    },
   },
   "237": {
-    "id": "237",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "teal",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "lemon",
-        "sky",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "teal",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "teal",
-        "lime"
-      ],
-      [
-        "amber",
-        "lime",
-        "sky",
-        "rose"
-      ],
-      [
-        "rose",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "sky",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "amber",
-        "amber",
-        "teal",
-        "lemon"
-      ],
+    id: "237",
+    capacity: 4,
+    board: [
+      ["rose", "teal", "cobalt", "rose"],
+      ["emerald", "magenta", "cocoa", "coral"],
+      ["emerald", "magenta", "lime", "cocoa"],
+      ["cobalt", "coral", "lemon", "cocoa"],
+      ["lime", "lemon", "sky", "magenta"],
+      ["emerald", "teal", "cobalt", "coral"],
+      ["emerald", "lemon", "violet", "magenta"],
+      ["cocoa", "violet", "teal", "lime"],
+      ["amber", "lime", "sky", "rose"],
+      ["rose", "coral", "sky", "violet"],
+      ["amber", "sky", "cobalt", "violet"],
+      ["amber", "amber", "teal", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.7452
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.7452,
+    },
   },
   "238": {
-    "id": "238",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "violet",
-        "teal",
-        "sky"
-      ],
-      [
-        "amber",
-        "teal",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "amber",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "sky",
-        "violet"
-      ],
-      [
-        "rose",
-        "rose",
-        "coral",
-        "emerald"
-      ],
-      [
-        "coral",
-        "violet",
-        "magenta",
-        "coral"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "rose",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "lemon",
-        "lime",
-        "lime",
-        "sky"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "emerald",
-        "magenta"
-      ],
+    id: "238",
+    capacity: 4,
+    board: [
+      ["sky", "violet", "teal", "sky"],
+      ["amber", "teal", "coral", "cobalt"],
+      ["teal", "emerald", "lime", "cocoa"],
+      ["cocoa", "cocoa", "amber", "emerald"],
+      ["lemon", "lemon", "sky", "violet"],
+      ["rose", "rose", "coral", "emerald"],
+      ["coral", "violet", "magenta", "coral"],
+      ["lemon", "magenta", "teal", "magenta"],
+      ["rose", "rose", "violet", "cobalt"],
+      ["amber", "cobalt", "cobalt", "amber"],
+      ["lemon", "lime", "lime", "sky"],
+      ["lime", "cocoa", "emerald", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 34,
-      "difficultyScore": 0.3293
-    }
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.3293,
+    },
   },
   "239": {
-    "id": "239",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "violet"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "rose",
-        "amber"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "violet",
-        "emerald",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "amber",
-        "amber",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "sky",
-        "lemon",
-        "emerald",
-        "rose"
-      ],
-      [
-        "emerald",
-        "coral",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "teal"
-      ],
-      [
-        "magenta",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
+    id: "239",
+    capacity: 4,
+    board: [
+      ["magenta", "sky", "violet", "violet"],
+      ["magenta", "sky", "lime", "cobalt"],
+      ["rose", "cocoa", "rose", "amber"],
+      ["rose", "cocoa", "cobalt", "sky"],
+      ["violet", "emerald", "cocoa", "lemon"],
+      ["amber", "amber", "emerald", "cocoa"],
+      ["coral", "lemon", "lime", "teal"],
+      ["lime", "violet", "coral", "amber"],
+      ["sky", "lemon", "emerald", "rose"],
+      ["emerald", "coral", "coral", "cobalt"],
+      ["magenta", "lime", "teal", "teal"],
+      ["magenta", "teal", "cobalt", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4138
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4138,
+    },
   },
   "240": {
-    "id": "240",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "lemon",
-        "lime",
-        "amber"
-      ],
-      [
-        "emerald",
-        "amber",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "violet",
-        "emerald",
-        "amber",
-        "emerald"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "lemon",
-        "rose",
-        "rose"
-      ],
-      [
-        "magenta",
-        "teal",
-        "coral",
-        "sky"
-      ],
-      [
-        "sky",
-        "magenta",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lemon",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "amber",
-        "lime"
-      ],
-      [
-        "lime",
-        "sky",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "magenta",
-        "violet"
-      ],
+    id: "240",
+    capacity: 4,
+    board: [
+      ["teal", "lemon", "lime", "amber"],
+      ["emerald", "amber", "magenta", "cocoa"],
+      ["violet", "sky", "cobalt", "teal"],
+      ["violet", "emerald", "amber", "emerald"],
+      ["coral", "cobalt", "lime", "coral"],
+      ["rose", "lemon", "rose", "rose"],
+      ["magenta", "teal", "coral", "sky"],
+      ["sky", "magenta", "emerald", "cobalt"],
+      ["violet", "lemon", "teal", "cobalt"],
+      ["rose", "cocoa", "amber", "lime"],
+      ["lime", "sky", "cocoa", "coral"],
+      ["cocoa", "lemon", "magenta", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4636
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4636,
+    },
   },
   "241": {
-    "id": "241",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "violet",
-        "sky",
-        "teal"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "coral",
-        "rose"
-      ],
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "sky"
-      ],
-      [
-        "teal",
-        "magenta",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "lime",
-        "emerald",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "sky",
-        "lime"
-      ],
-      [
-        "violet",
-        "emerald",
-        "rose",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "rose",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "violet",
-        "amber",
-        "teal"
-      ],
+    id: "241",
+    capacity: 4,
+    board: [
+      ["emerald", "violet", "sky", "teal"],
+      ["violet", "cocoa", "coral", "rose"],
+      ["lemon", "coral", "amber", "sky"],
+      ["teal", "magenta", "magenta", "sky"],
+      ["rose", "lime", "emerald", "coral"],
+      ["amber", "amber", "sky", "lime"],
+      ["violet", "emerald", "rose", "teal"],
+      ["magenta", "cobalt", "magenta", "lime"],
+      ["lemon", "emerald", "rose", "coral"],
+      ["cocoa", "cobalt", "lime", "lemon"],
+      ["cocoa", "cobalt", "cobalt", "cocoa"],
+      ["lemon", "violet", "amber", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4178
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4178,
+    },
   },
   "242": {
-    "id": "242",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "emerald",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "lemon",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "sky",
-        "teal"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lime",
-        "coral"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "lemon"
-      ],
-      [
-        "violet",
-        "amber",
-        "violet",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "rose",
-        "emerald",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "amber",
-        "rose",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "cocoa"
-      ],
+    id: "242",
+    capacity: 4,
+    board: [
+      ["sky", "lime", "lemon", "magenta"],
+      ["teal", "lemon", "teal", "cocoa"],
+      ["teal", "emerald", "cobalt", "coral"],
+      ["lemon", "lime", "amber", "violet"],
+      ["cocoa", "cobalt", "sky", "teal"],
+      ["magenta", "sky", "lime", "coral"],
+      ["emerald", "rose", "violet", "lemon"],
+      ["violet", "amber", "violet", "coral"],
+      ["cocoa", "lime", "rose", "magenta"],
+      ["rose", "emerald", "emerald", "magenta"],
+      ["amber", "rose", "sky", "cobalt"],
+      ["amber", "cobalt", "coral", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5034
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5034,
+    },
   },
   "243": {
-    "id": "243",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lime",
-        "magenta",
-        "coral"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "emerald",
-        "lemon",
-        "lime"
-      ],
-      [
-        "amber",
-        "emerald",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "magenta",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "amber",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "amber",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "rose",
-        "magenta",
-        "lime"
-      ],
-      [
-        "teal",
-        "lemon",
-        "violet",
-        "rose"
-      ],
+    id: "243",
+    capacity: 4,
+    board: [
+      ["emerald", "rose", "cobalt", "magenta"],
+      ["teal", "lime", "magenta", "coral"],
+      ["sky", "lemon", "lime", "cocoa"],
+      ["coral", "emerald", "lemon", "lime"],
+      ["amber", "emerald", "violet", "cobalt"],
+      ["cobalt", "sky", "cocoa", "cocoa"],
+      ["coral", "magenta", "cocoa", "teal"],
+      ["lemon", "emerald", "teal", "coral"],
+      ["sky", "amber", "rose", "cobalt"],
+      ["violet", "amber", "sky", "violet"],
+      ["amber", "rose", "magenta", "lime"],
+      ["teal", "lemon", "violet", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5454
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5454,
+    },
   },
   "244": {
-    "id": "244",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "violet",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "rose",
-        "sky",
-        "rose",
-        "coral"
-      ],
-      [
-        "amber",
-        "magenta",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "amber",
-        "coral",
-        "sky"
-      ],
-      [
-        "teal",
-        "emerald",
-        "emerald",
-        "lime"
-      ],
-      [
-        "lime",
-        "coral",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "sky",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lemon",
-        "rose"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "amber",
-        "cocoa"
-      ],
+    id: "244",
+    capacity: 4,
+    board: [
+      ["lemon", "violet", "cocoa", "coral"],
+      ["rose", "sky", "rose", "coral"],
+      ["amber", "magenta", "amber", "cobalt"],
+      ["magenta", "amber", "coral", "sky"],
+      ["teal", "emerald", "emerald", "lime"],
+      ["lime", "coral", "emerald", "magenta"],
+      ["teal", "violet", "emerald", "cobalt"],
+      ["violet", "sky", "cobalt", "rose"],
+      ["sky", "cobalt", "lemon", "rose"],
+      ["magenta", "teal", "violet", "cocoa"],
+      ["lime", "teal", "lemon", "lime"],
+      ["lemon", "cocoa", "amber", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5653
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5653,
+    },
   },
   "245": {
-    "id": "245",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "amber",
-        "rose",
-        "sky"
-      ],
-      [
-        "lemon",
-        "teal",
-        "teal",
-        "lemon"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "lime"
-      ],
-      [
-        "lemon",
-        "amber",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "violet",
-        "lime",
-        "sky",
-        "sky"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "amber",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "teal",
-        "emerald",
-        "lime"
-      ],
-      [
-        "sky",
-        "violet",
-        "cobalt",
-        "magenta"
-      ],
+    id: "245",
+    capacity: 4,
+    board: [
+      ["lime", "amber", "rose", "sky"],
+      ["lemon", "teal", "teal", "lemon"],
+      ["coral", "amber", "coral", "lime"],
+      ["lemon", "amber", "magenta", "cobalt"],
+      ["rose", "cocoa", "teal", "cobalt"],
+      ["cocoa", "violet", "rose", "cocoa"],
+      ["emerald", "coral", "cobalt", "coral"],
+      ["violet", "lime", "sky", "sky"],
+      ["rose", "magenta", "lemon", "emerald"],
+      ["cocoa", "violet", "amber", "emerald"],
+      ["magenta", "teal", "emerald", "lime"],
+      ["sky", "violet", "cobalt", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.497
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.497,
+    },
   },
   "246": {
-    "id": "246",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lemon",
-        "violet",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "teal",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lime",
-        "teal",
-        "coral",
-        "coral"
-      ],
-      [
-        "magenta",
-        "sky",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "magenta",
-        "coral",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "sky",
-        "teal",
-        "rose"
-      ],
-      [
-        "emerald",
-        "amber",
-        "lemon",
-        "amber"
-      ],
-      [
-        "teal",
-        "rose",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "amber",
-        "emerald",
-        "lime"
-      ],
+    id: "246",
+    capacity: 4,
+    board: [
+      ["violet", "lemon", "violet", "rose"],
+      ["cocoa", "cobalt", "cobalt", "cocoa"],
+      ["sky", "sky", "cocoa", "lemon"],
+      ["teal", "coral", "violet", "magenta"],
+      ["lime", "teal", "coral", "coral"],
+      ["magenta", "sky", "cobalt", "rose"],
+      ["cobalt", "lime", "amber", "violet"],
+      ["magenta", "coral", "cocoa", "magenta"],
+      ["lemon", "sky", "teal", "rose"],
+      ["emerald", "amber", "lemon", "amber"],
+      ["teal", "rose", "emerald", "emerald"],
+      ["lime", "amber", "emerald", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.392
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.392,
+    },
   },
   "247": {
-    "id": "247",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "emerald",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "violet",
-        "amber",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "lime",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "violet",
-        "emerald",
-        "teal"
-      ],
-      [
-        "sky",
-        "lemon",
-        "teal",
-        "lime"
-      ],
-      [
-        "teal",
-        "sky",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "coral",
-        "rose",
-        "amber"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lime",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "rose",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "rose",
-        "lemon"
-      ],
-      [
-        "teal",
-        "emerald",
-        "amber",
-        "coral"
-      ],
+    id: "247",
+    capacity: 4,
+    board: [
+      ["cocoa", "emerald", "violet", "cobalt"],
+      ["rose", "violet", "amber", "lemon"],
+      ["lemon", "lime", "cocoa", "lime"],
+      ["sky", "violet", "emerald", "teal"],
+      ["sky", "lemon", "teal", "lime"],
+      ["teal", "sky", "magenta", "cobalt"],
+      ["coral", "coral", "rose", "amber"],
+      ["sky", "cobalt", "lime", "violet"],
+      ["cocoa", "emerald", "rose", "coral"],
+      ["magenta", "cobalt", "magenta", "magenta"],
+      ["amber", "cocoa", "rose", "lemon"],
+      ["teal", "emerald", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.532
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.532,
+    },
   },
   "248": {
-    "id": "248",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "emerald",
-        "lime",
-        "sky"
-      ],
-      [
-        "magenta",
-        "coral",
-        "rose",
-        "sky"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "teal",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "rose",
-        "lime"
-      ],
-      [
-        "violet",
-        "coral",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "teal",
-        "lemon",
-        "teal"
-      ],
-      [
-        "teal",
-        "amber",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "violet",
-        "lime"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "rose",
-        "magenta",
-        "violet"
-      ],
+    id: "248",
+    capacity: 4,
+    board: [
+      ["emerald", "emerald", "lime", "sky"],
+      ["magenta", "coral", "rose", "sky"],
+      ["rose", "cocoa", "cocoa", "magenta"],
+      ["teal", "violet", "coral", "sky"],
+      ["emerald", "emerald", "rose", "lime"],
+      ["violet", "coral", "coral", "cobalt"],
+      ["amber", "teal", "lemon", "teal"],
+      ["teal", "amber", "magenta", "lemon"],
+      ["cobalt", "amber", "lemon", "amber"],
+      ["cobalt", "lemon", "violet", "lime"],
+      ["sky", "cocoa", "cobalt", "cocoa"],
+      ["lime", "rose", "magenta", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4037
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4037,
+    },
   },
   "249": {
-    "id": "249",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "emerald",
-        "sky"
-      ],
-      [
-        "magenta",
-        "coral",
-        "teal",
-        "lemon"
-      ],
-      [
-        "violet",
-        "teal",
-        "lime",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "teal",
-        "lime",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "rose",
-        "rose",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "emerald",
-        "lime"
-      ],
-      [
-        "violet",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "rose",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "rose",
-        "amber",
-        "amber",
-        "violet"
-      ],
+    id: "249",
+    capacity: 4,
+    board: [
+      ["sky", "sky", "lime", "lemon"],
+      ["cobalt", "cocoa", "emerald", "sky"],
+      ["magenta", "coral", "teal", "lemon"],
+      ["violet", "teal", "lime", "magenta"],
+      ["magenta", "teal", "lime", "lemon"],
+      ["magenta", "cobalt", "teal", "lemon"],
+      ["rose", "rose", "emerald", "cocoa"],
+      ["cocoa", "sky", "emerald", "lime"],
+      ["violet", "coral", "amber", "emerald"],
+      ["violet", "cocoa", "amber", "cobalt"],
+      ["coral", "rose", "cobalt", "coral"],
+      ["rose", "amber", "amber", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.513
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.513,
+    },
   },
   "250": {
-    "id": "250",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "violet",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "sky",
-        "sky"
-      ],
-      [
-        "violet",
-        "amber",
-        "lime",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "teal",
-        "coral",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "coral",
-        "sky"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lime",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "rose",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "teal",
-        "violet"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "teal",
-        "teal",
-        "lemon",
-        "lime"
-      ],
+    id: "250",
+    capacity: 4,
+    board: [
+      ["lemon", "violet", "cocoa", "emerald"],
+      ["amber", "lemon", "sky", "sky"],
+      ["violet", "amber", "lime", "emerald"],
+      ["lemon", "cobalt", "magenta", "cobalt"],
+      ["rose", "teal", "coral", "coral"],
+      ["emerald", "magenta", "coral", "sky"],
+      ["amber", "sky", "lime", "cocoa"],
+      ["coral", "lime", "cobalt", "cobalt"],
+      ["cocoa", "rose", "rose", "violet"],
+      ["magenta", "amber", "teal", "violet"],
+      ["rose", "emerald", "cocoa", "magenta"],
+      ["teal", "teal", "lemon", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2692
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2692,
+    },
   },
   "251": {
-    "id": "251",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "magenta",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "rose"
-      ],
-      [
-        "amber",
-        "coral",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "violet",
-        "emerald",
-        "magenta",
-        "amber"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "sky",
-        "sky"
-      ],
-      [
-        "violet",
-        "amber",
-        "violet",
-        "lemon"
-      ],
-      [
-        "lime",
-        "lime",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "teal",
-        "lemon",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "lime",
-        "violet",
-        "teal"
-      ],
-      [
-        "amber",
-        "rose",
-        "sky",
-        "teal"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "rose",
-        "rose"
-      ],
+    id: "251",
+    capacity: 4,
+    board: [
+      ["cobalt", "magenta", "cocoa", "cocoa"],
+      ["cocoa", "coral", "emerald", "rose"],
+      ["amber", "coral", "cobalt", "teal"],
+      ["violet", "emerald", "magenta", "amber"],
+      ["lemon", "emerald", "sky", "sky"],
+      ["violet", "amber", "violet", "lemon"],
+      ["lime", "lime", "cocoa", "lime"],
+      ["sky", "teal", "lemon", "coral"],
+      ["emerald", "magenta", "cobalt", "cobalt"],
+      ["coral", "lime", "violet", "teal"],
+      ["amber", "rose", "sky", "teal"],
+      ["lemon", "magenta", "rose", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.2586
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.2586,
+    },
   },
   "252": {
-    "id": "252",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "lime"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "magenta"
-      ],
-      [
-        "sky",
-        "coral",
-        "lemon",
-        "coral"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "amber",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "coral",
-        "lime",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "lemon",
-        "coral",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "rose",
-        "amber",
-        "lime"
-      ],
+    id: "252",
+    capacity: 4,
+    board: [
+      ["lime", "emerald", "violet", "lime"],
+      ["emerald", "emerald", "cocoa", "teal"],
+      ["lemon", "magenta", "violet", "magenta"],
+      ["sky", "coral", "lemon", "coral"],
+      ["lemon", "emerald", "amber", "cobalt"],
+      ["teal", "violet", "sky", "magenta"],
+      ["sky", "amber", "sky", "cocoa"],
+      ["amber", "coral", "lime", "rose"],
+      ["cocoa", "violet", "cobalt", "cobalt"],
+      ["rose", "lemon", "coral", "teal"],
+      ["cocoa", "teal", "magenta", "cobalt"],
+      ["rose", "rose", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4611
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4611,
+    },
   },
   "253": {
-    "id": "253",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lime",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "violet",
-        "lime"
-      ],
-      [
-        "emerald",
-        "lime",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "lemon",
-        "lime"
-      ],
-      [
-        "teal",
-        "sky",
-        "lemon",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "emerald"
-      ],
-      [
-        "rose",
-        "amber",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "coral",
-        "teal",
-        "coral"
-      ],
-      [
-        "violet",
-        "lemon",
-        "teal",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "emerald",
-        "amber"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "magenta"
-      ],
+    id: "253",
+    capacity: 4,
+    board: [
+      ["sky", "lime", "cobalt", "amber"],
+      ["cocoa", "rose", "violet", "lime"],
+      ["emerald", "lime", "cobalt", "cobalt"],
+      ["cobalt", "magenta", "lemon", "lime"],
+      ["teal", "sky", "lemon", "violet"],
+      ["magenta", "lemon", "cocoa", "coral"],
+      ["emerald", "sky", "coral", "emerald"],
+      ["rose", "amber", "sky", "cocoa"],
+      ["rose", "coral", "teal", "coral"],
+      ["violet", "lemon", "teal", "rose"],
+      ["cocoa", "amber", "emerald", "amber"],
+      ["magenta", "teal", "violet", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5389
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5389,
+    },
   },
   "254": {
-    "id": "254",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "violet",
-        "amber",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lemon",
-        "lime",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "lemon",
-        "lime"
-      ],
-      [
-        "coral",
-        "emerald",
-        "rose",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "sky",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "coral",
-        "lemon"
-      ],
+    id: "254",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "violet", "cocoa"],
+      ["lime", "coral", "amber", "emerald"],
+      ["violet", "amber", "magenta", "cocoa"],
+      ["teal", "magenta", "sky", "magenta"],
+      ["lemon", "cobalt", "sky", "emerald"],
+      ["teal", "lemon", "lime", "rose"],
+      ["cobalt", "rose", "lemon", "lime"],
+      ["coral", "emerald", "rose", "magenta"],
+      ["emerald", "sky", "amber", "cocoa"],
+      ["cocoa", "rose", "violet", "cobalt"],
+      ["teal", "sky", "amber", "coral"],
+      ["cobalt", "lime", "coral", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.717
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.717,
+    },
   },
   "255": {
-    "id": "255",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "emerald",
-        "lime",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "teal",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "sky",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "teal",
-        "rose"
-      ],
-      [
-        "amber",
-        "lime",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "coral",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "amber",
-        "magenta",
-        "sky"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "teal",
-        "lemon",
-        "coral",
-        "sky"
-      ],
-      [
-        "coral",
-        "rose",
-        "rose",
-        "violet"
-      ],
+    id: "255",
+    capacity: 4,
+    board: [
+      ["lime", "emerald", "lime", "emerald"],
+      ["lemon", "teal", "magenta", "cocoa"],
+      ["lime", "cocoa", "sky", "violet"],
+      ["cobalt", "magenta", "teal", "rose"],
+      ["amber", "lime", "violet", "cocoa"],
+      ["violet", "coral", "teal", "magenta"],
+      ["amber", "amber", "coral", "cobalt"],
+      ["rose", "amber", "magenta", "sky"],
+      ["emerald", "cobalt", "cobalt", "lemon"],
+      ["cocoa", "emerald", "sky", "lemon"],
+      ["teal", "lemon", "coral", "sky"],
+      ["coral", "rose", "rose", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4012
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4012,
+    },
   },
   "256": {
-    "id": "256",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "sky",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "amber",
-        "coral",
-        "magenta"
-      ],
-      [
-        "violet",
-        "coral",
-        "sky",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "sky",
-        "lime"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "violet",
-        "emerald",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "magenta",
-        "lime"
-      ],
-      [
-        "rose",
-        "coral",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "coral",
-        "lime",
-        "rose",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "rose",
-        "teal"
-      ],
-      [
-        "rose",
-        "lemon",
-        "emerald",
-        "amber"
-      ],
+    id: "256",
+    capacity: 4,
+    board: [
+      ["amber", "sky", "magenta", "emerald"],
+      ["magenta", "amber", "coral", "magenta"],
+      ["violet", "coral", "sky", "teal"],
+      ["cocoa", "cocoa", "cobalt", "lime"],
+      ["cobalt", "teal", "sky", "lime"],
+      ["violet", "cocoa", "lemon", "lemon"],
+      ["violet", "emerald", "cobalt", "teal"],
+      ["lemon", "amber", "magenta", "lime"],
+      ["rose", "coral", "cobalt", "violet"],
+      ["coral", "lime", "rose", "emerald"],
+      ["cocoa", "sky", "rose", "teal"],
+      ["rose", "lemon", "emerald", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5786
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5786,
+    },
   },
   "257": {
-    "id": "257",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cocoa",
-        "lime",
-        "sky"
-      ],
-      [
-        "sky",
-        "lime",
-        "teal",
-        "rose"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "amber",
-        "lime",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "emerald",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "rose",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "lemon",
-        "violet",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "sky",
-        "emerald"
-      ],
-      [
-        "rose",
-        "lime",
-        "teal",
-        "amber"
-      ],
+    id: "257",
+    capacity: 4,
+    board: [
+      ["coral", "cocoa", "lime", "sky"],
+      ["sky", "lime", "teal", "rose"],
+      ["teal", "emerald", "lemon", "magenta"],
+      ["amber", "amber", "lemon", "coral"],
+      ["amber", "lime", "cobalt", "cobalt"],
+      ["coral", "emerald", "cocoa", "coral"],
+      ["cocoa", "sky", "cobalt", "magenta"],
+      ["rose", "magenta", "violet", "violet"],
+      ["lemon", "violet", "emerald", "rose"],
+      ["cocoa", "violet", "cobalt", "magenta"],
+      ["teal", "lemon", "sky", "emerald"],
+      ["rose", "lime", "teal", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4175
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4175,
+    },
   },
   "258": {
-    "id": "258",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "coral",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "sky",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "lemon",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "lemon",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "teal",
-        "teal"
-      ],
-      [
-        "sky",
-        "violet",
-        "violet",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "magenta",
-        "lime"
-      ],
-      [
-        "amber",
-        "lemon",
-        "rose",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "lime",
-        "amber",
-        "lime",
-        "coral"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "emerald"
-      ],
+    id: "258",
+    capacity: 4,
+    board: [
+      ["amber", "coral", "rose", "cocoa"],
+      ["magenta", "sky", "coral", "teal"],
+      ["teal", "lemon", "lemon", "amber"],
+      ["cobalt", "rose", "lemon", "lime"],
+      ["cobalt", "emerald", "violet", "cobalt"],
+      ["cocoa", "cocoa", "teal", "teal"],
+      ["sky", "violet", "violet", "sky"],
+      ["cobalt", "rose", "magenta", "lime"],
+      ["amber", "lemon", "rose", "emerald"],
+      ["magenta", "violet", "cocoa", "magenta"],
+      ["lime", "amber", "lime", "coral"],
+      ["coral", "emerald", "sky", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4358
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4358,
+    },
   },
   "259": {
-    "id": "259",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "rose",
-        "lemon",
-        "violet"
-      ],
-      [
-        "teal",
-        "emerald",
-        "violet",
-        "rose"
-      ],
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "sky"
-      ],
-      [
-        "coral",
-        "coral",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "lime",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "amber",
-        "rose",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "violet",
-        "violet",
-        "sky",
-        "sky"
-      ],
-      [
-        "amber",
-        "amber",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "rose",
-        "sky",
-        "cocoa",
-        "lime"
-      ],
+    id: "259",
+    capacity: 4,
+    board: [
+      ["lemon", "rose", "lemon", "violet"],
+      ["teal", "emerald", "violet", "rose"],
+      ["magenta", "lime", "teal", "amber"],
+      ["cocoa", "lime", "emerald", "sky"],
+      ["coral", "coral", "teal", "cocoa"],
+      ["teal", "magenta", "lime", "coral"],
+      ["magenta", "cobalt", "lemon", "cobalt"],
+      ["coral", "amber", "rose", "magenta"],
+      ["cobalt", "cobalt", "cocoa", "lemon"],
+      ["violet", "violet", "sky", "sky"],
+      ["amber", "amber", "emerald", "emerald"],
+      ["rose", "sky", "cocoa", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 34,
-      "difficultyScore": 0.157
-    }
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.157,
+    },
   },
   "260": {
-    "id": "260",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cocoa",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "rose",
-        "sky",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "amber",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "magenta",
-        "violet"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "coral",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "rose",
-        "amber"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "sky"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lime",
-        "rose"
-      ],
-      [
-        "emerald",
-        "coral",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "teal",
-        "lime",
-        "teal"
-      ],
+    id: "260",
+    capacity: 4,
+    board: [
+      ["sky", "cocoa", "cobalt", "cocoa"],
+      ["lemon", "rose", "sky", "teal"],
+      ["lemon", "amber", "cocoa", "coral"],
+      ["emerald", "amber", "amber", "violet"],
+      ["cocoa", "cobalt", "magenta", "violet"],
+      ["rose", "violet", "sky", "magenta"],
+      ["cobalt", "violet", "coral", "coral"],
+      ["cobalt", "lime", "rose", "amber"],
+      ["lime", "emerald", "lemon", "sky"],
+      ["emerald", "teal", "lime", "rose"],
+      ["emerald", "coral", "magenta", "lemon"],
+      ["magenta", "teal", "lime", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5486
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5486,
+    },
   },
   "261": {
-    "id": "261",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "cobalt",
-        "lime",
-        "lime"
-      ],
-      [
-        "coral",
-        "teal",
-        "coral",
-        "lemon"
-      ],
-      [
-        "amber",
-        "coral",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "amber",
-        "sky",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "violet",
-        "magenta",
-        "magenta",
-        "violet"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "lime",
-        "rose",
-        "rose",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lemon",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "lime",
-        "teal",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "sky",
-        "emerald"
-      ],
+    id: "261",
+    capacity: 4,
+    board: [
+      ["rose", "cobalt", "lime", "lime"],
+      ["coral", "teal", "coral", "lemon"],
+      ["amber", "coral", "cobalt", "sky"],
+      ["amber", "sky", "cobalt", "cocoa"],
+      ["cocoa", "emerald", "cocoa", "violet"],
+      ["violet", "magenta", "magenta", "violet"],
+      ["emerald", "teal", "lemon", "magenta"],
+      ["lime", "rose", "rose", "lemon"],
+      ["rose", "lemon", "magenta", "sky"],
+      ["cobalt", "coral", "amber", "emerald"],
+      ["lime", "teal", "amber", "teal"],
+      ["violet", "cocoa", "sky", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5308
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5308,
+    },
   },
   "262": {
-    "id": "262",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "sky",
-        "lemon",
-        "violet"
-      ],
-      [
-        "emerald",
-        "amber",
-        "rose",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "lime",
-        "sky",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "rose",
-        "lime",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "lemon",
-        "amber"
-      ],
-      [
-        "teal",
-        "emerald",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "magenta",
-        "rose"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "sky",
-        "teal"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "coral",
-        "coral",
-        "amber",
-        "lime"
-      ],
+    id: "262",
+    capacity: 4,
+    board: [
+      ["magenta", "sky", "lemon", "violet"],
+      ["emerald", "amber", "rose", "lime"],
+      ["cobalt", "amber", "teal", "magenta"],
+      ["rose", "lime", "sky", "teal"],
+      ["cobalt", "coral", "cobalt", "violet"],
+      ["rose", "lime", "violet", "cocoa"],
+      ["cocoa", "violet", "lemon", "amber"],
+      ["teal", "emerald", "cobalt", "magenta"],
+      ["emerald", "cocoa", "magenta", "rose"],
+      ["sky", "cocoa", "sky", "teal"],
+      ["emerald", "coral", "lemon", "lemon"],
+      ["coral", "coral", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5679
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5679,
+    },
   },
   "263": {
-    "id": "263",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "magenta",
-        "magenta",
-        "lime"
-      ],
-      [
-        "violet",
-        "lime",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "teal",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "coral",
-        "sky"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "coral",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "rose",
-        "emerald",
-        "coral",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "lime",
-        "amber",
-        "sky",
-        "emerald"
-      ],
-      [
-        "violet",
-        "lemon",
-        "rose",
-        "amber"
-      ],
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "emerald"
-      ],
+    id: "263",
+    capacity: 4,
+    board: [
+      ["magenta", "magenta", "magenta", "lime"],
+      ["violet", "lime", "cobalt", "teal"],
+      ["amber", "cocoa", "teal", "violet"],
+      ["cocoa", "teal", "coral", "sky"],
+      ["emerald", "cocoa", "cocoa", "rose"],
+      ["cobalt", "lemon", "coral", "teal"],
+      ["cobalt", "coral", "magenta", "lemon"],
+      ["rose", "emerald", "coral", "amber"],
+      ["cobalt", "sky", "rose", "violet"],
+      ["lime", "amber", "sky", "emerald"],
+      ["violet", "lemon", "rose", "amber"],
+      ["sky", "lime", "lemon", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3721
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3721,
+    },
   },
   "264": {
-    "id": "264",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cocoa",
-        "amber",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "teal",
-        "rose"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "amber",
-        "teal"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "coral",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "rose"
-      ],
-      [
-        "lemon",
-        "lime",
-        "violet",
-        "coral"
-      ],
-      [
-        "amber",
-        "violet",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "sky",
-        "lime"
-      ],
+    id: "264",
+    capacity: 4,
+    board: [
+      ["violet", "cocoa", "amber", "lime"],
+      ["emerald", "cobalt", "teal", "rose"],
+      ["magenta", "magenta", "cobalt", "lemon"],
+      ["cobalt", "emerald", "amber", "teal"],
+      ["emerald", "cobalt", "teal", "magenta"],
+      ["amber", "lime", "sky", "lemon"],
+      ["lemon", "coral", "rose", "cocoa"],
+      ["sky", "violet", "sky", "magenta"],
+      ["coral", "rose", "teal", "rose"],
+      ["lemon", "lime", "violet", "coral"],
+      ["amber", "violet", "cocoa", "emerald"],
+      ["cocoa", "coral", "sky", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.558
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.558,
+    },
   },
   "265": {
-    "id": "265",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "violet",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "lime",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "rose",
-        "violet"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lime",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "lime",
-        "lemon"
-      ],
-      [
-        "teal",
-        "magenta",
-        "amber",
-        "rose"
-      ],
-      [
-        "coral",
-        "amber",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "violet"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "lime",
-        "amber"
-      ],
+    id: "265",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "cobalt", "cocoa"],
+      ["teal", "violet", "sky", "cocoa"],
+      ["rose", "cobalt", "lime", "amber"],
+      ["violet", "cobalt", "rose", "violet"],
+      ["rose", "cocoa", "lime", "magenta"],
+      ["teal", "lemon", "lime", "lemon"],
+      ["teal", "magenta", "amber", "rose"],
+      ["coral", "amber", "emerald", "magenta"],
+      ["emerald", "sky", "coral", "violet"],
+      ["lemon", "emerald", "magenta", "cocoa"],
+      ["emerald", "sky", "teal", "coral"],
+      ["coral", "cobalt", "lime", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6268
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6268,
+    },
   },
   "266": {
-    "id": "266",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "magenta",
-        "teal",
-        "teal"
-      ],
-      [
-        "violet",
-        "lime",
-        "violet",
-        "magenta"
-      ],
-      [
-        "coral",
-        "sky",
-        "emerald",
-        "sky"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "amber",
-        "coral"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "amber",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lime",
-        "lime",
-        "teal",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lime",
-        "lemon",
-        "cocoa"
-      ],
+    id: "266",
+    capacity: 4,
+    board: [
+      ["amber", "magenta", "teal", "teal"],
+      ["violet", "lime", "violet", "magenta"],
+      ["coral", "sky", "emerald", "sky"],
+      ["magenta", "rose", "lemon", "rose"],
+      ["cobalt", "cobalt", "amber", "coral"],
+      ["emerald", "emerald", "amber", "coral"],
+      ["cobalt", "rose", "violet", "cocoa"],
+      ["cobalt", "sky", "cocoa", "teal"],
+      ["coral", "cocoa", "amber", "violet"],
+      ["magenta", "emerald", "sky", "lemon"],
+      ["lime", "lime", "teal", "lemon"],
+      ["rose", "lime", "lemon", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4037
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4037,
+    },
   },
   "267": {
-    "id": "267",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "teal",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "lemon"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lime",
-        "teal"
-      ],
-      [
-        "rose",
-        "amber",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "coral"
-      ],
-      [
-        "violet",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "lime",
-        "amber",
-        "emerald",
-        "sky"
-      ],
-      [
-        "lime",
-        "lemon",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "rose",
-        "magenta",
-        "rose",
-        "coral"
-      ],
+    id: "267",
+    capacity: 4,
+    board: [
+      ["sky", "teal", "lemon", "emerald"],
+      ["magenta", "teal", "violet", "lemon"],
+      ["sky", "lemon", "lime", "teal"],
+      ["rose", "amber", "violet", "cobalt"],
+      ["emerald", "cobalt", "cobalt", "magenta"],
+      ["cocoa", "emerald", "lime", "cocoa"],
+      ["cocoa", "rose", "teal", "magenta"],
+      ["amber", "cobalt", "coral", "coral"],
+      ["violet", "amber", "violet", "sky"],
+      ["lime", "amber", "emerald", "sky"],
+      ["lime", "lemon", "cocoa", "coral"],
+      ["rose", "magenta", "rose", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5071
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5071,
+    },
   },
   "268": {
-    "id": "268",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "lemon",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "coral",
-        "emerald",
-        "amber",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "amber",
-        "amber"
-      ],
-      [
-        "lemon",
-        "coral",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "lime",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "violet",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "coral",
-        "sky"
-      ],
-      [
-        "teal",
-        "sky",
-        "sky",
-        "amber"
-      ],
-      [
-        "violet",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "rose",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "emerald",
-        "cocoa"
-      ],
+    id: "268",
+    capacity: 4,
+    board: [
+      ["teal", "lemon", "lemon", "magenta"],
+      ["coral", "emerald", "amber", "rose"],
+      ["cocoa", "magenta", "amber", "amber"],
+      ["lemon", "coral", "cobalt", "rose"],
+      ["cobalt", "teal", "lemon", "cobalt"],
+      ["sky", "lime", "lime", "cocoa"],
+      ["lime", "cocoa", "violet", "violet"],
+      ["cobalt", "emerald", "coral", "sky"],
+      ["teal", "sky", "sky", "amber"],
+      ["violet", "teal", "violet", "lime"],
+      ["magenta", "magenta", "rose", "coral"],
+      ["rose", "emerald", "emerald", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 32,
-      "difficultyScore": 0.1534
-    }
+    development: {
+      optimalMoveCount: 32,
+      difficultyScore: 0.1534,
+    },
   },
   "269": {
-    "id": "269",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "violet",
-        "rose",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "amber",
-        "teal"
-      ],
-      [
-        "sky",
-        "amber",
-        "lime",
-        "teal"
-      ],
-      [
-        "violet",
-        "teal",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "coral",
-        "magenta",
-        "rose"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "amber",
-        "coral"
-      ],
-      [
-        "lime",
-        "coral",
-        "rose",
-        "lime"
-      ],
-      [
-        "magenta",
-        "coral",
-        "lemon",
-        "cocoa"
-      ],
+    id: "269",
+    capacity: 4,
+    board: [
+      ["sky", "violet", "rose", "emerald"],
+      ["emerald", "cobalt", "emerald", "lemon"],
+      ["violet", "cobalt", "amber", "teal"],
+      ["sky", "amber", "lime", "teal"],
+      ["violet", "teal", "cocoa", "cocoa"],
+      ["lime", "emerald", "lemon", "magenta"],
+      ["rose", "sky", "amber", "teal"],
+      ["violet", "coral", "magenta", "rose"],
+      ["sky", "magenta", "cobalt", "cocoa"],
+      ["lemon", "cobalt", "amber", "coral"],
+      ["lime", "coral", "rose", "lime"],
+      ["magenta", "coral", "lemon", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.7148
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.7148,
+    },
   },
   "270": {
-    "id": "270",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lime",
-        "coral"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "rose",
-        "rose"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "teal",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "emerald",
-        "amber",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "amber",
-        "violet"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "sky"
-      ],
+    id: "270",
+    capacity: 4,
+    board: [
+      ["cocoa", "emerald", "sky", "lime"],
+      ["emerald", "magenta", "lime", "coral"],
+      ["violet", "cobalt", "rose", "rose"],
+      ["coral", "rose", "teal", "coral"],
+      ["cobalt", "lime", "teal", "lemon"],
+      ["lemon", "rose", "cobalt", "violet"],
+      ["emerald", "magenta", "magenta", "sky"],
+      ["coral", "emerald", "amber", "lemon"],
+      ["cocoa", "lime", "amber", "violet"],
+      ["teal", "cocoa", "amber", "violet"],
+      ["amber", "cocoa", "lemon", "cobalt"],
+      ["teal", "magenta", "sky", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4814
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4814,
+    },
   },
   "271": {
-    "id": "271",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "rose",
-        "coral",
-        "coral"
-      ],
-      [
-        "lemon",
-        "teal",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "magenta",
-        "lime",
-        "teal"
-      ],
-      [
-        "amber",
-        "violet",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "amber",
-        "violet"
-      ],
-      [
-        "violet",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "sky",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "sky",
-        "lime"
-      ],
-      [
-        "magenta",
-        "lime",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "coral",
-        "rose",
-        "emerald"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "cobalt",
-        "emerald"
-      ],
+    id: "271",
+    capacity: 4,
+    board: [
+      ["lemon", "rose", "coral", "coral"],
+      ["lemon", "teal", "rose", "cobalt"],
+      ["sky", "magenta", "lime", "teal"],
+      ["amber", "violet", "lemon", "teal"],
+      ["lemon", "cobalt", "rose", "sky"],
+      ["emerald", "emerald", "amber", "violet"],
+      ["violet", "amber", "cocoa", "cocoa"],
+      ["teal", "sky", "magenta", "violet"],
+      ["cobalt", "magenta", "sky", "lime"],
+      ["magenta", "lime", "amber", "cocoa"],
+      ["coral", "coral", "rose", "emerald"],
+      ["lime", "cocoa", "cobalt", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2613
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2613,
+    },
   },
   "272": {
-    "id": "272",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lime",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "rose",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "emerald",
-        "rose",
-        "lemon"
-      ],
-      [
-        "teal",
-        "amber",
-        "sky",
-        "coral"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "violet",
-        "lemon",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "rose",
-        "rose"
-      ],
-      [
-        "magenta",
-        "violet",
-        "amber",
-        "emerald"
-      ],
-      [
-        "violet",
-        "violet",
-        "amber",
-        "coral"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
+    id: "272",
+    capacity: 4,
+    board: [
+      ["sky", "lime", "lemon", "magenta"],
+      ["coral", "lime", "lime", "emerald"],
+      ["coral", "magenta", "lemon", "emerald"],
+      ["rose", "amber", "cocoa", "cocoa"],
+      ["sky", "emerald", "rose", "lemon"],
+      ["teal", "amber", "sky", "coral"],
+      ["teal", "cobalt", "cobalt", "teal"],
+      ["violet", "lemon", "cobalt", "magenta"],
+      ["lime", "cocoa", "rose", "rose"],
+      ["magenta", "violet", "amber", "emerald"],
+      ["violet", "violet", "amber", "coral"],
+      ["teal", "cobalt", "cocoa", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3292
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3292,
+    },
   },
   "273": {
-    "id": "273",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "emerald",
-        "sky",
-        "emerald"
-      ],
-      [
-        "rose",
-        "rose",
-        "amber",
-        "coral"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "rose",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "teal",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "lime",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "emerald",
-        "amber",
-        "emerald",
-        "teal"
-      ],
-      [
-        "sky",
-        "coral",
-        "magenta",
-        "lime"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "violet",
-        "magenta"
-      ],
-      [
-        "violet",
-        "teal",
-        "violet",
-        "amber"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lemon",
-        "amber"
-      ],
+    id: "273",
+    capacity: 4,
+    board: [
+      ["lemon", "emerald", "sky", "emerald"],
+      ["rose", "rose", "amber", "coral"],
+      ["rose", "cocoa", "rose", "teal"],
+      ["cocoa", "coral", "teal", "magenta"],
+      ["magenta", "lime", "cobalt", "sky"],
+      ["emerald", "amber", "emerald", "teal"],
+      ["sky", "coral", "magenta", "lime"],
+      ["violet", "coral", "cocoa", "lemon"],
+      ["sky", "cobalt", "cocoa", "lime"],
+      ["cobalt", "lemon", "violet", "magenta"],
+      ["violet", "teal", "violet", "amber"],
+      ["lime", "cobalt", "lemon", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5362
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5362,
+    },
   },
   "274": {
-    "id": "274",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "teal",
-        "teal",
-        "violet"
-      ],
-      [
-        "sky",
-        "rose",
-        "sky",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "amber",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "amber",
-        "violet"
-      ],
-      [
-        "amber",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "coral",
-        "sky",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "sky",
-        "teal",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "coral",
-        "magenta",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "teal",
-        "rose",
-        "rose"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "cocoa",
-        "cobalt"
-      ],
+    id: "274",
+    capacity: 4,
+    board: [
+      ["lemon", "teal", "teal", "violet"],
+      ["sky", "rose", "sky", "lime"],
+      ["cobalt", "lime", "amber", "amber"],
+      ["cobalt", "violet", "amber", "violet"],
+      ["amber", "rose", "lime", "lime"],
+      ["lemon", "cocoa", "cobalt", "violet"],
+      ["coral", "sky", "coral", "magenta"],
+      ["lemon", "sky", "teal", "coral"],
+      ["emerald", "cocoa", "cocoa", "emerald"],
+      ["coral", "magenta", "emerald", "magenta"],
+      ["magenta", "teal", "rose", "rose"],
+      ["lemon", "emerald", "cocoa", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3865
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3865,
+    },
   },
   "275": {
-    "id": "275",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lemon",
-        "violet"
-      ],
-      [
-        "emerald",
-        "teal",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "amber",
-        "teal",
-        "amber",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "magenta",
-        "violet"
-      ],
-      [
-        "lemon",
-        "lime",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "sky",
-        "coral",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "rose"
-      ],
-      [
-        "lime",
-        "teal",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lime",
-        "violet",
-        "emerald",
-        "coral"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lime",
-        "magenta"
-      ],
+    id: "275",
+    capacity: 4,
+    board: [
+      ["amber", "cobalt", "coral", "violet"],
+      ["cobalt", "lemon", "lemon", "violet"],
+      ["emerald", "teal", "cobalt", "sky"],
+      ["amber", "teal", "amber", "lemon"],
+      ["cocoa", "sky", "magenta", "violet"],
+      ["lemon", "lime", "cobalt", "emerald"],
+      ["cocoa", "rose", "magenta", "sky"],
+      ["rose", "sky", "coral", "magenta"],
+      ["teal", "cocoa", "coral", "rose"],
+      ["lime", "teal", "emerald", "amber"],
+      ["lime", "violet", "emerald", "coral"],
+      ["rose", "cocoa", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6188
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6188,
+    },
   },
   "276": {
-    "id": "276",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cobalt",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "magenta",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "rose",
-        "coral"
-      ],
-      [
-        "coral",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "amber",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "teal",
-        "lime"
-      ],
-      [
-        "rose",
-        "lemon",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lime",
-        "lemon",
-        "violet"
-      ],
-      [
-        "sky",
-        "rose",
-        "violet",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "coral",
-        "sky",
-        "emerald",
-        "violet"
-      ],
-      [
-        "amber",
-        "violet",
-        "magenta",
-        "sky"
-      ],
+    id: "276",
+    capacity: 4,
+    board: [
+      ["emerald", "cobalt", "lime", "teal"],
+      ["lime", "magenta", "magenta", "magenta"],
+      ["cocoa", "cobalt", "rose", "coral"],
+      ["coral", "amber", "cocoa", "cocoa"],
+      ["teal", "amber", "teal", "amber"],
+      ["cobalt", "lemon", "teal", "lime"],
+      ["rose", "lemon", "sky", "cocoa"],
+      ["coral", "lime", "lemon", "violet"],
+      ["sky", "rose", "violet", "emerald"],
+      ["emerald", "rose", "cobalt", "lemon"],
+      ["coral", "sky", "emerald", "violet"],
+      ["amber", "violet", "magenta", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.396
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.396,
+    },
   },
   "277": {
-    "id": "277",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "amber",
-        "violet",
-        "sky",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "emerald",
-        "teal"
-      ],
-      [
-        "rose",
-        "emerald",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "violet",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "amber",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "lime",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "amber",
-        "teal"
-      ],
-      [
-        "coral",
-        "violet",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "violet",
-        "lemon",
-        "sky"
-      ],
+    id: "277",
+    capacity: 4,
+    board: [
+      ["lime", "rose", "magenta", "lemon"],
+      ["amber", "violet", "sky", "lime"],
+      ["cobalt", "magenta", "emerald", "teal"],
+      ["rose", "emerald", "rose", "cocoa"],
+      ["cocoa", "sky", "teal", "magenta"],
+      ["rose", "violet", "coral", "cocoa"],
+      ["lemon", "magenta", "amber", "teal"],
+      ["cobalt", "lemon", "cobalt", "coral"],
+      ["emerald", "emerald", "lime", "sky"],
+      ["coral", "amber", "amber", "teal"],
+      ["coral", "violet", "cocoa", "cobalt"],
+      ["lime", "violet", "lemon", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5279
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5279,
+    },
   },
   "278": {
-    "id": "278",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "amber",
-        "sky",
-        "coral"
-      ],
-      [
-        "teal",
-        "emerald",
-        "rose",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "amber",
-        "sky",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "coral",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "violet",
-        "emerald"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "violet",
-        "sky",
-        "teal",
-        "teal"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "amber",
-        "lime"
-      ],
+    id: "278",
+    capacity: 4,
+    board: [
+      ["coral", "amber", "sky", "coral"],
+      ["teal", "emerald", "rose", "lime"],
+      ["violet", "teal", "cocoa", "coral"],
+      ["amber", "sky", "cocoa", "amber"],
+      ["emerald", "emerald", "violet", "lemon"],
+      ["rose", "coral", "magenta", "cobalt"],
+      ["magenta", "lemon", "cobalt", "lemon"],
+      ["rose", "lime", "sky", "lemon"],
+      ["magenta", "cobalt", "violet", "emerald"],
+      ["rose", "cocoa", "cocoa", "magenta"],
+      ["violet", "sky", "teal", "teal"],
+      ["lime", "cobalt", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4388
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4388,
+    },
   },
   "279": {
-    "id": "279",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "teal",
-        "sky",
-        "teal",
-        "amber"
-      ],
-      [
-        "amber",
-        "amber",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "lime",
-        "emerald",
-        "rose",
-        "violet"
-      ],
-      [
-        "rose",
-        "violet",
-        "lime",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "amber",
-        "sky",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "rose",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "teal",
-        "violet"
-      ],
-      [
-        "magenta",
-        "sky",
-        "coral",
-        "coral"
-      ],
-      [
-        "emerald",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
+    id: "279",
+    capacity: 4,
+    board: [
+      ["lemon", "coral", "emerald", "lemon"],
+      ["teal", "sky", "teal", "amber"],
+      ["amber", "amber", "cobalt", "lime"],
+      ["lime", "emerald", "rose", "violet"],
+      ["rose", "violet", "lime", "magenta"],
+      ["emerald", "magenta", "cocoa", "lemon"],
+      ["cobalt", "cocoa", "cocoa", "lemon"],
+      ["amber", "sky", "cobalt", "coral"],
+      ["sky", "cocoa", "rose", "teal"],
+      ["violet", "magenta", "teal", "violet"],
+      ["magenta", "sky", "coral", "coral"],
+      ["emerald", "rose", "lime", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3177
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3177,
+    },
   },
   "280": {
-    "id": "280",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "sky",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "coral",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "emerald"
-      ],
-      [
-        "rose",
-        "violet",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "amber",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "teal",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "lime",
-        "teal",
-        "coral"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "rose"
-      ],
+    id: "280",
+    capacity: 4,
+    board: [
+      ["coral", "sky", "rose", "cocoa"],
+      ["lime", "emerald", "lemon", "cocoa"],
+      ["magenta", "amber", "cobalt", "violet"],
+      ["lemon", "coral", "sky", "cobalt"],
+      ["magenta", "amber", "violet", "emerald"],
+      ["rose", "violet", "lime", "cocoa"],
+      ["lime", "amber", "magenta", "emerald"],
+      ["lemon", "magenta", "violet", "lemon"],
+      ["emerald", "teal", "teal", "coral"],
+      ["sky", "lime", "teal", "coral"],
+      ["amber", "cobalt", "sky", "cocoa"],
+      ["teal", "rose", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5578
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5578,
+    },
   },
   "281": {
-    "id": "281",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "rose",
-        "amber"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "teal",
-        "teal",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lime",
-        "violet",
-        "coral"
-      ],
-      [
-        "amber",
-        "coral",
-        "lime",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "sky",
-        "rose"
-      ],
-      [
-        "teal",
-        "rose",
-        "coral",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lime",
-        "violet",
-        "lemon",
-        "amber"
-      ],
+    id: "281",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "emerald", "emerald"],
+      ["amber", "lemon", "rose", "amber"],
+      ["lemon", "emerald", "sky", "cobalt"],
+      ["emerald", "teal", "teal", "lemon"],
+      ["rose", "lime", "violet", "coral"],
+      ["amber", "coral", "lime", "sky"],
+      ["cobalt", "cobalt", "cocoa", "cocoa"],
+      ["magenta", "violet", "cobalt", "lime"],
+      ["cocoa", "magenta", "sky", "rose"],
+      ["teal", "rose", "coral", "magenta"],
+      ["cocoa", "sky", "coral", "magenta"],
+      ["lime", "violet", "lemon", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.286
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.286,
+    },
   },
   "282": {
-    "id": "282",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "coral",
-        "lime",
-        "rose"
-      ],
-      [
-        "lemon",
-        "lime",
-        "teal",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lime",
-        "sky"
-      ],
-      [
-        "coral",
-        "lemon",
-        "magenta",
-        "sky"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "amber",
-        "amber"
-      ],
-      [
-        "rose",
-        "teal",
-        "magenta",
-        "teal"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "violet",
-        "sky"
-      ],
+    id: "282",
+    capacity: 4,
+    board: [
+      ["lime", "coral", "lime", "rose"],
+      ["lemon", "lime", "teal", "coral"],
+      ["lemon", "violet", "teal", "cobalt"],
+      ["emerald", "sky", "cocoa", "violet"],
+      ["magenta", "rose", "lime", "sky"],
+      ["coral", "lemon", "magenta", "sky"],
+      ["amber", "cocoa", "amber", "amber"],
+      ["rose", "teal", "magenta", "teal"],
+      ["rose", "cobalt", "cobalt", "violet"],
+      ["emerald", "coral", "cobalt", "emerald"],
+      ["cocoa", "magenta", "amber", "cocoa"],
+      ["emerald", "lemon", "violet", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5876
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5876,
+    },
   },
   "283": {
-    "id": "283",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "emerald",
-        "rose",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "amber",
-        "coral"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lime",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "violet",
-        "sky",
-        "lemon",
-        "teal"
-      ],
-      [
-        "magenta",
-        "sky",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "amber",
-        "violet",
-        "coral",
-        "lime"
-      ],
-      [
-        "magenta",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "lime",
-        "teal",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "coral",
-        "teal",
-        "amber",
-        "cobalt"
-      ],
+    id: "283",
+    capacity: 4,
+    board: [
+      ["rose", "emerald", "rose", "emerald"],
+      ["lemon", "cobalt", "cobalt", "violet"],
+      ["lemon", "magenta", "amber", "coral"],
+      ["rose", "cocoa", "lime", "lemon"],
+      ["emerald", "rose", "cocoa", "lime"],
+      ["violet", "sky", "lemon", "teal"],
+      ["magenta", "sky", "sky", "magenta"],
+      ["cocoa", "sky", "cobalt", "violet"],
+      ["amber", "violet", "coral", "lime"],
+      ["magenta", "coral", "amber", "emerald"],
+      ["lime", "teal", "cocoa", "teal"],
+      ["coral", "teal", "amber", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4002
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4002,
+    },
   },
   "284": {
-    "id": "284",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "magenta",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "amber",
-        "sky",
-        "rose",
-        "amber"
-      ],
-      [
-        "teal",
-        "magenta",
-        "magenta",
-        "violet"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "teal",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "coral",
-        "sky",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lemon",
-        "rose",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lemon",
-        "violet"
-      ],
+    id: "284",
+    capacity: 4,
+    board: [
+      ["lime", "magenta", "cocoa", "coral"],
+      ["amber", "sky", "rose", "amber"],
+      ["teal", "magenta", "magenta", "violet"],
+      ["lime", "sky", "teal", "amber"],
+      ["cocoa", "lemon", "amber", "coral"],
+      ["cobalt", "violet", "teal", "rose"],
+      ["cobalt", "lime", "cobalt", "emerald"],
+      ["coral", "sky", "lemon", "teal"],
+      ["lemon", "rose", "emerald", "magenta"],
+      ["cocoa", "emerald", "lime", "cocoa"],
+      ["violet", "sky", "rose", "cobalt"],
+      ["emerald", "coral", "lemon", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5662
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5662,
+    },
   },
   "285": {
-    "id": "285",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "lemon",
-        "sky",
-        "sky"
-      ],
-      [
-        "rose",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "teal",
-        "sky",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "teal",
-        "teal"
-      ],
-      [
-        "amber",
-        "coral",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "magenta",
-        "rose"
-      ],
-      [
-        "amber",
-        "rose",
-        "violet",
-        "lime"
-      ],
-      [
-        "lime",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "rose",
-        "emerald",
-        "lime"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "violet",
-        "coral"
-      ],
+    id: "285",
+    capacity: 4,
+    board: [
+      ["lemon", "lemon", "sky", "sky"],
+      ["rose", "amber", "magenta", "coral"],
+      ["emerald", "emerald", "magenta", "cocoa"],
+      ["lemon", "teal", "sky", "amber"],
+      ["cobalt", "teal", "teal", "teal"],
+      ["amber", "coral", "cobalt", "lemon"],
+      ["lime", "cobalt", "violet", "cocoa"],
+      ["cocoa", "cocoa", "magenta", "rose"],
+      ["amber", "rose", "violet", "lime"],
+      ["lime", "coral", "violet", "magenta"],
+      ["emerald", "rose", "emerald", "lime"],
+      ["sky", "cobalt", "violet", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 34,
-      "difficultyScore": 0.1485
-    }
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.1485,
+    },
   },
   "286": {
-    "id": "286",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "amber"
-      ],
-      [
-        "teal",
-        "emerald",
-        "violet",
-        "sky"
-      ],
-      [
-        "sky",
-        "teal",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "rose",
-        "coral",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lemon",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lime",
-        "lime",
-        "sky",
-        "amber"
-      ],
+    id: "286",
+    capacity: 4,
+    board: [
+      ["magenta", "cobalt", "cocoa", "teal"],
+      ["coral", "emerald", "sky", "amber"],
+      ["teal", "emerald", "violet", "sky"],
+      ["sky", "teal", "lime", "cocoa"],
+      ["teal", "rose", "coral", "magenta"],
+      ["magenta", "lemon", "coral", "emerald"],
+      ["amber", "violet", "cobalt", "cocoa"],
+      ["lime", "emerald", "violet", "coral"],
+      ["cobalt", "lemon", "rose", "lemon"],
+      ["amber", "cocoa", "rose", "cobalt"],
+      ["violet", "lemon", "magenta", "rose"],
+      ["lime", "lime", "sky", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.5497
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.5497,
+    },
   },
   "287": {
-    "id": "287",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "violet",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "sky",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lime",
-        "rose",
-        "coral",
-        "amber"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "amber",
-        "sky"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lemon",
-        "teal"
-      ],
-      [
-        "violet",
-        "teal",
-        "coral",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "violet"
-      ],
+    id: "287",
+    capacity: 4,
+    board: [
+      ["amber", "violet", "amber", "coral"],
+      ["cobalt", "lime", "emerald", "coral"],
+      ["lemon", "magenta", "sky", "cocoa"],
+      ["rose", "sky", "lemon", "lemon"],
+      ["cocoa", "cobalt", "cocoa", "emerald"],
+      ["lime", "rose", "coral", "amber"],
+      ["rose", "magenta", "lime", "cobalt"],
+      ["magenta", "emerald", "amber", "sky"],
+      ["magenta", "violet", "cocoa", "rose"],
+      ["teal", "emerald", "lemon", "teal"],
+      ["violet", "teal", "coral", "lime"],
+      ["cobalt", "sky", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5084
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5084,
+    },
   },
   "288": {
-    "id": "288",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "magenta",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "violet",
-        "coral"
-      ],
-      [
-        "teal",
-        "magenta",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "lemon",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "amber",
-        "lime",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "sky",
-        "teal"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "teal",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "violet",
-        "rose",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "magenta",
-        "violet"
-      ],
+    id: "288",
+    capacity: 4,
+    board: [
+      ["amber", "magenta", "cobalt", "cobalt"],
+      ["sky", "lime", "lemon", "lemon"],
+      ["emerald", "emerald", "violet", "coral"],
+      ["teal", "magenta", "rose", "cobalt"],
+      ["cocoa", "sky", "rose", "violet"],
+      ["lemon", "lime", "sky", "lemon"],
+      ["amber", "lime", "emerald", "amber"],
+      ["cocoa", "coral", "sky", "teal"],
+      ["coral", "amber", "coral", "cobalt"],
+      ["rose", "teal", "magenta", "emerald"],
+      ["violet", "rose", "teal", "cocoa"],
+      ["cocoa", "lime", "magenta", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3882
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3882,
+    },
   },
   "289": {
-    "id": "289",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "rose",
-        "teal",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "coral",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "rose",
-        "teal"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "sky",
-        "amber"
-      ],
-      [
-        "lime",
-        "amber",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "sky",
-        "rose",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "violet",
-        "lemon",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "magenta",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "teal",
-        "violet"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "amber",
-        "coral"
-      ],
+    id: "289",
+    capacity: 4,
+    board: [
+      ["lime", "rose", "teal", "rose"],
+      ["amber", "sky", "coral", "magenta"],
+      ["cocoa", "cobalt", "rose", "teal"],
+      ["lime", "emerald", "violet", "emerald"],
+      ["cocoa", "magenta", "sky", "amber"],
+      ["lime", "amber", "lime", "lemon"],
+      ["lemon", "sky", "rose", "coral"],
+      ["magenta", "cobalt", "cobalt", "cocoa"],
+      ["violet", "violet", "lemon", "teal"],
+      ["cocoa", "emerald", "magenta", "coral"],
+      ["sky", "cobalt", "teal", "violet"],
+      ["lemon", "emerald", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6048
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6048,
+    },
   },
   "290": {
-    "id": "290",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "violet",
-        "rose",
-        "amber"
-      ],
-      [
-        "rose",
-        "sky",
-        "magenta",
-        "sky"
-      ],
-      [
-        "amber",
-        "teal",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "violet",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "coral",
-        "violet"
-      ],
-      [
-        "lime",
-        "lemon",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "amber",
-        "teal",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "rose",
-        "lemon"
-      ],
-      [
-        "sky",
-        "magenta",
-        "emerald",
-        "coral"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "lemon",
-        "coral"
-      ],
+    id: "290",
+    capacity: 4,
+    board: [
+      ["lime", "violet", "rose", "amber"],
+      ["rose", "sky", "magenta", "sky"],
+      ["amber", "teal", "cocoa", "amber"],
+      ["sky", "magenta", "cobalt", "cobalt"],
+      ["lemon", "magenta", "violet", "lime"],
+      ["cocoa", "lime", "emerald", "coral"],
+      ["cobalt", "violet", "coral", "violet"],
+      ["lime", "lemon", "cobalt", "teal"],
+      ["amber", "teal", "rose", "cocoa"],
+      ["teal", "cocoa", "rose", "lemon"],
+      ["sky", "magenta", "emerald", "coral"],
+      ["emerald", "emerald", "lemon", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3523
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3523,
+    },
   },
   "291": {
-    "id": "291",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "teal",
-        "sky",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "teal",
-        "rose"
-      ],
-      [
-        "sky",
-        "magenta",
-        "coral",
-        "rose"
-      ],
-      [
-        "amber",
-        "coral",
-        "rose",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "violet",
-        "teal"
-      ],
-      [
-        "coral",
-        "lemon",
-        "lime",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lemon",
-        "teal"
-      ],
-      [
-        "sky",
-        "violet",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "lime",
-        "violet",
-        "lemon"
-      ],
+    id: "291",
+    capacity: 4,
+    board: [
+      ["sky", "teal", "sky", "coral"],
+      ["cobalt", "lime", "emerald", "amber"],
+      ["cocoa", "magenta", "cobalt", "emerald"],
+      ["magenta", "magenta", "violet", "cocoa"],
+      ["emerald", "cocoa", "teal", "rose"],
+      ["sky", "magenta", "coral", "rose"],
+      ["amber", "coral", "rose", "emerald"],
+      ["cocoa", "amber", "violet", "teal"],
+      ["coral", "lemon", "lime", "rose"],
+      ["cobalt", "lemon", "lemon", "teal"],
+      ["sky", "violet", "lime", "cobalt"],
+      ["amber", "lime", "violet", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5227
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5227,
+    },
   },
   "292": {
-    "id": "292",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "violet",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lemon",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "sky",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "lime",
-        "rose",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "violet",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "cobalt",
-        "teal"
-      ],
+    id: "292",
+    capacity: 4,
+    board: [
+      ["amber", "violet", "magenta", "lemon"],
+      ["rose", "lemon", "coral", "teal"],
+      ["sky", "magenta", "cobalt", "magenta"],
+      ["sky", "lime", "lime", "teal"],
+      ["coral", "rose", "cobalt", "emerald"],
+      ["emerald", "violet", "coral", "sky"],
+      ["emerald", "amber", "cocoa", "amber"],
+      ["lime", "rose", "rose", "cobalt"],
+      ["sky", "violet", "cocoa", "violet"],
+      ["lemon", "lemon", "magenta", "lime"],
+      ["teal", "cocoa", "coral", "amber"],
+      ["cocoa", "emerald", "cobalt", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4008
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4008,
+    },
   },
   "293": {
-    "id": "293",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "lemon",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "sky",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lemon",
-        "violet"
-      ],
-      [
-        "magenta",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "coral",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "teal",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "rose",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "lime",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "amber"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "coral",
-        "coral"
-      ],
+    id: "293",
+    capacity: 4,
+    board: [
+      ["cobalt", "lemon", "cobalt", "rose"],
+      ["cocoa", "rose", "sky", "lime"],
+      ["cobalt", "amber", "lemon", "violet"],
+      ["magenta", "teal", "coral", "emerald"],
+      ["amber", "coral", "emerald", "magenta"],
+      ["teal", "sky", "cocoa", "cocoa"],
+      ["violet", "rose", "cocoa", "magenta"],
+      ["sky", "lemon", "lime", "emerald"],
+      ["teal", "emerald", "lemon", "teal"],
+      ["lime", "sky", "lime", "violet"],
+      ["magenta", "amber", "violet", "amber"],
+      ["rose", "cobalt", "coral", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.383
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.383,
+    },
   },
   "294": {
-    "id": "294",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "coral",
-        "sky"
-      ],
-      [
-        "lime",
-        "violet",
-        "violet",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "sky",
-        "violet",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "teal",
-        "lime",
-        "lime"
-      ],
-      [
-        "violet",
-        "amber",
-        "rose",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "teal",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "rose",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "amber",
-        "lime",
-        "cobalt"
-      ],
+    id: "294",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "coral", "sky"],
+      ["lime", "violet", "violet", "coral"],
+      ["emerald", "cobalt", "lemon", "emerald"],
+      ["sky", "violet", "cocoa", "teal"],
+      ["cocoa", "coral", "coral", "cobalt"],
+      ["amber", "teal", "lime", "lime"],
+      ["violet", "amber", "rose", "lemon"],
+      ["magenta", "magenta", "teal", "sky"],
+      ["cocoa", "rose", "teal", "magenta"],
+      ["amber", "emerald", "rose", "rose"],
+      ["cobalt", "magenta", "emerald", "cocoa"],
+      ["lemon", "amber", "lime", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2161
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2161,
+    },
   },
   "295": {
-    "id": "295",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "cocoa",
-        "rose",
-        "amber"
-      ],
-      [
-        "lemon",
-        "teal",
-        "rose",
-        "emerald"
-      ],
-      [
-        "violet",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "amber",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lime",
-        "magenta",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "coral",
-        "lime",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "rose",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "violet",
-        "sky",
-        "sky"
-      ],
-      [
-        "sky",
-        "coral",
-        "violet",
-        "violet"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
-      [
-        "teal",
-        "teal",
-        "cocoa",
-        "amber"
-      ],
+    id: "295",
+    capacity: 4,
+    board: [
+      ["cocoa", "cocoa", "rose", "amber"],
+      ["lemon", "teal", "rose", "emerald"],
+      ["violet", "amber", "lemon", "cobalt"],
+      ["sky", "amber", "emerald", "coral"],
+      ["lime", "magenta", "cobalt", "lime"],
+      ["lime", "cobalt", "lemon", "cocoa"],
+      ["coral", "coral", "lime", "emerald"],
+      ["emerald", "rose", "rose", "cobalt"],
+      ["lemon", "violet", "sky", "sky"],
+      ["sky", "coral", "violet", "violet"],
+      ["magenta", "magenta", "teal", "magenta"],
+      ["teal", "teal", "cocoa", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 32,
-      "difficultyScore": 0.1503
-    }
+    development: {
+      optimalMoveCount: 32,
+      difficultyScore: 0.1503,
+    },
   },
   "296": {
-    "id": "296",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "cobalt",
-        "lime",
-        "rose"
-      ],
-      [
-        "teal",
-        "violet",
-        "lemon",
-        "sky"
-      ],
-      [
-        "amber",
-        "emerald",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "violet",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "lime",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "coral",
-        "emerald",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "coral",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "violet",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "coral",
-        "lemon",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lime",
-        "emerald",
-        "teal"
-      ],
+    id: "296",
+    capacity: 4,
+    board: [
+      ["lemon", "cobalt", "lime", "rose"],
+      ["teal", "violet", "lemon", "sky"],
+      ["amber", "emerald", "cocoa", "amber"],
+      ["violet", "teal", "lemon", "rose"],
+      ["magenta", "magenta", "cocoa", "cobalt"],
+      ["amber", "lime", "magenta", "magenta"],
+      ["coral", "emerald", "emerald", "sky"],
+      ["cocoa", "sky", "cobalt", "lime"],
+      ["rose", "coral", "violet", "sky"],
+      ["rose", "violet", "cobalt", "coral"],
+      ["coral", "lemon", "teal", "cocoa"],
+      ["amber", "lime", "emerald", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3823
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3823,
+    },
   },
   "297": {
-    "id": "297",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "violet",
-        "rose",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "teal",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "emerald",
-        "lime"
-      ],
-      [
-        "coral",
-        "lemon",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lemon",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "rose",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "sky",
-        "emerald",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "violet",
-        "violet"
-      ],
-      [
-        "amber",
-        "teal",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lime",
-        "amber",
-        "coral"
-      ],
+    id: "297",
+    capacity: 4,
+    board: [
+      ["cocoa", "emerald", "sky", "lime"],
+      ["violet", "rose", "rose", "lemon"],
+      ["amber", "teal", "cocoa", "teal"],
+      ["cobalt", "magenta", "coral", "cobalt"],
+      ["cobalt", "teal", "emerald", "lime"],
+      ["coral", "lemon", "sky", "lemon"],
+      ["emerald", "coral", "lemon", "lime"],
+      ["cobalt", "violet", "rose", "magenta"],
+      ["magenta", "sky", "emerald", "rose"],
+      ["amber", "sky", "violet", "violet"],
+      ["amber", "teal", "cocoa", "cocoa"],
+      ["magenta", "lime", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4331
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4331,
+    },
   },
   "298": {
-    "id": "298",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "emerald",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "amber",
-        "lemon"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "sky",
-        "amber",
-        "rose",
-        "coral"
-      ],
-      [
-        "sky",
-        "emerald",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "sky",
-        "rose"
-      ],
-      [
-        "lemon",
-        "coral",
-        "violet",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "lime",
-        "rose",
-        "amber"
-      ],
-      [
-        "coral",
-        "emerald",
-        "lemon",
-        "violet"
-      ],
+    id: "298",
+    capacity: 4,
+    board: [
+      ["teal", "emerald", "teal", "cobalt"],
+      ["violet", "cocoa", "lime", "lemon"],
+      ["cobalt", "cocoa", "emerald", "rose"],
+      ["cocoa", "coral", "amber", "lemon"],
+      ["sky", "magenta", "cobalt", "teal"],
+      ["sky", "amber", "rose", "coral"],
+      ["sky", "emerald", "magenta", "magenta"],
+      ["cocoa", "amber", "sky", "rose"],
+      ["lemon", "coral", "violet", "teal"],
+      ["violet", "magenta", "lime", "cobalt"],
+      ["lime", "lime", "rose", "amber"],
+      ["coral", "emerald", "lemon", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5156
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5156,
+    },
   },
   "299": {
-    "id": "299",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "violet",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "coral",
-        "teal",
-        "sky"
-      ],
-      [
-        "teal",
-        "magenta",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "amber",
-        "rose"
-      ],
-      [
-        "violet",
-        "amber",
-        "sky",
-        "sky"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "teal"
-      ],
-      [
-        "emerald",
-        "amber",
-        "emerald",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "sky",
-        "coral"
-      ],
-      [
-        "lime",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
+    id: "299",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "cocoa", "magenta"],
+      ["emerald", "coral", "teal", "sky"],
+      ["teal", "magenta", "rose", "cocoa"],
+      ["lemon", "rose", "lime", "lime"],
+      ["cocoa", "amber", "violet", "cocoa"],
+      ["cobalt", "violet", "amber", "rose"],
+      ["violet", "amber", "sky", "sky"],
+      ["lemon", "lemon", "magenta", "teal"],
+      ["emerald", "amber", "emerald", "coral"],
+      ["cobalt", "cobalt", "sky", "coral"],
+      ["lime", "rose", "lime", "cobalt"],
+      ["emerald", "coral", "lemon", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4751
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4751,
+    },
   },
   "300": {
-    "id": "300",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lime",
-        "rose"
-      ],
-      [
-        "emerald",
-        "teal",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "magenta",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "violet",
-        "amber"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "teal",
-        "violet"
-      ],
-      [
-        "lime",
-        "sky",
-        "sky",
-        "teal"
-      ],
-      [
-        "coral",
-        "coral",
-        "violet",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "emerald",
-        "coral",
-        "emerald",
-        "emerald"
-      ],
+    id: "300",
+    capacity: 4,
+    board: [
+      ["magenta", "lime", "teal", "lemon"],
+      ["amber", "cocoa", "sky", "cobalt"],
+      ["lemon", "rose", "lime", "rose"],
+      ["emerald", "teal", "cobalt", "cocoa"],
+      ["cobalt", "rose", "magenta", "violet"],
+      ["magenta", "amber", "violet", "amber"],
+      ["lemon", "lemon", "teal", "violet"],
+      ["lime", "sky", "sky", "teal"],
+      ["coral", "coral", "violet", "amber"],
+      ["cobalt", "magenta", "cocoa", "lime"],
+      ["sky", "coral", "cocoa", "rose"],
+      ["emerald", "coral", "emerald", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.375
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.375,
+    },
   },
   "301": {
-    "id": "301",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "cobalt",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "rose",
-        "teal"
-      ],
-      [
-        "lime",
-        "coral",
-        "coral",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "teal",
-        "lime",
-        "teal",
-        "emerald"
-      ],
-      [
-        "coral",
-        "sky",
-        "amber",
-        "sky"
-      ],
-      [
-        "teal",
-        "violet",
-        "amber",
-        "rose"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "magenta",
-        "rose"
-      ],
-      [
-        "violet",
-        "sky",
-        "lime",
-        "cobalt"
-      ],
+    id: "301",
+    capacity: 4,
+    board: [
+      ["rose", "cobalt", "cocoa", "amber"],
+      ["violet", "cobalt", "cocoa", "violet"],
+      ["magenta", "emerald", "rose", "teal"],
+      ["lime", "coral", "coral", "emerald"],
+      ["magenta", "amber", "cobalt", "lemon"],
+      ["teal", "lime", "teal", "emerald"],
+      ["coral", "sky", "amber", "sky"],
+      ["teal", "violet", "amber", "rose"],
+      ["sky", "lime", "coral", "magenta"],
+      ["emerald", "lemon", "cocoa", "lemon"],
+      ["lemon", "cocoa", "magenta", "rose"],
+      ["violet", "sky", "lime", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.591
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.591,
+    },
   },
   "302": {
-    "id": "302",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "magenta",
-        "amber",
-        "amber"
-      ],
-      [
-        "rose",
-        "emerald",
-        "magenta",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "emerald",
-        "teal"
-      ],
-      [
-        "teal",
-        "lime",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "sky",
-        "coral"
-      ],
-      [
-        "magenta",
-        "sky",
-        "emerald",
-        "rose"
-      ],
-      [
-        "violet",
-        "lime",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "emerald",
-        "rose",
-        "coral",
-        "magenta"
-      ],
-      [
-        "amber",
-        "violet",
-        "lime",
-        "coral"
-      ],
+    id: "302",
+    capacity: 4,
+    board: [
+      ["violet", "magenta", "amber", "amber"],
+      ["rose", "emerald", "magenta", "rose"],
+      ["cobalt", "teal", "cobalt", "lemon"],
+      ["cocoa", "coral", "lemon", "amber"],
+      ["lemon", "lemon", "cocoa", "sky"],
+      ["violet", "cobalt", "emerald", "teal"],
+      ["teal", "lime", "cocoa", "teal"],
+      ["sky", "cocoa", "sky", "coral"],
+      ["magenta", "sky", "emerald", "rose"],
+      ["violet", "lime", "cobalt", "lime"],
+      ["emerald", "rose", "coral", "magenta"],
+      ["amber", "violet", "lime", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5509
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5509,
+    },
   },
   "303": {
-    "id": "303",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cobalt",
-        "emerald",
-        "lime"
-      ],
-      [
-        "lemon",
-        "violet",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "teal",
-        "sky",
-        "rose"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "sky",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "sky",
-        "teal"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "lime"
-      ],
-      [
-        "sky",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "rose",
-        "coral"
-      ],
-      [
-        "amber",
-        "lime",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "amber",
-        "rose",
-        "violet",
-        "violet"
-      ],
+    id: "303",
+    capacity: 4,
+    board: [
+      ["coral", "cobalt", "emerald", "lime"],
+      ["lemon", "violet", "lemon", "cobalt"],
+      ["coral", "teal", "sky", "rose"],
+      ["emerald", "cobalt", "teal", "cocoa"],
+      ["magenta", "lemon", "sky", "coral"],
+      ["cocoa", "lime", "sky", "teal"],
+      ["rose", "magenta", "amber", "lime"],
+      ["sky", "amber", "cocoa", "emerald"],
+      ["teal", "cobalt", "cocoa", "violet"],
+      ["emerald", "lemon", "rose", "coral"],
+      ["amber", "lime", "magenta", "magenta"],
+      ["amber", "rose", "violet", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3502
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3502,
+    },
   },
   "304": {
-    "id": "304",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "violet",
-        "emerald",
-        "teal"
-      ],
-      [
-        "lemon",
-        "coral",
-        "coral",
-        "amber"
-      ],
-      [
-        "lime",
-        "lime",
-        "sky",
-        "lime"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "violet",
-        "lemon",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "coral",
-        "lime"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "emerald",
-        "sky"
-      ],
-      [
-        "emerald",
-        "teal",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "amber"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "emerald"
-      ],
-      [
-        "violet",
-        "magenta",
-        "teal",
-        "violet"
-      ],
+    id: "304",
+    capacity: 4,
+    board: [
+      ["cobalt", "violet", "emerald", "teal"],
+      ["lemon", "coral", "coral", "amber"],
+      ["lime", "lime", "sky", "lime"],
+      ["sky", "rose", "cocoa", "rose"],
+      ["violet", "lemon", "cocoa", "magenta"],
+      ["coral", "cobalt", "sky", "cobalt"],
+      ["cocoa", "amber", "coral", "lime"],
+      ["rose", "cocoa", "emerald", "sky"],
+      ["emerald", "teal", "teal", "cobalt"],
+      ["lemon", "lemon", "magenta", "amber"],
+      ["rose", "magenta", "amber", "emerald"],
+      ["violet", "magenta", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3744
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3744,
+    },
   },
   "305": {
-    "id": "305",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "amber",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "emerald"
-      ],
-      [
-        "teal",
-        "amber",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lime",
-        "violet",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "violet"
-      ],
-      [
-        "amber",
-        "lime",
-        "rose",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "teal",
-        "teal",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "sky",
-        "magenta",
-        "magenta"
-      ],
+    id: "305",
+    capacity: 4,
+    board: [
+      ["emerald", "amber", "emerald", "rose"],
+      ["cocoa", "sky", "coral", "emerald"],
+      ["teal", "amber", "cobalt", "coral"],
+      ["cocoa", "lime", "sky", "lemon"],
+      ["lime", "violet", "lemon", "lemon"],
+      ["amber", "magenta", "coral", "rose"],
+      ["cocoa", "lime", "coral", "cobalt"],
+      ["emerald", "rose", "violet", "violet"],
+      ["amber", "lime", "rose", "sky"],
+      ["cobalt", "magenta", "cocoa", "violet"],
+      ["teal", "teal", "teal", "cobalt"],
+      ["lemon", "sky", "magenta", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3345
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3345,
+    },
   },
   "306": {
-    "id": "306",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lime",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "rose",
-        "coral",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "amber",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "sky",
-        "amber"
-      ],
-      [
-        "emerald",
-        "coral",
-        "violet",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "sky",
-        "teal",
-        "teal"
-      ],
-      [
-        "coral",
-        "sky",
-        "teal",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "lime",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "amber",
-        "magenta",
-        "violet",
-        "teal"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "violet",
-        "violet",
-        "magenta",
-        "rose"
-      ],
+    id: "306",
+    capacity: 4,
+    board: [
+      ["sky", "lime", "cobalt", "lime"],
+      ["rose", "coral", "rose", "cocoa"],
+      ["rose", "amber", "lemon", "lemon"],
+      ["cocoa", "cocoa", "sky", "amber"],
+      ["emerald", "coral", "violet", "emerald"],
+      ["lemon", "sky", "teal", "teal"],
+      ["coral", "sky", "teal", "lemon"],
+      ["cobalt", "magenta", "lime", "cobalt"],
+      ["emerald", "lime", "cocoa", "coral"],
+      ["amber", "magenta", "violet", "teal"],
+      ["magenta", "amber", "cobalt", "emerald"],
+      ["violet", "violet", "magenta", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3675
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3675,
+    },
   },
   "307": {
-    "id": "307",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "amber",
-        "amber",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "sky",
-        "magenta",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "rose",
-        "teal",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "sky",
-        "amber",
-        "lime"
-      ],
-      [
-        "lime",
-        "coral",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "teal",
-        "lemon",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lime",
-        "rose"
-      ],
-      [
-        "violet",
-        "teal",
-        "rose",
-        "violet"
-      ],
-      [
-        "sky",
-        "lemon",
-        "cobalt",
-        "coral"
-      ],
+    id: "307",
+    capacity: 4,
+    board: [
+      ["emerald", "amber", "amber", "lemon"],
+      ["emerald", "teal", "violet", "lime"],
+      ["sky", "magenta", "sky", "cocoa"],
+      ["magenta", "emerald", "cobalt", "rose"],
+      ["rose", "teal", "cocoa", "cobalt"],
+      ["coral", "sky", "amber", "lime"],
+      ["lime", "coral", "magenta", "magenta"],
+      ["lemon", "amber", "emerald", "cocoa"],
+      ["coral", "teal", "lemon", "violet"],
+      ["cobalt", "cocoa", "lime", "rose"],
+      ["violet", "teal", "rose", "violet"],
+      ["sky", "lemon", "cobalt", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4178
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4178,
+    },
   },
   "308": {
-    "id": "308",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "cobalt",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "rose",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "sky",
-        "emerald"
-      ],
-      [
-        "rose",
-        "sky",
-        "amber",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "coral",
-        "emerald",
-        "violet"
-      ],
-      [
-        "amber",
-        "teal",
-        "lime",
-        "sky"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "teal",
-        "violet",
-        "lemon"
-      ],
-      [
-        "teal",
-        "sky",
-        "coral",
-        "lime"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "rose",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "amber",
-        "emerald",
-        "violet",
-        "cocoa"
-      ],
+    id: "308",
+    capacity: 4,
+    board: [
+      ["cobalt", "cobalt", "amber", "cocoa"],
+      ["magenta", "rose", "magenta", "cocoa"],
+      ["cobalt", "lemon", "sky", "emerald"],
+      ["rose", "sky", "amber", "magenta"],
+      ["magenta", "coral", "emerald", "violet"],
+      ["amber", "teal", "lime", "sky"],
+      ["lemon", "lemon", "teal", "cobalt"],
+      ["violet", "teal", "violet", "lemon"],
+      ["teal", "sky", "coral", "lime"],
+      ["emerald", "coral", "cocoa", "coral"],
+      ["rose", "rose", "lime", "lime"],
+      ["amber", "emerald", "violet", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2647
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2647,
+    },
   },
   "309": {
-    "id": "309",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "teal",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "violet",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "rose",
-        "coral",
-        "teal",
-        "magenta"
-      ],
-      [
-        "rose",
-        "coral",
-        "sky",
-        "lemon"
-      ],
-      [
-        "coral",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "coral",
-        "teal"
-      ],
-      [
-        "lemon",
-        "sky",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "lime",
-        "emerald",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "violet",
-        "violet",
-        "teal",
-        "amber"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lemon",
-        "rose"
-      ],
+    id: "309",
+    capacity: 4,
+    board: [
+      ["cobalt", "teal", "amber", "cobalt"],
+      ["sky", "violet", "emerald", "emerald"],
+      ["rose", "coral", "teal", "magenta"],
+      ["rose", "coral", "sky", "lemon"],
+      ["coral", "amber", "violet", "lime"],
+      ["magenta", "amber", "lime", "lime"],
+      ["cobalt", "cocoa", "coral", "teal"],
+      ["lemon", "sky", "cocoa", "sky"],
+      ["lime", "emerald", "cobalt", "emerald"],
+      ["rose", "cocoa", "magenta", "magenta"],
+      ["violet", "violet", "teal", "amber"],
+      ["lemon", "cocoa", "lemon", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3223
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3223,
+    },
   },
   "310": {
-    "id": "310",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "violet",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "magenta",
-        "teal",
-        "sky",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "rose",
-        "teal",
-        "lime"
-      ],
-      [
-        "lime",
-        "rose",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "emerald",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "lime",
-        "violet"
-      ],
-      [
-        "coral",
-        "amber",
-        "magenta",
-        "violet"
-      ],
-      [
-        "sky",
-        "lemon",
-        "violet",
-        "cobalt"
-      ],
+    id: "310",
+    capacity: 4,
+    board: [
+      ["lime", "violet", "amber", "cocoa"],
+      ["coral", "amber", "coral", "teal"],
+      ["cobalt", "magenta", "magenta", "lemon"],
+      ["teal", "rose", "cobalt", "amber"],
+      ["magenta", "teal", "sky", "emerald"],
+      ["lemon", "rose", "teal", "lime"],
+      ["lime", "rose", "coral", "cocoa"],
+      ["sky", "emerald", "emerald", "cocoa"],
+      ["cocoa", "rose", "emerald", "lemon"],
+      ["cobalt", "sky", "lime", "violet"],
+      ["coral", "amber", "magenta", "violet"],
+      ["sky", "lemon", "violet", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5219
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5219,
+    },
   },
   "311": {
-    "id": "311",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "sky",
-        "magenta",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "rose",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lime",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "rose",
-        "emerald",
-        "magenta",
-        "coral"
-      ],
-      [
-        "teal",
-        "sky",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "coral",
-        "sky",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "violet",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "rose",
-        "lemon",
-        "lime"
-      ],
-      [
-        "emerald",
-        "sky",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "violet",
-        "emerald"
-      ],
+    id: "311",
+    capacity: 4,
+    board: [
+      ["amber", "sky", "magenta", "coral"],
+      ["magenta", "lemon", "cocoa", "amber"],
+      ["rose", "cobalt", "rose", "emerald"],
+      ["lemon", "cocoa", "lime", "cocoa"],
+      ["amber", "lime", "cocoa", "magenta"],
+      ["rose", "emerald", "magenta", "coral"],
+      ["teal", "sky", "cobalt", "lemon"],
+      ["coral", "sky", "amber", "teal"],
+      ["violet", "violet", "violet", "teal"],
+      ["lime", "rose", "lemon", "lime"],
+      ["emerald", "sky", "teal", "cobalt"],
+      ["coral", "cobalt", "violet", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.42
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.42,
+    },
   },
   "312": {
-    "id": "312",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "teal",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "lime",
-        "magenta",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "rose",
-        "rose",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "teal",
-        "sky",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "magenta",
-        "lime"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "coral",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "rose",
-        "sky"
-      ],
-      [
-        "emerald",
-        "violet",
-        "lime",
-        "teal"
-      ],
+    id: "312",
+    capacity: 4,
+    board: [
+      ["cocoa", "teal", "coral", "amber"],
+      ["violet", "lime", "magenta", "coral"],
+      ["cobalt", "amber", "sky", "cobalt"],
+      ["magenta", "rose", "rose", "coral"],
+      ["lemon", "violet", "violet", "cobalt"],
+      ["lemon", "teal", "sky", "emerald"],
+      ["emerald", "magenta", "magenta", "lime"],
+      ["rose", "cocoa", "lemon", "teal"],
+      ["lemon", "cocoa", "cobalt", "amber"],
+      ["coral", "sky", "emerald", "amber"],
+      ["cocoa", "lime", "rose", "sky"],
+      ["emerald", "violet", "lime", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4819
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4819,
+    },
   },
   "313": {
-    "id": "313",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "violet",
-        "lime",
-        "teal"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "lime",
-        "rose"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "magenta",
-        "coral"
-      ],
-      [
-        "amber",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
-      [
-        "violet",
-        "teal",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "violet"
-      ],
-      [
-        "lemon",
-        "amber",
-        "sky",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "emerald",
-        "sky"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "coral",
-        "coral"
-      ],
+    id: "313",
+    capacity: 4,
+    board: [
+      ["emerald", "violet", "lime", "teal"],
+      ["amber", "emerald", "lemon", "lemon"],
+      ["amber", "cocoa", "lime", "rose"],
+      ["rose", "cobalt", "magenta", "coral"],
+      ["amber", "magenta", "teal", "magenta"],
+      ["violet", "teal", "cocoa", "teal"],
+      ["lime", "cocoa", "coral", "emerald"],
+      ["cocoa", "sky", "violet", "violet"],
+      ["lemon", "amber", "sky", "lemon"],
+      ["cobalt", "rose", "emerald", "sky"],
+      ["magenta", "rose", "lime", "cobalt"],
+      ["sky", "cobalt", "coral", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4176
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4176,
+    },
   },
   "314": {
-    "id": "314",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "coral",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lime",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "emerald",
-        "violet",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "lime",
-        "coral",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "violet",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "lime",
-        "emerald",
-        "magenta",
-        "rose"
-      ],
-      [
-        "teal",
-        "magenta",
-        "violet",
-        "coral"
-      ],
-      [
-        "amber",
-        "violet",
-        "amber",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "cobalt",
-        "rose"
-      ],
+    id: "314",
+    capacity: 4,
+    board: [
+      ["cobalt", "coral", "teal", "cocoa"],
+      ["magenta", "lime", "cobalt", "sky"],
+      ["emerald", "violet", "teal", "cobalt"],
+      ["magenta", "sky", "rose", "rose"],
+      ["cocoa", "coral", "emerald", "lemon"],
+      ["lemon", "lime", "coral", "lemon"],
+      ["cocoa", "sky", "emerald", "lemon"],
+      ["violet", "teal", "amber", "lime"],
+      ["lime", "emerald", "magenta", "rose"],
+      ["teal", "magenta", "violet", "coral"],
+      ["amber", "violet", "amber", "amber"],
+      ["cocoa", "sky", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5811
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5811,
+    },
   },
   "315": {
-    "id": "315",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "teal",
-        "teal",
-        "emerald"
-      ],
-      [
-        "amber",
-        "sky",
-        "violet",
-        "rose"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "lime"
-      ],
-      [
-        "violet",
-        "lemon",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "emerald",
-        "rose"
-      ],
-      [
-        "magenta",
-        "sky",
-        "sky",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lime",
-        "amber",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "violet",
-        "lemon"
-      ],
+    id: "315",
+    capacity: 4,
+    board: [
+      ["violet", "teal", "teal", "emerald"],
+      ["amber", "sky", "violet", "rose"],
+      ["rose", "magenta", "amber", "lime"],
+      ["violet", "lemon", "coral", "cocoa"],
+      ["emerald", "coral", "cobalt", "lemon"],
+      ["sky", "cobalt", "emerald", "rose"],
+      ["magenta", "sky", "sky", "coral"],
+      ["cocoa", "teal", "lime", "emerald"],
+      ["cocoa", "lemon", "lime", "cobalt"],
+      ["magenta", "cobalt", "cocoa", "magenta"],
+      ["amber", "lime", "amber", "teal"],
+      ["coral", "rose", "violet", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4501
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4501,
+    },
   },
   "316": {
-    "id": "316",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "amber",
-        "rose",
-        "coral"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "coral",
-        "rose"
-      ],
-      [
-        "teal",
-        "lime",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "teal",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "lime",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "rose",
-        "violet"
-      ],
-      [
-        "sky",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "sky",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "violet",
-        "sky",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lemon",
-        "rose",
-        "lime"
-      ],
+    id: "316",
+    capacity: 4,
+    board: [
+      ["coral", "amber", "rose", "coral"],
+      ["magenta", "amber", "cocoa", "teal"],
+      ["lemon", "emerald", "coral", "rose"],
+      ["teal", "lime", "cocoa", "cobalt"],
+      ["violet", "cobalt", "teal", "lime"],
+      ["cocoa", "cobalt", "lime", "emerald"],
+      ["magenta", "lemon", "rose", "violet"],
+      ["sky", "violet", "coral", "amber"],
+      ["sky", "sky", "emerald", "amber"],
+      ["magenta", "cobalt", "cocoa", "emerald"],
+      ["violet", "sky", "lemon", "magenta"],
+      ["teal", "lemon", "rose", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4276
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4276,
+    },
   },
   "317": {
-    "id": "317",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "magenta"
-      ],
-      [
-        "violet",
-        "lemon",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "coral",
-        "rose"
-      ],
-      [
-        "teal",
-        "teal",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "rose",
-        "rose",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "sky",
-        "amber"
-      ],
-      [
-        "lime",
-        "lemon",
-        "lemon",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "cobalt",
-        "magenta"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "amber",
-        "magenta"
-      ],
-      [
-        "violet",
-        "emerald",
-        "coral",
-        "emerald"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lemon",
-        "rose"
-      ],
+    id: "317",
+    capacity: 4,
+    board: [
+      ["cobalt", "sky", "teal", "sky"],
+      ["coral", "amber", "coral", "magenta"],
+      ["violet", "lemon", "emerald", "cocoa"],
+      ["cobalt", "lime", "coral", "rose"],
+      ["teal", "teal", "amber", "cobalt"],
+      ["magenta", "rose", "rose", "lime"],
+      ["violet", "teal", "sky", "amber"],
+      ["lime", "lemon", "lemon", "violet"],
+      ["cocoa", "cocoa", "cobalt", "magenta"],
+      ["lime", "cocoa", "amber", "magenta"],
+      ["violet", "emerald", "coral", "emerald"],
+      ["sky", "emerald", "lemon", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.2841
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.2841,
+    },
   },
   "318": {
-    "id": "318",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "violet",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "coral",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lime",
-        "amber"
-      ],
-      [
-        "sky",
-        "magenta",
-        "magenta",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "coral",
-        "teal",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lime",
-        "emerald",
-        "rose",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "rose",
-        "sky",
-        "emerald"
-      ],
-      [
-        "teal",
-        "teal",
-        "amber",
-        "amber"
-      ],
+    id: "318",
+    capacity: 4,
+    board: [
+      ["cocoa", "sky", "coral", "amber"],
+      ["violet", "violet", "coral", "cobalt"],
+      ["magenta", "cocoa", "coral", "sky"],
+      ["cobalt", "lemon", "lime", "amber"],
+      ["sky", "magenta", "magenta", "teal"],
+      ["cocoa", "rose", "magenta", "lemon"],
+      ["coral", "teal", "cocoa", "emerald"],
+      ["lime", "emerald", "rose", "lime"],
+      ["cobalt", "violet", "violet", "lemon"],
+      ["emerald", "rose", "lemon", "cobalt"],
+      ["lime", "rose", "sky", "emerald"],
+      ["teal", "teal", "amber", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3348
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3348,
+    },
   },
   "319": {
-    "id": "319",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "violet",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "teal",
-        "amber"
-      ],
-      [
-        "violet",
-        "rose",
-        "amber",
-        "rose"
-      ],
-      [
-        "emerald",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "coral",
-        "teal",
-        "lemon",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "sky",
-        "rose",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "violet",
-        "coral"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "teal",
-        "teal"
-      ],
-      [
-        "rose",
-        "coral",
-        "lime",
-        "magenta"
-      ],
+    id: "319",
+    capacity: 4,
+    board: [
+      ["cobalt", "violet", "cobalt", "sky"],
+      ["amber", "cobalt", "sky", "cocoa"],
+      ["amber", "cocoa", "teal", "amber"],
+      ["violet", "rose", "amber", "rose"],
+      ["emerald", "violet", "coral", "sky"],
+      ["coral", "teal", "lemon", "lime"],
+      ["emerald", "cocoa", "lemon", "lime"],
+      ["lime", "cobalt", "cocoa", "magenta"],
+      ["sky", "rose", "lemon", "magenta"],
+      ["emerald", "lemon", "violet", "coral"],
+      ["emerald", "magenta", "teal", "teal"],
+      ["rose", "coral", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5458
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5458,
+    },
   },
   "320": {
-    "id": "320",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "coral",
-        "rose",
-        "violet"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "amber",
-        "coral",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "sky",
-        "emerald",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "rose",
-        "teal"
-      ],
-      [
-        "teal",
-        "coral",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "amber",
-        "violet"
-      ],
-      [
-        "rose",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cobalt",
-        "violet"
-      ],
+    id: "320",
+    capacity: 4,
+    board: [
+      ["amber", "coral", "rose", "violet"],
+      ["emerald", "sky", "cobalt", "lime"],
+      ["amber", "coral", "magenta", "lemon"],
+      ["sky", "emerald", "emerald", "magenta"],
+      ["coral", "cocoa", "rose", "teal"],
+      ["teal", "coral", "magenta", "violet"],
+      ["cocoa", "lime", "lime", "lemon"],
+      ["cocoa", "lemon", "amber", "violet"],
+      ["rose", "emerald", "sky", "lemon"],
+      ["cobalt", "teal", "cocoa", "amber"],
+      ["lime", "sky", "magenta", "rose"],
+      ["cobalt", "teal", "cobalt", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5981
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5981,
+    },
   },
   "321": {
-    "id": "321",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "violet",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "lemon",
-        "amber"
-      ],
-      [
-        "rose",
-        "rose",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "teal",
-        "magenta",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "sky",
-        "emerald",
-        "magenta",
-        "violet"
-      ],
-      [
-        "lime",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "amber",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "lime",
-        "teal"
-      ],
-      [
-        "teal",
-        "emerald",
-        "cocoa",
-        "coral"
-      ],
+    id: "321",
+    capacity: 4,
+    board: [
+      ["violet", "violet", "magenta", "sky"],
+      ["coral", "lime", "lemon", "amber"],
+      ["rose", "rose", "cocoa", "amber"],
+      ["teal", "magenta", "cobalt", "rose"],
+      ["sky", "emerald", "magenta", "violet"],
+      ["lime", "violet", "coral", "amber"],
+      ["lemon", "magenta", "amber", "sky"],
+      ["cocoa", "teal", "sky", "lemon"],
+      ["emerald", "rose", "cobalt", "lime"],
+      ["cobalt", "cocoa", "emerald", "coral"],
+      ["lemon", "cobalt", "lime", "teal"],
+      ["teal", "emerald", "cocoa", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5163
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5163,
+    },
   },
   "322": {
-    "id": "322",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "teal",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "lemon",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "violet",
-        "rose",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "amber",
-        "teal",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lime",
-        "magenta"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "sky",
-        "coral"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lime",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "teal"
-      ],
+    id: "322",
+    capacity: 4,
+    board: [
+      ["coral", "teal", "magenta", "sky"],
+      ["coral", "lemon", "cocoa", "lemon"],
+      ["violet", "rose", "magenta", "emerald"],
+      ["amber", "teal", "sky", "violet"],
+      ["amber", "lemon", "lime", "magenta"],
+      ["coral", "cobalt", "cocoa", "sky"],
+      ["cobalt", "cobalt", "sky", "coral"],
+      ["rose", "cocoa", "teal", "emerald"],
+      ["lime", "emerald", "lime", "lemon"],
+      ["emerald", "rose", "violet", "violet"],
+      ["cobalt", "amber", "cocoa", "rose"],
+      ["magenta", "amber", "lime", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5842
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5842,
+    },
   },
   "323": {
-    "id": "323",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "cocoa",
-        "magenta",
-        "teal"
-      ],
-      [
-        "amber",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "coral",
-        "emerald",
-        "teal",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "teal",
-        "magenta"
-      ],
-      [
-        "lime",
-        "violet",
-        "violet",
-        "rose"
-      ],
-      [
-        "lemon",
-        "violet",
-        "amber",
-        "coral"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "rose",
-        "sky",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "rose",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lemon",
-        "sky",
-        "rose",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
+    id: "323",
+    capacity: 4,
+    board: [
+      ["lime", "cocoa", "magenta", "teal"],
+      ["amber", "lemon", "amber", "lime"],
+      ["coral", "emerald", "teal", "coral"],
+      ["magenta", "cocoa", "teal", "magenta"],
+      ["lime", "violet", "violet", "rose"],
+      ["lemon", "violet", "amber", "coral"],
+      ["sky", "magenta", "cocoa", "violet"],
+      ["rose", "sky", "lemon", "cobalt"],
+      ["coral", "rose", "emerald", "amber"],
+      ["lemon", "sky", "rose", "emerald"],
+      ["sky", "cobalt", "cobalt", "cobalt"],
+      ["teal", "cocoa", "lime", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3071
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3071,
+    },
   },
   "324": {
-    "id": "324",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lemon",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "lime",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "amber"
-      ],
-      [
-        "sky",
-        "sky",
-        "teal",
-        "amber"
-      ],
-      [
-        "lime",
-        "lemon",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "coral",
-        "emerald",
-        "teal"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "coral",
-        "violet"
-      ],
-      [
-        "sky",
-        "lemon",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lime",
-        "lime"
-      ],
-      [
-        "lemon",
-        "teal",
-        "magenta",
-        "violet"
-      ],
+    id: "324",
+    capacity: 4,
+    board: [
+      ["violet", "lemon", "coral", "cobalt"],
+      ["emerald", "lime", "amber", "cocoa"],
+      ["amber", "magenta", "magenta", "amber"],
+      ["sky", "sky", "teal", "amber"],
+      ["lime", "lemon", "rose", "cobalt"],
+      ["rose", "coral", "emerald", "teal"],
+      ["sky", "cobalt", "coral", "violet"],
+      ["sky", "lemon", "rose", "cobalt"],
+      ["cocoa", "rose", "emerald", "emerald"],
+      ["cocoa", "violet", "teal", "cocoa"],
+      ["coral", "magenta", "lime", "lime"],
+      ["lemon", "teal", "magenta", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3414
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3414,
+    },
   },
   "325": {
-    "id": "325",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "violet",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "magenta",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "teal",
-        "lemon"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "amber"
-      ],
-      [
-        "teal",
-        "violet",
-        "lime",
-        "rose"
-      ],
+    id: "325",
+    capacity: 4,
+    board: [
+      ["rose", "violet", "coral", "emerald"],
+      ["teal", "cobalt", "cobalt", "lime"],
+      ["lime", "cobalt", "lime", "coral"],
+      ["rose", "violet", "cocoa", "coral"],
+      ["emerald", "emerald", "magenta", "rose"],
+      ["amber", "sky", "teal", "lemon"],
+      ["amber", "magenta", "magenta", "teal"],
+      ["lemon", "amber", "sky", "cocoa"],
+      ["lemon", "lemon", "magenta", "violet"],
+      ["cobalt", "sky", "cocoa", "cocoa"],
+      ["emerald", "sky", "coral", "amber"],
+      ["teal", "violet", "lime", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3302
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3302,
+    },
   },
   "326": {
-    "id": "326",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "rose",
-        "violet",
-        "rose"
-      ],
-      [
-        "magenta",
-        "violet",
-        "sky",
-        "violet"
-      ],
-      [
-        "lemon",
-        "sky",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "sky",
-        "coral",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "lime",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "amber",
-        "amber"
-      ],
-      [
-        "emerald",
-        "teal",
-        "rose",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "emerald",
-        "coral",
-        "amber"
-      ],
+    id: "326",
+    capacity: 4,
+    board: [
+      ["teal", "rose", "violet", "rose"],
+      ["magenta", "violet", "sky", "violet"],
+      ["lemon", "sky", "magenta", "cocoa"],
+      ["cocoa", "cocoa", "coral", "magenta"],
+      ["lemon", "sky", "coral", "violet"],
+      ["cobalt", "magenta", "rose", "lemon"],
+      ["amber", "cobalt", "lime", "lime"],
+      ["cobalt", "coral", "amber", "amber"],
+      ["emerald", "teal", "rose", "teal"],
+      ["lime", "lemon", "emerald", "emerald"],
+      ["lime", "cocoa", "sky", "cobalt"],
+      ["teal", "emerald", "coral", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4014
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4014,
+    },
   },
   "327": {
-    "id": "327",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "magenta",
-        "emerald",
-        "rose"
-      ],
-      [
-        "teal",
-        "teal",
-        "rose",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lime",
-        "sky",
-        "coral",
-        "violet"
-      ],
-      [
-        "coral",
-        "amber",
-        "amber",
-        "lemon"
-      ],
-      [
-        "violet",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "violet",
-        "lemon",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "sky",
-        "amber",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "sky",
-        "rose"
-      ],
-      [
-        "emerald",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "sky"
-      ],
+    id: "327",
+    capacity: 4,
+    board: [
+      ["magenta", "magenta", "emerald", "rose"],
+      ["teal", "teal", "rose", "teal"],
+      ["cocoa", "lemon", "magenta", "cobalt"],
+      ["cobalt", "violet", "lime", "lemon"],
+      ["lime", "sky", "coral", "violet"],
+      ["coral", "amber", "amber", "lemon"],
+      ["violet", "amber", "magenta", "coral"],
+      ["violet", "lemon", "cocoa", "cobalt"],
+      ["teal", "sky", "amber", "emerald"],
+      ["coral", "lime", "sky", "rose"],
+      ["emerald", "lime", "rose", "cobalt"],
+      ["emerald", "cocoa", "cocoa", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3046
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3046,
+    },
   },
   "328": {
-    "id": "328",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "violet",
-        "magenta",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lemon",
-        "teal",
-        "magenta",
-        "amber"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "rose",
-        "violet",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "teal",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "coral",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "amber",
-        "lime",
-        "emerald",
-        "amber"
-      ],
-      [
-        "lemon",
-        "rose",
-        "rose",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "lemon",
-        "emerald",
-        "cobalt"
-      ],
+    id: "328",
+    capacity: 4,
+    board: [
+      ["emerald", "violet", "magenta", "amber"],
+      ["cocoa", "lime", "magenta", "lime"],
+      ["lemon", "teal", "magenta", "amber"],
+      ["rose", "cobalt", "violet", "cocoa"],
+      ["sky", "rose", "violet", "sky"],
+      ["cocoa", "coral", "teal", "emerald"],
+      ["magenta", "lemon", "coral", "coral"],
+      ["sky", "cobalt", "cobalt", "lime"],
+      ["amber", "lime", "emerald", "amber"],
+      ["lemon", "rose", "rose", "violet"],
+      ["cocoa", "sky", "coral", "teal"],
+      ["teal", "lemon", "emerald", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3753
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3753,
+    },
   },
   "329": {
-    "id": "329",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "amber",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "violet",
-        "lime"
-      ],
-      [
-        "sky",
-        "violet",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "emerald",
-        "amber",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "rose",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "magenta",
-        "lime",
-        "violet",
-        "lemon"
-      ],
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "coral",
-        "magenta",
-        "teal"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "sky"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
+    id: "329",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "cobalt", "coral"],
+      ["magenta", "lemon", "violet", "lime"],
+      ["sky", "violet", "rose", "cobalt"],
+      ["teal", "emerald", "amber", "violet"],
+      ["cobalt", "teal", "emerald", "lemon"],
+      ["emerald", "cocoa", "amber", "cocoa"],
+      ["rose", "rose", "cocoa", "amber"],
+      ["magenta", "lime", "violet", "lemon"],
+      ["coral", "emerald", "magenta", "cobalt"],
+      ["coral", "coral", "magenta", "teal"],
+      ["lime", "sky", "teal", "sky"],
+      ["lemon", "rose", "cocoa", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4927
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4927,
+    },
   },
   "330": {
-    "id": "330",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "rose",
-        "teal",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "violet",
-        "lemon",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "coral",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "lime",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "rose",
-        "emerald"
-      ],
-      [
-        "lime",
-        "magenta",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "sky",
-        "magenta",
-        "amber"
-      ],
-      [
-        "sky",
-        "lemon",
-        "rose",
-        "coral"
-      ],
-      [
-        "teal",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "amber",
-        "emerald"
-      ],
+    id: "330",
+    capacity: 4,
+    board: [
+      ["violet", "rose", "teal", "coral"],
+      ["cobalt", "cocoa", "lemon", "lemon"],
+      ["violet", "lemon", "magenta", "emerald"],
+      ["cobalt", "cocoa", "coral", "sky"],
+      ["cobalt", "amber", "violet", "teal"],
+      ["lime", "lime", "lime", "cocoa"],
+      ["cocoa", "teal", "rose", "emerald"],
+      ["lime", "magenta", "sky", "cobalt"],
+      ["rose", "sky", "magenta", "amber"],
+      ["sky", "lemon", "rose", "coral"],
+      ["teal", "amber", "coral", "violet"],
+      ["magenta", "emerald", "amber", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4534
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4534,
+    },
   },
   "331": {
-    "id": "331",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "rose",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "lemon",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "coral",
-        "violet",
-        "teal",
-        "amber"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "coral",
-        "teal",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "lime",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "emerald",
-        "amber"
-      ],
-      [
-        "rose",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "sky",
-        "teal",
-        "coral",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "violet"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "rose",
-        "emerald"
-      ],
+    id: "331",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "emerald", "cobalt"],
+      ["lime", "lemon", "lemon", "magenta"],
+      ["coral", "violet", "teal", "amber"],
+      ["lemon", "rose", "lime", "cobalt"],
+      ["magenta", "coral", "teal", "magenta"],
+      ["emerald", "lime", "magenta", "lime"],
+      ["cocoa", "cobalt", "coral", "cocoa"],
+      ["cobalt", "amber", "emerald", "amber"],
+      ["rose", "amber", "violet", "sky"],
+      ["sky", "teal", "coral", "lemon"],
+      ["cocoa", "sky", "violet", "violet"],
+      ["teal", "cocoa", "rose", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4822
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4822,
+    },
   },
   "332": {
-    "id": "332",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "rose",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "teal",
-        "sky",
-        "violet",
-        "sky"
-      ],
-      [
-        "teal",
-        "coral",
-        "lemon",
-        "coral"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "rose",
-        "emerald",
-        "emerald",
-        "rose"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lime",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "sky",
-        "magenta",
-        "amber"
-      ],
-      [
-        "teal",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "violet",
-        "emerald"
-      ],
+    id: "332",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "cobalt", "coral"],
+      ["teal", "sky", "violet", "sky"],
+      ["teal", "coral", "lemon", "coral"],
+      ["lime", "cocoa", "coral", "cobalt"],
+      ["amber", "cocoa", "cobalt", "violet"],
+      ["rose", "emerald", "emerald", "rose"],
+      ["rose", "magenta", "amber", "cocoa"],
+      ["emerald", "lime", "lemon", "lemon"],
+      ["sky", "lemon", "lime", "cobalt"],
+      ["magenta", "sky", "magenta", "amber"],
+      ["teal", "teal", "lime", "amber"],
+      ["violet", "cocoa", "violet", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3614
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3614,
+    },
   },
   "333": {
-    "id": "333",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "emerald",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "sky",
-        "rose",
-        "emerald"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "lime",
-        "teal",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "violet",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "rose",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "lime",
-        "lemon",
-        "coral"
-      ],
-      [
-        "sky",
-        "lemon",
-        "teal",
-        "violet"
-      ],
+    id: "333",
+    capacity: 4,
+    board: [
+      ["amber", "emerald", "emerald", "magenta"],
+      ["cocoa", "violet", "cobalt", "cocoa"],
+      ["cobalt", "lime", "teal", "cocoa"],
+      ["sky", "sky", "rose", "emerald"],
+      ["amber", "magenta", "coral", "coral"],
+      ["amber", "amber", "lemon", "emerald"],
+      ["lime", "teal", "teal", "coral"],
+      ["sky", "cobalt", "violet", "rose"],
+      ["cobalt", "magenta", "rose", "violet"],
+      ["magenta", "lime", "rose", "cocoa"],
+      ["lemon", "lime", "lemon", "coral"],
+      ["sky", "lemon", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4697
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4697,
+    },
   },
   "334": {
-    "id": "334",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lime",
-        "magenta",
-        "rose"
-      ],
-      [
-        "amber",
-        "lemon",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "violet",
-        "sky",
-        "teal"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lemon",
-        "sky"
-      ],
-      [
-        "rose",
-        "emerald",
-        "sky",
-        "lime"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "coral",
-        "rose",
-        "rose"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "amber",
-        "sky"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "violet",
-        "teal",
-        "magenta"
-      ],
+    id: "334",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "magenta", "rose"],
+      ["amber", "lemon", "amber", "cocoa"],
+      ["lime", "violet", "sky", "teal"],
+      ["coral", "cocoa", "lime", "emerald"],
+      ["teal", "cocoa", "lemon", "sky"],
+      ["rose", "emerald", "sky", "lime"],
+      ["lemon", "lemon", "coral", "emerald"],
+      ["cocoa", "coral", "amber", "cobalt"],
+      ["violet", "coral", "rose", "rose"],
+      ["emerald", "cobalt", "amber", "sky"],
+      ["magenta", "cobalt", "magenta", "cobalt"],
+      ["teal", "violet", "teal", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5665
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5665,
+    },
   },
   "335": {
-    "id": "335",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "cobalt",
-        "amber",
-        "violet"
-      ],
-      [
-        "sky",
-        "lime",
-        "lime",
-        "violet"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lemon",
-        "violet"
-      ],
-      [
-        "amber",
-        "sky",
-        "emerald",
-        "rose"
-      ],
-      [
-        "coral",
-        "emerald",
-        "rose",
-        "magenta"
-      ],
-      [
-        "amber",
-        "teal",
-        "magenta",
-        "rose"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "lime",
-        "teal",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "coral",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "rose",
-        "lemon"
-      ],
+    id: "335",
+    capacity: 4,
+    board: [
+      ["cobalt", "cobalt", "amber", "violet"],
+      ["sky", "lime", "lime", "violet"],
+      ["teal", "emerald", "lemon", "violet"],
+      ["amber", "sky", "emerald", "rose"],
+      ["coral", "emerald", "rose", "magenta"],
+      ["amber", "teal", "magenta", "rose"],
+      ["sky", "cobalt", "emerald", "cocoa"],
+      ["violet", "lime", "teal", "lemon"],
+      ["cobalt", "coral", "coral", "coral"],
+      ["cocoa", "sky", "teal", "magenta"],
+      ["magenta", "amber", "cocoa", "lime"],
+      ["lemon", "cocoa", "rose", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4324
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4324,
+    },
   },
   "336": {
-    "id": "336",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "lime",
-        "amber",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "amber",
-        "sky",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "violet",
-        "violet",
-        "sky",
-        "sky"
-      ],
-      [
-        "coral",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "magenta",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "rose",
-        "coral",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "rose",
-        "teal",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cocoa",
-        "lime"
-      ],
+    id: "336",
+    capacity: 4,
+    board: [
+      ["lime", "lime", "amber", "lemon"],
+      ["magenta", "amber", "sky", "rose"],
+      ["cocoa", "magenta", "cobalt", "emerald"],
+      ["violet", "violet", "sky", "sky"],
+      ["coral", "violet", "coral", "amber"],
+      ["magenta", "lime", "amber", "violet"],
+      ["lemon", "rose", "cocoa", "emerald"],
+      ["emerald", "rose", "coral", "coral"],
+      ["cocoa", "teal", "cobalt", "cobalt"],
+      ["lemon", "rose", "teal", "emerald"],
+      ["teal", "cobalt", "teal", "lemon"],
+      ["sky", "magenta", "cocoa", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.2974
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.2974,
+    },
   },
   "337": {
-    "id": "337",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "teal",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "rose",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "amber",
-        "lime"
-      ],
-      [
-        "coral",
-        "amber",
-        "sky",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "magenta",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "lemon",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "emerald",
-        "amber"
-      ],
-      [
-        "magenta",
-        "rose",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "violet",
-        "lime"
-      ],
-      [
-        "sky",
-        "rose",
-        "amber",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "violet",
-        "cocoa"
-      ],
+    id: "337",
+    capacity: 4,
+    board: [
+      ["lemon", "teal", "magenta", "cobalt"],
+      ["sky", "rose", "rose", "cobalt"],
+      ["cobalt", "lemon", "teal", "emerald"],
+      ["cobalt", "magenta", "amber", "lime"],
+      ["coral", "amber", "sky", "coral"],
+      ["lemon", "violet", "magenta", "lime"],
+      ["violet", "teal", "lemon", "coral"],
+      ["emerald", "cocoa", "emerald", "amber"],
+      ["magenta", "rose", "teal", "coral"],
+      ["sky", "cocoa", "violet", "lime"],
+      ["sky", "rose", "amber", "lime"],
+      ["emerald", "cocoa", "violet", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6729
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6729,
+    },
   },
   "338": {
-    "id": "338",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "teal",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "rose",
-        "magenta"
-      ],
-      [
-        "rose",
-        "sky",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "teal",
-        "lime",
-        "violet"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "amber",
-        "teal",
-        "lime"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "violet",
-        "emerald",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "rose",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "lime",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lemon",
-        "coral"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "lemon",
-        "sky"
-      ],
+    id: "338",
+    capacity: 4,
+    board: [
+      ["magenta", "teal", "emerald", "cobalt"],
+      ["lemon", "magenta", "rose", "magenta"],
+      ["rose", "sky", "coral", "teal"],
+      ["sky", "teal", "lime", "violet"],
+      ["coral", "emerald", "sky", "cobalt"],
+      ["rose", "amber", "teal", "lime"],
+      ["violet", "cobalt", "cocoa", "amber"],
+      ["violet", "emerald", "lime", "cocoa"],
+      ["magenta", "rose", "violet", "cocoa"],
+      ["amber", "cobalt", "lime", "emerald"],
+      ["amber", "lemon", "lemon", "coral"],
+      ["coral", "cocoa", "lemon", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4265
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4265,
+    },
   },
   "339": {
-    "id": "339",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "magenta",
-        "teal",
-        "emerald"
-      ],
-      [
-        "rose",
-        "lime",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "lemon",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "lemon",
-        "violet",
-        "amber"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "rose",
-        "sky"
-      ],
-      [
-        "violet",
-        "coral",
-        "violet",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "emerald",
-        "rose"
-      ],
-      [
-        "amber",
-        "amber",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "sky",
-        "coral",
-        "lime"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "emerald",
-        "amber"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "magenta",
-        "cobalt"
-      ],
+    id: "339",
+    capacity: 4,
+    board: [
+      ["cobalt", "magenta", "teal", "emerald"],
+      ["rose", "lime", "lemon", "lemon"],
+      ["emerald", "cocoa", "magenta", "sky"],
+      ["coral", "lemon", "coral", "cobalt"],
+      ["teal", "lemon", "violet", "amber"],
+      ["rose", "cocoa", "rose", "sky"],
+      ["violet", "coral", "violet", "teal"],
+      ["violet", "magenta", "emerald", "rose"],
+      ["amber", "amber", "lime", "cocoa"],
+      ["teal", "sky", "coral", "lime"],
+      ["lime", "cocoa", "emerald", "amber"],
+      ["sky", "cobalt", "magenta", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3645
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3645,
+    },
   },
   "340": {
-    "id": "340",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "emerald",
-        "coral",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "amber",
-        "lime"
-      ],
-      [
-        "sky",
-        "teal",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "violet",
-        "teal",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lemon",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "violet",
-        "magenta"
-      ],
-      [
-        "sky",
-        "magenta",
-        "amber",
-        "lemon"
-      ],
-      [
-        "teal",
-        "violet",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "rose",
-        "violet",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "amber",
-        "cocoa"
-      ],
+    id: "340",
+    capacity: 4,
+    board: [
+      ["amber", "emerald", "coral", "coral"],
+      ["cobalt", "emerald", "amber", "lime"],
+      ["sky", "teal", "magenta", "cocoa"],
+      ["cobalt", "coral", "magenta", "sky"],
+      ["rose", "violet", "teal", "rose"],
+      ["cocoa", "lime", "lime", "emerald"],
+      ["teal", "lemon", "emerald", "rose"],
+      ["lemon", "cobalt", "violet", "magenta"],
+      ["sky", "magenta", "amber", "lemon"],
+      ["teal", "violet", "coral", "cobalt"],
+      ["sky", "rose", "violet", "lime"],
+      ["cocoa", "lemon", "amber", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4568
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4568,
+    },
   },
   "341": {
-    "id": "341",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "violet",
-        "lime",
-        "lime"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "rose",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "sky",
-        "teal",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "emerald",
-        "teal",
-        "teal",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "teal",
-        "violet"
-      ],
-      [
-        "sky",
-        "magenta",
-        "magenta",
-        "coral"
-      ],
-      [
-        "violet",
-        "rose",
-        "cobalt",
-        "lemon"
-      ],
+    id: "341",
+    capacity: 4,
+    board: [
+      ["lime", "violet", "lime", "lime"],
+      ["lemon", "rose", "cocoa", "lime"],
+      ["amber", "cocoa", "rose", "magenta"],
+      ["emerald", "cocoa", "amber", "coral"],
+      ["cobalt", "violet", "coral", "sky"],
+      ["sky", "coral", "cocoa", "rose"],
+      ["sky", "teal", "emerald", "magenta"],
+      ["amber", "lemon", "cobalt", "amber"],
+      ["emerald", "teal", "teal", "emerald"],
+      ["cobalt", "lemon", "teal", "violet"],
+      ["sky", "magenta", "magenta", "coral"],
+      ["violet", "rose", "cobalt", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4034
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4034,
+    },
   },
   "342": {
-    "id": "342",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "violet",
-        "sky",
-        "amber"
-      ],
-      [
-        "coral",
-        "magenta",
-        "amber",
-        "amber"
-      ],
-      [
-        "coral",
-        "emerald",
-        "lemon",
-        "teal"
-      ],
-      [
-        "lime",
-        "emerald",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "teal",
-        "lime"
-      ],
-      [
-        "lime",
-        "sky",
-        "coral",
-        "amber"
-      ],
-      [
-        "lime",
-        "lemon",
-        "teal",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "violet",
-        "rose"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "violet",
-        "lemon"
-      ],
-      [
-        "coral",
-        "sky",
-        "cocoa",
-        "magenta"
-      ],
+    id: "342",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "sky", "amber"],
+      ["coral", "magenta", "amber", "amber"],
+      ["coral", "emerald", "lemon", "teal"],
+      ["lime", "emerald", "rose", "cobalt"],
+      ["rose", "emerald", "cocoa", "cocoa"],
+      ["cobalt", "violet", "teal", "lime"],
+      ["lime", "sky", "coral", "amber"],
+      ["lime", "lemon", "teal", "magenta"],
+      ["lemon", "cobalt", "magenta", "sky"],
+      ["cocoa", "emerald", "violet", "rose"],
+      ["rose", "cobalt", "violet", "lemon"],
+      ["coral", "sky", "cocoa", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5491
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5491,
+    },
   },
   "343": {
-    "id": "343",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "lime",
-        "lime",
-        "lemon"
-      ],
-      [
-        "violet",
-        "emerald",
-        "emerald",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "teal",
-        "amber"
-      ],
-      [
-        "rose",
-        "violet",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "emerald",
-        "sky"
-      ],
-      [
-        "amber",
-        "rose",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "rose",
-        "magenta",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "magenta",
-        "cobalt",
-        "lemon"
-      ],
+    id: "343",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "cocoa", "cocoa"],
+      ["rose", "lime", "lime", "lemon"],
+      ["violet", "emerald", "emerald", "amber"],
+      ["teal", "cobalt", "teal", "amber"],
+      ["rose", "violet", "lemon", "lemon"],
+      ["coral", "cocoa", "coral", "emerald"],
+      ["cocoa", "coral", "sky", "violet"],
+      ["coral", "lime", "teal", "teal"],
+      ["lime", "violet", "emerald", "sky"],
+      ["amber", "rose", "magenta", "magenta"],
+      ["rose", "magenta", "cobalt", "cobalt"],
+      ["sky", "magenta", "cobalt", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 33,
-      "difficultyScore": 0.2613
-    }
+    development: {
+      optimalMoveCount: 33,
+      difficultyScore: 0.2613,
+    },
   },
   "344": {
-    "id": "344",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "sky",
-        "lemon",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "violet",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lemon",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "violet",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "lime",
-        "violet",
-        "amber"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "rose"
-      ],
-      [
-        "coral",
-        "amber",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "lime",
-        "coral",
-        "emerald",
-        "teal"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "coral",
-        "magenta",
-        "amber",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cobalt",
-        "violet"
-      ],
+    id: "344",
+    capacity: 4,
+    board: [
+      ["cocoa", "sky", "lemon", "sky"],
+      ["cobalt", "magenta", "violet", "sky"],
+      ["cocoa", "rose", "lemon", "sky"],
+      ["cocoa", "amber", "violet", "magenta"],
+      ["magenta", "lime", "violet", "amber"],
+      ["coral", "lime", "teal", "rose"],
+      ["coral", "amber", "emerald", "lemon"],
+      ["lime", "coral", "emerald", "teal"],
+      ["emerald", "rose", "teal", "emerald"],
+      ["cobalt", "teal", "lemon", "rose"],
+      ["coral", "magenta", "amber", "lime"],
+      ["cocoa", "cobalt", "cobalt", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5171
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5171,
+    },
   },
   "345": {
-    "id": "345",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "cocoa",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "violet",
-        "coral",
-        "lime"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "lime",
-        "emerald",
-        "sky",
-        "sky"
-      ],
-      [
-        "lemon",
-        "rose",
-        "sky",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "coral",
-        "teal",
-        "violet",
-        "coral"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "violet",
-        "lemon"
-      ],
-      [
-        "coral",
-        "magenta",
-        "teal",
-        "lemon"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "rose",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "teal",
-        "teal",
-        "violet",
-        "emerald"
-      ],
+    id: "345",
+    capacity: 4,
+    board: [
+      ["amber", "cocoa", "cocoa", "cobalt"],
+      ["amber", "violet", "coral", "lime"],
+      ["lemon", "amber", "cobalt", "emerald"],
+      ["lime", "emerald", "sky", "sky"],
+      ["lemon", "rose", "sky", "emerald"],
+      ["magenta", "cobalt", "cocoa", "amber"],
+      ["coral", "teal", "violet", "coral"],
+      ["sky", "cocoa", "violet", "lemon"],
+      ["coral", "magenta", "teal", "lemon"],
+      ["rose", "cobalt", "rose", "magenta"],
+      ["magenta", "rose", "lime", "lime"],
+      ["teal", "teal", "violet", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3602
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3602,
+    },
   },
   "346": {
-    "id": "346",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "magenta",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "sky",
-        "rose"
-      ],
-      [
-        "amber",
-        "teal",
-        "violet",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "teal",
-        "magenta",
-        "amber"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "teal",
-        "sky"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "rose",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "lime",
-        "coral"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "sky",
-        "rose",
-        "amber"
-      ],
-      [
-        "violet",
-        "lime",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "lemon",
-        "violet",
-        "sky",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "magenta",
-        "coral"
-      ],
+    id: "346",
+    capacity: 4,
+    board: [
+      ["emerald", "magenta", "teal", "cocoa"],
+      ["cocoa", "violet", "sky", "rose"],
+      ["amber", "teal", "violet", "emerald"],
+      ["emerald", "teal", "magenta", "amber"],
+      ["lemon", "lemon", "teal", "sky"],
+      ["lemon", "emerald", "rose", "lime"],
+      ["cobalt", "coral", "lime", "coral"],
+      ["amber", "cobalt", "magenta", "cobalt"],
+      ["lime", "sky", "rose", "amber"],
+      ["violet", "lime", "cocoa", "coral"],
+      ["lemon", "violet", "sky", "rose"],
+      ["cocoa", "cobalt", "magenta", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5283
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5283,
+    },
   },
   "347": {
-    "id": "347",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "violet",
-        "rose",
-        "sky"
-      ],
-      [
-        "lemon",
-        "rose",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "amber",
-        "magenta",
-        "sky"
-      ],
-      [
-        "teal",
-        "violet",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "magenta",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "emerald",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "sky",
-        "violet"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lemon",
-        "teal"
-      ],
-      [
-        "teal",
-        "lime",
-        "lime",
-        "coral"
-      ],
-      [
-        "coral",
-        "lemon",
-        "amber",
-        "magenta"
-      ],
-      [
-        "sky",
-        "teal",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cocoa",
-        "rose"
-      ],
+    id: "347",
+    capacity: 4,
+    board: [
+      ["amber", "violet", "rose", "sky"],
+      ["lemon", "rose", "emerald", "cocoa"],
+      ["violet", "amber", "magenta", "sky"],
+      ["teal", "violet", "rose", "cobalt"],
+      ["coral", "magenta", "cobalt", "emerald"],
+      ["amber", "cobalt", "emerald", "coral"],
+      ["cocoa", "lime", "sky", "violet"],
+      ["lime", "cobalt", "lemon", "teal"],
+      ["teal", "lime", "lime", "coral"],
+      ["coral", "lemon", "amber", "magenta"],
+      ["sky", "teal", "lemon", "magenta"],
+      ["emerald", "cocoa", "cocoa", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3009
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3009,
+    },
   },
   "348": {
-    "id": "348",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "magenta",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "violet",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "coral",
-        "emerald",
-        "coral"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "amber",
-        "teal"
-      ],
-      [
-        "emerald",
-        "violet",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "teal",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "rose",
-        "magenta",
-        "emerald",
-        "violet"
-      ],
-      [
-        "amber",
-        "lime",
-        "lime",
-        "amber"
-      ],
-      [
-        "coral",
-        "teal",
-        "coral",
-        "sky"
-      ],
+    id: "348",
+    capacity: 4,
+    board: [
+      ["magenta", "magenta", "cocoa", "lemon"],
+      ["rose", "magenta", "lime", "cocoa"],
+      ["violet", "violet", "sky", "cobalt"],
+      ["sky", "coral", "emerald", "coral"],
+      ["sky", "rose", "cocoa", "rose"],
+      ["teal", "cobalt", "amber", "teal"],
+      ["emerald", "violet", "emerald", "lemon"],
+      ["cobalt", "lime", "teal", "amber"],
+      ["cobalt", "cocoa", "lemon", "lemon"],
+      ["rose", "magenta", "emerald", "violet"],
+      ["amber", "lime", "lime", "amber"],
+      ["coral", "teal", "coral", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.477
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.477,
+    },
   },
   "349": {
-    "id": "349",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "lime",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lime",
-        "lemon",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "magenta",
-        "lime"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "coral",
-        "coral"
-      ],
-      [
-        "amber",
-        "lemon",
-        "sky",
-        "rose"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "sky",
-        "amber"
-      ],
-      [
-        "teal",
-        "violet",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "violet",
-        "rose",
-        "amber",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "teal",
-        "lime",
-        "lemon"
-      ],
-      [
-        "violet",
-        "coral",
-        "rose",
-        "cocoa"
-      ],
+    id: "349",
+    capacity: 4,
+    board: [
+      ["magenta", "lime", "magenta", "rose"],
+      ["lime", "lemon", "cobalt", "violet"],
+      ["emerald", "amber", "cocoa", "emerald"],
+      ["sky", "cocoa", "magenta", "lime"],
+      ["emerald", "emerald", "coral", "coral"],
+      ["amber", "lemon", "sky", "rose"],
+      ["teal", "cobalt", "sky", "amber"],
+      ["teal", "violet", "cobalt", "teal"],
+      ["violet", "rose", "amber", "sky"],
+      ["magenta", "lemon", "cocoa", "cobalt"],
+      ["coral", "teal", "lime", "lemon"],
+      ["violet", "coral", "rose", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3256
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3256,
+    },
   },
   "350": {
-    "id": "350",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "rose",
-        "amber",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "magenta",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "teal",
-        "violet",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "teal",
-        "emerald",
-        "amber"
-      ],
-      [
-        "magenta",
-        "teal",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lemon",
-        "violet",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "violet",
-        "amber",
-        "emerald"
-      ],
-      [
-        "rose",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "cocoa",
-        "sky"
-      ],
+    id: "350",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "amber", "emerald"],
+      ["teal", "cocoa", "coral", "cobalt"],
+      ["amber", "cobalt", "violet", "cobalt"],
+      ["rose", "magenta", "cobalt", "sky"],
+      ["teal", "violet", "lime", "lemon"],
+      ["coral", "teal", "emerald", "amber"],
+      ["magenta", "teal", "lemon", "lime"],
+      ["lemon", "violet", "magenta", "cocoa"],
+      ["sky", "violet", "amber", "emerald"],
+      ["rose", "coral", "lemon", "magenta"],
+      ["rose", "cocoa", "lime", "emerald"],
+      ["coral", "lime", "cocoa", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5885
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5885,
+    },
+  },
+  "351": {
+    id: "351",
+    capacity: 4,
+    board: [
+      ["magenta", "coral", "magenta", "lime"],
+      ["cobalt", "amber", "lemon", "cocoa"],
+      ["magenta", "lime", "amber", "lime"],
+      ["teal", "teal", "cobalt", "sky"],
+      ["violet", "lime", "rose", "rose"],
+      ["rose", "emerald", "violet", "amber"],
+      ["sky", "coral", "cocoa", "emerald"],
+      ["teal", "violet", "cobalt", "cocoa"],
+      ["cocoa", "emerald", "cobalt", "violet"],
+      ["coral", "emerald", "amber", "magenta"],
+      ["lemon", "teal", "sky", "rose"],
+      ["coral", "lemon", "sky", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4639,
+    },
+  },
+  "352": {
+    id: "352",
+    capacity: 4,
+    board: [
+      ["emerald", "cocoa", "lemon", "cocoa"],
+      ["rose", "sky", "coral", "emerald"],
+      ["coral", "violet", "cocoa", "violet"],
+      ["lime", "rose", "teal", "amber"],
+      ["violet", "violet", "amber", "coral"],
+      ["lemon", "sky", "teal", "sky"],
+      ["amber", "cobalt", "cobalt", "coral"],
+      ["magenta", "rose", "teal", "rose"],
+      ["lime", "lemon", "lime", "magenta"],
+      ["magenta", "cobalt", "cocoa", "amber"],
+      ["lemon", "sky", "cobalt", "emerald"],
+      ["emerald", "magenta", "lime", "teal"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5152,
+    },
+  },
+  "353": {
+    id: "353",
+    capacity: 4,
+    board: [
+      ["rose", "lime", "emerald", "teal"],
+      ["magenta", "cocoa", "magenta", "sky"],
+      ["violet", "violet", "coral", "teal"],
+      ["cobalt", "lemon", "rose", "cobalt"],
+      ["lime", "cobalt", "cocoa", "violet"],
+      ["rose", "cobalt", "teal", "coral"],
+      ["lemon", "lime", "amber", "cocoa"],
+      ["emerald", "rose", "emerald", "violet"],
+      ["magenta", "sky", "coral", "amber"],
+      ["lime", "emerald", "amber", "lemon"],
+      ["coral", "sky", "amber", "magenta"],
+      ["sky", "lemon", "cocoa", "teal"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4879,
+    },
+  },
+  "354": {
+    id: "354",
+    capacity: 4,
+    board: [
+      ["violet", "lemon", "teal", "emerald"],
+      ["lemon", "rose", "violet", "lemon"],
+      ["lime", "magenta", "teal", "emerald"],
+      ["cobalt", "rose", "amber", "coral"],
+      ["sky", "lemon", "lime", "rose"],
+      ["magenta", "cocoa", "teal", "emerald"],
+      ["emerald", "amber", "lime", "coral"],
+      ["cocoa", "rose", "cocoa", "cobalt"],
+      ["magenta", "cobalt", "coral", "violet"],
+      ["magenta", "amber", "sky", "teal"],
+      ["cobalt", "sky", "lime", "sky"],
+      ["coral", "violet", "amber", "cocoa"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6094,
+    },
+  },
+  "355": {
+    id: "355",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "lemon", "cobalt"],
+      ["coral", "lemon", "lime", "cocoa"],
+      ["rose", "magenta", "teal", "magenta"],
+      ["emerald", "violet", "amber", "sky"],
+      ["magenta", "sky", "teal", "cocoa"],
+      ["cobalt", "emerald", "lemon", "sky"],
+      ["rose", "lemon", "teal", "cocoa"],
+      ["violet", "emerald", "lime", "violet"],
+      ["cobalt", "rose", "emerald", "amber"],
+      ["sky", "teal", "amber", "cobalt"],
+      ["coral", "amber", "cocoa", "rose"],
+      ["lime", "magenta", "coral", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4722,
+    },
+  },
+  "356": {
+    id: "356",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "violet", "cocoa"],
+      ["teal", "sky", "violet", "magenta"],
+      ["amber", "cobalt", "rose", "magenta"],
+      ["violet", "amber", "lime", "violet"],
+      ["cobalt", "lime", "coral", "emerald"],
+      ["teal", "cobalt", "coral", "emerald"],
+      ["emerald", "magenta", "coral", "lemon"],
+      ["lime", "lemon", "lime", "lemon"],
+      ["cobalt", "amber", "cocoa", "teal"],
+      ["rose", "cocoa", "coral", "amber"],
+      ["sky", "teal", "rose", "magenta"],
+      ["sky", "cocoa", "emerald", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.666,
+    },
+  },
+  "357": {
+    id: "357",
+    capacity: 4,
+    board: [
+      ["lime", "violet", "cobalt", "magenta"],
+      ["lemon", "violet", "sky", "sky"],
+      ["amber", "emerald", "amber", "teal"],
+      ["lemon", "cocoa", "emerald", "lime"],
+      ["sky", "teal", "teal", "coral"],
+      ["rose", "coral", "magenta", "amber"],
+      ["lime", "lime", "rose", "cocoa"],
+      ["lemon", "cocoa", "violet", "rose"],
+      ["coral", "teal", "cobalt", "amber"],
+      ["emerald", "cobalt", "cobalt", "magenta"],
+      ["violet", "rose", "lemon", "coral"],
+      ["emerald", "cocoa", "magenta", "sky"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4035,
+    },
+  },
+  "358": {
+    id: "358",
+    capacity: 4,
+    board: [
+      ["coral", "emerald", "sky", "rose"],
+      ["coral", "lime", "violet", "rose"],
+      ["lime", "lemon", "teal", "teal"],
+      ["cobalt", "coral", "rose", "cobalt"],
+      ["magenta", "teal", "emerald", "sky"],
+      ["magenta", "violet", "amber", "sky"],
+      ["emerald", "lemon", "amber", "cobalt"],
+      ["teal", "violet", "lime", "magenta"],
+      ["cocoa", "cocoa", "coral", "sky"],
+      ["lemon", "cobalt", "cocoa", "emerald"],
+      ["cocoa", "lime", "lemon", "violet"],
+      ["amber", "magenta", "rose", "amber"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3802,
+    },
+  },
+  "359": {
+    id: "359",
+    capacity: 4,
+    board: [
+      ["teal", "rose", "magenta", "cobalt"],
+      ["lime", "rose", "coral", "magenta"],
+      ["amber", "lime", "violet", "lemon"],
+      ["amber", "lime", "cocoa", "cocoa"],
+      ["emerald", "cobalt", "emerald", "lemon"],
+      ["sky", "sky", "amber", "teal"],
+      ["sky", "teal", "sky", "violet"],
+      ["cocoa", "cobalt", "coral", "amber"],
+      ["rose", "lemon", "violet", "rose"],
+      ["teal", "cocoa", "cobalt", "coral"],
+      ["emerald", "magenta", "magenta", "lemon"],
+      ["violet", "coral", "emerald", "lime"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4453,
+    },
+  },
+  "360": {
+    id: "360",
+    capacity: 4,
+    board: [
+      ["teal", "lemon", "rose", "violet"],
+      ["emerald", "amber", "teal", "cobalt"],
+      ["lime", "emerald", "sky", "rose"],
+      ["violet", "cocoa", "rose", "sky"],
+      ["lemon", "teal", "coral", "cobalt"],
+      ["amber", "coral", "magenta", "cocoa"],
+      ["magenta", "violet", "coral", "magenta"],
+      ["emerald", "cocoa", "violet", "lemon"],
+      ["magenta", "rose", "teal", "lime"],
+      ["coral", "cobalt", "emerald", "cobalt"],
+      ["lime", "amber", "sky", "amber"],
+      ["sky", "cocoa", "lime", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6066,
+    },
+  },
+  "361": {
+    id: "361",
+    capacity: 4,
+    board: [
+      ["teal", "lemon", "coral", "cocoa"],
+      ["violet", "violet", "rose", "rose"],
+      ["lemon", "coral", "cobalt", "coral"],
+      ["teal", "sky", "amber", "sky"],
+      ["lime", "lime", "cocoa", "magenta"],
+      ["teal", "teal", "emerald", "sky"],
+      ["lemon", "amber", "cocoa", "magenta"],
+      ["coral", "cobalt", "emerald", "emerald"],
+      ["rose", "emerald", "violet", "rose"],
+      ["cocoa", "sky", "lemon", "cobalt"],
+      ["amber", "amber", "lime", "cobalt"],
+      ["lime", "magenta", "magenta", "violet"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.3247,
+    },
+  },
+  "362": {
+    id: "362",
+    capacity: 4,
+    board: [
+      ["cocoa", "sky", "lime", "violet"],
+      ["sky", "amber", "cobalt", "teal"],
+      ["violet", "magenta", "cocoa", "amber"],
+      ["lime", "coral", "amber", "cobalt"],
+      ["cocoa", "violet", "lemon", "lime"],
+      ["amber", "coral", "rose", "emerald"],
+      ["rose", "magenta", "sky", "teal"],
+      ["violet", "teal", "sky", "coral"],
+      ["cobalt", "emerald", "magenta", "cobalt"],
+      ["emerald", "teal", "rose", "rose"],
+      ["cocoa", "lime", "coral", "emerald"],
+      ["magenta", "lemon", "lemon", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3276,
+    },
+  },
+  "363": {
+    id: "363",
+    capacity: 4,
+    board: [
+      ["amber", "coral", "magenta", "lemon"],
+      ["violet", "sky", "rose", "lemon"],
+      ["amber", "amber", "rose", "violet"],
+      ["cocoa", "magenta", "lime", "cobalt"],
+      ["sky", "cobalt", "lime", "teal"],
+      ["cobalt", "teal", "cobalt", "emerald"],
+      ["lemon", "emerald", "sky", "teal"],
+      ["lime", "emerald", "rose", "cocoa"],
+      ["rose", "amber", "sky", "teal"],
+      ["coral", "cocoa", "violet", "emerald"],
+      ["coral", "magenta", "lime", "violet"],
+      ["magenta", "coral", "cocoa", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4035,
+    },
+  },
+  "364": {
+    id: "364",
+    capacity: 4,
+    board: [
+      ["emerald", "coral", "magenta", "violet"],
+      ["cobalt", "lime", "emerald", "rose"],
+      ["cobalt", "emerald", "cocoa", "amber"],
+      ["magenta", "amber", "rose", "lemon"],
+      ["amber", "sky", "lime", "magenta"],
+      ["lemon", "sky", "magenta", "violet"],
+      ["teal", "rose", "lime", "teal"],
+      ["emerald", "lemon", "amber", "teal"],
+      ["coral", "violet", "rose", "sky"],
+      ["cocoa", "cobalt", "cobalt", "lime"],
+      ["coral", "teal", "sky", "violet"],
+      ["cocoa", "lemon", "cocoa", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5991,
+    },
+  },
+  "365": {
+    id: "365",
+    capacity: 4,
+    board: [
+      ["rose", "cocoa", "rose", "rose"],
+      ["sky", "violet", "cobalt", "amber"],
+      ["sky", "amber", "lime", "cocoa"],
+      ["violet", "emerald", "coral", "rose"],
+      ["teal", "cobalt", "lemon", "magenta"],
+      ["coral", "magenta", "teal", "magenta"],
+      ["cobalt", "cocoa", "emerald", "violet"],
+      ["sky", "violet", "lime", "amber"],
+      ["emerald", "teal", "lemon", "amber"],
+      ["teal", "coral", "lemon", "lime"],
+      ["coral", "magenta", "emerald", "cocoa"],
+      ["lemon", "lime", "cobalt", "sky"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5772,
+    },
+  },
+  "366": {
+    id: "366",
+    capacity: 4,
+    board: [
+      ["violet", "rose", "emerald", "teal"],
+      ["coral", "lime", "rose", "amber"],
+      ["cobalt", "magenta", "cobalt", "cocoa"],
+      ["rose", "magenta", "sky", "violet"],
+      ["cocoa", "cocoa", "amber", "violet"],
+      ["violet", "lime", "emerald", "lemon"],
+      ["rose", "teal", "cobalt", "sky"],
+      ["lime", "lemon", "magenta", "coral"],
+      ["cobalt", "amber", "teal", "coral"],
+      ["lime", "sky", "emerald", "cocoa"],
+      ["sky", "lemon", "teal", "emerald"],
+      ["coral", "magenta", "lemon", "amber"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5188,
+    },
+  },
+  "367": {
+    id: "367",
+    capacity: 4,
+    board: [
+      ["teal", "magenta", "cobalt", "cocoa"],
+      ["magenta", "coral", "violet", "lime"],
+      ["cobalt", "lime", "violet", "magenta"],
+      ["violet", "cocoa", "amber", "lime"],
+      ["magenta", "lemon", "rose", "emerald"],
+      ["rose", "coral", "sky", "sky"],
+      ["amber", "rose", "cocoa", "coral"],
+      ["lime", "teal", "lemon", "cobalt"],
+      ["amber", "lemon", "amber", "sky"],
+      ["emerald", "rose", "violet", "emerald"],
+      ["lemon", "cocoa", "teal", "emerald"],
+      ["teal", "sky", "coral", "cobalt"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5544,
+    },
+  },
+  "368": {
+    id: "368",
+    capacity: 4,
+    board: [
+      ["emerald", "emerald", "lemon", "rose"],
+      ["magenta", "magenta", "sky", "teal"],
+      ["amber", "violet", "rose", "cobalt"],
+      ["cobalt", "magenta", "cocoa", "teal"],
+      ["rose", "lemon", "sky", "rose"],
+      ["violet", "coral", "teal", "lime"],
+      ["coral", "coral", "lemon", "emerald"],
+      ["cobalt", "cobalt", "amber", "sky"],
+      ["emerald", "amber", "teal", "lime"],
+      ["amber", "coral", "lime", "violet"],
+      ["violet", "sky", "lime", "cocoa"],
+      ["lemon", "cocoa", "magenta", "cocoa"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3476,
+    },
+  },
+  "369": {
+    id: "369",
+    capacity: 4,
+    board: [
+      ["violet", "lemon", "coral", "magenta"],
+      ["teal", "lime", "sky", "cobalt"],
+      ["cobalt", "lime", "teal", "sky"],
+      ["rose", "coral", "lemon", "emerald"],
+      ["lime", "emerald", "sky", "amber"],
+      ["violet", "cocoa", "teal", "emerald"],
+      ["rose", "cocoa", "amber", "cobalt"],
+      ["magenta", "teal", "coral", "lemon"],
+      ["rose", "sky", "cocoa", "magenta"],
+      ["lemon", "amber", "cocoa", "amber"],
+      ["coral", "violet", "rose", "violet"],
+      ["magenta", "emerald", "lime", "cobalt"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.7068,
+    },
+  },
+  "370": {
+    id: "370",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "sky", "coral"],
+      ["lemon", "sky", "teal", "cocoa"],
+      ["cocoa", "lime", "cobalt", "coral"],
+      ["lime", "magenta", "rose", "lemon"],
+      ["magenta", "emerald", "rose", "cocoa"],
+      ["teal", "amber", "coral", "amber"],
+      ["coral", "violet", "rose", "amber"],
+      ["magenta", "teal", "cobalt", "amber"],
+      ["sky", "rose", "teal", "emerald"],
+      ["emerald", "lime", "violet", "violet"],
+      ["magenta", "cobalt", "cobalt", "lemon"],
+      ["sky", "cocoa", "emerald", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.45,
+    },
+  },
+  "371": {
+    id: "371",
+    capacity: 4,
+    board: [
+      ["amber", "teal", "rose", "sky"],
+      ["amber", "sky", "lime", "violet"],
+      ["amber", "lemon", "emerald", "lime"],
+      ["lime", "lemon", "rose", "cobalt"],
+      ["amber", "cobalt", "coral", "violet"],
+      ["violet", "teal", "cobalt", "cocoa"],
+      ["teal", "rose", "cocoa", "teal"],
+      ["coral", "magenta", "cocoa", "lemon"],
+      ["magenta", "lime", "coral", "magenta"],
+      ["cobalt", "magenta", "cocoa", "violet"],
+      ["emerald", "coral", "lemon", "emerald"],
+      ["sky", "rose", "sky", "emerald"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6948,
+    },
+  },
+  "372": {
+    id: "372",
+    capacity: 4,
+    board: [
+      ["coral", "sky", "lime", "cobalt"],
+      ["sky", "magenta", "lemon", "violet"],
+      ["lime", "cobalt", "coral", "amber"],
+      ["lemon", "violet", "cocoa", "sky"],
+      ["coral", "rose", "amber", "emerald"],
+      ["teal", "cocoa", "violet", "cobalt"],
+      ["teal", "teal", "coral", "cocoa"],
+      ["rose", "magenta", "lemon", "emerald"],
+      ["lime", "cocoa", "rose", "lime"],
+      ["emerald", "cobalt", "rose", "sky"],
+      ["magenta", "lemon", "violet", "magenta"],
+      ["amber", "emerald", "teal", "amber"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5314,
+    },
+  },
+  "373": {
+    id: "373",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "teal", "emerald"],
+      ["emerald", "sky", "cobalt", "lemon"],
+      ["cobalt", "magenta", "emerald", "sky"],
+      ["cobalt", "amber", "magenta", "coral"],
+      ["lime", "teal", "amber", "rose"],
+      ["amber", "sky", "coral", "lime"],
+      ["violet", "cobalt", "violet", "cocoa"],
+      ["sky", "lemon", "cocoa", "rose"],
+      ["rose", "teal", "cocoa", "teal"],
+      ["magenta", "coral", "violet", "cocoa"],
+      ["rose", "magenta", "lemon", "coral"],
+      ["emerald", "lemon", "lime", "amber"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.618,
+    },
+  },
+  "374": {
+    id: "374",
+    capacity: 4,
+    board: [
+      ["rose", "magenta", "emerald", "sky"],
+      ["sky", "teal", "violet", "sky"],
+      ["violet", "violet", "cocoa", "lime"],
+      ["coral", "lemon", "amber", "sky"],
+      ["amber", "lemon", "teal", "lime"],
+      ["coral", "coral", "cobalt", "emerald"],
+      ["violet", "lemon", "coral", "teal"],
+      ["magenta", "amber", "cobalt", "amber"],
+      ["cocoa", "lime", "rose", "cocoa"],
+      ["cobalt", "rose", "teal", "emerald"],
+      ["lime", "lemon", "emerald", "magenta"],
+      ["cobalt", "rose", "cocoa", "magenta"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4266,
+    },
+  },
+  "375": {
+    id: "375",
+    capacity: 4,
+    board: [
+      ["rose", "lime", "cocoa", "lime"],
+      ["sky", "rose", "teal", "coral"],
+      ["lemon", "cobalt", "magenta", "rose"],
+      ["emerald", "magenta", "violet", "violet"],
+      ["cobalt", "lime", "violet", "amber"],
+      ["teal", "cocoa", "emerald", "sky"],
+      ["coral", "sky", "cocoa", "cobalt"],
+      ["lemon", "emerald", "lemon", "teal"],
+      ["cocoa", "coral", "amber", "magenta"],
+      ["teal", "violet", "coral", "sky"],
+      ["lemon", "cobalt", "lime", "magenta"],
+      ["emerald", "amber", "rose", "amber"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5471,
+    },
+  },
+  "376": {
+    id: "376",
+    capacity: 4,
+    board: [
+      ["sky", "coral", "violet", "amber"],
+      ["teal", "cobalt", "lime", "lemon"],
+      ["cocoa", "coral", "cobalt", "violet"],
+      ["emerald", "sky", "emerald", "magenta"],
+      ["cocoa", "magenta", "lemon", "cobalt"],
+      ["cobalt", "teal", "magenta", "cocoa"],
+      ["violet", "lemon", "magenta", "amber"],
+      ["lime", "emerald", "cocoa", "rose"],
+      ["coral", "lime", "rose", "violet"],
+      ["rose", "coral", "rose", "sky"],
+      ["amber", "sky", "lemon", "amber"],
+      ["lime", "teal", "teal", "emerald"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4873,
+    },
+  },
+  "377": {
+    id: "377",
+    capacity: 4,
+    board: [
+      ["lemon", "sky", "emerald", "coral"],
+      ["rose", "sky", "emerald", "lime"],
+      ["lemon", "teal", "emerald", "cobalt"],
+      ["teal", "sky", "cobalt", "violet"],
+      ["cobalt", "lime", "lime", "coral"],
+      ["cobalt", "violet", "amber", "magenta"],
+      ["coral", "teal", "lemon", "sky"],
+      ["amber", "amber", "violet", "violet"],
+      ["lemon", "magenta", "amber", "coral"],
+      ["lime", "magenta", "teal", "rose"],
+      ["cocoa", "rose", "rose", "cocoa"],
+      ["magenta", "cocoa", "emerald", "cocoa"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4314,
+    },
+  },
+  "378": {
+    id: "378",
+    capacity: 4,
+    board: [
+      ["violet", "rose", "cobalt", "lime"],
+      ["cocoa", "sky", "coral", "cocoa"],
+      ["rose", "coral", "violet", "emerald"],
+      ["teal", "coral", "rose", "violet"],
+      ["cobalt", "amber", "magenta", "sky"],
+      ["sky", "emerald", "emerald", "lime"],
+      ["amber", "teal", "coral", "lemon"],
+      ["lemon", "violet", "magenta", "magenta"],
+      ["lime", "cobalt", "emerald", "teal"],
+      ["magenta", "amber", "cobalt", "lemon"],
+      ["rose", "cocoa", "amber", "teal"],
+      ["cocoa", "sky", "lime", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3148,
+    },
+  },
+  "379": {
+    id: "379",
+    capacity: 4,
+    board: [
+      ["lemon", "sky", "lemon", "emerald"],
+      ["rose", "cobalt", "lime", "lime"],
+      ["amber", "rose", "teal", "coral"],
+      ["cobalt", "amber", "violet", "teal"],
+      ["sky", "rose", "violet", "cocoa"],
+      ["lime", "magenta", "cocoa", "emerald"],
+      ["sky", "coral", "cocoa", "lemon"],
+      ["cocoa", "coral", "emerald", "cobalt"],
+      ["teal", "lime", "magenta", "sky"],
+      ["violet", "amber", "violet", "magenta"],
+      ["lemon", "cobalt", "magenta", "rose"],
+      ["amber", "emerald", "teal", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4447,
+    },
+  },
+  "380": {
+    id: "380",
+    capacity: 4,
+    board: [
+      ["amber", "teal", "magenta", "amber"],
+      ["lime", "teal", "lemon", "cobalt"],
+      ["lime", "lime", "emerald", "emerald"],
+      ["cocoa", "violet", "sky", "cocoa"],
+      ["amber", "cobalt", "sky", "rose"],
+      ["teal", "coral", "violet", "magenta"],
+      ["lime", "emerald", "amber", "magenta"],
+      ["lemon", "rose", "emerald", "teal"],
+      ["lemon", "rose", "rose", "violet"],
+      ["coral", "cobalt", "sky", "violet"],
+      ["cocoa", "sky", "lemon", "cocoa"],
+      ["magenta", "cobalt", "coral", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5153,
+    },
+  },
+  "381": {
+    id: "381",
+    capacity: 4,
+    board: [
+      ["violet", "violet", "cobalt", "emerald"],
+      ["teal", "emerald", "lime", "lime"],
+      ["cobalt", "coral", "rose", "magenta"],
+      ["sky", "sky", "lemon", "cobalt"],
+      ["coral", "teal", "lemon", "coral"],
+      ["teal", "cocoa", "emerald", "amber"],
+      ["magenta", "sky", "magenta", "cocoa"],
+      ["coral", "teal", "lemon", "emerald"],
+      ["cocoa", "amber", "cocoa", "violet"],
+      ["lemon", "amber", "amber", "magenta"],
+      ["rose", "cobalt", "sky", "violet"],
+      ["lime", "rose", "rose", "lime"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3509,
+    },
+  },
+  "382": {
+    id: "382",
+    capacity: 4,
+    board: [
+      ["cobalt", "emerald", "lime", "cocoa"],
+      ["cocoa", "lemon", "rose", "lime"],
+      ["cocoa", "lime", "amber", "violet"],
+      ["emerald", "coral", "violet", "magenta"],
+      ["emerald", "teal", "amber", "coral"],
+      ["sky", "emerald", "rose", "lemon"],
+      ["coral", "cobalt", "magenta", "sky"],
+      ["amber", "rose", "cocoa", "lemon"],
+      ["magenta", "amber", "cobalt", "coral"],
+      ["teal", "rose", "lime", "magenta"],
+      ["cobalt", "violet", "teal", "lemon"],
+      ["sky", "violet", "teal", "sky"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5477,
+    },
+  },
+  "383": {
+    id: "383",
+    capacity: 4,
+    board: [
+      ["teal", "cocoa", "magenta", "cobalt"],
+      ["coral", "cocoa", "amber", "sky"],
+      ["lime", "violet", "emerald", "rose"],
+      ["lemon", "emerald", "emerald", "amber"],
+      ["lime", "magenta", "lemon", "amber"],
+      ["teal", "amber", "rose", "lime"],
+      ["cobalt", "coral", "teal", "cobalt"],
+      ["rose", "cobalt", "violet", "lemon"],
+      ["lemon", "sky", "sky", "magenta"],
+      ["cocoa", "violet", "coral", "lime"],
+      ["coral", "violet", "teal", "rose"],
+      ["emerald", "magenta", "cocoa", "sky"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4127,
+    },
+  },
+  "384": {
+    id: "384",
+    capacity: 4,
+    board: [
+      ["cocoa", "lemon", "coral", "lemon"],
+      ["rose", "teal", "teal", "cocoa"],
+      ["emerald", "violet", "rose", "cobalt"],
+      ["cocoa", "sky", "magenta", "cocoa"],
+      ["rose", "teal", "emerald", "lime"],
+      ["cobalt", "cobalt", "amber", "amber"],
+      ["amber", "coral", "violet", "magenta"],
+      ["lemon", "magenta", "cobalt", "violet"],
+      ["sky", "coral", "teal", "violet"],
+      ["lemon", "coral", "lime", "amber"],
+      ["rose", "emerald", "emerald", "magenta"],
+      ["sky", "lime", "lime", "sky"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3435,
+    },
+  },
+  "385": {
+    id: "385",
+    capacity: 4,
+    board: [
+      ["sky", "violet", "sky", "magenta"],
+      ["lemon", "sky", "magenta", "emerald"],
+      ["coral", "violet", "rose", "sky"],
+      ["teal", "amber", "coral", "cobalt"],
+      ["rose", "lime", "amber", "lime"],
+      ["cocoa", "violet", "violet", "lime"],
+      ["rose", "lemon", "amber", "amber"],
+      ["lime", "magenta", "lemon", "cocoa"],
+      ["cobalt", "cobalt", "teal", "teal"],
+      ["coral", "coral", "cobalt", "magenta"],
+      ["cocoa", "emerald", "emerald", "cocoa"],
+      ["rose", "emerald", "lemon", "teal"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2303,
+    },
+  },
+  "386": {
+    id: "386",
+    capacity: 4,
+    board: [
+      ["lime", "lemon", "rose", "amber"],
+      ["violet", "cobalt", "rose", "cocoa"],
+      ["lemon", "teal", "teal", "coral"],
+      ["cobalt", "cocoa", "violet", "rose"],
+      ["amber", "violet", "cobalt", "magenta"],
+      ["cobalt", "teal", "sky", "sky"],
+      ["lime", "amber", "coral", "emerald"],
+      ["magenta", "cocoa", "coral", "lime"],
+      ["lime", "emerald", "cocoa", "lemon"],
+      ["coral", "magenta", "violet", "lemon"],
+      ["amber", "emerald", "emerald", "magenta"],
+      ["sky", "sky", "teal", "rose"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3419,
+    },
+  },
+  "387": {
+    id: "387",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "lime", "magenta"],
+      ["teal", "coral", "sky", "amber"],
+      ["cobalt", "lemon", "cocoa", "emerald"],
+      ["sky", "coral", "cocoa", "cobalt"],
+      ["teal", "cocoa", "emerald", "cobalt"],
+      ["rose", "cocoa", "magenta", "teal"],
+      ["teal", "amber", "lemon", "violet"],
+      ["coral", "violet", "violet", "emerald"],
+      ["cobalt", "emerald", "coral", "lime"],
+      ["sky", "lime", "rose", "magenta"],
+      ["lemon", "violet", "amber", "sky"],
+      ["amber", "lemon", "rose", "lime"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4464,
+    },
+  },
+  "388": {
+    id: "388",
+    capacity: 4,
+    board: [
+      ["violet", "lemon", "rose", "coral"],
+      ["lime", "rose", "sky", "coral"],
+      ["cocoa", "teal", "violet", "lime"],
+      ["coral", "magenta", "sky", "emerald"],
+      ["emerald", "sky", "cocoa", "lime"],
+      ["magenta", "lemon", "violet", "cobalt"],
+      ["amber", "lemon", "cobalt", "amber"],
+      ["sky", "emerald", "cobalt", "teal"],
+      ["magenta", "cobalt", "lemon", "coral"],
+      ["rose", "rose", "magenta", "cocoa"],
+      ["teal", "emerald", "amber", "cocoa"],
+      ["amber", "teal", "lime", "violet"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5021,
+    },
+  },
+  "389": {
+    id: "389",
+    capacity: 4,
+    board: [
+      ["lime", "magenta", "teal", "rose"],
+      ["sky", "amber", "cobalt", "coral"],
+      ["sky", "emerald", "violet", "coral"],
+      ["cobalt", "teal", "emerald", "magenta"],
+      ["cobalt", "lemon", "sky", "magenta"],
+      ["lemon", "teal", "lemon", "cocoa"],
+      ["magenta", "teal", "cocoa", "amber"],
+      ["lime", "violet", "violet", "rose"],
+      ["lime", "lemon", "coral", "coral"],
+      ["sky", "amber", "cocoa", "violet"],
+      ["amber", "rose", "rose", "emerald"],
+      ["cobalt", "cocoa", "emerald", "lime"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5093,
+    },
+  },
+  "390": {
+    id: "390",
+    capacity: 4,
+    board: [
+      ["lemon", "violet", "amber", "rose"],
+      ["coral", "lime", "rose", "violet"],
+      ["lime", "amber", "lemon", "lemon"],
+      ["sky", "cocoa", "lemon", "cobalt"],
+      ["emerald", "cobalt", "rose", "sky"],
+      ["magenta", "emerald", "teal", "teal"],
+      ["cobalt", "magenta", "cocoa", "cocoa"],
+      ["violet", "coral", "coral", "emerald"],
+      ["sky", "sky", "teal", "magenta"],
+      ["coral", "cobalt", "lime", "rose"],
+      ["amber", "emerald", "amber", "lime"],
+      ["violet", "teal", "magenta", "cocoa"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.1497,
+    },
+  },
+  "391": {
+    id: "391",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "lime", "violet"],
+      ["cocoa", "lime", "magenta", "coral"],
+      ["sky", "coral", "lime", "magenta"],
+      ["amber", "cocoa", "cobalt", "sky"],
+      ["cocoa", "cobalt", "sky", "violet"],
+      ["amber", "rose", "cobalt", "teal"],
+      ["emerald", "amber", "cobalt", "lime"],
+      ["violet", "teal", "emerald", "teal"],
+      ["teal", "coral", "lemon", "violet"],
+      ["lemon", "sky", "emerald", "coral"],
+      ["rose", "lemon", "lemon", "magenta"],
+      ["emerald", "cocoa", "amber", "rose"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.567,
+    },
+  },
+  "392": {
+    id: "392",
+    capacity: 4,
+    board: [
+      ["magenta", "rose", "teal", "amber"],
+      ["cobalt", "lemon", "cocoa", "coral"],
+      ["emerald", "amber", "teal", "rose"],
+      ["sky", "violet", "lemon", "lemon"],
+      ["emerald", "magenta", "coral", "violet"],
+      ["teal", "amber", "amber", "coral"],
+      ["coral", "rose", "cocoa", "cobalt"],
+      ["cocoa", "lime", "emerald", "teal"],
+      ["violet", "rose", "cocoa", "violet"],
+      ["sky", "magenta", "lime", "cobalt"],
+      ["sky", "cobalt", "lime", "sky"],
+      ["emerald", "lime", "magenta", "lemon"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5562,
+    },
+  },
+  "393": {
+    id: "393",
+    capacity: 4,
+    board: [
+      ["coral", "emerald", "cocoa", "teal"],
+      ["rose", "lemon", "amber", "amber"],
+      ["emerald", "violet", "rose", "lime"],
+      ["cocoa", "coral", "cobalt", "rose"],
+      ["violet", "sky", "teal", "lime"],
+      ["coral", "teal", "teal", "sky"],
+      ["cobalt", "lemon", "cocoa", "cobalt"],
+      ["coral", "amber", "lemon", "lime"],
+      ["emerald", "cobalt", "magenta", "magenta"],
+      ["emerald", "sky", "lime", "amber"],
+      ["sky", "violet", "cocoa", "lemon"],
+      ["magenta", "magenta", "violet", "rose"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4402,
+    },
+  },
+  "394": {
+    id: "394",
+    capacity: 4,
+    board: [
+      ["emerald", "emerald", "cocoa", "magenta"],
+      ["coral", "cocoa", "cocoa", "lime"],
+      ["coral", "lime", "magenta", "amber"],
+      ["cobalt", "coral", "emerald", "lemon"],
+      ["sky", "coral", "lime", "teal"],
+      ["violet", "violet", "violet", "magenta"],
+      ["sky", "cobalt", "lime", "lemon"],
+      ["rose", "amber", "amber", "lemon"],
+      ["sky", "lemon", "cobalt", "teal"],
+      ["cocoa", "violet", "teal", "rose"],
+      ["magenta", "emerald", "sky", "rose"],
+      ["amber", "cobalt", "teal", "rose"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3059,
+    },
+  },
+  "395": {
+    id: "395",
+    capacity: 4,
+    board: [
+      ["coral", "magenta", "lemon", "amber"],
+      ["violet", "lemon", "lemon", "sky"],
+      ["emerald", "sky", "magenta", "coral"],
+      ["teal", "emerald", "teal", "cocoa"],
+      ["amber", "teal", "violet", "magenta"],
+      ["cobalt", "cobalt", "lime", "cobalt"],
+      ["rose", "cocoa", "violet", "violet"],
+      ["cocoa", "sky", "amber", "emerald"],
+      ["magenta", "emerald", "rose", "lemon"],
+      ["sky", "rose", "rose", "cocoa"],
+      ["amber", "lime", "coral", "lime"],
+      ["teal", "cobalt", "lime", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2168,
+    },
+  },
+  "396": {
+    id: "396",
+    capacity: 4,
+    board: [
+      ["emerald", "amber", "cocoa", "magenta"],
+      ["lime", "cobalt", "emerald", "teal"],
+      ["emerald", "cobalt", "cocoa", "coral"],
+      ["coral", "amber", "violet", "teal"],
+      ["coral", "magenta", "rose", "emerald"],
+      ["sky", "rose", "rose", "violet"],
+      ["lime", "lemon", "lemon", "sky"],
+      ["violet", "magenta", "rose", "cocoa"],
+      ["teal", "coral", "amber", "violet"],
+      ["cobalt", "lemon", "cocoa", "teal"],
+      ["amber", "sky", "lime", "cobalt"],
+      ["lime", "sky", "lemon", "magenta"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5703,
+    },
+  },
+  "397": {
+    id: "397",
+    capacity: 4,
+    board: [
+      ["amber", "cobalt", "violet", "emerald"],
+      ["sky", "violet", "lime", "coral"],
+      ["emerald", "lemon", "lime", "lemon"],
+      ["rose", "rose", "magenta", "amber"],
+      ["teal", "amber", "violet", "amber"],
+      ["magenta", "cocoa", "sky", "coral"],
+      ["coral", "coral", "violet", "teal"],
+      ["teal", "cobalt", "lemon", "cocoa"],
+      ["lime", "emerald", "lemon", "magenta"],
+      ["cobalt", "lime", "rose", "sky"],
+      ["sky", "cocoa", "magenta", "teal"],
+      ["rose", "emerald", "cobalt", "cocoa"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4245,
+    },
+  },
+  "398": {
+    id: "398",
+    capacity: 4,
+    board: [
+      ["cocoa", "teal", "cobalt", "emerald"],
+      ["emerald", "lime", "lime", "magenta"],
+      ["rose", "violet", "violet", "sky"],
+      ["cocoa", "rose", "lime", "cobalt"],
+      ["rose", "sky", "emerald", "coral"],
+      ["lemon", "violet", "cocoa", "coral"],
+      ["lemon", "rose", "amber", "lemon"],
+      ["amber", "cocoa", "cobalt", "emerald"],
+      ["amber", "amber", "teal", "magenta"],
+      ["sky", "teal", "lime", "cobalt"],
+      ["sky", "magenta", "magenta", "coral"],
+      ["lemon", "coral", "violet", "teal"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5128,
+    },
+  },
+  "399": {
+    id: "399",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "amber", "lemon"],
+      ["rose", "amber", "emerald", "sky"],
+      ["violet", "sky", "coral", "magenta"],
+      ["cocoa", "cobalt", "amber", "emerald"],
+      ["cocoa", "magenta", "lime", "cobalt"],
+      ["coral", "sky", "rose", "violet"],
+      ["cobalt", "violet", "amber", "lime"],
+      ["lemon", "cocoa", "emerald", "lime"],
+      ["emerald", "cocoa", "magenta", "coral"],
+      ["cobalt", "teal", "teal", "lemon"],
+      ["magenta", "lime", "teal", "sky"],
+      ["rose", "lemon", "rose", "coral"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5436,
+    },
+  },
+  "400": {
+    id: "400",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "violet", "sky"],
+      ["magenta", "lemon", "cobalt", "cobalt"],
+      ["violet", "rose", "lemon", "lime"],
+      ["cobalt", "teal", "amber", "sky"],
+      ["magenta", "emerald", "rose", "coral"],
+      ["cocoa", "lime", "coral", "cocoa"],
+      ["sky", "teal", "cocoa", "teal"],
+      ["amber", "cocoa", "lime", "coral"],
+      ["coral", "magenta", "amber", "cobalt"],
+      ["lemon", "emerald", "violet", "violet"],
+      ["magenta", "rose", "rose", "lemon"],
+      ["teal", "lime", "emerald", "emerald"],
+      [],
+      [],
+    ],
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3406,
+    },
   },
   "001": {
-    "id": "001",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "violet",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "rose",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "violet",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "sky",
-        "sky",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "coral",
-        "rose",
-        "coral"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "teal",
-        "emerald",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "teal",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "violet",
-        "rose"
-      ],
-      [
-        "amber",
-        "lime",
-        "cocoa",
-        "sky"
-      ],
+    id: "001",
+    capacity: 4,
+    board: [
+      ["lime", "violet", "emerald", "cocoa"],
+      ["amber", "rose", "cobalt", "teal"],
+      ["amber", "magenta", "coral", "cocoa"],
+      ["lime", "rose", "lime", "cobalt"],
+      ["coral", "violet", "sky", "cobalt"],
+      ["amber", "sky", "sky", "magenta"],
+      ["lemon", "coral", "rose", "coral"],
+      ["violet", "cocoa", "lemon", "teal"],
+      ["teal", "emerald", "magenta", "lemon"],
+      ["cobalt", "emerald", "teal", "lemon"],
+      ["emerald", "magenta", "violet", "rose"],
+      ["amber", "lime", "cocoa", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6563
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6563,
+    },
   },
   "002": {
-    "id": "002",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "emerald",
-        "rose",
-        "sky"
-      ],
-      [
-        "violet",
-        "coral",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "rose"
-      ],
-      [
-        "lemon",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "violet",
-        "lemon",
-        "coral",
-        "magenta"
-      ],
-      [
-        "teal",
-        "magenta",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "teal",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lime",
-        "violet",
-        "amber",
-        "violet"
-      ],
-      [
-        "coral",
-        "amber",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "coral",
-        "sky"
-      ],
-      [
-        "lime",
-        "lime",
-        "teal",
-        "emerald"
-      ],
+    id: "002",
+    capacity: 4,
+    board: [
+      ["teal", "emerald", "rose", "sky"],
+      ["violet", "coral", "lime", "cocoa"],
+      ["cocoa", "magenta", "rose", "rose"],
+      ["lemon", "sky", "emerald", "amber"],
+      ["violet", "lemon", "coral", "magenta"],
+      ["teal", "magenta", "amber", "cobalt"],
+      ["sky", "teal", "cobalt", "cobalt"],
+      ["cocoa", "cobalt", "emerald", "rose"],
+      ["lime", "violet", "amber", "violet"],
+      ["coral", "amber", "lemon", "cocoa"],
+      ["magenta", "lemon", "coral", "sky"],
+      ["lime", "lime", "teal", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4193
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4193,
+    },
   },
   "003": {
-    "id": "003",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "teal",
-        "amber"
-      ],
-      [
-        "violet",
-        "amber",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "violet",
-        "rose",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "violet",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "coral",
-        "sky",
-        "rose"
-      ],
-      [
-        "emerald",
-        "teal",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "rose",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "teal",
-        "lime"
-      ],
+    id: "003",
+    capacity: 4,
+    board: [
+      ["magenta", "teal", "lime", "amber"],
+      ["coral", "cocoa", "teal", "amber"],
+      ["violet", "amber", "cobalt", "lime"],
+      ["cobalt", "rose", "violet", "emerald"],
+      ["cobalt", "emerald", "sky", "lemon"],
+      ["magenta", "violet", "rose", "sky"],
+      ["cobalt", "amber", "violet", "magenta"],
+      ["emerald", "coral", "sky", "rose"],
+      ["emerald", "teal", "magenta", "lemon"],
+      ["lemon", "sky", "lime", "lemon"],
+      ["coral", "rose", "cocoa", "cocoa"],
+      ["cocoa", "coral", "teal", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.709
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.709,
+    },
   },
   "004": {
-    "id": "004",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "emerald",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "violet",
-        "rose",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "lemon",
-        "coral"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "teal",
-        "magenta",
-        "coral",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "lime",
-        "emerald"
-      ],
-      [
-        "lime",
-        "violet",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "amber",
-        "rose"
-      ],
-      [
-        "magenta",
-        "sky",
-        "sky",
-        "cobalt"
-      ],
+    id: "004",
+    capacity: 4,
+    board: [
+      ["lemon", "emerald", "cocoa", "magenta"],
+      ["teal", "lime", "lime", "teal"],
+      ["violet", "rose", "cobalt", "rose"],
+      ["cocoa", "sky", "lemon", "coral"],
+      ["sky", "cobalt", "emerald", "lemon"],
+      ["teal", "magenta", "coral", "amber"],
+      ["cocoa", "amber", "coral", "violet"],
+      ["cobalt", "coral", "lime", "emerald"],
+      ["lime", "violet", "emerald", "lemon"],
+      ["rose", "magenta", "amber", "violet"],
+      ["cocoa", "teal", "amber", "rose"],
+      ["magenta", "sky", "sky", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.429
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.429,
+    },
   },
   "005": {
-    "id": "005",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "lemon",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "lime",
-        "rose",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "emerald",
-        "teal"
-      ],
-      [
-        "coral",
-        "lemon",
-        "violet",
-        "magenta"
-      ],
-      [
-        "coral",
-        "magenta",
-        "rose",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "emerald"
-      ],
-      [
-        "sky",
-        "magenta",
-        "lime",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "teal",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "sky",
-        "violet",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "lime",
-        "rose"
-      ],
-      [
-        "teal",
-        "coral",
-        "amber",
-        "violet"
-      ],
+    id: "005",
+    capacity: 4,
+    board: [
+      ["cocoa", "lemon", "amber", "cobalt"],
+      ["cobalt", "amber", "cobalt", "sky"],
+      ["lime", "rose", "magenta", "sky"],
+      ["rose", "cocoa", "emerald", "teal"],
+      ["coral", "lemon", "violet", "magenta"],
+      ["coral", "magenta", "rose", "emerald"],
+      ["coral", "lime", "teal", "emerald"],
+      ["sky", "magenta", "lime", "amber"],
+      ["cocoa", "cobalt", "teal", "lemon"],
+      ["lemon", "sky", "violet", "violet"],
+      ["cocoa", "emerald", "lime", "rose"],
+      ["teal", "coral", "amber", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.6753
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.6753,
+    },
   },
   "006": {
-    "id": "006",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "emerald",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lemon",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "coral",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "emerald",
-        "amber",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lime",
-        "magenta",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "violet"
-      ],
-      [
-        "lemon",
-        "violet",
-        "lime",
-        "sky"
-      ],
-      [
-        "violet",
-        "lemon",
-        "amber",
-        "sky"
-      ],
-      [
-        "teal",
-        "rose",
-        "amber",
-        "lime"
-      ],
+    id: "006",
+    capacity: 4,
+    board: [
+      ["cobalt", "teal", "cocoa", "cocoa"],
+      ["coral", "emerald", "magenta", "sky"],
+      ["cobalt", "rose", "magenta", "cocoa"],
+      ["coral", "lemon", "rose", "cocoa"],
+      ["lime", "coral", "magenta", "cobalt"],
+      ["sky", "emerald", "amber", "teal"],
+      ["lemon", "amber", "emerald", "coral"],
+      ["lime", "magenta", "cobalt", "teal"],
+      ["emerald", "rose", "violet", "violet"],
+      ["lemon", "violet", "lime", "sky"],
+      ["violet", "lemon", "amber", "sky"],
+      ["teal", "rose", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5187
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5187,
+    },
   },
   "007": {
-    "id": "007",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "magenta",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "teal",
-        "magenta",
-        "amber",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "lemon",
-        "violet"
-      ],
-      [
-        "coral",
-        "lemon",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "magenta",
-        "rose"
-      ],
-      [
-        "teal",
-        "sky",
-        "lime",
-        "amber"
-      ],
-      [
-        "rose",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "sky",
-        "lemon"
-      ],
-      [
-        "lime",
-        "violet",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "emerald",
-        "coral"
-      ],
-      [
-        "magenta",
-        "amber",
-        "emerald",
-        "rose"
-      ],
+    id: "007",
+    capacity: 4,
+    board: [
+      ["sky", "magenta", "cocoa", "teal"],
+      ["teal", "magenta", "amber", "coral"],
+      ["cobalt", "violet", "lemon", "violet"],
+      ["coral", "lemon", "cobalt", "teal"],
+      ["amber", "cobalt", "violet", "lemon"],
+      ["rose", "cocoa", "magenta", "rose"],
+      ["teal", "sky", "lime", "amber"],
+      ["rose", "lime", "emerald", "lime"],
+      ["cocoa", "sky", "sky", "lemon"],
+      ["lime", "violet", "cocoa", "coral"],
+      ["cobalt", "emerald", "emerald", "coral"],
+      ["magenta", "amber", "emerald", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4024
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4024,
+    },
   },
   "008": {
-    "id": "008",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "violet",
-        "teal",
-        "sky"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "teal",
-        "lemon"
-      ],
-      [
-        "sky",
-        "coral",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "amber",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "emerald",
-        "coral",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "lime",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lemon",
-        "violet",
-        "emerald",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "magenta",
-        "rose",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "lime",
-        "lime",
-        "amber"
-      ],
+    id: "008",
+    capacity: 4,
+    board: [
+      ["magenta", "violet", "teal", "sky"],
+      ["emerald", "magenta", "teal", "lemon"],
+      ["sky", "coral", "sky", "cocoa"],
+      ["teal", "amber", "violet", "cocoa"],
+      ["teal", "emerald", "coral", "amber"],
+      ["cobalt", "lemon", "cobalt", "cocoa"],
+      ["coral", "lime", "violet", "magenta"],
+      ["cobalt", "coral", "emerald", "rose"],
+      ["lemon", "violet", "emerald", "rose"],
+      ["rose", "lemon", "cocoa", "sky"],
+      ["magenta", "rose", "amber", "cobalt"],
+      ["lime", "lime", "lime", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5504
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5504,
+    },
   },
   "009": {
-    "id": "009",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "sky",
-        "lime",
-        "amber",
-        "magenta"
-      ],
-      [
-        "teal",
-        "teal",
-        "lime",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "rose",
-        "sky",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "sky",
-        "coral"
-      ],
-      [
-        "teal",
-        "rose",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "violet",
-        "amber",
-        "lemon"
-      ],
-      [
-        "violet",
-        "rose",
-        "amber",
-        "emerald"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "lemon",
-        "coral"
-      ],
+    id: "009",
+    capacity: 4,
+    board: [
+      ["cocoa", "amber", "lemon", "magenta"],
+      ["sky", "lime", "amber", "magenta"],
+      ["teal", "teal", "lime", "emerald"],
+      ["magenta", "rose", "sky", "sky"],
+      ["cobalt", "violet", "sky", "coral"],
+      ["teal", "rose", "cobalt", "emerald"],
+      ["magenta", "cocoa", "lemon", "teal"],
+      ["cocoa", "violet", "cobalt", "rose"],
+      ["lime", "violet", "amber", "lemon"],
+      ["violet", "rose", "amber", "emerald"],
+      ["coral", "cocoa", "lime", "emerald"],
+      ["coral", "cobalt", "lemon", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4017
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4017,
+    },
   },
   "010": {
-    "id": "010",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "sky",
-        "lime",
-        "lemon"
-      ],
-      [
-        "coral",
-        "sky",
-        "emerald",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "coral",
-        "rose"
-      ],
-      [
-        "coral",
-        "amber",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "lime",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "teal",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "coral",
-        "violet",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "rose",
-        "violet"
-      ],
-      [
-        "teal",
-        "teal",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lime",
-        "rose",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "sky",
-        "rose"
-      ],
+    id: "010",
+    capacity: 4,
+    board: [
+      ["lemon", "sky", "lime", "lemon"],
+      ["coral", "sky", "emerald", "violet"],
+      ["magenta", "emerald", "coral", "rose"],
+      ["coral", "amber", "amber", "teal"],
+      ["violet", "lime", "amber", "cocoa"],
+      ["lemon", "magenta", "cocoa", "cocoa"],
+      ["cobalt", "cobalt", "teal", "magenta"],
+      ["emerald", "coral", "violet", "amber"],
+      ["cobalt", "magenta", "rose", "violet"],
+      ["teal", "teal", "lemon", "lime"],
+      ["lime", "rose", "cobalt", "sky"],
+      ["emerald", "cocoa", "sky", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3696
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3696,
+    },
   },
   "011": {
-    "id": "011",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "lime",
-        "amber",
-        "coral"
-      ],
-      [
-        "sky",
-        "sky",
-        "teal",
-        "violet"
-      ],
-      [
-        "amber",
-        "teal",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "amber",
-        "teal",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "magenta",
-        "sky",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "rose",
-        "rose"
-      ],
-      [
-        "rose",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "magenta",
-        "rose"
-      ],
-      [
-        "violet",
-        "violet",
-        "coral",
-        "lime"
-      ],
+    id: "011",
+    capacity: 4,
+    board: [
+      ["coral", "lime", "amber", "coral"],
+      ["sky", "sky", "teal", "violet"],
+      ["amber", "teal", "lemon", "emerald"],
+      ["emerald", "amber", "teal", "coral"],
+      ["cobalt", "violet", "cobalt", "cocoa"],
+      ["cocoa", "lime", "cocoa", "lemon"],
+      ["lemon", "amber", "cocoa", "lime"],
+      ["magenta", "sky", "cobalt", "emerald"],
+      ["cobalt", "magenta", "rose", "rose"],
+      ["rose", "sky", "teal", "emerald"],
+      ["lemon", "magenta", "magenta", "rose"],
+      ["violet", "violet", "coral", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3005
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3005,
+    },
   },
   "012": {
-    "id": "012",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "violet",
-        "rose",
-        "amber"
-      ],
-      [
-        "teal",
-        "emerald",
-        "sky",
-        "coral"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "emerald",
-        "rose",
-        "lime",
-        "coral"
-      ],
-      [
-        "sky",
-        "coral",
-        "violet",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "teal",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "lime",
-        "teal"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "amber",
-        "rose",
-        "lemon"
-      ],
-      [
-        "lime",
-        "magenta",
-        "cobalt",
-        "sky"
-      ],
+    id: "012",
+    capacity: 4,
+    board: [
+      ["cobalt", "violet", "rose", "amber"],
+      ["teal", "emerald", "sky", "coral"],
+      ["amber", "lemon", "cocoa", "violet"],
+      ["emerald", "rose", "lime", "coral"],
+      ["sky", "coral", "violet", "rose"],
+      ["cocoa", "teal", "cobalt", "lime"],
+      ["sky", "coral", "cocoa", "cocoa"],
+      ["magenta", "magenta", "teal", "lemon"],
+      ["amber", "cobalt", "lime", "teal"],
+      ["emerald", "magenta", "violet", "lemon"],
+      ["emerald", "amber", "rose", "lemon"],
+      ["lime", "magenta", "cobalt", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5492
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5492,
+    },
   },
   "013": {
-    "id": "013",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cobalt",
-        "rose",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "rose",
-        "teal"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "amber",
-        "violet"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "coral",
-        "emerald",
-        "lime"
-      ],
-      [
-        "magenta",
-        "sky",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "sky",
-        "lime"
-      ],
-      [
-        "lime",
-        "amber",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lemon",
-        "teal",
-        "emerald"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "sky",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "rose",
-        "amber",
-        "magenta"
-      ],
-      [
-        "rose",
-        "violet",
-        "emerald",
-        "teal"
-      ],
+    id: "013",
+    capacity: 4,
+    board: [
+      ["sky", "cobalt", "rose", "coral"],
+      ["cocoa", "lemon", "rose", "teal"],
+      ["lime", "cobalt", "amber", "violet"],
+      ["coral", "cocoa", "lemon", "cobalt"],
+      ["violet", "coral", "emerald", "lime"],
+      ["magenta", "sky", "magenta", "lemon"],
+      ["cocoa", "teal", "sky", "lime"],
+      ["lime", "amber", "amber", "cobalt"],
+      ["violet", "lemon", "teal", "emerald"],
+      ["coral", "cocoa", "sky", "magenta"],
+      ["emerald", "rose", "amber", "magenta"],
+      ["rose", "violet", "emerald", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.5889
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.5889,
+    },
   },
   "014": {
-    "id": "014",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "magenta",
-        "coral",
-        "rose"
-      ],
-      [
-        "amber",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "emerald",
-        "sky"
-      ],
-      [
-        "coral",
-        "violet",
-        "violet",
-        "rose"
-      ],
-      [
-        "teal",
-        "amber",
-        "lime",
-        "coral"
-      ],
-      [
-        "emerald",
-        "lime",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "emerald",
-        "sky",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "teal",
-        "sky"
-      ],
-      [
-        "rose",
-        "amber",
-        "violet",
-        "coral"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "lemon",
-        "teal"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "emerald",
-        "sky"
-      ],
+    id: "014",
+    capacity: 4,
+    board: [
+      ["magenta", "magenta", "coral", "rose"],
+      ["amber", "teal", "violet", "lime"],
+      ["lime", "cobalt", "emerald", "sky"],
+      ["coral", "violet", "violet", "rose"],
+      ["teal", "amber", "lime", "coral"],
+      ["emerald", "lime", "cocoa", "cobalt"],
+      ["amber", "emerald", "sky", "lemon"],
+      ["cobalt", "cocoa", "teal", "sky"],
+      ["rose", "amber", "violet", "coral"],
+      ["magenta", "cocoa", "lemon", "teal"],
+      ["magenta", "lemon", "lemon", "cobalt"],
+      ["rose", "cocoa", "emerald", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4708
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4708,
+    },
   },
   "015": {
-    "id": "015",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "rose",
-        "lemon",
-        "teal"
-      ],
-      [
-        "rose",
-        "lemon",
-        "teal",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "emerald",
-        "violet"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "violet",
-        "sky"
-      ],
-      [
-        "lime",
-        "lemon",
-        "emerald",
-        "sky"
-      ],
-      [
-        "sky",
-        "emerald",
-        "rose",
-        "coral"
-      ],
-      [
-        "coral",
-        "coral",
-        "rose",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "teal",
-        "violet"
-      ],
-      [
-        "amber",
-        "amber",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "amber",
-        "lime"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lime",
-        "lime",
-        "sky"
-      ],
+    id: "015",
+    capacity: 4,
+    board: [
+      ["teal", "rose", "lemon", "teal"],
+      ["rose", "lemon", "teal", "violet"],
+      ["cocoa", "magenta", "emerald", "violet"],
+      ["magenta", "cobalt", "violet", "sky"],
+      ["lime", "lemon", "emerald", "sky"],
+      ["sky", "emerald", "rose", "coral"],
+      ["coral", "coral", "rose", "lemon"],
+      ["cobalt", "magenta", "teal", "violet"],
+      ["amber", "amber", "cocoa", "cocoa"],
+      ["cocoa", "amber", "amber", "lime"],
+      ["magenta", "cobalt", "cobalt", "emerald"],
+      ["coral", "lime", "lime", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 33,
-      "difficultyScore": 0.2094
-    }
+    development: {
+      optimalMoveCount: 33,
+      difficultyScore: 0.2094,
+    },
   },
   "016": {
-    "id": "016",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "amber"
-      ],
-      [
-        "emerald",
-        "sky",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "violet",
-        "violet",
-        "magenta"
-      ],
-      [
-        "teal",
-        "coral",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "magenta",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "teal",
-        "rose",
-        "lemon"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "coral",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "magenta",
-        "teal"
-      ],
-      [
-        "violet",
-        "emerald",
-        "amber",
-        "sky"
-      ],
-      [
-        "sky",
-        "rose",
-        "lime",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "cocoa"
-      ],
+    id: "016",
+    capacity: 4,
+    board: [
+      ["lemon", "coral", "amber", "amber"],
+      ["emerald", "sky", "lime", "cobalt"],
+      ["emerald", "violet", "violet", "magenta"],
+      ["teal", "coral", "magenta", "cobalt"],
+      ["teal", "magenta", "amber", "cocoa"],
+      ["lemon", "teal", "rose", "lemon"],
+      ["rose", "violet", "sky", "rose"],
+      ["cobalt", "cocoa", "coral", "lime"],
+      ["cocoa", "coral", "magenta", "teal"],
+      ["violet", "emerald", "amber", "sky"],
+      ["sky", "rose", "lime", "lime"],
+      ["emerald", "cobalt", "lemon", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4227
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4227,
+    },
   },
   "017": {
-    "id": "017",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "cobalt",
-        "emerald",
-        "violet"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "amber",
-        "magenta",
-        "rose"
-      ],
-      [
-        "teal",
-        "violet",
-        "teal",
-        "coral"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "sky",
-        "emerald"
-      ],
-      [
-        "coral",
-        "emerald",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "rose",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "rose",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "amber",
-        "sky",
-        "lime",
-        "sky"
-      ],
-      [
-        "lemon",
-        "lime",
-        "violet",
-        "lime"
-      ],
+    id: "017",
+    capacity: 4,
+    board: [
+      ["cobalt", "cobalt", "emerald", "violet"],
+      ["lemon", "magenta", "lime", "cobalt"],
+      ["amber", "amber", "magenta", "rose"],
+      ["teal", "violet", "teal", "coral"],
+      ["coral", "cocoa", "sky", "emerald"],
+      ["coral", "emerald", "cobalt", "coral"],
+      ["cocoa", "violet", "rose", "emerald"],
+      ["magenta", "magenta", "rose", "sky"],
+      ["lemon", "amber", "cocoa", "teal"],
+      ["cocoa", "teal", "lemon", "rose"],
+      ["amber", "sky", "lime", "sky"],
+      ["lemon", "lime", "violet", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5301
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5301,
+    },
   },
   "018": {
-    "id": "018",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cobalt",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "emerald",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "sky",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lime",
-        "violet",
-        "lime"
-      ],
-      [
-        "rose",
-        "magenta",
-        "coral",
-        "sky"
-      ],
-      [
-        "lemon",
-        "lime",
-        "coral",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "teal",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "emerald",
-        "sky"
-      ],
-      [
-        "teal",
-        "amber",
-        "rose",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "amber",
-        "magenta",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "rose",
-        "rose",
-        "violet"
-      ],
+    id: "018",
+    capacity: 4,
+    board: [
+      ["coral", "cobalt", "emerald", "cobalt"],
+      ["coral", "emerald", "cocoa", "amber"],
+      ["teal", "cocoa", "sky", "emerald"],
+      ["teal", "lime", "violet", "lime"],
+      ["rose", "magenta", "coral", "sky"],
+      ["lemon", "lime", "coral", "lemon"],
+      ["lemon", "cocoa", "teal", "violet"],
+      ["magenta", "amber", "emerald", "sky"],
+      ["teal", "amber", "rose", "violet"],
+      ["cobalt", "sky", "cobalt", "lime"],
+      ["amber", "magenta", "cocoa", "lemon"],
+      ["magenta", "rose", "rose", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6427
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6427,
+    },
   },
   "019": {
-    "id": "019",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cobalt",
-        "emerald",
-        "teal"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "emerald",
-        "rose",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "rose",
-        "rose",
-        "amber"
-      ],
-      [
-        "sky",
-        "lime",
-        "magenta",
-        "coral"
-      ],
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "magenta",
-        "lime"
-      ],
-      [
-        "magenta",
-        "rose",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "lemon",
-        "sky"
-      ],
+    id: "019",
+    capacity: 4,
+    board: [
+      ["sky", "cobalt", "emerald", "teal"],
+      ["sky", "coral", "cocoa", "violet"],
+      ["emerald", "rose", "amber", "teal"],
+      ["violet", "cocoa", "violet", "cocoa"],
+      ["violet", "teal", "coral", "emerald"],
+      ["lime", "cobalt", "emerald", "cobalt"],
+      ["amber", "rose", "rose", "amber"],
+      ["sky", "lime", "magenta", "coral"],
+      ["magenta", "amber", "lime", "lemon"],
+      ["lemon", "lemon", "magenta", "lime"],
+      ["magenta", "rose", "cobalt", "coral"],
+      ["teal", "cocoa", "lemon", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5321
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5321,
+    },
   },
   "020": {
-    "id": "020",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "rose",
-        "lime",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "lemon",
-        "teal"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "amber",
-        "violet"
-      ],
-      [
-        "sky",
-        "magenta",
-        "teal",
-        "coral"
-      ],
-      [
-        "coral",
-        "violet",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "teal",
-        "amber",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lime",
-        "violet",
-        "emerald"
-      ],
-      [
-        "violet",
-        "amber",
-        "coral",
-        "amber"
-      ],
-      [
-        "lime",
-        "sky",
-        "teal",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "rose",
-        "cobalt",
-        "rose"
-      ],
+    id: "020",
+    capacity: 4,
+    board: [
+      ["cobalt", "rose", "lime", "sky"],
+      ["cobalt", "lime", "lemon", "teal"],
+      ["coral", "cocoa", "cocoa", "lemon"],
+      ["cobalt", "emerald", "amber", "violet"],
+      ["sky", "magenta", "teal", "coral"],
+      ["coral", "violet", "magenta", "magenta"],
+      ["teal", "amber", "lemon", "rose"],
+      ["cocoa", "sky", "emerald", "cocoa"],
+      ["emerald", "lime", "violet", "emerald"],
+      ["violet", "amber", "coral", "amber"],
+      ["lime", "sky", "teal", "lemon"],
+      ["magenta", "rose", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.443
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.443,
+    },
   },
   "021": {
-    "id": "021",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "sky",
-        "amber",
-        "rose",
-        "coral"
-      ],
-      [
-        "sky",
-        "violet",
-        "amber",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "teal",
-        "magenta",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "teal",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "lime",
-        "teal"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lemon",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
+    id: "021",
+    capacity: 4,
+    board: [
+      ["amber", "sky", "teal", "emerald"],
+      ["sky", "amber", "rose", "coral"],
+      ["sky", "violet", "amber", "lime"],
+      ["emerald", "cocoa", "emerald", "lemon"],
+      ["coral", "cocoa", "sky", "violet"],
+      ["magenta", "teal", "magenta", "rose"],
+      ["cocoa", "amber", "cobalt", "lemon"],
+      ["lemon", "teal", "cobalt", "coral"],
+      ["cobalt", "rose", "violet", "emerald"],
+      ["cocoa", "lime", "lime", "teal"],
+      ["coral", "magenta", "lemon", "violet"],
+      ["magenta", "lime", "rose", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6023
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6023,
+    },
   },
   "022": {
-    "id": "022",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cobalt",
-        "amber",
-        "violet"
-      ],
-      [
-        "lime",
-        "amber",
-        "coral",
-        "sky"
-      ],
-      [
-        "lime",
-        "coral",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "amber"
-      ],
-      [
-        "sky",
-        "emerald",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "teal",
-        "magenta"
-      ],
-      [
-        "teal",
-        "amber",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "violet",
-        "lemon"
-      ],
-      [
-        "sky",
-        "magenta",
-        "coral",
-        "lime"
-      ],
+    id: "022",
+    capacity: 4,
+    board: [
+      ["sky", "cobalt", "amber", "violet"],
+      ["lime", "amber", "coral", "sky"],
+      ["lime", "coral", "cocoa", "teal"],
+      ["cocoa", "teal", "cobalt", "lemon"],
+      ["emerald", "coral", "cocoa", "rose"],
+      ["lemon", "cobalt", "magenta", "amber"],
+      ["sky", "emerald", "magenta", "violet"],
+      ["cocoa", "lime", "teal", "magenta"],
+      ["teal", "amber", "cobalt", "emerald"],
+      ["violet", "rose", "emerald", "rose"],
+      ["rose", "lemon", "violet", "lemon"],
+      ["sky", "magenta", "coral", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6874
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6874,
+    },
   },
   "023": {
-    "id": "023",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "magenta",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "rose",
-        "lime",
-        "rose",
-        "coral"
-      ],
-      [
-        "violet",
-        "coral",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "amber",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "amber",
-        "violet",
-        "amber",
-        "violet"
-      ],
-      [
-        "sky",
-        "sky",
-        "rose",
-        "coral"
-      ],
-      [
-        "amber",
-        "sky",
-        "teal",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "teal",
-        "lime"
-      ],
+    id: "023",
+    capacity: 4,
+    board: [
+      ["violet", "magenta", "cobalt", "cobalt"],
+      ["lime", "teal", "coral", "emerald"],
+      ["sky", "cocoa", "lime", "emerald"],
+      ["lemon", "rose", "lemon", "cocoa"],
+      ["cocoa", "cocoa", "emerald", "magenta"],
+      ["rose", "lime", "rose", "coral"],
+      ["violet", "coral", "teal", "emerald"],
+      ["lemon", "amber", "magenta", "magenta"],
+      ["amber", "violet", "amber", "violet"],
+      ["sky", "sky", "rose", "coral"],
+      ["amber", "sky", "teal", "lemon"],
+      ["cobalt", "cobalt", "teal", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.3781
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.3781,
+    },
   },
   "024": {
-    "id": "024",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "cocoa",
-        "coral",
-        "teal"
-      ],
-      [
-        "coral",
-        "sky",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "violet",
-        "magenta",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "rose",
-        "violet",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "rose",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "sky"
-      ],
-      [
-        "teal",
-        "teal",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "emerald",
-        "lime"
-      ],
+    id: "024",
+    capacity: 4,
+    board: [
+      ["amber", "cocoa", "coral", "teal"],
+      ["coral", "sky", "lime", "cocoa"],
+      ["emerald", "violet", "magenta", "sky"],
+      ["lemon", "amber", "cobalt", "violet"],
+      ["magenta", "lime", "rose", "magenta"],
+      ["rose", "violet", "coral", "emerald"],
+      ["amber", "lemon", "violet", "lemon"],
+      ["lime", "cobalt", "rose", "sky"],
+      ["cocoa", "amber", "lemon", "emerald"],
+      ["cocoa", "magenta", "rose", "sky"],
+      ["teal", "teal", "teal", "cobalt"],
+      ["cobalt", "coral", "emerald", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3362
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3362,
+    },
   },
   "025": {
-    "id": "025",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "lemon",
-        "emerald",
-        "teal"
-      ],
-      [
-        "magenta",
-        "amber",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "emerald",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "violet",
-        "coral",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "lime",
-        "emerald",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "sky",
-        "rose",
-        "rose"
-      ],
-      [
-        "magenta",
-        "lime",
-        "lime",
-        "rose"
-      ],
-      [
-        "amber",
-        "violet",
-        "violet",
-        "sky"
-      ],
-      [
-        "amber",
-        "lemon",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "sky",
-        "sky",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lime",
-        "teal",
-        "violet"
-      ],
+    id: "025",
+    capacity: 4,
+    board: [
+      ["coral", "lemon", "emerald", "teal"],
+      ["magenta", "amber", "teal", "cobalt"],
+      ["rose", "emerald", "cocoa", "coral"],
+      ["violet", "coral", "cobalt", "coral"],
+      ["lime", "emerald", "amber", "cobalt"],
+      ["magenta", "sky", "rose", "rose"],
+      ["magenta", "lime", "lime", "rose"],
+      ["amber", "violet", "violet", "sky"],
+      ["amber", "lemon", "cocoa", "magenta"],
+      ["sky", "sky", "cocoa", "emerald"],
+      ["lemon", "cocoa", "teal", "cobalt"],
+      ["lemon", "lime", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4575
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4575,
+    },
   },
   "026": {
-    "id": "026",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "lemon",
-        "coral",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lime",
-        "violet"
-      ],
-      [
-        "lemon",
-        "violet",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "rose",
-        "rose",
-        "amber",
-        "amber"
-      ],
-      [
-        "magenta",
-        "sky",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "magenta",
-        "sky",
-        "lime",
-        "teal"
-      ],
-      [
-        "coral",
-        "sky",
-        "rose",
-        "coral"
-      ],
-      [
-        "lime",
-        "emerald",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "violet",
-        "sky"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "lime",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "lemon",
-        "teal"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "emerald"
-      ],
+    id: "026",
+    capacity: 4,
+    board: [
+      ["cobalt", "lemon", "coral", "violet"],
+      ["cobalt", "cocoa", "lime", "violet"],
+      ["lemon", "violet", "cocoa", "amber"],
+      ["rose", "rose", "amber", "amber"],
+      ["magenta", "sky", "cobalt", "teal"],
+      ["magenta", "sky", "lime", "teal"],
+      ["coral", "sky", "rose", "coral"],
+      ["lime", "emerald", "cocoa", "cobalt"],
+      ["cocoa", "amber", "violet", "sky"],
+      ["magenta", "emerald", "lime", "magenta"],
+      ["emerald", "lemon", "lemon", "teal"],
+      ["coral", "rose", "teal", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3714
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3714,
+    },
   },
   "027": {
-    "id": "027",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cocoa",
-        "emerald",
-        "rose"
-      ],
-      [
-        "coral",
-        "sky",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "violet",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "rose",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "amber",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "lemon"
-      ],
-      [
-        "amber",
-        "lime",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "amber",
-        "lime",
-        "lime"
-      ],
-      [
-        "lemon",
-        "teal",
-        "rose",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "lime",
-        "violet",
-        "sky",
-        "cobalt"
-      ],
+    id: "027",
+    capacity: 4,
+    board: [
+      ["teal", "cocoa", "emerald", "rose"],
+      ["coral", "sky", "rose", "lemon"],
+      ["amber", "violet", "emerald", "emerald"],
+      ["magenta", "rose", "emerald", "magenta"],
+      ["lemon", "amber", "cobalt", "coral"],
+      ["cocoa", "sky", "violet", "lemon"],
+      ["amber", "lime", "sky", "violet"],
+      ["magenta", "cobalt", "coral", "cocoa"],
+      ["teal", "amber", "lime", "lime"],
+      ["lemon", "teal", "rose", "coral"],
+      ["cobalt", "teal", "cocoa", "magenta"],
+      ["lime", "violet", "sky", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5013
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5013,
+    },
   },
   "028": {
-    "id": "028",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "amber",
-        "lime",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "teal",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "sky",
-        "magenta"
-      ],
-      [
-        "coral",
-        "lime",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "rose",
-        "violet"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "teal",
-        "sky"
-      ],
-      [
-        "violet",
-        "emerald",
-        "coral",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "coral",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "rose",
-        "rose",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "coral",
-        "cobalt"
-      ],
+    id: "028",
+    capacity: 4,
+    board: [
+      ["teal", "amber", "lime", "magenta"],
+      ["sky", "cobalt", "amber", "cobalt"],
+      ["cocoa", "sky", "teal", "teal"],
+      ["cocoa", "amber", "sky", "magenta"],
+      ["coral", "lime", "magenta", "lemon"],
+      ["rose", "cobalt", "rose", "violet"],
+      ["lime", "emerald", "violet", "amber"],
+      ["emerald", "lemon", "teal", "sky"],
+      ["violet", "emerald", "coral", "lemon"],
+      ["emerald", "coral", "cocoa", "violet"],
+      ["rose", "rose", "magenta", "lime"],
+      ["lemon", "cocoa", "coral", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5123
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5123,
+    },
   },
   "029": {
-    "id": "029",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "lemon",
-        "sky",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "sky",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "rose"
-      ],
-      [
-        "teal",
-        "magenta",
-        "sky",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "sky",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "lime",
-        "coral",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "coral",
-        "amber",
-        "violet",
-        "violet"
-      ],
-      [
-        "lime",
-        "rose",
-        "violet",
-        "lime"
-      ],
+    id: "029",
+    capacity: 4,
+    board: [
+      ["rose", "lemon", "sky", "emerald"],
+      ["cocoa", "lime", "emerald", "cocoa"],
+      ["emerald", "sky", "cocoa", "rose"],
+      ["lemon", "cobalt", "cobalt", "amber"],
+      ["lemon", "coral", "amber", "rose"],
+      ["teal", "magenta", "sky", "coral"],
+      ["emerald", "cobalt", "sky", "teal"],
+      ["violet", "magenta", "lemon", "cocoa"],
+      ["teal", "lime", "coral", "amber"],
+      ["teal", "cobalt", "magenta", "magenta"],
+      ["coral", "amber", "violet", "violet"],
+      ["lime", "rose", "violet", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4389
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4389,
+    },
   },
   "030": {
-    "id": "030",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "lemon",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "magenta",
-        "rose",
-        "magenta"
-      ],
-      [
-        "violet",
-        "sky",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "amber",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "amber",
-        "emerald"
-      ],
-      [
-        "rose",
-        "coral",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "teal",
-        "coral",
-        "violet",
-        "coral"
-      ],
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "sky"
-      ],
-      [
-        "lime",
-        "violet",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "magenta",
-        "emerald",
-        "cobalt"
-      ],
+    id: "030",
+    capacity: 4,
+    board: [
+      ["teal", "lemon", "rose", "lemon"],
+      ["amber", "magenta", "rose", "magenta"],
+      ["violet", "sky", "sky", "cocoa"],
+      ["violet", "amber", "cobalt", "emerald"],
+      ["amber", "lemon", "amber", "emerald"],
+      ["rose", "coral", "cocoa", "lemon"],
+      ["teal", "coral", "violet", "coral"],
+      ["magenta", "lime", "teal", "coral"],
+      ["cobalt", "cocoa", "lime", "cobalt"],
+      ["emerald", "rose", "teal", "sky"],
+      ["lime", "violet", "lime", "cocoa"],
+      ["sky", "magenta", "emerald", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4527
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4527,
+    },
   },
   "031": {
-    "id": "031",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "magenta",
-        "violet",
-        "sky"
-      ],
-      [
-        "lemon",
-        "lime",
-        "amber",
-        "lime"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "sky",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "emerald",
-        "sky"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "lemon",
-        "rose"
-      ],
-      [
-        "coral",
-        "violet",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "magenta",
-        "lemon",
-        "coral"
-      ],
-      [
-        "lime",
-        "coral",
-        "lime",
-        "magenta"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "emerald",
-        "rose"
-      ],
-      [
-        "teal",
-        "lemon",
-        "sky",
-        "teal"
-      ],
-      [
-        "rose",
-        "amber",
-        "amber",
-        "cocoa"
-      ],
+    id: "031",
+    capacity: 4,
+    board: [
+      ["violet", "magenta", "violet", "sky"],
+      ["lemon", "lime", "amber", "lime"],
+      ["magenta", "violet", "cobalt", "cocoa"],
+      ["cobalt", "coral", "sky", "teal"],
+      ["cocoa", "emerald", "emerald", "sky"],
+      ["rose", "cocoa", "lemon", "rose"],
+      ["coral", "violet", "emerald", "cobalt"],
+      ["teal", "magenta", "lemon", "coral"],
+      ["lime", "coral", "lime", "magenta"],
+      ["amber", "cobalt", "emerald", "rose"],
+      ["teal", "lemon", "sky", "teal"],
+      ["rose", "amber", "amber", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.2834
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.2834,
+    },
   },
   "032": {
-    "id": "032",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "sky",
-        "sky",
-        "amber"
-      ],
-      [
-        "sky",
-        "violet",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "magenta",
-        "violet",
-        "lime"
-      ],
-      [
-        "teal",
-        "amber",
-        "emerald",
-        "violet"
-      ],
-      [
-        "lemon",
-        "amber",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "rose",
-        "rose",
-        "coral",
-        "teal"
-      ],
-      [
-        "amber",
-        "emerald",
-        "violet",
-        "lemon"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "coral",
-        "magenta",
-        "sky",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "teal",
-        "teal"
-      ],
+    id: "032",
+    capacity: 4,
+    board: [
+      ["lime", "sky", "sky", "amber"],
+      ["sky", "violet", "coral", "cobalt"],
+      ["rose", "magenta", "violet", "lime"],
+      ["teal", "amber", "emerald", "violet"],
+      ["lemon", "amber", "magenta", "lemon"],
+      ["rose", "rose", "coral", "teal"],
+      ["amber", "emerald", "violet", "lemon"],
+      ["magenta", "cocoa", "cocoa", "rose"],
+      ["coral", "magenta", "sky", "coral"],
+      ["emerald", "cobalt", "cobalt", "lime"],
+      ["lemon", "cocoa", "lime", "emerald"],
+      ["cocoa", "cobalt", "teal", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 34,
-      "difficultyScore": 0.1473
-    }
+    development: {
+      optimalMoveCount: 34,
+      difficultyScore: 0.1473,
+    },
   },
   "033": {
-    "id": "033",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "coral",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "amber",
-        "sky"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "violet",
-        "teal"
-      ],
-      [
-        "teal",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "amber"
-      ],
-      [
-        "lime",
-        "rose",
-        "sky",
-        "lime"
-      ],
-      [
-        "lime",
-        "rose",
-        "lemon",
-        "violet"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "amber",
-        "teal",
-        "teal"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "sky"
-      ],
+    id: "033",
+    capacity: 4,
+    board: [
+      ["cocoa", "coral", "rose", "cobalt"],
+      ["magenta", "magenta", "amber", "sky"],
+      ["lemon", "cocoa", "emerald", "emerald"],
+      ["lime", "cobalt", "violet", "teal"],
+      ["teal", "coral", "violet", "magenta"],
+      ["rose", "magenta", "lemon", "amber"],
+      ["lime", "rose", "sky", "lime"],
+      ["lime", "rose", "lemon", "violet"],
+      ["violet", "coral", "cocoa", "cobalt"],
+      ["coral", "amber", "teal", "teal"],
+      ["emerald", "cobalt", "sky", "cocoa"],
+      ["lemon", "amber", "emerald", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.274
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.274,
+    },
   },
   "034": {
-    "id": "034",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "lime",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "teal"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "coral",
-        "sky"
-      ],
-      [
-        "rose",
-        "emerald",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "coral",
-        "sky",
-        "rose"
-      ],
-      [
-        "lemon",
-        "sky",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "lime",
-        "violet",
-        "magenta"
-      ],
-      [
-        "violet",
-        "violet",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "rose",
-        "amber"
-      ],
+    id: "034",
+    capacity: 4,
+    board: [
+      ["magenta", "lime", "cobalt", "coral"],
+      ["cocoa", "amber", "lemon", "teal"],
+      ["emerald", "amber", "cocoa", "lemon"],
+      ["lemon", "cocoa", "coral", "sky"],
+      ["rose", "emerald", "emerald", "emerald"],
+      ["magenta", "coral", "sky", "rose"],
+      ["lemon", "sky", "cocoa", "violet"],
+      ["cobalt", "lime", "coral", "teal"],
+      ["sky", "lime", "violet", "magenta"],
+      ["violet", "violet", "rose", "cobalt"],
+      ["magenta", "teal", "lime", "amber"],
+      ["teal", "cobalt", "rose", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.324
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.324,
+    },
   },
   "035": {
-    "id": "035",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "sky",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lime",
-        "teal"
-      ],
-      [
-        "amber",
-        "teal",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lemon",
-        "violet"
-      ],
-      [
-        "coral",
-        "sky",
-        "amber",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "lime",
-        "coral",
-        "magenta"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "violet",
-        "lemon"
-      ],
-      [
-        "violet",
-        "coral",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "rose",
-        "rose",
-        "magenta",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "teal",
-        "sky"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "cocoa",
-        "teal"
-      ],
+    id: "035",
+    capacity: 4,
+    board: [
+      ["cobalt", "sky", "cocoa", "rose"],
+      ["cocoa", "rose", "lemon", "cocoa"],
+      ["amber", "emerald", "lime", "teal"],
+      ["amber", "teal", "lime", "cobalt"],
+      ["amber", "lemon", "lemon", "violet"],
+      ["coral", "sky", "amber", "emerald"],
+      ["emerald", "lime", "coral", "magenta"],
+      ["violet", "cobalt", "violet", "lemon"],
+      ["violet", "coral", "emerald", "magenta"],
+      ["rose", "rose", "magenta", "sky"],
+      ["coral", "lime", "teal", "sky"],
+      ["magenta", "cobalt", "cocoa", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.521
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.521,
+    },
   },
   "036": {
-    "id": "036",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "cocoa",
-        "rose",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "violet",
-        "teal",
-        "violet"
-      ],
-      [
-        "amber",
-        "lime",
-        "amber",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "violet",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "teal",
-        "teal"
-      ],
-      [
-        "coral",
-        "coral",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "lemon",
-        "lime"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "coral",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "violet",
-        "sky",
-        "lemon"
-      ],
-      [
-        "rose",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "rose",
-        "lime",
-        "rose",
-        "cobalt"
-      ],
+    id: "036",
+    capacity: 4,
+    board: [
+      ["cobalt", "cocoa", "rose", "magenta"],
+      ["lemon", "violet", "teal", "violet"],
+      ["amber", "lime", "amber", "magenta"],
+      ["emerald", "violet", "cobalt", "emerald"],
+      ["sky", "cocoa", "teal", "teal"],
+      ["coral", "coral", "amber", "cocoa"],
+      ["lime", "coral", "lemon", "magenta"],
+      ["amber", "emerald", "lemon", "lime"],
+      ["magenta", "cocoa", "coral", "sky"],
+      ["cobalt", "violet", "sky", "lemon"],
+      ["rose", "sky", "teal", "emerald"],
+      ["rose", "lime", "rose", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4607
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4607,
+    },
   },
   "037": {
-    "id": "037",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "cobalt",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "magenta",
-        "rose",
-        "amber"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "violet",
-        "coral"
-      ],
-      [
-        "coral",
-        "emerald",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "violet",
-        "emerald",
-        "rose"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "coral",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "lime",
-        "emerald"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "teal",
-        "sky"
-      ],
-      [
-        "teal",
-        "rose",
-        "cocoa",
-        "teal"
-      ],
+    id: "037",
+    capacity: 4,
+    board: [
+      ["lime", "cobalt", "magenta", "lemon"],
+      ["lemon", "lemon", "violet", "cocoa"],
+      ["magenta", "magenta", "rose", "amber"],
+      ["sky", "lime", "coral", "lime"],
+      ["lemon", "cobalt", "violet", "coral"],
+      ["coral", "emerald", "emerald", "cobalt"],
+      ["teal", "violet", "emerald", "rose"],
+      ["sky", "cobalt", "amber", "cocoa"],
+      ["rose", "coral", "sky", "violet"],
+      ["magenta", "amber", "lime", "emerald"],
+      ["amber", "cocoa", "teal", "sky"],
+      ["teal", "rose", "cocoa", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4494
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4494,
+    },
   },
   "038": {
-    "id": "038",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "lemon",
-        "violet",
-        "teal"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "magenta",
-        "sky"
-      ],
-      [
-        "teal",
-        "lemon",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "emerald",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "rose",
-        "coral",
-        "coral"
-      ],
-      [
-        "amber",
-        "coral",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "violet",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "sky",
-        "teal"
-      ],
-      [
-        "amber",
-        "violet",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "sky",
-        "emerald",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lime",
-        "magenta"
-      ],
+    id: "038",
+    capacity: 4,
+    board: [
+      ["emerald", "lemon", "violet", "teal"],
+      ["lemon", "cobalt", "magenta", "sky"],
+      ["teal", "lemon", "cobalt", "teal"],
+      ["magenta", "cobalt", "emerald", "sky"],
+      ["cobalt", "rose", "amber", "cocoa"],
+      ["lime", "rose", "coral", "coral"],
+      ["amber", "coral", "rose", "cocoa"],
+      ["lime", "violet", "lime", "coral"],
+      ["rose", "emerald", "sky", "teal"],
+      ["amber", "violet", "cocoa", "magenta"],
+      ["sky", "emerald", "cocoa", "violet"],
+      ["amber", "lemon", "lime", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.533
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.533,
+    },
   },
   "039": {
-    "id": "039",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "rose",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "teal",
-        "sky",
-        "amber"
-      ],
-      [
-        "violet",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "magenta",
-        "lime"
-      ],
-      [
-        "lime",
-        "rose",
-        "sky",
-        "rose"
-      ],
-      [
-        "lemon",
-        "teal",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "teal",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "sky",
-        "violet"
-      ],
-      [
-        "coral",
-        "magenta",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "violet",
-        "cobalt",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "amber",
-        "teal",
-        "lemon"
-      ],
+    id: "039",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "magenta", "cobalt"],
+      ["coral", "teal", "sky", "amber"],
+      ["violet", "coral", "amber", "emerald"],
+      ["cocoa", "coral", "magenta", "lime"],
+      ["lime", "rose", "sky", "rose"],
+      ["lemon", "teal", "lemon", "magenta"],
+      ["lemon", "teal", "emerald", "emerald"],
+      ["cocoa", "cocoa", "sky", "violet"],
+      ["coral", "magenta", "cobalt", "violet"],
+      ["emerald", "violet", "cobalt", "lime"],
+      ["cocoa", "rose", "lime", "cobalt"],
+      ["amber", "amber", "teal", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5676
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5676,
+    },
   },
   "040": {
-    "id": "040",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "lime",
-        "lime",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "violet",
-        "coral"
-      ],
-      [
-        "teal",
-        "emerald",
-        "rose",
-        "magenta"
-      ],
-      [
-        "amber",
-        "amber",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "amber",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "coral",
-        "lemon",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "coral",
-        "rose",
-        "sky",
-        "coral"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "teal",
-        "emerald"
-      ],
-      [
-        "lime",
-        "magenta",
-        "sky",
-        "sky"
-      ],
+    id: "040",
+    capacity: 4,
+    board: [
+      ["teal", "lime", "lime", "emerald"],
+      ["cobalt", "cocoa", "violet", "coral"],
+      ["teal", "emerald", "rose", "magenta"],
+      ["amber", "amber", "violet", "cobalt"],
+      ["amber", "amber", "violet", "cocoa"],
+      ["lime", "teal", "magenta", "lemon"],
+      ["coral", "lemon", "cocoa", "emerald"],
+      ["coral", "rose", "sky", "coral"],
+      ["lemon", "magenta", "cobalt", "violet"],
+      ["lemon", "rose", "cobalt", "sky"],
+      ["cocoa", "rose", "teal", "emerald"],
+      ["lime", "magenta", "sky", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4513
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4513,
+    },
   },
   "041": {
-    "id": "041",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "sky",
-        "violet",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "emerald",
-        "lime",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "rose",
-        "rose",
-        "coral",
-        "violet"
-      ],
-      [
-        "magenta",
-        "amber",
-        "sky",
-        "lemon"
-      ],
-      [
-        "violet",
-        "amber",
-        "magenta",
-        "lime"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "teal",
-        "lime"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "teal",
-        "amber"
-      ],
-      [
-        "coral",
-        "coral",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "sky",
-        "violet"
-      ],
+    id: "041",
+    capacity: 4,
+    board: [
+      ["lime", "sky", "violet", "teal"],
+      ["cocoa", "emerald", "lime", "magenta"],
+      ["cobalt", "coral", "rose", "lemon"],
+      ["amber", "cobalt", "emerald", "lemon"],
+      ["sky", "cobalt", "emerald", "magenta"],
+      ["rose", "rose", "coral", "violet"],
+      ["magenta", "amber", "sky", "lemon"],
+      ["violet", "amber", "magenta", "lime"],
+      ["teal", "cobalt", "teal", "lime"],
+      ["rose", "cocoa", "teal", "amber"],
+      ["coral", "coral", "cocoa", "cocoa"],
+      ["emerald", "lemon", "sky", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3288
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3288,
+    },
   },
   "042": {
-    "id": "042",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "teal",
-        "amber",
-        "rose"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "rose",
-        "coral"
-      ],
-      [
-        "violet",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "rose",
-        "sky",
-        "teal",
-        "rose"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lemon",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "teal",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "sky",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "violet",
-        "coral"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "sky",
-        "magenta",
-        "lemon",
-        "violet"
-      ],
+    id: "042",
+    capacity: 4,
+    board: [
+      ["lime", "teal", "amber", "rose"],
+      ["magenta", "cocoa", "amber", "cocoa"],
+      ["lime", "cobalt", "rose", "coral"],
+      ["violet", "teal", "coral", "emerald"],
+      ["rose", "sky", "teal", "rose"],
+      ["violet", "cobalt", "lemon", "cocoa"],
+      ["amber", "lemon", "amber", "cocoa"],
+      ["lime", "teal", "lime", "cobalt"],
+      ["lemon", "emerald", "sky", "sky"],
+      ["cobalt", "coral", "violet", "coral"],
+      ["magenta", "emerald", "magenta", "emerald"],
+      ["sky", "magenta", "lemon", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5627
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5627,
+    },
   },
   "043": {
-    "id": "043",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "lime",
-        "magenta",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "lime",
-        "coral"
-      ],
-      [
-        "rose",
-        "rose",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "amber",
-        "rose",
-        "amber",
-        "sky"
-      ],
-      [
-        "rose",
-        "lemon",
-        "violet",
-        "emerald"
-      ],
-      [
-        "violet",
-        "teal",
-        "teal",
-        "sky"
-      ],
-      [
-        "coral",
-        "magenta",
-        "sky",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "lemon",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "amber",
-        "coral"
-      ],
+    id: "043",
+    capacity: 4,
+    board: [
+      ["coral", "teal", "lime", "amber"],
+      ["violet", "cobalt", "emerald", "cocoa"],
+      ["violet", "cocoa", "cobalt", "sky"],
+      ["lime", "magenta", "teal", "cobalt"],
+      ["lime", "cocoa", "lime", "coral"],
+      ["rose", "rose", "lemon", "magenta"],
+      ["amber", "rose", "amber", "sky"],
+      ["rose", "lemon", "violet", "emerald"],
+      ["violet", "teal", "teal", "sky"],
+      ["coral", "magenta", "sky", "lemon"],
+      ["emerald", "magenta", "lemon", "emerald"],
+      ["cobalt", "cocoa", "amber", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5628
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5628,
+    },
   },
   "044": {
-    "id": "044",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "teal",
-        "amber",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "magenta",
-        "rose",
-        "rose",
-        "coral"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "lime",
-        "violet",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "sky",
-        "sky",
-        "lemon",
-        "lime"
-      ],
-      [
-        "teal",
-        "magenta",
-        "rose",
-        "violet"
-      ],
-      [
-        "coral",
-        "amber",
-        "coral",
-        "magenta"
-      ],
-      [
-        "rose",
-        "violet",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "violet",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
+    id: "044",
+    capacity: 4,
+    board: [
+      ["magenta", "teal", "amber", "lemon"],
+      ["lemon", "emerald", "emerald", "amber"],
+      ["cobalt", "teal", "cocoa", "lime"],
+      ["magenta", "rose", "rose", "coral"],
+      ["coral", "cobalt", "lime", "emerald"],
+      ["teal", "cobalt", "cocoa", "sky"],
+      ["lime", "violet", "cocoa", "lemon"],
+      ["sky", "sky", "lemon", "lime"],
+      ["teal", "magenta", "rose", "violet"],
+      ["coral", "amber", "coral", "magenta"],
+      ["rose", "violet", "cocoa", "amber"],
+      ["violet", "cobalt", "sky", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3456
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3456,
+    },
   },
   "045": {
-    "id": "045",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "teal",
-        "coral",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lime",
-        "rose",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "coral",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "emerald",
-        "teal",
-        "amber",
-        "violet"
-      ],
-      [
-        "teal",
-        "emerald",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lemon",
-        "magenta",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "amber",
-        "rose",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "lime",
-        "rose",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "coral",
-        "lime",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "violet",
-        "magenta",
-        "sky",
-        "cocoa"
-      ],
+    id: "045",
+    capacity: 4,
+    board: [
+      ["coral", "teal", "coral", "teal"],
+      ["cobalt", "rose", "magenta", "lemon"],
+      ["lime", "rose", "cocoa", "amber"],
+      ["coral", "emerald", "sky", "violet"],
+      ["emerald", "teal", "amber", "violet"],
+      ["teal", "emerald", "lime", "cobalt"],
+      ["violet", "lemon", "magenta", "sky"],
+      ["cobalt", "magenta", "cobalt", "sky"],
+      ["amber", "rose", "cocoa", "lemon"],
+      ["lime", "rose", "emerald", "lemon"],
+      ["coral", "lime", "cocoa", "amber"],
+      ["violet", "magenta", "sky", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6744
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6744,
+    },
   },
   "046": {
-    "id": "046",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "cobalt",
-        "lime",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "magenta",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "coral"
-      ],
-      [
-        "sky",
-        "emerald",
-        "amber",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "rose",
-        "sky",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "coral",
-        "teal",
-        "sky",
-        "violet"
-      ],
-      [
-        "teal",
-        "magenta",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lime",
-        "rose",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "amber"
-      ],
-      [
-        "violet",
-        "lemon",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "lemon",
-        "violet",
-        "lemon"
-      ],
+    id: "046",
+    capacity: 4,
+    board: [
+      ["cocoa", "cobalt", "lime", "teal"],
+      ["cobalt", "rose", "magenta", "violet"],
+      ["cocoa", "magenta", "rose", "coral"],
+      ["sky", "emerald", "amber", "teal"],
+      ["cocoa", "lime", "emerald", "lime"],
+      ["rose", "sky", "cobalt", "cocoa"],
+      ["coral", "teal", "sky", "violet"],
+      ["teal", "magenta", "coral", "magenta"],
+      ["lime", "rose", "cobalt", "sky"],
+      ["lemon", "amber", "emerald", "amber"],
+      ["violet", "lemon", "coral", "emerald"],
+      ["amber", "lemon", "violet", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5705
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5705,
+    },
   },
   "047": {
-    "id": "047",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "emerald",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "sky",
-        "amber"
-      ],
-      [
-        "lime",
-        "violet",
-        "teal",
-        "sky"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "lime",
-        "rose"
-      ],
-      [
-        "teal",
-        "magenta",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "violet",
-        "rose"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "amber",
-        "teal"
-      ],
-      [
-        "rose",
-        "coral",
-        "emerald",
-        "violet"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "teal",
-        "coral",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "violet",
-        "coral",
-        "magenta"
-      ],
-      [
-        "coral",
-        "amber",
-        "sky",
-        "magenta"
-      ],
+    id: "047",
+    capacity: 4,
+    board: [
+      ["lemon", "emerald", "cobalt", "rose"],
+      ["lime", "cobalt", "sky", "amber"],
+      ["lime", "violet", "teal", "sky"],
+      ["amber", "cobalt", "lime", "rose"],
+      ["teal", "magenta", "emerald", "cobalt"],
+      ["lemon", "lemon", "violet", "rose"],
+      ["magenta", "cocoa", "amber", "teal"],
+      ["rose", "coral", "emerald", "violet"],
+      ["lime", "cocoa", "cocoa", "sky"],
+      ["teal", "coral", "cocoa", "lemon"],
+      ["emerald", "violet", "coral", "magenta"],
+      ["coral", "amber", "sky", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.578
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.578,
+    },
   },
   "048": {
-    "id": "048",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cocoa",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "rose",
-        "rose"
-      ],
-      [
-        "sky",
-        "coral",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "amber",
-        "lime",
-        "lemon",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "sky",
-        "emerald"
-      ],
-      [
-        "violet",
-        "emerald",
-        "teal",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "amber",
-        "lime"
-      ],
-      [
-        "rose",
-        "emerald",
-        "lemon",
-        "amber"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "lemon",
-        "coral"
-      ],
-      [
-        "lime",
-        "coral",
-        "emerald",
-        "violet"
-      ],
-      [
-        "magenta",
-        "teal",
-        "violet",
-        "cobalt"
-      ],
+    id: "048",
+    capacity: 4,
+    board: [
+      ["violet", "cocoa", "lime", "lemon"],
+      ["cocoa", "teal", "rose", "rose"],
+      ["sky", "coral", "teal", "cocoa"],
+      ["sky", "rose", "cocoa", "magenta"],
+      ["amber", "lime", "lemon", "amber"],
+      ["cobalt", "coral", "sky", "emerald"],
+      ["violet", "emerald", "teal", "magenta"],
+      ["magenta", "cobalt", "amber", "lime"],
+      ["rose", "emerald", "lemon", "amber"],
+      ["sky", "cobalt", "lemon", "coral"],
+      ["lime", "coral", "emerald", "violet"],
+      ["magenta", "teal", "violet", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6054
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6054,
+    },
   },
   "049": {
-    "id": "049",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "teal",
-        "amber",
-        "amber"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "sky",
-        "teal"
-      ],
-      [
-        "violet",
-        "teal",
-        "violet",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "amber",
-        "sky"
-      ],
-      [
-        "emerald",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "lime"
-      ],
-      [
-        "sky",
-        "coral",
-        "violet",
-        "lime"
-      ],
-      [
-        "violet",
-        "coral",
-        "sky",
-        "rose"
-      ],
+    id: "049",
+    capacity: 4,
+    board: [
+      ["emerald", "teal", "amber", "amber"],
+      ["emerald", "cocoa", "magenta", "magenta"],
+      ["rose", "cobalt", "sky", "teal"],
+      ["violet", "teal", "violet", "lime"],
+      ["cocoa", "rose", "amber", "sky"],
+      ["emerald", "rose", "magenta", "lemon"],
+      ["lemon", "coral", "amber", "cobalt"],
+      ["lime", "coral", "lemon", "magenta"],
+      ["cocoa", "teal", "cocoa", "cobalt"],
+      ["emerald", "cobalt", "lemon", "lime"],
+      ["sky", "coral", "violet", "lime"],
+      ["violet", "coral", "sky", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6364
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6364,
+    },
   },
   "050": {
-    "id": "050",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "violet",
-        "lemon",
-        "amber"
-      ],
-      [
-        "rose",
-        "teal",
-        "emerald",
-        "amber"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "violet",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "sky",
-        "coral",
-        "teal",
-        "lime"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "violet",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "coral",
-        "rose",
-        "teal",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "magenta"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "coral",
-        "sky",
-        "lemon"
-      ],
+    id: "050",
+    capacity: 4,
+    board: [
+      ["teal", "violet", "lemon", "amber"],
+      ["rose", "teal", "emerald", "amber"],
+      ["cocoa", "cobalt", "violet", "amber"],
+      ["emerald", "lemon", "cocoa", "emerald"],
+      ["sky", "coral", "teal", "lime"],
+      ["rose", "cobalt", "lime", "cobalt"],
+      ["lime", "violet", "violet", "magenta"],
+      ["cocoa", "amber", "magenta", "lemon"],
+      ["coral", "rose", "teal", "sky"],
+      ["cocoa", "magenta", "rose", "magenta"],
+      ["sky", "lime", "coral", "cobalt"],
+      ["emerald", "coral", "sky", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6052
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6052,
+    },
   },
   "051": {
-    "id": "051",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cobalt",
-        "rose",
-        "lime"
-      ],
-      [
-        "emerald",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "lime",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "sky",
-        "amber",
-        "amber",
-        "rose"
-      ],
-      [
-        "sky",
-        "violet",
-        "coral",
-        "coral"
-      ],
-      [
-        "lime",
-        "coral",
-        "teal",
-        "amber"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "violet",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "lemon",
-        "sky"
-      ],
-      [
-        "lime",
-        "teal",
-        "amber",
-        "lemon"
-      ],
+    id: "051",
+    capacity: 4,
+    board: [
+      ["sky", "cobalt", "rose", "lime"],
+      ["emerald", "coral", "violet", "magenta"],
+      ["lemon", "lime", "emerald", "lemon"],
+      ["sky", "amber", "amber", "rose"],
+      ["sky", "violet", "coral", "coral"],
+      ["lime", "coral", "teal", "amber"],
+      ["teal", "cocoa", "emerald", "magenta"],
+      ["emerald", "violet", "cocoa", "violet"],
+      ["cocoa", "rose", "rose", "cobalt"],
+      ["cocoa", "cobalt", "magenta", "magenta"],
+      ["teal", "cobalt", "lemon", "sky"],
+      ["lime", "teal", "amber", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4266
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4266,
+    },
   },
   "052": {
-    "id": "052",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "lime",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "violet",
-        "lime",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "coral",
-        "coral"
-      ],
-      [
-        "coral",
-        "lemon",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "teal",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "rose",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "emerald",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "violet",
-        "emerald"
-      ],
-      [
-        "teal",
-        "emerald",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "teal",
-        "lime",
-        "amber"
-      ],
+    id: "052",
+    capacity: 4,
+    board: [
+      ["lemon", "lime", "cobalt", "violet"],
+      ["emerald", "violet", "lime", "violet"],
+      ["cobalt", "cobalt", "coral", "coral"],
+      ["coral", "lemon", "magenta", "lime"],
+      ["cocoa", "amber", "cocoa", "amber"],
+      ["teal", "cobalt", "teal", "rose"],
+      ["rose", "lemon", "sky", "cocoa"],
+      ["cocoa", "magenta", "rose", "sky"],
+      ["coral", "amber", "emerald", "sky"],
+      ["magenta", "lemon", "violet", "emerald"],
+      ["teal", "emerald", "magenta", "sky"],
+      ["rose", "teal", "lime", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5235
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5235,
+    },
   },
   "053": {
-    "id": "053",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "cocoa",
-        "amber",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "violet",
-        "rose"
-      ],
-      [
-        "rose",
-        "magenta",
-        "teal",
-        "lime"
-      ],
-      [
-        "violet",
-        "teal",
-        "lime",
-        "teal"
-      ],
-      [
-        "sky",
-        "amber",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "magenta",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "violet",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "coral",
-        "violet"
-      ],
-      [
-        "coral",
-        "emerald",
-        "amber",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "cocoa",
-        "lemon"
-      ],
+    id: "053",
+    capacity: 4,
+    board: [
+      ["rose", "cocoa", "amber", "magenta"],
+      ["emerald", "sky", "violet", "rose"],
+      ["rose", "magenta", "teal", "lime"],
+      ["violet", "teal", "lime", "teal"],
+      ["sky", "amber", "amber", "cobalt"],
+      ["coral", "magenta", "cocoa", "cobalt"],
+      ["sky", "violet", "lime", "lemon"],
+      ["cobalt", "coral", "coral", "violet"],
+      ["coral", "emerald", "amber", "magenta"],
+      ["emerald", "teal", "lemon", "rose"],
+      ["sky", "emerald", "lime", "cobalt"],
+      ["cocoa", "lemon", "cocoa", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6488
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6488,
+    },
   },
   "054": {
-    "id": "054",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "sky",
-        "sky",
-        "amber"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "lemon",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lemon",
-        "violet"
-      ],
-      [
-        "magenta",
-        "teal",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "magenta",
-        "sky"
-      ],
-      [
-        "rose",
-        "coral",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "magenta",
-        "sky",
-        "teal",
-        "lime"
-      ],
-      [
-        "emerald",
-        "amber",
-        "rose",
-        "coral"
-      ],
-      [
-        "lime",
-        "teal",
-        "emerald",
-        "violet"
-      ],
+    id: "054",
+    capacity: 4,
+    board: [
+      ["amber", "sky", "sky", "amber"],
+      ["lemon", "emerald", "coral", "cobalt"],
+      ["teal", "lemon", "cobalt", "amber"],
+      ["cobalt", "lemon", "lemon", "violet"],
+      ["magenta", "teal", "cocoa", "violet"],
+      ["cocoa", "lime", "emerald", "lime"],
+      ["coral", "cocoa", "magenta", "sky"],
+      ["rose", "coral", "cobalt", "rose"],
+      ["magenta", "violet", "cocoa", "rose"],
+      ["magenta", "sky", "teal", "lime"],
+      ["emerald", "amber", "rose", "coral"],
+      ["lime", "teal", "emerald", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3563
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3563,
+    },
   },
   "055": {
-    "id": "055",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "sky",
-        "amber",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "rose",
-        "violet",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "lime",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "lemon",
-        "rose"
-      ],
-      [
-        "emerald",
-        "lime",
-        "magenta",
-        "sky"
-      ],
-      [
-        "violet",
-        "lime",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "teal",
-        "rose",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "coral",
-        "emerald",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "amber",
-        "amber"
-      ],
-      [
-        "teal",
-        "coral",
-        "amber",
-        "coral"
-      ],
-      [
-        "lime",
-        "rose",
-        "violet",
-        "violet"
-      ],
+    id: "055",
+    capacity: 4,
+    board: [
+      ["cobalt", "sky", "amber", "magenta"],
+      ["lemon", "cobalt", "cocoa", "cocoa"],
+      ["lemon", "rose", "violet", "lemon"],
+      ["cocoa", "coral", "lime", "magenta"],
+      ["teal", "cobalt", "lemon", "rose"],
+      ["emerald", "lime", "magenta", "sky"],
+      ["violet", "lime", "sky", "cobalt"],
+      ["teal", "rose", "magenta", "emerald"],
+      ["emerald", "coral", "emerald", "teal"],
+      ["cocoa", "sky", "amber", "amber"],
+      ["teal", "coral", "amber", "coral"],
+      ["lime", "rose", "violet", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4696
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4696,
+    },
   },
   "056": {
-    "id": "056",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "sky",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "violet",
-        "lemon"
-      ],
-      [
-        "rose",
-        "sky",
-        "coral",
-        "violet"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "amber",
-        "magenta"
-      ],
-      [
-        "lime",
-        "teal",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lime",
-        "teal",
-        "coral",
-        "amber"
-      ],
-      [
-        "amber",
-        "emerald",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "rose",
-        "lime",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "coral",
-        "emerald",
-        "teal"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "amber",
-        "violet"
-      ],
-      [
-        "violet",
-        "teal",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "cobalt",
-        "lime"
-      ],
+    id: "056",
+    capacity: 4,
+    board: [
+      ["lemon", "sky", "cocoa", "cobalt"],
+      ["cobalt", "magenta", "violet", "lemon"],
+      ["rose", "sky", "coral", "violet"],
+      ["rose", "cobalt", "amber", "magenta"],
+      ["lime", "teal", "coral", "magenta"],
+      ["lime", "teal", "coral", "amber"],
+      ["amber", "emerald", "cocoa", "sky"],
+      ["rose", "lime", "sky", "cocoa"],
+      ["rose", "coral", "emerald", "teal"],
+      ["lemon", "emerald", "amber", "violet"],
+      ["violet", "teal", "magenta", "lemon"],
+      ["emerald", "cocoa", "cobalt", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.6588
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.6588,
+    },
   },
   "057": {
-    "id": "057",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "rose",
-        "teal",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "sky",
-        "coral",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "amber",
-        "teal",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "sky",
-        "coral"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lime",
-        "rose"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "teal",
-        "amber"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "coral",
-        "lemon"
-      ],
-      [
-        "violet",
-        "magenta",
-        "violet",
-        "lime"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "lemon"
-      ],
+    id: "057",
+    capacity: 4,
+    board: [
+      ["sky", "rose", "teal", "lemon"],
+      ["cobalt", "amber", "coral", "violet"],
+      ["sky", "coral", "cocoa", "lime"],
+      ["amber", "teal", "cobalt", "rose"],
+      ["magenta", "emerald", "emerald", "emerald"],
+      ["lime", "cobalt", "teal", "cocoa"],
+      ["cobalt", "lemon", "sky", "coral"],
+      ["sky", "emerald", "lime", "rose"],
+      ["violet", "cocoa", "teal", "amber"],
+      ["rose", "cocoa", "coral", "lemon"],
+      ["violet", "magenta", "violet", "lime"],
+      ["amber", "magenta", "magenta", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.469
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.469,
+    },
   },
   "058": {
-    "id": "058",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "amber",
-        "magenta",
-        "teal"
-      ],
-      [
-        "coral",
-        "teal",
-        "violet",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "rose",
-        "violet"
-      ],
-      [
-        "teal",
-        "lime",
-        "emerald",
-        "lime"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lemon",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "sky",
-        "amber"
-      ],
-      [
-        "coral",
-        "amber",
-        "rose",
-        "teal"
-      ],
-      [
-        "sky",
-        "magenta",
-        "rose",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "magenta",
-        "violet"
-      ],
+    id: "058",
+    capacity: 4,
+    board: [
+      ["emerald", "amber", "magenta", "teal"],
+      ["coral", "teal", "violet", "violet"],
+      ["cocoa", "coral", "emerald", "magenta"],
+      ["cobalt", "rose", "lemon", "coral"],
+      ["cobalt", "cobalt", "rose", "violet"],
+      ["teal", "lime", "emerald", "lime"],
+      ["sky", "emerald", "lemon", "lime"],
+      ["cobalt", "lemon", "amber", "lime"],
+      ["cocoa", "sky", "sky", "amber"],
+      ["coral", "amber", "rose", "teal"],
+      ["sky", "magenta", "rose", "lemon"],
+      ["cocoa", "cocoa", "magenta", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.6432
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.6432,
+    },
   },
   "059": {
-    "id": "059",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "lime",
-        "teal",
-        "rose"
-      ],
-      [
-        "teal",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "sky",
-        "lemon",
-        "lime"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "teal",
-        "coral",
-        "rose"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "violet",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "teal",
-        "emerald"
-      ],
-      [
-        "sky",
-        "magenta",
-        "violet",
-        "coral"
-      ],
-      [
-        "coral",
-        "lime",
-        "coral",
-        "amber"
-      ],
-      [
-        "violet",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "lemon",
-        "lime",
-        "sky"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "magenta"
-      ],
+    id: "059",
+    capacity: 4,
+    board: [
+      ["lemon", "lime", "teal", "rose"],
+      ["teal", "amber", "lemon", "cobalt"],
+      ["emerald", "sky", "lemon", "lime"],
+      ["amber", "cocoa", "emerald", "cocoa"],
+      ["rose", "teal", "coral", "rose"],
+      ["magenta", "cobalt", "violet", "rose"],
+      ["cobalt", "sky", "teal", "emerald"],
+      ["sky", "magenta", "violet", "coral"],
+      ["coral", "lime", "coral", "amber"],
+      ["violet", "amber", "cocoa", "emerald"],
+      ["cocoa", "lemon", "lime", "sky"],
+      ["magenta", "violet", "cobalt", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5107
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5107,
+    },
   },
   "060": {
-    "id": "060",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cobalt",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "lime",
-        "teal",
-        "violet"
-      ],
-      [
-        "rose",
-        "amber",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "magenta",
-        "amber"
-      ],
-      [
-        "coral",
-        "lemon",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "violet",
-        "coral",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "sky",
-        "coral",
-        "rose",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "teal",
-        "violet"
-      ],
+    id: "060",
+    capacity: 4,
+    board: [
+      ["teal", "cobalt", "cocoa", "cocoa"],
+      ["violet", "lime", "teal", "violet"],
+      ["rose", "amber", "coral", "teal"],
+      ["sky", "lemon", "lemon", "lemon"],
+      ["lime", "cocoa", "cocoa", "sky"],
+      ["cobalt", "rose", "emerald", "magenta"],
+      ["emerald", "sky", "magenta", "amber"],
+      ["coral", "lemon", "emerald", "cobalt"],
+      ["magenta", "violet", "coral", "amber"],
+      ["emerald", "lime", "rose", "magenta"],
+      ["sky", "coral", "rose", "amber"],
+      ["cobalt", "lime", "teal", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2678
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2678,
+    },
   },
   "061": {
-    "id": "061",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "cobalt",
-        "lime",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "teal",
-        "magenta",
-        "rose",
-        "lemon"
-      ],
-      [
-        "amber",
-        "lemon",
-        "emerald",
-        "amber"
-      ],
-      [
-        "amber",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "violet",
-        "teal",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "sky",
-        "amber",
-        "emerald",
-        "lime"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "rose",
-        "rose"
-      ],
-      [
-        "sky",
-        "violet",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "lime",
-        "coral",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "magenta",
-        "sky"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "lemon",
-        "magenta"
-      ],
+    id: "061",
+    capacity: 4,
+    board: [
+      ["rose", "cobalt", "lime", "violet"],
+      ["cocoa", "coral", "lemon", "magenta"],
+      ["teal", "magenta", "rose", "lemon"],
+      ["amber", "lemon", "emerald", "amber"],
+      ["amber", "teal", "coral", "emerald"],
+      ["violet", "teal", "cobalt", "emerald"],
+      ["sky", "amber", "emerald", "lime"],
+      ["lime", "cocoa", "rose", "rose"],
+      ["sky", "violet", "cobalt", "teal"],
+      ["lime", "coral", "cocoa", "coral"],
+      ["cobalt", "sky", "magenta", "sky"],
+      ["violet", "cocoa", "lemon", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5028
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5028,
+    },
   },
   "062": {
-    "id": "062",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "rose",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "amber",
-        "emerald",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "sky",
-        "lime",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "coral",
-        "teal",
-        "coral"
-      ],
-      [
-        "sky",
-        "lime",
-        "coral",
-        "violet"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "emerald",
-        "amber",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "sky",
-        "sky",
-        "violet"
-      ],
-      [
-        "coral",
-        "teal",
-        "rose",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "magenta",
-        "rose",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "violet",
-        "amber"
-      ],
+    id: "062",
+    capacity: 4,
+    board: [
+      ["amber", "rose", "cocoa", "cocoa"],
+      ["magenta", "amber", "emerald", "teal"],
+      ["cobalt", "emerald", "lemon", "lemon"],
+      ["sky", "lime", "lemon", "cobalt"],
+      ["lime", "coral", "teal", "coral"],
+      ["sky", "lime", "coral", "violet"],
+      ["teal", "cobalt", "magenta", "cocoa"],
+      ["rose", "emerald", "amber", "magenta"],
+      ["emerald", "sky", "sky", "violet"],
+      ["coral", "teal", "rose", "cocoa"],
+      ["lime", "magenta", "rose", "violet"],
+      ["cobalt", "lemon", "violet", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4282
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4282,
+    },
   },
   "063": {
-    "id": "063",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "amber",
-        "amber",
-        "sky",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "cobalt",
-        "cocoa",
-        "teal"
-      ],
-      [
-        "lime",
-        "amber",
-        "lemon",
-        "sky"
-      ],
-      [
-        "rose",
-        "violet",
-        "lime",
-        "teal"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "emerald",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "coral",
-        "sky"
-      ],
-      [
-        "rose",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "violet",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "coral",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lemon",
-        "magenta"
-      ],
+    id: "063",
+    capacity: 4,
+    board: [
+      ["cocoa", "amber", "lemon", "coral"],
+      ["amber", "amber", "sky", "emerald"],
+      ["cocoa", "cobalt", "cocoa", "teal"],
+      ["lime", "amber", "lemon", "sky"],
+      ["rose", "violet", "lime", "teal"],
+      ["teal", "cobalt", "emerald", "coral"],
+      ["lime", "cocoa", "emerald", "violet"],
+      ["magenta", "lime", "coral", "sky"],
+      ["rose", "sky", "rose", "violet"],
+      ["cobalt", "magenta", "violet", "emerald"],
+      ["lemon", "coral", "teal", "cobalt"],
+      ["magenta", "rose", "lemon", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5849
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5849,
+    },
   },
   "064": {
-    "id": "064",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "violet",
-        "lemon",
-        "teal"
-      ],
-      [
-        "violet",
-        "lime",
-        "sky",
-        "magenta"
-      ],
-      [
-        "rose",
-        "teal",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "rose",
-        "amber"
-      ],
-      [
-        "lime",
-        "rose",
-        "lime",
-        "teal"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "magenta",
-        "sky",
-        "teal"
-      ],
-      [
-        "magenta",
-        "amber",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "amber",
-        "coral"
-      ],
-      [
-        "lime",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "sky",
-        "lemon",
-        "emerald",
-        "coral"
-      ],
+    id: "064",
+    capacity: 4,
+    board: [
+      ["rose", "violet", "lemon", "teal"],
+      ["violet", "lime", "sky", "magenta"],
+      ["rose", "teal", "cocoa", "emerald"],
+      ["sky", "cocoa", "coral", "emerald"],
+      ["lemon", "cocoa", "rose", "amber"],
+      ["lime", "rose", "lime", "teal"],
+      ["magenta", "cobalt", "emerald", "cobalt"],
+      ["violet", "magenta", "sky", "teal"],
+      ["magenta", "amber", "cobalt", "cocoa"],
+      ["cobalt", "lemon", "amber", "coral"],
+      ["lime", "amber", "coral", "violet"],
+      ["sky", "lemon", "emerald", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 41,
-      "difficultyScore": 0.7165
-    }
+    development: {
+      optimalMoveCount: 41,
+      difficultyScore: 0.7165,
+    },
   },
   "065": {
-    "id": "065",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "magenta",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "teal",
-        "emerald",
-        "rose"
-      ],
-      [
-        "coral",
-        "lemon",
-        "sky",
-        "coral"
-      ],
-      [
-        "violet",
-        "emerald",
-        "sky",
-        "violet"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "coral",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "teal",
-        "violet",
-        "amber"
-      ],
-      [
-        "rose",
-        "teal",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "cobalt"
-      ],
+    id: "065",
+    capacity: 4,
+    board: [
+      ["lime", "magenta", "amber", "cocoa"],
+      ["amber", "teal", "emerald", "rose"],
+      ["coral", "lemon", "sky", "coral"],
+      ["violet", "emerald", "sky", "violet"],
+      ["magenta", "violet", "cobalt", "lemon"],
+      ["rose", "magenta", "amber", "cobalt"],
+      ["cocoa", "teal", "lime", "cocoa"],
+      ["magenta", "coral", "cocoa", "lime"],
+      ["sky", "teal", "violet", "amber"],
+      ["rose", "teal", "rose", "cobalt"],
+      ["sky", "coral", "emerald", "lemon"],
+      ["lime", "emerald", "lemon", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6578
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6578,
+    },
   },
   "066": {
-    "id": "066",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "violet",
-        "emerald",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "lemon",
-        "teal"
-      ],
-      [
-        "magenta",
-        "violet",
-        "sky",
-        "magenta"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "teal",
-        "rose",
-        "lemon",
-        "rose"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "amber",
-        "violet"
-      ],
-      [
-        "rose",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "emerald"
-      ],
-      [
-        "lime",
-        "amber",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "magenta",
-        "lime",
-        "teal",
-        "rose"
-      ],
-      [
-        "coral",
-        "coral",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "teal"
-      ],
+    id: "066",
+    capacity: 4,
+    board: [
+      ["magenta", "violet", "emerald", "emerald"],
+      ["cobalt", "emerald", "lemon", "teal"],
+      ["magenta", "violet", "sky", "magenta"],
+      ["sky", "cocoa", "cobalt", "lemon"],
+      ["teal", "rose", "lemon", "rose"],
+      ["lime", "cocoa", "amber", "violet"],
+      ["rose", "lemon", "amber", "lime"],
+      ["cocoa", "sky", "coral", "emerald"],
+      ["lime", "amber", "cobalt", "sky"],
+      ["magenta", "lime", "teal", "rose"],
+      ["coral", "coral", "amber", "cobalt"],
+      ["violet", "coral", "cocoa", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4176
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4176,
+    },
   },
   "067": {
-    "id": "067",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "coral",
-        "coral",
-        "teal"
-      ],
-      [
-        "teal",
-        "coral",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "sky",
-        "teal",
-        "lemon",
-        "rose"
-      ],
-      [
-        "amber",
-        "magenta",
-        "lime",
-        "lemon"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "rose",
-        "lime",
-        "teal"
-      ],
-      [
-        "violet",
-        "amber",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "violet",
-        "sky",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "lime",
-        "violet",
-        "coral"
-      ],
-      [
-        "violet",
-        "rose",
-        "cocoa",
-        "amber"
-      ],
+    id: "067",
+    capacity: 4,
+    board: [
+      ["emerald", "coral", "coral", "teal"],
+      ["teal", "coral", "sky", "cobalt"],
+      ["emerald", "cocoa", "magenta", "emerald"],
+      ["sky", "teal", "lemon", "rose"],
+      ["amber", "magenta", "lime", "lemon"],
+      ["lime", "cobalt", "lemon", "magenta"],
+      ["cobalt", "amber", "cocoa", "emerald"],
+      ["lemon", "rose", "lime", "teal"],
+      ["violet", "amber", "cobalt", "rose"],
+      ["violet", "sky", "sky", "cocoa"],
+      ["magenta", "lime", "violet", "coral"],
+      ["violet", "rose", "cocoa", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4462
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4462,
+    },
   },
   "068": {
-    "id": "068",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "coral",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "sky",
-        "teal",
-        "coral",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "rose",
-        "emerald",
-        "rose"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "sky",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "sky",
-        "violet"
-      ],
-      [
-        "amber",
-        "emerald",
-        "emerald",
-        "lime"
-      ],
-      [
-        "violet",
-        "coral",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "lime",
-        "emerald",
-        "lemon",
-        "amber"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "rose",
-        "coral",
-        "cobalt",
-        "teal"
-      ],
+    id: "068",
+    capacity: 4,
+    board: [
+      ["magenta", "coral", "lemon", "cobalt"],
+      ["cocoa", "teal", "sky", "cocoa"],
+      ["sky", "teal", "coral", "lime"],
+      ["cocoa", "violet", "amber", "teal"],
+      ["violet", "rose", "emerald", "rose"],
+      ["cobalt", "rose", "sky", "lemon"],
+      ["cobalt", "lemon", "sky", "violet"],
+      ["amber", "emerald", "emerald", "lime"],
+      ["violet", "coral", "cocoa", "lime"],
+      ["lime", "emerald", "lemon", "amber"],
+      ["amber", "magenta", "magenta", "magenta"],
+      ["rose", "coral", "cobalt", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4053
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4053,
+    },
   },
   "069": {
-    "id": "069",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "magenta",
-        "rose",
-        "rose"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "sky",
-        "sky",
-        "amber",
-        "rose"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "lemon",
-        "coral",
-        "violet"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "sky",
-        "emerald"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "teal",
-        "rose"
-      ],
-      [
-        "coral",
-        "lime",
-        "lime",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "lime",
-        "amber",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "amber",
-        "violet"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lime",
-        "emerald"
-      ],
-      [
-        "sky",
-        "magenta",
-        "violet",
-        "amber"
-      ],
+    id: "069",
+    capacity: 4,
+    board: [
+      ["coral", "magenta", "rose", "rose"],
+      ["lemon", "cobalt", "cobalt", "emerald"],
+      ["sky", "sky", "amber", "rose"],
+      ["teal", "cocoa", "cocoa", "cocoa"],
+      ["teal", "lemon", "coral", "violet"],
+      ["teal", "cobalt", "sky", "emerald"],
+      ["violet", "cocoa", "teal", "rose"],
+      ["coral", "lime", "lime", "lemon"],
+      ["cobalt", "lime", "amber", "emerald"],
+      ["lemon", "magenta", "amber", "violet"],
+      ["coral", "magenta", "lime", "emerald"],
+      ["sky", "magenta", "violet", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.3486
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.3486,
+    },
   },
   "070": {
-    "id": "070",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "amber",
-        "emerald",
-        "teal"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "sky"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "amber",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "coral",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "coral",
-        "lime"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "cocoa",
-        "lime"
-      ],
-      [
-        "sky",
-        "violet",
-        "amber",
-        "teal"
-      ],
-      [
-        "violet",
-        "emerald",
-        "cocoa",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "teal",
-        "magenta",
-        "rose",
-        "coral"
-      ],
+    id: "070",
+    capacity: 4,
+    board: [
+      ["sky", "amber", "emerald", "teal"],
+      ["rose", "magenta", "lemon", "sky"],
+      ["lemon", "emerald", "amber", "sky"],
+      ["cobalt", "amber", "rose", "cobalt"],
+      ["violet", "coral", "lime", "teal"],
+      ["lime", "cocoa", "coral", "lime"],
+      ["cocoa", "rose", "cocoa", "lime"],
+      ["sky", "violet", "amber", "teal"],
+      ["violet", "emerald", "cocoa", "lemon"],
+      ["cobalt", "magenta", "violet", "cobalt"],
+      ["magenta", "coral", "emerald", "lemon"],
+      ["teal", "magenta", "rose", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 42,
-      "difficultyScore": 0.602
-    }
+    development: {
+      optimalMoveCount: 42,
+      difficultyScore: 0.602,
+    },
   },
   "071": {
-    "id": "071",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "cocoa",
-        "violet",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "violet",
-        "teal",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "lemon",
-        "lime",
-        "emerald"
-      ],
-      [
-        "teal",
-        "coral",
-        "rose",
-        "sky"
-      ],
-      [
-        "lime",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "coral",
-        "rose",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "amber",
-        "sky",
-        "emerald"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "rose",
-        "lemon",
-        "magenta",
-        "teal"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "cobalt",
-        "amber"
-      ],
-      [
-        "sky",
-        "magenta",
-        "teal",
-        "magenta"
-      ],
+    id: "071",
+    capacity: 4,
+    board: [
+      ["coral", "cocoa", "violet", "emerald"],
+      ["emerald", "violet", "teal", "cocoa"],
+      ["amber", "lemon", "lime", "emerald"],
+      ["teal", "coral", "rose", "sky"],
+      ["lime", "coral", "violet", "magenta"],
+      ["coral", "rose", "lime", "cobalt"],
+      ["lime", "amber", "sky", "emerald"],
+      ["amber", "cobalt", "lemon", "lemon"],
+      ["rose", "lemon", "magenta", "teal"],
+      ["sky", "rose", "cocoa", "cobalt"],
+      ["violet", "cocoa", "cobalt", "amber"],
+      ["sky", "magenta", "teal", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5488
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5488,
+    },
   },
   "072": {
-    "id": "072",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cocoa",
-        "lime",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "lemon",
-        "violet"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lime",
-        "rose",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lime",
-        "violet"
-      ],
-      [
-        "lemon",
-        "coral",
-        "teal",
-        "sky"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "rose",
-        "teal",
-        "sky",
-        "lime"
-      ],
-      [
-        "teal",
-        "amber",
-        "amber",
-        "coral"
-      ],
-      [
-        "amber",
-        "magenta",
-        "coral",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "rose",
-        "teal"
-      ],
+    id: "072",
+    capacity: 4,
+    board: [
+      ["emerald", "cocoa", "lime", "sky"],
+      ["cobalt", "sky", "lemon", "violet"],
+      ["magenta", "emerald", "cobalt", "violet"],
+      ["magenta", "lime", "rose", "violet"],
+      ["cocoa", "rose", "lime", "violet"],
+      ["lemon", "coral", "teal", "sky"],
+      ["lemon", "cocoa", "cocoa", "amber"],
+      ["rose", "teal", "sky", "lime"],
+      ["teal", "amber", "amber", "coral"],
+      ["amber", "magenta", "coral", "magenta"],
+      ["lemon", "emerald", "cobalt", "coral"],
+      ["cobalt", "emerald", "rose", "teal"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5359
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5359,
+    },
   },
   "073": {
-    "id": "073",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "sky",
-        "lemon",
-        "lemon"
-      ],
-      [
-        "lime",
-        "teal",
-        "sky",
-        "teal"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "teal",
-        "lime",
-        "coral",
-        "lime"
-      ],
-      [
-        "teal",
-        "amber",
-        "rose",
-        "cobalt"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "emerald"
-      ],
-      [
-        "sky",
-        "emerald",
-        "lime",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "rose",
-        "magenta"
-      ],
-      [
-        "amber",
-        "rose",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "coral"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "lemon",
-        "cobalt"
-      ],
+    id: "073",
+    capacity: 4,
+    board: [
+      ["violet", "sky", "lemon", "lemon"],
+      ["lime", "teal", "sky", "teal"],
+      ["emerald", "amber", "cocoa", "magenta"],
+      ["teal", "lime", "coral", "lime"],
+      ["teal", "amber", "rose", "cobalt"],
+      ["amber", "cocoa", "coral", "cocoa"],
+      ["magenta", "sky", "violet", "emerald"],
+      ["sky", "emerald", "lime", "violet"],
+      ["cobalt", "coral", "rose", "magenta"],
+      ["amber", "rose", "cocoa", "violet"],
+      ["rose", "magenta", "lemon", "coral"],
+      ["emerald", "cobalt", "lemon", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.554
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.554,
+    },
   },
   "074": {
-    "id": "074",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "amber",
-        "emerald",
-        "coral"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "sky",
-        "teal"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "rose",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "coral",
-        "lime",
-        "violet"
-      ],
-      [
-        "magenta",
-        "lemon",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lime",
-        "amber"
-      ],
-      [
-        "teal",
-        "lime",
-        "sky",
-        "rose"
-      ],
-      [
-        "magenta",
-        "cobalt",
-        "teal",
-        "rose"
-      ],
-      [
-        "violet",
-        "lemon",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "sky",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "coral",
-        "emerald",
-        "amber"
-      ],
+    id: "074",
+    capacity: 4,
+    board: [
+      ["violet", "amber", "emerald", "coral"],
+      ["lemon", "emerald", "sky", "teal"],
+      ["emerald", "amber", "cocoa", "cobalt"],
+      ["rose", "rose", "magenta", "cocoa"],
+      ["lime", "coral", "lime", "violet"],
+      ["magenta", "lemon", "coral", "cobalt"],
+      ["cocoa", "teal", "lime", "amber"],
+      ["teal", "lime", "sky", "rose"],
+      ["magenta", "cobalt", "teal", "rose"],
+      ["violet", "lemon", "sky", "cocoa"],
+      ["violet", "sky", "lemon", "magenta"],
+      ["cobalt", "coral", "emerald", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3646
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3646,
+    },
   },
   "075": {
-    "id": "075",
-    "capacity": 4,
-    "board": [
-      [
-        "coral",
-        "lime",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "amber",
-        "coral",
-        "violet"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "amber",
-        "lemon"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "coral",
-        "magenta"
-      ],
-      [
-        "teal",
-        "emerald",
-        "teal",
-        "sky"
-      ],
-      [
-        "rose",
-        "amber",
-        "sky",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "magenta",
-        "rose",
-        "lime",
-        "lemon"
-      ],
-      [
-        "sky",
-        "emerald",
-        "amber",
-        "emerald"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "lime"
-      ],
-      [
-        "lemon",
-        "violet",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "magenta",
-        "cocoa"
-      ],
+    id: "075",
+    capacity: 4,
+    board: [
+      ["coral", "lime", "lime", "cobalt"],
+      ["lemon", "amber", "coral", "violet"],
+      ["teal", "cocoa", "amber", "lemon"],
+      ["cobalt", "magenta", "coral", "magenta"],
+      ["teal", "emerald", "teal", "sky"],
+      ["rose", "amber", "sky", "violet"],
+      ["cobalt", "teal", "cocoa", "rose"],
+      ["magenta", "rose", "lime", "lemon"],
+      ["sky", "emerald", "amber", "emerald"],
+      ["rose", "violet", "sky", "lime"],
+      ["lemon", "violet", "coral", "cocoa"],
+      ["emerald", "cobalt", "magenta", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.4586
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.4586,
+    },
   },
   "076": {
-    "id": "076",
-    "capacity": 4,
-    "board": [
-      [
-        "magenta",
-        "cobalt",
-        "teal",
-        "rose"
-      ],
-      [
-        "lemon",
-        "violet",
-        "lemon",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "teal",
-        "emerald",
-        "violet"
-      ],
-      [
-        "coral",
-        "emerald",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "lemon",
-        "emerald",
-        "lime"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "magenta",
-        "amber"
-      ],
-      [
-        "amber",
-        "teal",
-        "coral",
-        "emerald"
-      ],
-      [
-        "amber",
-        "coral",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "rose",
-        "lime"
-      ],
-      [
-        "rose",
-        "magenta",
-        "lemon",
-        "lime"
-      ],
-      [
-        "sky",
-        "lime",
-        "sky",
-        "magenta"
-      ],
+    id: "076",
+    capacity: 4,
+    board: [
+      ["magenta", "cobalt", "teal", "rose"],
+      ["lemon", "violet", "lemon", "rose"],
+      ["cocoa", "sky", "violet", "cocoa"],
+      ["amber", "teal", "emerald", "violet"],
+      ["coral", "emerald", "coral", "cocoa"],
+      ["violet", "lemon", "emerald", "lime"],
+      ["teal", "cocoa", "magenta", "amber"],
+      ["amber", "teal", "coral", "emerald"],
+      ["amber", "coral", "sky", "cobalt"],
+      ["cobalt", "cobalt", "rose", "lime"],
+      ["rose", "magenta", "lemon", "lime"],
+      ["sky", "lime", "sky", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.3656
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.3656,
+    },
   },
   "077": {
-    "id": "077",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "cobalt",
-        "teal",
-        "sky"
-      ],
-      [
-        "lemon",
-        "emerald",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "rose",
-        "lemon",
-        "cocoa",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "coral",
-        "amber",
-        "emerald"
-      ],
-      [
-        "lime",
-        "magenta",
-        "magenta",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "lemon",
-        "violet",
-        "teal"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "magenta",
-        "lime"
-      ],
-      [
-        "rose",
-        "lemon",
-        "amber",
-        "teal"
-      ],
-      [
-        "rose",
-        "teal",
-        "coral",
-        "sky"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "amber",
-        "violet",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "amber",
-        "lime"
-      ],
+    id: "077",
+    capacity: 4,
+    board: [
+      ["sky", "cobalt", "teal", "sky"],
+      ["lemon", "emerald", "cocoa", "rose"],
+      ["rose", "lemon", "cocoa", "cobalt"],
+      ["coral", "coral", "amber", "emerald"],
+      ["lime", "magenta", "magenta", "cocoa"],
+      ["violet", "lemon", "violet", "teal"],
+      ["emerald", "cobalt", "magenta", "lime"],
+      ["rose", "lemon", "amber", "teal"],
+      ["rose", "teal", "coral", "sky"],
+      ["lime", "sky", "magenta", "emerald"],
+      ["amber", "violet", "violet", "cobalt"],
+      ["coral", "cocoa", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.2612
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.2612,
+    },
   },
   "078": {
-    "id": "078",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "cobalt",
-        "coral",
-        "violet"
-      ],
-      [
-        "coral",
-        "rose",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "amber",
-        "sky",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "amber",
-        "magenta"
-      ],
-      [
-        "violet",
-        "teal",
-        "magenta",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "violet",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "rose",
-        "sky",
-        "rose"
-      ],
-      [
-        "rose",
-        "sky",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "amber",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "lime",
-        "sky"
-      ],
-      [
-        "lime",
-        "lime",
-        "lemon",
-        "coral"
-      ],
+    id: "078",
+    capacity: 4,
+    board: [
+      ["violet", "cobalt", "coral", "violet"],
+      ["coral", "rose", "cocoa", "magenta"],
+      ["emerald", "amber", "sky", "magenta"],
+      ["cobalt", "teal", "amber", "magenta"],
+      ["violet", "teal", "magenta", "teal"],
+      ["cobalt", "teal", "violet", "lemon"],
+      ["emerald", "rose", "sky", "rose"],
+      ["rose", "sky", "emerald", "cobalt"],
+      ["coral", "amber", "amber", "cocoa"],
+      ["emerald", "cocoa", "lemon", "lime"],
+      ["lemon", "cocoa", "lime", "sky"],
+      ["lime", "lime", "lemon", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5781
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5781,
+    },
   },
   "079": {
-    "id": "079",
-    "capacity": 4,
-    "board": [
-      [
-        "cobalt",
-        "magenta",
-        "lime",
-        "emerald"
-      ],
-      [
-        "amber",
-        "teal",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "rose",
-        "sky"
-      ],
-      [
-        "sky",
-        "sky",
-        "amber",
-        "violet"
-      ],
-      [
-        "coral",
-        "coral",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "coral",
-        "violet"
-      ],
-      [
-        "emerald",
-        "lime",
-        "violet",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "coral",
-        "magenta",
-        "teal"
-      ],
-      [
-        "rose",
-        "lime",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "teal",
-        "amber",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "rose",
-        "violet",
-        "sky",
-        "lime"
-      ],
-      [
-        "lemon",
-        "rose",
-        "magenta",
-        "lemon"
-      ],
+    id: "079",
+    capacity: 4,
+    board: [
+      ["cobalt", "magenta", "lime", "emerald"],
+      ["amber", "teal", "lemon", "cocoa"],
+      ["cobalt", "teal", "rose", "sky"],
+      ["sky", "sky", "amber", "violet"],
+      ["coral", "coral", "cobalt", "cobalt"],
+      ["cocoa", "cocoa", "coral", "violet"],
+      ["emerald", "lime", "violet", "cocoa"],
+      ["amber", "coral", "magenta", "teal"],
+      ["rose", "lime", "emerald", "lemon"],
+      ["teal", "amber", "magenta", "emerald"],
+      ["rose", "violet", "sky", "lime"],
+      ["lemon", "rose", "magenta", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3438
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3438,
+    },
   },
   "080": {
-    "id": "080",
-    "capacity": 4,
-    "board": [
-      [
-        "teal",
-        "cobalt",
-        "cobalt",
-        "sky"
-      ],
-      [
-        "violet",
-        "lemon",
-        "amber",
-        "lemon"
-      ],
-      [
-        "coral",
-        "coral",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lemon",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "rose",
-        "lemon",
-        "lime"
-      ],
-      [
-        "violet",
-        "amber",
-        "amber",
-        "sky"
-      ],
-      [
-        "coral",
-        "lime",
-        "rose",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "amber",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "lime",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "rose",
-        "sky",
-        "violet"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "cobalt",
-        "coral"
-      ],
+    id: "080",
+    capacity: 4,
+    board: [
+      ["teal", "cobalt", "cobalt", "sky"],
+      ["violet", "lemon", "amber", "lemon"],
+      ["coral", "coral", "violet", "magenta"],
+      ["cocoa", "rose", "lemon", "teal"],
+      ["cocoa", "rose", "lemon", "lime"],
+      ["violet", "amber", "amber", "sky"],
+      ["coral", "lime", "rose", "magenta"],
+      ["emerald", "amber", "cocoa", "emerald"],
+      ["cobalt", "teal", "lime", "magenta"],
+      ["emerald", "rose", "sky", "violet"],
+      ["lime", "sky", "magenta", "emerald"],
+      ["teal", "cocoa", "cobalt", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4409
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4409,
+    },
   },
   "081": {
-    "id": "081",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "cocoa",
-        "lime",
-        "violet"
-      ],
-      [
-        "lime",
-        "emerald",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "coral",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "lemon",
-        "lemon",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "lemon",
-        "lime",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "coral",
-        "coral",
-        "rose"
-      ],
-      [
-        "sky",
-        "amber",
-        "teal",
-        "rose"
-      ],
-      [
-        "sky",
-        "violet",
-        "sky",
-        "teal"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "teal",
-        "amber"
-      ],
-      [
-        "amber",
-        "magenta",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "rose",
-        "violet",
-        "violet"
-      ],
+    id: "081",
+    capacity: 4,
+    board: [
+      ["lime", "cocoa", "lime", "violet"],
+      ["lime", "emerald", "cobalt", "emerald"],
+      ["lemon", "cocoa", "coral", "cobalt"],
+      ["sky", "lemon", "lemon", "teal"],
+      ["cobalt", "lemon", "lime", "emerald"],
+      ["magenta", "coral", "coral", "rose"],
+      ["sky", "amber", "teal", "rose"],
+      ["sky", "violet", "sky", "teal"],
+      ["cobalt", "amber", "teal", "amber"],
+      ["amber", "magenta", "cocoa", "rose"],
+      ["coral", "cocoa", "magenta", "magenta"],
+      ["emerald", "rose", "violet", "violet"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 36,
-      "difficultyScore": 0.4218
-    }
+    development: {
+      optimalMoveCount: 36,
+      difficultyScore: 0.4218,
+    },
   },
   "082": {
-    "id": "082",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "amber",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "violet",
-        "coral",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lemon",
-        "coral",
-        "sky",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "lime",
-        "teal",
-        "lime"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "violet",
-        "emerald"
-      ],
-      [
-        "teal",
-        "lime",
-        "sky",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "violet",
-        "coral"
-      ],
-      [
-        "magenta",
-        "teal",
-        "rose",
-        "rose"
-      ],
-      [
-        "coral",
-        "cocoa",
-        "amber",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "magenta",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "teal",
-        "amber"
-      ],
+    id: "082",
+    capacity: 4,
+    board: [
+      ["amber", "amber", "emerald", "magenta"],
+      ["violet", "coral", "cobalt", "violet"],
+      ["lemon", "coral", "sky", "magenta"],
+      ["lemon", "lime", "teal", "lime"],
+      ["lemon", "rose", "cobalt", "cocoa"],
+      ["emerald", "lemon", "violet", "emerald"],
+      ["teal", "lime", "sky", "emerald"],
+      ["cocoa", "sky", "violet", "coral"],
+      ["magenta", "teal", "rose", "rose"],
+      ["coral", "cocoa", "amber", "sky"],
+      ["cobalt", "cocoa", "magenta", "lime"],
+      ["cobalt", "rose", "teal", "amber"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5198
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5198,
+    },
   },
   "083": {
-    "id": "083",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lime",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "rose",
-        "violet",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "lemon",
-        "teal"
-      ],
-      [
-        "amber",
-        "cocoa",
-        "emerald",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "sky",
-        "coral",
-        "sky"
-      ],
-      [
-        "lemon",
-        "cocoa",
-        "emerald",
-        "lime"
-      ],
-      [
-        "violet",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "rose",
-        "cocoa",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "rose",
-        "teal",
-        "coral",
-        "sky"
-      ],
-      [
-        "lime",
-        "magenta",
-        "coral",
-        "lime"
-      ],
-      [
-        "teal",
-        "emerald",
-        "sky",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
+    id: "083",
+    capacity: 4,
+    board: [
+      ["amber", "lime", "magenta", "cobalt"],
+      ["rose", "rose", "violet", "magenta"],
+      ["cocoa", "teal", "lemon", "teal"],
+      ["amber", "cocoa", "emerald", "lemon"],
+      ["emerald", "sky", "coral", "sky"],
+      ["lemon", "cocoa", "emerald", "lime"],
+      ["violet", "magenta", "violet", "violet"],
+      ["rose", "cocoa", "cobalt", "coral"],
+      ["rose", "teal", "coral", "sky"],
+      ["lime", "magenta", "coral", "lime"],
+      ["teal", "emerald", "sky", "amber"],
+      ["cobalt", "amber", "lemon", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 39,
-      "difficultyScore": 0.5574
-    }
+    development: {
+      optimalMoveCount: 39,
+      difficultyScore: 0.5574,
+    },
   },
   "084": {
-    "id": "084",
-    "capacity": 4,
-    "board": [
-      [
-        "lime",
-        "lemon",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "cocoa",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "amber",
-        "teal",
-        "sky"
-      ],
-      [
-        "amber",
-        "sky",
-        "violet",
-        "magenta"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "rose",
-        "violet"
-      ],
-      [
-        "sky",
-        "teal",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "violet",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "amber",
-        "rose",
-        "teal",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lemon",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "lime",
-        "coral",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "coral",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "rose",
-        "emerald",
-        "coral"
-      ],
+    id: "084",
+    capacity: 4,
+    board: [
+      ["lime", "lemon", "lemon", "cocoa"],
+      ["magenta", "cocoa", "lime", "cobalt"],
+      ["lemon", "amber", "teal", "sky"],
+      ["amber", "sky", "violet", "magenta"],
+      ["teal", "cocoa", "rose", "violet"],
+      ["sky", "teal", "magenta", "magenta"],
+      ["violet", "sky", "emerald", "amber"],
+      ["amber", "rose", "teal", "emerald"],
+      ["coral", "lemon", "cobalt", "violet"],
+      ["lime", "coral", "emerald", "cocoa"],
+      ["cobalt", "rose", "coral", "lime"],
+      ["cobalt", "rose", "emerald", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4311
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4311,
+    },
   },
   "085": {
-    "id": "085",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cobalt",
-        "amber",
-        "sky"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "rose"
-      ],
-      [
-        "lemon",
-        "sky",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "coral",
-        "sky",
-        "lemon"
-      ],
-      [
-        "coral",
-        "rose",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "lime",
-        "violet",
-        "teal",
-        "amber"
-      ],
-      [
-        "lime",
-        "magenta",
-        "coral",
-        "rose"
-      ],
-      [
-        "teal",
-        "violet",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "teal",
-        "emerald",
-        "lime"
-      ],
-      [
-        "teal",
-        "magenta",
-        "cobalt",
-        "coral"
-      ],
-      [
-        "sky",
-        "emerald",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "cobalt",
-        "rose"
-      ],
+    id: "085",
+    capacity: 4,
+    board: [
+      ["emerald", "cobalt", "amber", "sky"],
+      ["lemon", "amber", "emerald", "rose"],
+      ["lemon", "sky", "amber", "cocoa"],
+      ["magenta", "coral", "sky", "lemon"],
+      ["coral", "rose", "lime", "cocoa"],
+      ["lime", "violet", "teal", "amber"],
+      ["lime", "magenta", "coral", "rose"],
+      ["teal", "violet", "violet", "cobalt"],
+      ["violet", "teal", "emerald", "lime"],
+      ["teal", "magenta", "cobalt", "coral"],
+      ["sky", "emerald", "magenta", "lemon"],
+      ["cocoa", "cocoa", "cobalt", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3728
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3728,
+    },
   },
   "086": {
-    "id": "086",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "cocoa",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "magenta",
-        "amber",
-        "coral"
-      ],
-      [
-        "emerald",
-        "violet",
-        "amber",
-        "lime"
-      ],
-      [
-        "emerald",
-        "rose",
-        "teal",
-        "violet"
-      ],
-      [
-        "magenta",
-        "sky",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lemon",
-        "coral",
-        "sky",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "cocoa",
-        "lime",
-        "teal"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "rose",
-        "magenta"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "lemon",
-        "amber"
-      ],
-      [
-        "teal",
-        "magenta",
-        "emerald",
-        "teal"
-      ],
-      [
-        "coral",
-        "lemon",
-        "amber",
-        "lime"
-      ],
-      [
-        "cobalt",
-        "sky",
-        "violet",
-        "rose"
-      ],
+    id: "086",
+    capacity: 4,
+    board: [
+      ["emerald", "cocoa", "lemon", "coral"],
+      ["cocoa", "magenta", "amber", "coral"],
+      ["emerald", "violet", "amber", "lime"],
+      ["emerald", "rose", "teal", "violet"],
+      ["magenta", "sky", "cobalt", "rose"],
+      ["lemon", "coral", "sky", "cobalt"],
+      ["violet", "cocoa", "lime", "teal"],
+      ["lime", "cobalt", "rose", "magenta"],
+      ["cocoa", "sky", "lemon", "amber"],
+      ["teal", "magenta", "emerald", "teal"],
+      ["coral", "lemon", "amber", "lime"],
+      ["cobalt", "sky", "violet", "rose"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6009
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6009,
+    },
   },
   "087": {
-    "id": "087",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "coral",
-        "teal",
-        "lime"
-      ],
-      [
-        "emerald",
-        "rose",
-        "cocoa",
-        "magenta"
-      ],
-      [
-        "magenta",
-        "sky",
-        "violet",
-        "lemon"
-      ],
-      [
-        "sky",
-        "teal",
-        "sky",
-        "amber"
-      ],
-      [
-        "rose",
-        "rose",
-        "rose",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "magenta",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "coral",
-        "violet",
-        "violet",
-        "lime"
-      ],
-      [
-        "coral",
-        "lemon",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "cobalt",
-        "emerald",
-        "teal"
-      ],
-      [
-        "lime",
-        "violet",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "cobalt",
-        "magenta",
-        "amber"
-      ],
-      [
-        "emerald",
-        "lime",
-        "coral",
-        "emerald"
-      ],
+    id: "087",
+    capacity: 4,
+    board: [
+      ["cocoa", "coral", "teal", "lime"],
+      ["emerald", "rose", "cocoa", "magenta"],
+      ["magenta", "sky", "violet", "lemon"],
+      ["sky", "teal", "sky", "amber"],
+      ["rose", "rose", "rose", "amber"],
+      ["cobalt", "magenta", "lemon", "cobalt"],
+      ["coral", "violet", "violet", "lime"],
+      ["coral", "lemon", "amber", "cocoa"],
+      ["lemon", "cobalt", "emerald", "teal"],
+      ["lime", "violet", "sky", "cocoa"],
+      ["teal", "cobalt", "magenta", "amber"],
+      ["emerald", "lime", "coral", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.1795
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.1795,
+    },
   },
   "088": {
-    "id": "088",
-    "capacity": 4,
-    "board": [
-      [
-        "lemon",
-        "lime",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "lemon",
-        "sky",
-        "rose",
-        "amber"
-      ],
-      [
-        "sky",
-        "violet",
-        "teal",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "magenta",
-        "amber",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "coral",
-        "magenta"
-      ],
-      [
-        "emerald",
-        "teal",
-        "lime",
-        "cobalt"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "violet",
-        "violet"
-      ],
-      [
-        "rose",
-        "rose",
-        "coral",
-        "coral"
-      ],
-      [
-        "lime",
-        "cocoa",
-        "teal",
-        "violet"
-      ],
-      [
-        "lemon",
-        "rose",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "amber",
-        "lime"
-      ],
+    id: "088",
+    capacity: 4,
+    board: [
+      ["lemon", "lime", "cobalt", "teal"],
+      ["lemon", "sky", "rose", "amber"],
+      ["sky", "violet", "teal", "sky"],
+      ["cocoa", "sky", "lemon", "cobalt"],
+      ["magenta", "amber", "emerald", "magenta"],
+      ["amber", "cobalt", "coral", "magenta"],
+      ["emerald", "teal", "lime", "cobalt"],
+      ["emerald", "magenta", "violet", "violet"],
+      ["rose", "rose", "coral", "coral"],
+      ["lime", "cocoa", "teal", "violet"],
+      ["lemon", "rose", "cocoa", "emerald"],
+      ["cocoa", "coral", "amber", "lime"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4067
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4067,
+    },
   },
   "089": {
-    "id": "089",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "coral",
-        "cocoa"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "sky",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "violet",
-        "lemon"
-      ],
-      [
-        "coral",
-        "cobalt",
-        "teal",
-        "violet"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "lime",
-        "magenta"
-      ],
-      [
-        "lime",
-        "amber",
-        "rose",
-        "magenta"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "amber"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "teal",
-        "sky"
-      ],
-      [
-        "coral",
-        "amber",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "amber",
-        "emerald",
-        "emerald",
-        "rose"
-      ],
-      [
-        "violet",
-        "magenta",
-        "rose",
-        "lime"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "emerald",
-        "coral"
-      ],
+    id: "089",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "coral", "cocoa"],
+      ["cocoa", "sky", "sky", "rose"],
+      ["cocoa", "violet", "violet", "lemon"],
+      ["coral", "cobalt", "teal", "violet"],
+      ["cobalt", "teal", "lime", "magenta"],
+      ["lime", "amber", "rose", "magenta"],
+      ["cobalt", "teal", "cocoa", "amber"],
+      ["lime", "cobalt", "teal", "sky"],
+      ["coral", "amber", "lemon", "magenta"],
+      ["amber", "emerald", "emerald", "rose"],
+      ["violet", "magenta", "rose", "lime"],
+      ["emerald", "lemon", "emerald", "coral"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4699
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4699,
+    },
   },
   "090": {
-    "id": "090",
-    "capacity": 4,
-    "board": [
-      [
-        "sky",
-        "lemon",
-        "teal",
-        "violet"
-      ],
-      [
-        "emerald",
-        "rose",
-        "lime",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "magenta",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "rose",
-        "violet"
-      ],
-      [
-        "coral",
-        "lime",
-        "coral",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "emerald",
-        "teal",
-        "rose"
-      ],
-      [
-        "lemon",
-        "rose",
-        "amber",
-        "lemon"
-      ],
-      [
-        "coral",
-        "magenta",
-        "lime",
-        "emerald"
-      ],
-      [
-        "coral",
-        "lemon",
-        "emerald",
-        "teal"
-      ],
-      [
-        "violet",
-        "magenta",
-        "lime",
-        "amber"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "amber",
-        "violet"
-      ],
-      [
-        "sky",
-        "cobalt",
-        "cobalt",
-        "magenta"
-      ],
+    id: "090",
+    capacity: 4,
+    board: [
+      ["sky", "lemon", "teal", "violet"],
+      ["emerald", "rose", "lime", "cocoa"],
+      ["teal", "magenta", "cocoa", "sky"],
+      ["cocoa", "sky", "rose", "violet"],
+      ["coral", "lime", "coral", "amber"],
+      ["cobalt", "emerald", "teal", "rose"],
+      ["lemon", "rose", "amber", "lemon"],
+      ["coral", "magenta", "lime", "emerald"],
+      ["coral", "lemon", "emerald", "teal"],
+      ["violet", "magenta", "lime", "amber"],
+      ["cobalt", "cocoa", "amber", "violet"],
+      ["sky", "cobalt", "cobalt", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.6404
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.6404,
+    },
   },
   "091": {
-    "id": "091",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "lime",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "rose",
-        "coral",
-        "emerald",
-        "teal"
-      ],
-      [
-        "teal",
-        "violet",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "sky",
-        "magenta",
-        "coral",
-        "violet"
-      ],
-      [
-        "emerald",
-        "cocoa",
-        "sky",
-        "coral"
-      ],
-      [
-        "lemon",
-        "amber",
-        "sky",
-        "sky"
-      ],
-      [
-        "lemon",
-        "violet",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "magenta",
-        "emerald",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "emerald",
-        "teal",
-        "magenta",
-        "amber"
-      ],
-      [
-        "coral",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "lime",
-        "cobalt",
-        "lemon",
-        "lime"
-      ],
-      [
-        "lemon",
-        "rose",
-        "rose",
-        "magenta"
-      ],
+    id: "091",
+    capacity: 4,
+    board: [
+      ["violet", "lime", "amber", "cobalt"],
+      ["rose", "coral", "emerald", "teal"],
+      ["teal", "violet", "cocoa", "rose"],
+      ["sky", "magenta", "coral", "violet"],
+      ["emerald", "cocoa", "sky", "coral"],
+      ["lemon", "amber", "sky", "sky"],
+      ["lemon", "violet", "cobalt", "cocoa"],
+      ["magenta", "emerald", "cobalt", "cocoa"],
+      ["emerald", "teal", "magenta", "amber"],
+      ["coral", "teal", "amber", "lime"],
+      ["lime", "cobalt", "lemon", "lime"],
+      ["lemon", "rose", "rose", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.373
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.373,
+    },
   },
   "092": {
-    "id": "092",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "coral",
-        "violet",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "teal",
-        "cobalt"
-      ],
-      [
-        "sky",
-        "coral",
-        "lime",
-        "teal"
-      ],
-      [
-        "rose",
-        "lemon",
-        "cocoa",
-        "emerald"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "lemon",
-        "magenta"
-      ],
-      [
-        "teal",
-        "sky",
-        "violet",
-        "emerald"
-      ],
-      [
-        "cobalt",
-        "cobalt",
-        "amber",
-        "magenta"
-      ],
-      [
-        "rose",
-        "magenta",
-        "cobalt",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "magenta",
-        "amber",
-        "teal"
-      ],
-      [
-        "amber",
-        "lime",
-        "rose",
-        "coral"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "lime",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "lime",
-        "sky"
-      ],
+    id: "092",
+    capacity: 4,
+    board: [
+      ["violet", "coral", "violet", "sky"],
+      ["cocoa", "coral", "teal", "cobalt"],
+      ["sky", "coral", "lime", "teal"],
+      ["rose", "lemon", "cocoa", "emerald"],
+      ["emerald", "emerald", "lemon", "magenta"],
+      ["teal", "sky", "violet", "emerald"],
+      ["cobalt", "cobalt", "amber", "magenta"],
+      ["rose", "magenta", "cobalt", "cocoa"],
+      ["rose", "magenta", "amber", "teal"],
+      ["amber", "lime", "rose", "coral"],
+      ["lemon", "lemon", "lime", "violet"],
+      ["cocoa", "amber", "lime", "sky"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4389
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4389,
+    },
   },
   "093": {
-    "id": "093",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "sky",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lime",
-        "teal"
-      ],
-      [
-        "coral",
-        "coral",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "violet",
-        "lemon",
-        "rose",
-        "lime"
-      ],
-      [
-        "sky",
-        "emerald",
-        "coral",
-        "lime"
-      ],
-      [
-        "magenta",
-        "violet",
-        "rose",
-        "teal"
-      ],
-      [
-        "lime",
-        "lemon",
-        "emerald",
-        "cocoa"
-      ],
-      [
-        "amber",
-        "magenta",
-        "cobalt",
-        "violet"
-      ],
-      [
-        "emerald",
-        "magenta",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "lemon",
-        "amber",
-        "emerald",
-        "teal"
-      ],
-      [
-        "amber",
-        "rose",
-        "rose",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "sky",
-        "coral",
-        "magenta"
-      ],
+    id: "093",
+    capacity: 4,
+    board: [
+      ["cocoa", "sky", "cocoa", "sky"],
+      ["cobalt", "amber", "lime", "teal"],
+      ["coral", "coral", "lemon", "cobalt"],
+      ["violet", "lemon", "rose", "lime"],
+      ["sky", "emerald", "coral", "lime"],
+      ["magenta", "violet", "rose", "teal"],
+      ["lime", "lemon", "emerald", "cocoa"],
+      ["amber", "magenta", "cobalt", "violet"],
+      ["emerald", "magenta", "cobalt", "teal"],
+      ["lemon", "amber", "emerald", "teal"],
+      ["amber", "rose", "rose", "violet"],
+      ["cocoa", "sky", "coral", "magenta"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.4043
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.4043,
+    },
   },
   "094": {
-    "id": "094",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "sky",
-        "magenta",
-        "sky"
-      ],
-      [
-        "emerald",
-        "emerald",
-        "teal",
-        "teal"
-      ],
-      [
-        "teal",
-        "violet",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "lime",
-        "amber",
-        "magenta",
-        "coral"
-      ],
-      [
-        "cobalt",
-        "cocoa",
-        "magenta",
-        "rose"
-      ],
-      [
-        "lemon",
-        "lime",
-        "coral",
-        "sky"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "violet",
-        "cobalt",
-        "rose"
-      ],
-      [
-        "lime",
-        "emerald",
-        "violet",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "amber",
-        "teal",
-        "coral"
-      ],
-      [
-        "violet",
-        "amber",
-        "lime",
-        "lemon"
-      ],
-      [
-        "sky",
-        "coral",
-        "emerald",
-        "cocoa"
-      ],
+    id: "094",
+    capacity: 4,
+    board: [
+      ["amber", "sky", "magenta", "sky"],
+      ["emerald", "emerald", "teal", "teal"],
+      ["teal", "violet", "cobalt", "lemon"],
+      ["lime", "amber", "magenta", "coral"],
+      ["cobalt", "cocoa", "magenta", "rose"],
+      ["lemon", "lime", "coral", "sky"],
+      ["rose", "cobalt", "cocoa", "rose"],
+      ["cocoa", "violet", "cobalt", "rose"],
+      ["lime", "emerald", "violet", "magenta"],
+      ["lemon", "amber", "teal", "coral"],
+      ["violet", "amber", "lime", "lemon"],
+      ["sky", "coral", "emerald", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4167
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4167,
+    },
   },
   "095": {
-    "id": "095",
-    "capacity": 4,
-    "board": [
-      [
-        "emerald",
-        "coral",
-        "violet",
-        "teal"
-      ],
-      [
-        "lime",
-        "coral",
-        "lime",
-        "magenta"
-      ],
-      [
-        "violet",
-        "sky",
-        "cobalt",
-        "lemon"
-      ],
-      [
-        "coral",
-        "violet",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "sky",
-        "cocoa",
-        "rose",
-        "teal"
-      ],
-      [
-        "amber",
-        "cobalt",
-        "amber",
-        "sky"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "amber",
-        "cocoa"
-      ],
-      [
-        "teal",
-        "rose",
-        "emerald",
-        "magenta"
-      ],
-      [
-        "lemon",
-        "rose",
-        "sky",
-        "cocoa"
-      ],
-      [
-        "rose",
-        "lemon",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "lime",
-        "lime",
-        "amber",
-        "violet"
-      ],
-      [
-        "lemon",
-        "coral",
-        "teal",
-        "cocoa"
-      ],
+    id: "095",
+    capacity: 4,
+    board: [
+      ["emerald", "coral", "violet", "teal"],
+      ["lime", "coral", "lime", "magenta"],
+      ["violet", "sky", "cobalt", "lemon"],
+      ["coral", "violet", "cobalt", "emerald"],
+      ["sky", "cocoa", "rose", "teal"],
+      ["amber", "cobalt", "amber", "sky"],
+      ["emerald", "cobalt", "amber", "cocoa"],
+      ["teal", "rose", "emerald", "magenta"],
+      ["lemon", "rose", "sky", "cocoa"],
+      ["rose", "lemon", "magenta", "magenta"],
+      ["lime", "lime", "amber", "violet"],
+      ["lemon", "coral", "teal", "cocoa"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 37,
-      "difficultyScore": 0.3901
-    }
+    development: {
+      optimalMoveCount: 37,
+      difficultyScore: 0.3901,
+    },
   },
   "096": {
-    "id": "096",
-    "capacity": 4,
-    "board": [
-      [
-        "rose",
-        "emerald",
-        "rose",
-        "sky"
-      ],
-      [
-        "sky",
-        "rose",
-        "cocoa",
-        "violet"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "teal",
-        "teal"
-      ],
-      [
-        "sky",
-        "amber",
-        "violet",
-        "lime"
-      ],
-      [
-        "teal",
-        "coral",
-        "magenta",
-        "lemon"
-      ],
-      [
-        "emerald",
-        "lemon",
-        "magenta",
-        "amber"
-      ],
-      [
-        "teal",
-        "cocoa",
-        "violet",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "amber",
-        "lemon",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "emerald",
-        "coral",
-        "lime"
-      ],
-      [
-        "lime",
-        "violet",
-        "coral",
-        "sky"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "lemon"
-      ],
+    id: "096",
+    capacity: 4,
+    board: [
+      ["rose", "emerald", "rose", "sky"],
+      ["sky", "rose", "cocoa", "violet"],
+      ["cocoa", "amber", "magenta", "magenta"],
+      ["rose", "cobalt", "teal", "teal"],
+      ["sky", "amber", "violet", "lime"],
+      ["teal", "coral", "magenta", "lemon"],
+      ["emerald", "lemon", "magenta", "amber"],
+      ["teal", "cocoa", "violet", "cobalt"],
+      ["cobalt", "amber", "lemon", "cobalt"],
+      ["lime", "emerald", "coral", "lime"],
+      ["lime", "violet", "coral", "sky"],
+      ["cocoa", "coral", "emerald", "lemon"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 40,
-      "difficultyScore": 0.5486
-    }
+    development: {
+      optimalMoveCount: 40,
+      difficultyScore: 0.5486,
+    },
   },
   "097": {
-    "id": "097",
-    "capacity": 4,
-    "board": [
-      [
-        "amber",
-        "lime",
-        "violet",
-        "sky"
-      ],
-      [
-        "rose",
-        "cobalt",
-        "cocoa",
-        "cocoa"
-      ],
-      [
-        "violet",
-        "violet",
-        "teal",
-        "magenta"
-      ],
-      [
-        "violet",
-        "lime",
-        "lemon",
-        "coral"
-      ],
-      [
-        "rose",
-        "emerald",
-        "sky",
-        "sky"
-      ],
-      [
-        "magenta",
-        "amber",
-        "rose",
-        "lime"
-      ],
-      [
-        "emerald",
-        "cobalt",
-        "emerald",
-        "lime"
-      ],
-      [
-        "lemon",
-        "amber",
-        "lemon",
-        "coral"
-      ],
-      [
-        "cocoa",
-        "teal",
-        "cocoa",
-        "sky"
-      ],
-      [
-        "amber",
-        "teal",
-        "coral",
-        "rose"
-      ],
-      [
-        "teal",
-        "lemon",
-        "magenta",
-        "magenta"
-      ],
-      [
-        "coral",
-        "emerald",
-        "cobalt",
-        "cobalt"
-      ],
+    id: "097",
+    capacity: 4,
+    board: [
+      ["amber", "lime", "violet", "sky"],
+      ["rose", "cobalt", "cocoa", "cocoa"],
+      ["violet", "violet", "teal", "magenta"],
+      ["violet", "lime", "lemon", "coral"],
+      ["rose", "emerald", "sky", "sky"],
+      ["magenta", "amber", "rose", "lime"],
+      ["emerald", "cobalt", "emerald", "lime"],
+      ["lemon", "amber", "lemon", "coral"],
+      ["cocoa", "teal", "cocoa", "sky"],
+      ["amber", "teal", "coral", "rose"],
+      ["teal", "lemon", "magenta", "magenta"],
+      ["coral", "emerald", "cobalt", "cobalt"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 35,
-      "difficultyScore": 0.2579
-    }
+    development: {
+      optimalMoveCount: 35,
+      difficultyScore: 0.2579,
+    },
   },
   "098": {
-    "id": "098",
-    "capacity": 4,
-    "board": [
-      [
-        "cocoa",
-        "teal",
-        "amber",
-        "lime"
-      ],
-      [
-        "sky",
-        "emerald",
-        "rose",
-        "rose"
-      ],
-      [
-        "lemon",
-        "coral",
-        "amber",
-        "magenta"
-      ],
-      [
-        "amber",
-        "magenta",
-        "magenta",
-        "cobalt"
-      ],
-      [
-        "lemon",
-        "lemon",
-        "amber",
-        "cobalt"
-      ],
-      [
-        "lime",
-        "emerald",
-        "coral",
-        "violet"
-      ],
-      [
-        "teal",
-        "sky",
-        "cocoa",
-        "rose"
-      ],
-      [
-        "sky",
-        "lime",
-        "violet",
-        "violet"
-      ],
-      [
-        "teal",
-        "lemon",
-        "violet",
-        "rose"
-      ],
-      [
-        "cocoa",
-        "coral",
-        "emerald",
-        "cobalt"
-      ],
-      [
-        "cobalt",
-        "teal",
-        "cocoa",
-        "coral"
-      ],
-      [
-        "lime",
-        "sky",
-        "magenta",
-        "emerald"
-      ],
+    id: "098",
+    capacity: 4,
+    board: [
+      ["cocoa", "teal", "amber", "lime"],
+      ["sky", "emerald", "rose", "rose"],
+      ["lemon", "coral", "amber", "magenta"],
+      ["amber", "magenta", "magenta", "cobalt"],
+      ["lemon", "lemon", "amber", "cobalt"],
+      ["lime", "emerald", "coral", "violet"],
+      ["teal", "sky", "cocoa", "rose"],
+      ["sky", "lime", "violet", "violet"],
+      ["teal", "lemon", "violet", "rose"],
+      ["cocoa", "coral", "emerald", "cobalt"],
+      ["cobalt", "teal", "cocoa", "coral"],
+      ["lime", "sky", "magenta", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.5173
-    }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.5173,
+    },
   },
   "099": {
-    "id": "099",
-    "capacity": 4,
-    "board": [
-      [
-        "violet",
-        "coral",
-        "lemon",
-        "rose"
-      ],
-      [
-        "magenta",
-        "sky",
-        "emerald",
-        "amber"
-      ],
-      [
-        "amber",
-        "sky",
-        "lemon",
-        "cocoa"
-      ],
-      [
-        "lemon",
-        "magenta",
-        "lime",
-        "teal"
-      ],
-      [
-        "teal",
-        "lime",
-        "cobalt",
-        "teal"
-      ],
-      [
-        "cocoa",
-        "amber",
-        "sky",
-        "violet"
-      ],
-      [
-        "rose",
-        "violet",
-        "coral",
-        "teal"
-      ],
-      [
-        "sky",
-        "lime",
-        "cobalt",
-        "emerald"
-      ],
-      [
-        "lime",
-        "coral",
-        "rose",
-        "amber"
-      ],
-      [
-        "lemon",
-        "rose",
-        "magenta",
-        "emerald"
-      ],
-      [
-        "magenta",
-        "violet",
-        "cobalt",
-        "cobalt"
-      ],
-      [
-        "cocoa",
-        "cocoa",
-        "coral",
-        "emerald"
-      ],
+    id: "099",
+    capacity: 4,
+    board: [
+      ["violet", "coral", "lemon", "rose"],
+      ["magenta", "sky", "emerald", "amber"],
+      ["amber", "sky", "lemon", "cocoa"],
+      ["lemon", "magenta", "lime", "teal"],
+      ["teal", "lime", "cobalt", "teal"],
+      ["cocoa", "amber", "sky", "violet"],
+      ["rose", "violet", "coral", "teal"],
+      ["sky", "lime", "cobalt", "emerald"],
+      ["lime", "coral", "rose", "amber"],
+      ["lemon", "rose", "magenta", "emerald"],
+      ["magenta", "violet", "cobalt", "cobalt"],
+      ["cocoa", "cocoa", "coral", "emerald"],
       [],
-      []
+      [],
     ],
-    "development": {
-      "optimalMoveCount": 38,
-      "difficultyScore": 0.4509
-    }
-  }
+    development: {
+      optimalMoveCount: 38,
+      difficultyScore: 0.4509,
+    },
+  },
 } as const satisfies Record<LevelId, Level>;
