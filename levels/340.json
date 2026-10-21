@@ -2,83 +2,23 @@
   "id": "340",
   "capacity": 4,
   "vials": [
-    [
-      "coral",
-      "coral",
-      "emerald",
-      "amber"
-    ],
-    [
-      "lime",
-      "amber",
-      "emerald",
-      "cobalt"
-    ],
-    [
-      "cocoa",
-      "magenta",
-      "teal",
-      "sky"
-    ],
-    [
-      "sky",
-      "magenta",
-      "coral",
-      "cobalt"
-    ],
-    [
-      "rose",
-      "teal",
-      "violet",
-      "rose"
-    ],
-    [
-      "emerald",
-      "lime",
-      "lime",
-      "cocoa"
-    ],
-    [
-      "rose",
-      "emerald",
-      "lemon",
-      "teal"
-    ],
-    [
-      "magenta",
-      "violet",
-      "cobalt",
-      "lemon"
-    ],
-    [
-      "lemon",
-      "amber",
-      "magenta",
-      "sky"
-    ],
-    [
-      "cobalt",
-      "coral",
-      "violet",
-      "teal"
-    ],
-    [
-      "lime",
-      "violet",
-      "rose",
-      "sky"
-    ],
-    [
-      "cocoa",
-      "amber",
-      "lemon",
-      "cocoa"
-    ],
+    ["coral", "coral", "emerald", "amber"],
+    ["lime", "amber", "emerald", "cobalt"],
+    ["cocoa", "magenta", "teal", "sky"],
+    ["sky", "magenta", "coral", "cobalt"],
+    ["rose", "teal", "violet", "rose"],
+    ["emerald", "lime", "lime", "cocoa"],
+    ["rose", "emerald", "lemon", "teal"],
+    ["magenta", "violet", "cobalt", "lemon"],
+    ["lemon", "amber", "magenta", "sky"],
+    ["cobalt", "coral", "violet", "teal"],
+    ["lime", "violet", "rose", "sky"],
+    ["cocoa", "amber", "lemon", "cocoa"],
     [],
     []
   ],
   "development": {
-    "optimalMoveCount": 38,
+    "optimalMoveCount": 39,
     "exploredStateCount": 16957,
     "maximumBranchingFactor": 24,
     "meanVialEntropy": 1.8333333333333333,

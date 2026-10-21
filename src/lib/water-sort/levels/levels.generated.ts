@@ -1919,12 +1919,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "301",
-    optimalMoveCount: 40,
+    optimalMoveCount: 39,
     difficultyScore: 0.591,
   },
   {
     id: "302",
-    optimalMoveCount: 38,
+    optimalMoveCount: 37,
     difficultyScore: 0.5509,
   },
   {
@@ -1934,27 +1934,27 @@ export const LEVEL_INDEX = [
   },
   {
     id: "304",
-    optimalMoveCount: 36,
+    optimalMoveCount: 37,
     difficultyScore: 0.3744,
   },
   {
     id: "305",
-    optimalMoveCount: 35,
+    optimalMoveCount: 36,
     difficultyScore: 0.3345,
   },
   {
     id: "306",
-    optimalMoveCount: 36,
+    optimalMoveCount: 35,
     difficultyScore: 0.3675,
   },
   {
     id: "307",
-    optimalMoveCount: 38,
+    optimalMoveCount: 39,
     difficultyScore: 0.4178,
   },
   {
     id: "308",
-    optimalMoveCount: 35,
+    optimalMoveCount: 36,
     difficultyScore: 0.2647,
   },
   {
@@ -1964,17 +1964,17 @@ export const LEVEL_INDEX = [
   },
   {
     id: "310",
-    optimalMoveCount: 38,
+    optimalMoveCount: 39,
     difficultyScore: 0.5219,
   },
   {
     id: "311",
-    optimalMoveCount: 38,
+    optimalMoveCount: 37,
     difficultyScore: 0.42,
   },
   {
     id: "312",
-    optimalMoveCount: 38,
+    optimalMoveCount: 37,
     difficultyScore: 0.4819,
   },
   {
@@ -1989,22 +1989,22 @@ export const LEVEL_INDEX = [
   },
   {
     id: "315",
-    optimalMoveCount: 38,
+    optimalMoveCount: 39,
     difficultyScore: 0.4501,
   },
   {
     id: "316",
-    optimalMoveCount: 38,
+    optimalMoveCount: 40,
     difficultyScore: 0.4276,
   },
   {
     id: "317",
-    optimalMoveCount: 36,
+    optimalMoveCount: 37,
     difficultyScore: 0.2841,
   },
   {
     id: "318",
-    optimalMoveCount: 36,
+    optimalMoveCount: 34,
     difficultyScore: 0.3348,
   },
   {
@@ -2014,12 +2014,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "320",
-    optimalMoveCount: 39,
+    optimalMoveCount: 37,
     difficultyScore: 0.5981,
   },
   {
     id: "321",
-    optimalMoveCount: 39,
+    optimalMoveCount: 36,
     difficultyScore: 0.5163,
   },
   {
@@ -2029,12 +2029,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "323",
-    optimalMoveCount: 36,
+    optimalMoveCount: 38,
     difficultyScore: 0.3071,
   },
   {
     id: "324",
-    optimalMoveCount: 37,
+    optimalMoveCount: 36,
     difficultyScore: 0.3414,
   },
   {
@@ -2044,7 +2044,7 @@ export const LEVEL_INDEX = [
   },
   {
     id: "326",
-    optimalMoveCount: 37,
+    optimalMoveCount: 36,
     difficultyScore: 0.4014,
   },
   {
@@ -2054,12 +2054,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "328",
-    optimalMoveCount: 37,
+    optimalMoveCount: 39,
     difficultyScore: 0.3753,
   },
   {
     id: "329",
-    optimalMoveCount: 39,
+    optimalMoveCount: 38,
     difficultyScore: 0.4927,
   },
   {
@@ -2069,12 +2069,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "331",
-    optimalMoveCount: 38,
+    optimalMoveCount: 37,
     difficultyScore: 0.4822,
   },
   {
     id: "332",
-    optimalMoveCount: 36,
+    optimalMoveCount: 37,
     difficultyScore: 0.3614,
   },
   {
@@ -2084,12 +2084,12 @@ export const LEVEL_INDEX = [
   },
   {
     id: "334",
-    optimalMoveCount: 39,
+    optimalMoveCount: 37,
     difficultyScore: 0.5665,
   },
   {
     id: "335",
-    optimalMoveCount: 37,
+    optimalMoveCount: 36,
     difficultyScore: 0.4324,
   },
   {
@@ -2104,42 +2104,42 @@ export const LEVEL_INDEX = [
   },
   {
     id: "338",
-    optimalMoveCount: 38,
+    optimalMoveCount: 40,
     difficultyScore: 0.4265,
   },
   {
     id: "339",
-    optimalMoveCount: 37,
+    optimalMoveCount: 38,
     difficultyScore: 0.3645,
   },
   {
     id: "340",
-    optimalMoveCount: 38,
+    optimalMoveCount: 39,
     difficultyScore: 0.4568,
   },
   {
     id: "341",
-    optimalMoveCount: 37,
+    optimalMoveCount: 39,
     difficultyScore: 0.4034,
   },
   {
     id: "342",
-    optimalMoveCount: 38,
+    optimalMoveCount: 39,
     difficultyScore: 0.5491,
   },
   {
     id: "343",
-    optimalMoveCount: 33,
+    optimalMoveCount: 34,
     difficultyScore: 0.2613,
   },
   {
     id: "344",
-    optimalMoveCount: 38,
+    optimalMoveCount: 41,
     difficultyScore: 0.5171,
   },
   {
     id: "345",
-    optimalMoveCount: 37,
+    optimalMoveCount: 36,
     difficultyScore: 0.3602,
   },
   {
@@ -2154,17 +2154,17 @@ export const LEVEL_INDEX = [
   },
   {
     id: "348",
-    optimalMoveCount: 37,
+    optimalMoveCount: 36,
     difficultyScore: 0.477,
   },
   {
     id: "349",
-    optimalMoveCount: 37,
+    optimalMoveCount: 38,
     difficultyScore: 0.3256,
   },
   {
     id: "350",
-    optimalMoveCount: 40,
+    optimalMoveCount: 41,
     difficultyScore: 0.5885,
   },
   {
@@ -7264,7 +7264,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 40,
+      optimalMoveCount: 39,
       difficultyScore: 0.591,
     },
   },
@@ -7288,7 +7288,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 37,
       difficultyScore: 0.5509,
     },
   },
@@ -7336,7 +7336,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 37,
       difficultyScore: 0.3744,
     },
   },
@@ -7360,7 +7360,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 35,
+      optimalMoveCount: 36,
       difficultyScore: 0.3345,
     },
   },
@@ -7384,7 +7384,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 35,
       difficultyScore: 0.3675,
     },
   },
@@ -7408,7 +7408,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 39,
       difficultyScore: 0.4178,
     },
   },
@@ -7432,7 +7432,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 35,
+      optimalMoveCount: 36,
       difficultyScore: 0.2647,
     },
   },
@@ -7480,7 +7480,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 39,
       difficultyScore: 0.5219,
     },
   },
@@ -7504,7 +7504,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 37,
       difficultyScore: 0.42,
     },
   },
@@ -7528,7 +7528,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 37,
       difficultyScore: 0.4819,
     },
   },
@@ -7600,7 +7600,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 39,
       difficultyScore: 0.4501,
     },
   },
@@ -7624,7 +7624,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 40,
       difficultyScore: 0.4276,
     },
   },
@@ -7648,7 +7648,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 37,
       difficultyScore: 0.2841,
     },
   },
@@ -7672,7 +7672,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 34,
       difficultyScore: 0.3348,
     },
   },
@@ -7720,7 +7720,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 39,
+      optimalMoveCount: 37,
       difficultyScore: 0.5981,
     },
   },
@@ -7744,7 +7744,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 39,
+      optimalMoveCount: 36,
       difficultyScore: 0.5163,
     },
   },
@@ -7792,7 +7792,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 38,
       difficultyScore: 0.3071,
     },
   },
@@ -7816,7 +7816,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 36,
       difficultyScore: 0.3414,
     },
   },
@@ -7864,7 +7864,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 36,
       difficultyScore: 0.4014,
     },
   },
@@ -7912,7 +7912,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 39,
       difficultyScore: 0.3753,
     },
   },
@@ -7936,7 +7936,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 39,
+      optimalMoveCount: 38,
       difficultyScore: 0.4927,
     },
   },
@@ -7984,7 +7984,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 37,
       difficultyScore: 0.4822,
     },
   },
@@ -8008,7 +8008,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 36,
+      optimalMoveCount: 37,
       difficultyScore: 0.3614,
     },
   },
@@ -8056,7 +8056,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 39,
+      optimalMoveCount: 37,
       difficultyScore: 0.5665,
     },
   },
@@ -8080,7 +8080,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 36,
       difficultyScore: 0.4324,
     },
   },
@@ -8152,7 +8152,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 40,
       difficultyScore: 0.4265,
     },
   },
@@ -8176,7 +8176,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 38,
       difficultyScore: 0.3645,
     },
   },
@@ -8200,7 +8200,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 39,
       difficultyScore: 0.4568,
     },
   },
@@ -8224,7 +8224,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 39,
       difficultyScore: 0.4034,
     },
   },
@@ -8248,7 +8248,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 39,
       difficultyScore: 0.5491,
     },
   },
@@ -8272,7 +8272,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 33,
+      optimalMoveCount: 34,
       difficultyScore: 0.2613,
     },
   },
@@ -8296,7 +8296,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 38,
+      optimalMoveCount: 41,
       difficultyScore: 0.5171,
     },
   },
@@ -8320,7 +8320,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 36,
       difficultyScore: 0.3602,
     },
   },
@@ -8392,7 +8392,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 36,
       difficultyScore: 0.477,
     },
   },
@@ -8416,7 +8416,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 37,
+      optimalMoveCount: 38,
       difficultyScore: 0.3256,
     },
   },
@@ -8440,7 +8440,7 @@ export const LEVELS = {
       [],
     ],
     development: {
-      optimalMoveCount: 40,
+      optimalMoveCount: 41,
       difficultyScore: 0.5885,
     },
   },
