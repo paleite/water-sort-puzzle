@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -80,7 +82,14 @@ jobs:
         run: pnpm run test:unit
 
       - name: Verify levels
-        run: pnpm run verify:levels
+        env:
+          LEVELS_BASE_REF: ${{ github.event.before }}
+        run: |
+          if [ -n "$LEVELS_BASE_REF" ] && [[ ! "$LEVELS_BASE_REF" =~ ^0+$ ]]; then
+            pnpm run verify:levels -- --changed-from "$LEVELS_BASE_REF"
+          else
+            pnpm run verify:levels
+          fi
 
       - name: Build with Next.js
         run: pnpm run build
