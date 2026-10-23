@@ -31,7 +31,7 @@ export function HomeScreen() {
         <HomeHero />
         <div className={styles.homeActions}>
           {continueLevelId !== null && (
-            <Link href={`/game/${continueLevelId}`}>
+            <Link href={`/game/${continueLevelId}`} replace>
               <Button size="lg" className="h-12 w-full text-base" tabIndex={-1}>
                 Continue
               </Button>
