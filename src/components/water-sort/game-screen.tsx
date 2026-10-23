@@ -105,16 +105,11 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
-  const {comboCount, comboSequence, unlockComboAudio} = useComboFeedback({
+  const {comboCount, comboSequence} = useComboFeedback({
     moveCount: game.context.history.length,
     activePourCount: game.context.activePresentations.length,
     phase: game.phase,
   });
-
-  const handleVialPress = useCallback((vialIndex: number): void => {
-    unlockComboAudio();
-    game.pressVial(vialIndex);
-  }, [game.pressVial, unlockComboAudio]);
 
   const forceBoardRender = useCallback((): void => {
     window.dispatchEvent(new Event("resize"));
@@ -269,7 +264,13 @@ function GameRuntime({
           data-combo-tier={comboCount >= 8 ? "legendary" : comboCount >= 5 ? "high" : comboCount >= 3 ? "medium" : "low"}
           role="status"
           aria-live="polite"
+          data-combo-hue={(comboCount - 2) % 8}
         >
+          <span className={styles.comboBurst} aria-hidden="true">
+            {Array.from({length: 8}, (_, index) => (
+              <span key={index} className={styles.comboSpark} />
+            ))}
+          </span>
           <span className={styles.comboNumber}>{comboCount}×</span>
           <span className={styles.comboLabel}>{comboCount >= 8 ? "UNSTOPPABLE" : comboCount >= 5 ? "INCREDIBLE" : comboCount >= 3 ? "GREAT CHAIN" : "COMBO"}</span>
         </div>
@@ -283,7 +284,7 @@ function GameRuntime({
         activePresentations={game.context.activePresentations}
         activeUndo={game.context.activeUndo}
         hintMove={hints.state.status === "showing" ? hints.state.move : null}
-        onVialPress={handleVialPress}
+        onVialPress={game.pressVial}
         onMovePresentationFinished={game.finishMovePresentation}
         onUndoPresentationFinished={game.finishUndoPresentation}
         onRestartPresentationFinished={game.finishRestartPresentation}
