@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
+import { useComboFeedback } from "@/hooks/use-combo-feedback";
 import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
 import type { Level } from "@/lib/water-sort/domain/types";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
@@ -104,6 +105,16 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
+  const {comboCount, comboSequence, unlockComboAudio} = useComboFeedback({
+    moveCount: game.context.history.length,
+    activePourCount: game.context.activePresentations.length,
+    phase: game.phase,
+  });
+
+  const handleVialPress = useCallback((vialIndex: number): void => {
+    unlockComboAudio();
+    game.pressVial(vialIndex);
+  }, [game.pressVial, unlockComboAudio]);
 
   const forceBoardRender = useCallback((): void => {
     window.dispatchEvent(new Event("resize"));
@@ -251,6 +262,19 @@ function GameRuntime({
         onRestart={game.restart}
       />
 
+      {comboCount >= 2 && (
+        <div
+          key={comboSequence}
+          className={styles.comboIndicator}
+          data-combo-tier={comboCount >= 8 ? "legendary" : comboCount >= 5 ? "high" : comboCount >= 3 ? "medium" : "low"}
+          role="status"
+          aria-live="polite"
+        >
+          <span className={styles.comboNumber}>{comboCount}×</span>
+          <span className={styles.comboLabel}>{comboCount >= 8 ? "UNSTOPPABLE" : comboCount >= 5 ? "INCREDIBLE" : comboCount >= 3 ? "GREAT CHAIN" : "COMBO"}</span>
+        </div>
+      )}
+
       <GameBoard
         board={game.context.board}
         capacity={level.capacity}
@@ -259,7 +283,7 @@ function GameRuntime({
         activePresentations={game.context.activePresentations}
         activeUndo={game.context.activeUndo}
         hintMove={hints.state.status === "showing" ? hints.state.move : null}
-        onVialPress={game.pressVial}
+        onVialPress={handleVialPress}
         onMovePresentationFinished={game.finishMovePresentation}
         onUndoPresentationFinished={game.finishUndoPresentation}
         onRestartPresentationFinished={game.finishRestartPresentation}
