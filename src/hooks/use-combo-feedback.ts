@@ -57,7 +57,6 @@ export function useComboFeedback({
       setComboCount(nextCount);
       if (nextCount >= 2) {
         setComboSequence((current) => current + 1);
-
       }
     }
 
