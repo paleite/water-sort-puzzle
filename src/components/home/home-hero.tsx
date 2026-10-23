@@ -2,202 +2,248 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
+import { useRef, type Ref } from "react";
 
-import { VialSlotButton } from "@/components/water-sort/vial-slot-button";
 import styles from "@/components/water-sort/water-sort.module.css";
-import { calculatePourGeometry } from "@/lib/water-sort/animation/pour-geometry";
-import { createPourTimeline, type PourPresentation } from "@/lib/water-sort/animation/timelines";
-import { applyMove } from "@/lib/water-sort/domain/moves";
-import type { Board } from "@/lib/water-sort/domain/types";
-import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
-import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
-import {
-  buildPourBoardRenderState,
-  buildStaticBoardRenderState,
-  type BoardRenderState,
-  type VialAnchor,
-} from "@/lib/water-sort/rendering/render-state";
+import type { ColorId } from "@/lib/water-sort/domain/colors";
+import { LIQUID_COLORS } from "@/lib/water-sort/presentation/palette";
+import { DEFAULT_VIAL_SKIN } from "@/lib/water-sort/presentation/vial-skins";
 
-const DEMO_BOARD: Board = [
-  ["cocoa", "coral"],
-  ["coral", "coral"],
-  ["sky", "sky", "sky", "sky"],
-];
+const VIAL_CAPACITY = 4;
+const LIQUID_BOTTOM = 259;
+const LIQUID_TOP = DEFAULT_VIAL_SKIN.liquidSurfaceY;
+const LAYER_HEIGHT = (LIQUID_BOTTOM - LIQUID_TOP) / VIAL_CAPACITY;
+const SOURCE_TOP_Y = LIQUID_BOTTOM - LAYER_HEIGHT * 2;
+const DESTINATION_NEW_TOP_Y = LIQUID_BOTTOM - LAYER_HEIGHT * 3;
 
-const DEMO_MOVE = applyMove(
-  DEMO_BOARD,
-  {
-    sourceVialIndex: 0,
-    destinationVialIndex: 1,
-  },
-  4,
-);
+const CLIP_ID = "home-hero-vial-interior";
+const GLASS_GRADIENT_ID = "home-hero-glass-gradient";
+const EDGE_GRADIENT_ID = "home-hero-edge-gradient";
+const STREAM_GRADIENT_ID = "home-hero-stream-gradient";
 
-type TransientStateBuilder = (anchors: readonly VialAnchor[]) => BoardRenderState;
+// These demo-only vials deliberately use simple SVG paint instead of a
+// second WebGL renderer. Gameplay keeps its existing Pixi liquid simulation.
+function HeroVial({
+  positionX,
+  colors,
+  groupRef,
+  animatedBand,
+}: {
+  positionX: number;
+  colors: readonly ColorId[];
+  groupRef: Ref<SVGGElement>;
+  animatedBand?: {
+    color: ColorId;
+    initialY: number;
+    initialHeight: number;
+    elementRef: Ref<SVGRectElement>;
+  };
+}) {
+  return (
+    <g transform={`translate(${positionX} 22) scale(0.7)`}>
+      <g ref={groupRef}>
+        <g clipPath={`url(#${CLIP_ID})`}>
+          {colors.map((color, index) => (
+            <rect
+              key={index}
+              x={14.5}
+              y={LIQUID_BOTTOM - (index + 1) * LAYER_HEIGHT}
+              width={71}
+              height={LAYER_HEIGHT + 0.5}
+              fill={LIQUID_COLORS[color]}
+            />
+          ))}
+          {animatedBand !== undefined && (
+            <rect
+              ref={animatedBand.elementRef}
+              x={14.5}
+              y={animatedBand.initialY}
+              width={71}
+              height={animatedBand.initialHeight}
+              fill={LIQUID_COLORS[animatedBand.color]}
+            />
+          )}
+        </g>
+        <path
+          d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18Z"
+          fill={`url(#${GLASS_GRADIENT_ID})`}
+        />
+        <path
+          d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18"
+          stroke={`url(#${EDGE_GRADIENT_ID})`}
+          strokeWidth="4.5"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <ellipse
+          cx="50"
+          cy="18"
+          rx="38"
+          ry="7.5"
+          fill="#07131c"
+          fillOpacity="0.27"
+          stroke="#9edcf5"
+          strokeOpacity="0.66"
+          strokeWidth="3.5"
+        />
+        <ellipse
+          cx="50"
+          cy="18"
+          rx="32.5"
+          ry="4.7"
+          fill="#061018"
+          fillOpacity="0.32"
+          stroke="#effbff"
+          strokeOpacity="0.26"
+          strokeWidth="1.4"
+        />
+        <path
+          d="M12 18C20 27 80 27 88 18"
+          stroke="#f1fbff"
+          strokeOpacity="0.62"
+          strokeWidth="2.1"
+          strokeLinecap="round"
+          fill="none"
+        />
+        <path
+          d="M19 34V198C19 224 28 242 40 250"
+          stroke="#ffffff"
+          strokeOpacity="0.27"
+          strokeWidth="3.2"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </g>
+    </g>
+  );
+}
 
 export function HomeHero() {
-  const [board, setBoard] = useState<Board>(DEMO_BOARD);
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasHostRef = useRef<HTMLDivElement>(null);
-  const vialRefs = useRef(new Map<number, HTMLButtonElement>());
-  const rendererRef = useRef<PixiBoardRenderer | null>(null);
-  const transientStateBuilderRef = useRef<TransientStateBuilder | null>(null);
-  const renderLatestRef = useRef<() => void>(() => {});
-  const pourPresentationRef = useRef<PourPresentation | null>(null);
-  const hasPlayedRef = useRef(false);
-
-  const renderLatest = useCallback((): void => {
-    const renderer = rendererRef.current;
-    const container = containerRef.current;
-    if (renderer === null || container === null) return;
-
-    const anchors = measureVialAnchors(container, vialRefs.current, board.length);
-    const transientStateBuilder = transientStateBuilderRef.current;
-    renderer.render(
-      transientStateBuilder === null
-        ? buildStaticBoardRenderState({
-            board,
-            anchors,
-            selectedSourceVialIndex: null,
-            capacity: 4,
-          })
-        : transientStateBuilder(anchors),
-    );
-  }, [board]);
-
-  renderLatestRef.current = renderLatest;
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-    const canvasHost = canvasHostRef.current;
-    if (container === null || canvasHost === null) return;
-
-    const renderer = new PixiBoardRenderer({boardElement: container, canvasHost});
-    rendererRef.current = renderer;
-    void renderer.initialize().catch((error: unknown) => {
-      console.error("Failed to initialize Pixi home renderer.", error);
-    });
-
-    let frame = 0;
-    const scheduleRender = (): void => {
-      if (frame !== 0) cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        renderLatestRef.current();
-      });
-    };
-
-    const observer = new ResizeObserver(scheduleRender);
-    observer.observe(container);
-    for (const element of vialRefs.current.values()) observer.observe(element);
-    window.addEventListener("resize", scheduleRender);
-    scheduleRender();
-
-    return () => {
-      if (frame !== 0) cancelAnimationFrame(frame);
-      window.removeEventListener("resize", scheduleRender);
-      observer.disconnect();
-      renderer.destroy();
-      if (rendererRef.current === renderer) rendererRef.current = null;
-    };
-  }, [board.length]);
-
-  useLayoutEffect(() => {
-    renderLatest();
-  }, [renderLatest]);
+  const sourceRef = useRef<SVGGElement>(null);
+  const destinationRef = useRef<SVGGElement>(null);
+  const thirdVialRef = useRef<SVGGElement>(null);
+  const sourceTopRef = useRef<SVGRectElement>(null);
+  const destinationTopRef = useRef<SVGRectElement>(null);
+  const streamRef = useRef<SVGPathElement>(null);
 
   useGSAP(() => {
-    if (hasPlayedRef.current) return;
+    const source = sourceRef.current;
+    const destination = destinationRef.current;
+    const thirdVial = thirdVialRef.current;
+    const sourceTop = sourceTopRef.current;
+    const destinationTop = destinationTopRef.current;
+    const stream = streamRef.current;
 
-    const container = containerRef.current;
-    const source = vialRefs.current.get(0);
-    const destination = vialRefs.current.get(1);
-    if (container === null || source === undefined || destination === undefined) return;
+    if (
+      source === null || destination === null || thirdVial === null
+      || sourceTop === null || destinationTop === null || stream === null
+    ) return;
 
-    hasPlayedRef.current = true;
-    const introMotions = DEMO_BOARD.map(() => ({y: 28, alpha: 0}));
-    transientStateBuilderRef.current = (anchors) => {
-      const state = buildStaticBoardRenderState({
-        board: DEMO_BOARD,
-        anchors,
-        selectedSourceVialIndex: null,
-        capacity: 4,
-      });
-      return {
-        ...state,
-        vials: state.vials.map((vial, index) => ({
-          ...vial,
-          translationY: introMotions[index]?.y ?? 0,
-          alpha: introMotions[index]?.alpha ?? 1,
-        })),
-      };
-    };
-    renderLatestRef.current();
+    // Initial SVG markup is already visible, even before hydration or GSAP.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const intro = gsap.timeline({onUpdate: () => renderLatestRef.current()});
-    intro.to(introMotions, {
-      y: 0,
-      alpha: 1,
-      duration: 0.42,
-      stagger: 0.08,
-      ease: "back.out(1.5)",
-    });
+    const timeline = gsap.timeline({ repeat: -1, repeatDelay: 1.2 });
 
-    const delayedPour = gsap.delayedCall(0.62, () => {
-      const geometry = calculatePourGeometry(container, source, destination);
-      const presentation = createPourTimeline({
-        geometry,
-        move: DEMO_MOVE,
-        sourceWidthPixels: source.getBoundingClientRect().width,
-        onFrame: (snapshot) => {
-          transientStateBuilderRef.current = (anchors) => buildPourBoardRenderState({
-            move: DEMO_MOVE,
-            anchors,
-            selectedSourceVialIndex: null,
-            geometry,
-            presentation: snapshot,
-            capacity: 4,
-          });
-          renderLatestRef.current();
-        },
-        onComplete: () => {
-          transientStateBuilderRef.current = null;
-          setBoard(DEMO_MOVE.nextBoard);
-        },
-      });
-      pourPresentationRef.current = presentation;
-    });
+    timeline.set(source, { x: 0, y: 0, rotation: 0, transformOrigin: "88px 18px" }, 0);
+    timeline.set([destination, thirdVial], { y: 0 }, 0);
+    timeline.set(sourceTop, { attr: { y: SOURCE_TOP_Y, height: LAYER_HEIGHT } }, 0);
+    timeline.set(destinationTop, { attr: { y: SOURCE_TOP_Y, height: 0 } }, 0);
+    timeline.set(stream, { opacity: 0 }, 0);
+    timeline.from(
+      [source, destination, thirdVial],
+      { y: 13, duration: 0.42, stagger: 0.09, ease: "back.out(1.5)" },
+      0,
+    );
+    timeline.to(
+      source,
+      { x: 89, y: -41, rotation: 74, duration: 0.54, ease: "power2.inOut" },
+      0.94,
+    );
+    timeline.to(stream, { opacity: 1, duration: 0.13 }, 1.36);
+    timeline.to(
+      sourceTop,
+      { attr: { y: SOURCE_TOP_Y + LAYER_HEIGHT, height: 0 }, duration: 0.4, ease: "none" },
+      1.47,
+    );
+    timeline.to(
+      destinationTop,
+      { attr: { y: DESTINATION_NEW_TOP_Y, height: LAYER_HEIGHT }, duration: 0.4, ease: "none" },
+      1.47,
+    );
+    timeline.to(stream, { opacity: 0, duration: 0.12 }, 1.84);
+    timeline.to(
+      source,
+      { x: 0, y: 0, rotation: 0, duration: 0.53, ease: "power2.inOut" },
+      2.02,
+    );
 
     return () => {
-      intro.kill();
-      delayedPour.kill();
-      pourPresentationRef.current?.timeline.kill();
-      pourPresentationRef.current = null;
-      transientStateBuilderRef.current = null;
-      hasPlayedRef.current = false;
+      timeline.kill();
     };
-  }, {scope: containerRef});
+  }, { scope: containerRef });
 
   return (
     <div ref={containerRef} className={styles.homeHero} aria-hidden="true">
-      <div ref={canvasHostRef} className={styles.pixiCanvasHost} />
-
-      <div className={styles.homeHeroSlots}>
-        {board.map((vial, index) => (
-          <VialSlotButton
-            key={index}
-            ref={(element) => {
-              if (element === null) vialRefs.current.delete(index);
-              else vialRefs.current.set(index, element);
-            }}
-            vial={vial}
-            capacity={4}
-            vialIndex={index}
-            interactive={false}
-          />
-        ))}
-      </div>
+      <svg className={styles.homeHeroSvg} viewBox="0 0 340 230" fill="none">
+        <defs>
+          <clipPath id={CLIP_ID} clipPathUnits="userSpaceOnUse">
+            <polygon
+              points={DEFAULT_VIAL_SKIN.liquidPolygon.map(({x, y}) => `${x},${y}`).join(" ")}
+            />
+          </clipPath>
+          <linearGradient id={GLASS_GRADIENT_ID} x1="10" y1="136" x2="90" y2="136" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#dff7ff" stopOpacity="0.10" />
+            <stop offset="0.18" stopColor="#ffffff" stopOpacity="0.025" />
+            <stop offset="0.72" stopColor="#8ddcff" stopOpacity="0.015" />
+            <stop offset="1" stopColor="#bcecff" stopOpacity="0.09" />
+          </linearGradient>
+          <linearGradient id={EDGE_GRADIENT_ID} x1="10" y1="0" x2="90" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#9edcf5" stopOpacity="0.78" />
+            <stop offset="0.5" stopColor="#5d8fa8" stopOpacity="0.60" />
+            <stop offset="1" stopColor="#9edcf5" stopOpacity="0.78" />
+          </linearGradient>
+          <linearGradient id={STREAM_GRADIENT_ID} x1="150" y1="0" x2="144" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor={LIQUID_COLORS.coral} stopOpacity="0.8" />
+            <stop offset="1" stopColor={LIQUID_COLORS.coral} />
+          </linearGradient>
+        </defs>
+        <HeroVial
+          positionX={26}
+          colors={["cocoa"]}
+          groupRef={sourceRef}
+          animatedBand={{
+            color: "coral",
+            initialY: SOURCE_TOP_Y,
+            initialHeight: LAYER_HEIGHT,
+            elementRef: sourceTopRef,
+          }}
+        />
+        <HeroVial
+          positionX={135}
+          colors={["coral", "coral"]}
+          groupRef={destinationRef}
+          animatedBand={{
+            color: "coral",
+            initialY: SOURCE_TOP_Y,
+            initialHeight: 0,
+            elementRef: destinationTopRef,
+          }}
+        />
+        <HeroVial
+          positionX={244}
+          colors={["sky", "sky", "sky", "sky"]}
+          groupRef={thirdVialRef}
+        />
+        <path
+          ref={streamRef}
+          d="M 151 6 Q 153 26 144 41"
+          stroke={`url(#${STREAM_GRADIENT_ID})`}
+          strokeWidth="4"
+          strokeLinecap="round"
+          opacity="0"
+        />
+      </svg>
     </div>
   );
 }

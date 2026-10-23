@@ -22,7 +22,6 @@ export function useComboFeedback({
   const comboCountRef = useRef(0);
   const graceDeadlineRef = useRef(0);
   const graceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const audioContextRef = useRef<AudioContext | null>(null);
 
   const clearGraceTimer = useCallback(() => {
     if (graceTimerRef.current !== null) {
@@ -37,18 +36,6 @@ export function useComboFeedback({
     comboCountRef.current = 0;
     setComboCount(0);
   }, [clearGraceTimer]);
-
-  // Called from a direct vial interaction to satisfy mobile audio gesture policies.
-  const unlockComboAudio = useCallback(() => {
-    try {
-      audioContextRef.current ??= new AudioContext();
-      if (audioContextRef.current.state === "suspended") {
-        void audioContextRef.current.resume().catch(() => {});
-      }
-    } catch {
-      // Combo visuals remain available on devices without Web Audio.
-    }
-  }, []);
 
   useEffect(() => {
     const previousMoveCount = lastMoveCountRef.current;
@@ -70,22 +57,6 @@ export function useComboFeedback({
       setComboCount(nextCount);
       if (nextCount >= 2) {
         setComboSequence((current) => current + 1);
-        const context = audioContextRef.current;
-        if (context !== null && context.state === "running") {
-          const oscillator = context.createOscillator();
-          const gain = context.createGain();
-          const startedAt = context.currentTime;
-          const frequency = Math.min(1100, 320 * Math.pow(1.13, nextCount - 2));
-          oscillator.type = nextCount >= 5 ? "triangle" : "sine";
-          oscillator.frequency.setValueAtTime(frequency, startedAt);
-          oscillator.frequency.exponentialRampToValueAtTime(frequency * 1.22, startedAt + 0.11);
-          gain.gain.setValueAtTime(0.0001, startedAt);
-          gain.gain.exponentialRampToValueAtTime(0.075, startedAt + 0.015);
-          gain.gain.exponentialRampToValueAtTime(0.0001, startedAt + 0.17);
-          oscillator.connect(gain).connect(context.destination);
-          oscillator.start(startedAt);
-          oscillator.stop(startedAt + 0.18);
-        }
       }
     }
 
@@ -105,12 +76,7 @@ export function useComboFeedback({
     }
   }, [activePourCount, moveCount, phase, clearGraceTimer, resetCombo]);
 
-  useEffect(() => () => {
-    clearGraceTimer();
-    if (audioContextRef.current !== null) {
-      void audioContextRef.current.close().catch(() => {});
-    }
-  }, [clearGraceTimer]);
+  useEffect(() => clearGraceTimer, [clearGraceTimer]);
 
-  return {comboCount, comboSequence, unlockComboAudio};
+  return {comboCount, comboSequence};
 }
