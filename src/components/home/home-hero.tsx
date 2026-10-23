@@ -178,7 +178,9 @@ export function HomeHero() {
       2.02,
     );
 
-    return () => timeline.kill();
+    return () => {
+      timeline.kill();
+    };
   }, { scope: containerRef });
 
   return (
