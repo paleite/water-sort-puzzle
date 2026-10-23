@@ -83,14 +83,14 @@ jobs:
       - name: Unit tests
         run: pnpm run test:unit
 
-      - name: Verify levels
+      - name: Verify new levels
         env:
           LEVELS_BASE_REF: ${{ github.event.before }}
         run: |
           if [ -n "$LEVELS_BASE_REF" ] && [[ ! "$LEVELS_BASE_REF" =~ ^0+$ ]]; then
-            pnpm run verify:levels -- --changed-from "$LEVELS_BASE_REF"
+            pnpm run verify:levels --changed-from "$LEVELS_BASE_REF"
           else
-            pnpm run verify:levels
+            echo "No push base ref; skipping new-level verification."
           fi
 
       - name: Build with Next.js

@@ -1,5 +1,7 @@
+import { execFile } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { promisify } from "node:util";
 
 import { createCanonicalBoardKey } from "../../src/lib/water-sort/domain/board";
 import type { ColorId } from "../../src/lib/water-sort/domain/colors";
@@ -34,13 +36,69 @@ function hasCleanStartingShape(raw: RawLevel): boolean {
   );
 }
 
+const execFileAsync = promisify(execFile);
+
 async function main(): Promise<void> {
-  const directory = path.resolve(process.argv[2] ?? "levels");
+  // Accept the optional pnpm argument separator for compatibility.
+  const args = process.argv.slice(2).filter((argument) => argument !== "--");
+  const changedFromIndex = args.indexOf("--changed-from");
+  const changedFrom = changedFromIndex < 0 ? undefined : args[changedFromIndex + 1];
+  if (changedFromIndex >= 0 && (changedFrom === undefined || changedFrom.startsWith("--"))) {
+    throw new Error("Expected a Git ref after --changed-from.");
+  }
+  const positionalArgs = args.filter((_, index) =>
+    changedFromIndex < 0 || (index !== changedFromIndex && index !== changedFromIndex + 1)
+  );
+  if (positionalArgs.length > 1 || positionalArgs.some((argument) => argument.startsWith("--"))) {
+    throw new Error("Usage: verify-levels [directory] [--changed-from <git-ref>]");
+  }
+  const directory = path.resolve(positionalArgs[0] ?? "levels");
+  let newLevelIds: Set<string> | null = null;
+  if (changedFrom !== undefined) {
+    const relativeDirectory = path.relative(process.cwd(), directory).split(path.sep).join("/");
+    if (relativeDirectory.startsWith("..") || path.isAbsolute(relativeDirectory)) {
+      throw new Error("Changed-level verification requires a directory inside the repository.");
+    }
+    const { stdout } = await execFileAsync("git", [
+      "diff", "--name-only", "--diff-filter=A", changedFrom, "HEAD", "--", relativeDirectory,
+    ]);
+    const directoryPrefix = `${relativeDirectory}/`;
+    newLevelIds = new Set(
+      stdout.split(/\r?\n/)
+        .filter((filename) => filename.startsWith(directoryPrefix))
+        .map((filename) => filename.slice(directoryPrefix.length))
+        .filter((filename) => filename !== "manifest.json" && /^[^/]+\.json$/.test(filename))
+        .map((filename) => filename.slice(0, -".json".length)),
+    );
+    if (newLevelIds.size === 0) {
+      console.log("No new levels in this change; verification passed.");
+      return;
+    }
+  }
   const manifest = await readJson<Manifest>(path.join(directory, "manifest.json"));
+  if (newLevelIds !== null) {
+    const manifestIds = new Set(manifest.levels.map((entry) => entry.id));
+    for (const levelId of newLevelIds) {
+      if (!manifestIds.has(levelId)) {
+        throw new Error(`New level ${levelId} is missing from the manifest.`);
+      }
+    }
+  }
   let failed = false;
   const seenBoards = new Map<string, string>();
 
+  // Compare new boards against existing boards without re-solving old levels.
+  if (newLevelIds !== null) {
+    for (const entry of manifest.levels) {
+      if (newLevelIds.has(entry.id)) continue;
+      const existing = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
+      const existingBoard: Board = existing.vials.map((vial) => [...vial].reverse());
+      seenBoards.set(createCanonicalBoardKey(existingBoard), entry.id);
+    }
+  }
+
   for (const entry of manifest.levels) {
+    if (newLevelIds !== null && !newLevelIds.has(entry.id)) continue;
     const raw = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
     if (raw.id !== entry.id) {
       console.error(`${entry.id}: FAIL · file id is ${raw.id}`);
@@ -80,7 +138,9 @@ async function main(): Promise<void> {
   }
 
   if (failed) process.exitCode = 1;
-  else console.log(`Verified ${manifest.levels.length} levels.`);
+  else console.log(newLevelIds === null
+    ? `Verified ${manifest.levels.length} levels.`
+    : `Verified ${newLevelIds.size} new levels.`);
 }
 
 void main().catch((error: unknown) => {
