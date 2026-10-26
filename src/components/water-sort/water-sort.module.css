@@ -291,7 +291,10 @@
 
 /* Silent, non-blocking combo impact with increasing bounce, skew, and sparks. */
 .comboStage {
-  position: relative;
+  position: absolute;
+  top: clamp(102px, 16dvh, 150px);
+  left: 50%;
+  z-index: 20;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -306,10 +309,7 @@
   --combo-pop: 1.18;
   --combo-burst: 1;
   --combo-lean: 10deg;
-  position: absolute;
-  top: clamp(102px, 16dvh, 150px);
-  left: 50%;
-  z-index: 20;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
