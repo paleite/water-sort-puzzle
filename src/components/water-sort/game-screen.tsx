@@ -36,7 +36,7 @@ import { GameCompleteOverlay } from "./game-complete-overlay";
 import { GameHud } from "./game-hud";
 import styles from "./water-sort.module.css";
 
-export function GameScreen({levelId}: {levelId: string}) {
+export function GameScreen({ levelId }: { levelId: string }) {
   const level = getLevel(levelId);
   const [loadedProgress, setLoadedProgress] = useState<{
     levelId: string;
@@ -51,13 +51,11 @@ export function GameScreen({levelId}: {levelId: string}) {
 
     const progress = loadProgress();
     const savedGame =
-      progress.savedGame?.levelId === level.id
-        ? progress.savedGame
-        : undefined;
+      progress.savedGame?.levelId === level.id ? progress.savedGame : undefined;
 
     setLoadedProgress({
       levelId: level.id,
-      ...(savedGame === undefined ? {} : {savedGame}),
+      ...(savedGame === undefined ? {} : { savedGame }),
     });
   }, [level]);
 
@@ -70,7 +68,11 @@ export function GameScreen({levelId}: {levelId: string}) {
   }
 
   if (loadedProgress?.levelId !== level.id) {
-    return <main className="grid min-h-dvh place-items-center p-6">Loading level…</main>;
+    return (
+      <main className="grid min-h-dvh place-items-center p-6">
+        Loading level…
+      </main>
+    );
   }
 
   return (
@@ -79,7 +81,7 @@ export function GameScreen({levelId}: {levelId: string}) {
       level={level}
       {...(loadedProgress.savedGame === undefined
         ? {}
-        : {savedGame: loadedProgress.savedGame})}
+        : { savedGame: loadedProgress.savedGame })}
     />
   );
 }
@@ -93,12 +95,18 @@ function GameRuntime({
 }) {
   const game = useWaterSortGame(level, savedGame);
   const hints = useWaterSortHints(game.context.board, level.capacity);
-  const [paletteId, setPaletteId] = useState<LiquidPaletteId>(DEFAULT_LIQUID_PALETTE_ID);
+  const [paletteId, setPaletteId] = useState<LiquidPaletteId>(
+    DEFAULT_LIQUID_PALETTE_ID,
+  );
   const [backgroundId, setBackgroundId] = useState<GameBackgroundId>(
     DEFAULT_GAME_BACKGROUND_ID,
   );
-  const [appearanceAnnouncement, setAppearanceAnnouncement] = useState<string | null>(null);
-  const appearanceAnnouncementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [appearanceAnnouncement, setAppearanceAnnouncement] = useState<
+    string | null
+  >(null);
+  const appearanceAnnouncementTimeoutRef = useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
   const nextLevelId = getNextLevelId(level.id);
   const background = getGameBackground(backgroundId);
 
@@ -129,20 +137,23 @@ function GameRuntime({
     }, 1100);
   }, []);
 
-  const cyclePalette = useCallback((direction: -1 | 1): void => {
-    const nextPaletteId = getAdjacentPaletteId(paletteId, direction);
-    const nextPalette = applyLiquidPalette(nextPaletteId);
-    setPaletteId(nextPaletteId);
+  const cyclePalette = useCallback(
+    (direction: -1 | 1): void => {
+      const nextPaletteId = getAdjacentPaletteId(paletteId, direction);
+      const nextPalette = applyLiquidPalette(nextPaletteId);
+      setPaletteId(nextPaletteId);
 
-    try {
-      window.localStorage.setItem(PALETTE_STORAGE_KEY, nextPaletteId);
-    } catch {
-      // Persistence is optional when storage is unavailable.
-    }
+      try {
+        window.localStorage.setItem(PALETTE_STORAGE_KEY, nextPaletteId);
+      } catch {
+        // Persistence is optional when storage is unavailable.
+      }
 
-    announceAppearance(nextPalette.name);
-    forceBoardRender();
-  }, [announceAppearance, forceBoardRender, paletteId]);
+      announceAppearance(nextPalette.name);
+      forceBoardRender();
+    },
+    [announceAppearance, forceBoardRender, paletteId],
+  );
 
   const cycleBackground = useCallback((): void => {
     const nextBackgroundId = getNextGameBackgroundId(backgroundId);
@@ -237,7 +248,7 @@ function GameRuntime({
   ]);
 
   return (
-    <main className={styles.gameShell} style={{background: background.css}}>
+    <main className={styles.gameShell} style={{ background: background.css }}>
       <GameHud
         levelId={level.id}
         moveCount={game.context.history.length}
@@ -254,12 +265,22 @@ function GameRuntime({
         hintSlow={hints.state.status === "searching" && hints.state.slow}
         {...(level.development?.optimalMoveCount === undefined
           ? {}
-          : {optimalMoveCount: level.development.optimalMoveCount})}
+          : { optimalMoveCount: level.development.optimalMoveCount })}
         onUndo={game.undo}
         onRestart={game.restart}
       />
 
-      <ComboCelebrations celebrations={celebrations} classes={styles} />
+      <ComboCelebrations
+        celebrations={celebrations}
+        classes={{
+          comboStage: styles.comboStage!,
+          comboIndicator: styles.comboIndicator!,
+          comboBurst: styles.comboBurst!,
+          comboSpark: styles.comboSpark!,
+          comboNumber: styles.comboNumber!,
+          comboLabel: styles.comboLabel!,
+        }}
+      />
 
       <GameBoard
         board={game.context.board}
@@ -306,7 +327,10 @@ function GameRuntime({
       )}
 
       {hints.state.status === "searching" && (
-        <div role="status" className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg">
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg"
+        >
           {hints.state.slow
             ? "This is taking longer than expected. Tap × to cancel."
             : "Finding hint…"}
@@ -314,7 +338,10 @@ function GameRuntime({
       )}
 
       {hints.state.status === "limit-reached" && (
-        <div role="status" className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg">
+        <div
+          role="status"
+          className="fixed bottom-6 left-1/2 z-40 -translate-x-1/2 rounded-full bg-black/80 px-4 py-2 text-sm text-white shadow-lg"
+        >
           Couldn’t determine a solution from this position.
         </div>
       )}

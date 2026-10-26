@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 
 import {
@@ -26,16 +26,20 @@ function TwoSimultaneousStarts() {
   const [celebrations, setCelebrations] = useState<ComboCelebration[]>([]);
 
   if (celebrations.length === 0) {
-    setCelebrations((current) => addComboCelebration(current, {
-      id: 12,
-      count: 2,
-      sequence: 1,
-    }));
-    setCelebrations((current) => addComboCelebration(current, {
-      id: 13,
-      count: 3,
-      sequence: 2,
-    }));
+    setCelebrations((current) =>
+      addComboCelebration(current, {
+        id: 12,
+        count: 2,
+        sequence: 1,
+      }),
+    );
+    setCelebrations((current) =>
+      addComboCelebration(current, {
+        id: 13,
+        count: 3,
+        sequence: 2,
+      }),
+    );
   }
 
   return <ComboCelebrations celebrations={celebrations} classes={classes} />;
@@ -53,11 +57,13 @@ test("two ready animation starts in one React update each render a celebration",
 
 test("finishing one concurrent pour leaves the other celebration intact", () => {
   const both = addComboCelebration(
-    addComboCelebration([], {id: 12, count: 2, sequence: 1}),
-    {id: 13, count: 3, sequence: 2},
+    addComboCelebration([], { id: 12, count: 2, sequence: 1 }),
+    { id: 13, count: 3, sequence: 2 },
   );
   const remaining = both.filter((entry) => entry.id !== 12);
-  const markup = renderToStaticMarkup(<ComboCelebrations celebrations={remaining} classes={classes} />);
+  const markup = renderToStaticMarkup(
+    <ComboCelebrations celebrations={remaining} classes={classes} />,
+  );
 
   assert.doesNotMatch(markup, /data-combo-presentation-id="12"/);
   assert.match(markup, /data-combo-presentation-id="13"/);

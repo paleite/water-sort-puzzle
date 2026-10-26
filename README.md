@@ -102,7 +102,7 @@ git diff -- levels src/lib/water-sort/levels/levels.generated.ts
 ```
 
 Deployment CI recompiles the runtime module and fails if the committed generated file is stale. CI never generates new puzzles.
-On pushes, CI solver-verifies only new or changed level files; changed boards are still checked for duplicates against the full current pack. Manual workflow runs and the plain `pnpm verify:levels` command verify every level.
+On pushes, CI solver-verifies only new level files; new boards are checked for duplicates against the full current pack. Manual workflow runs and the plain `pnpm verify:levels` command verify every level.
 
 ## TODO
 
