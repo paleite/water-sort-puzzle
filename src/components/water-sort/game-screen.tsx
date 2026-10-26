@@ -105,11 +105,13 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
-  const {comboCount, comboSequence} = useComboFeedback({
-    moveCount: game.context.history.length,
-    activePourCount: game.context.activePresentations.length,
-    phase: game.phase,
-  });
+  const {
+    comboCount,
+    comboSequence,
+    onPresentationQueued,
+    onPresentationStarted,
+    onPresentationFinished,
+  } = useComboFeedback(game.phase);
 
   const forceBoardRender = useCallback((): void => {
     window.dispatchEvent(new Event("resize"));
@@ -265,6 +267,7 @@ function GameRuntime({
           role="status"
           aria-live="polite"
           data-combo-hue={(comboCount - 2) % 8}
+          style={{"--combo-font-px": Math.min(64, 32 + (Math.min(comboCount, 15) - 2) * 32 / 13)} as React.CSSProperties}
         >
           <span className={styles.comboBurst} aria-hidden="true">
             {Array.from({length: 8}, (_, index) => (
@@ -286,6 +289,9 @@ function GameRuntime({
         hintMove={hints.state.status === "showing" ? hints.state.move : null}
         onVialPress={game.pressVial}
         onMovePresentationFinished={game.finishMovePresentation}
+        onComboPresentationQueued={onPresentationQueued}
+        onComboPresentationStarted={onPresentationStarted}
+        onComboPresentationFinished={onPresentationFinished}
         onUndoPresentationFinished={game.finishUndoPresentation}
         onRestartPresentationFinished={game.finishRestartPresentation}
       />
