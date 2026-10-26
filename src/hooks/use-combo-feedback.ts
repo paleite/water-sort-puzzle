@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { addComboCelebration, type ComboCelebration } from "@/components/water-sort/combo-celebrations";
 import type { AppliedMove } from "@/lib/water-sort/domain/types";
 import { ComboTracker } from "@/lib/water-sort/presentation/combo";
 
@@ -9,7 +10,7 @@ type ComboPhase = "idle" | "sourceSelected" | "presentingUndo" | "presentingRest
 
 export function useComboFeedback(phase: ComboPhase) {
   const trackerRef = useRef(new ComboTracker());
-  const [visible, setVisible] = useState<{id: number; count: number; sequence: number} | null>(null);
+  const [visible, setVisible] = useState<ComboCelebration[]>([]);
   const sequenceRef = useRef(0);
 
   const onPresentationQueued = useCallback((id: number, move: AppliedMove, capacity: number) => {
@@ -20,17 +21,17 @@ export function useComboFeedback(phase: ComboPhase) {
     const count = trackerRef.current.start(id);
     if (count === null || count < 2) return;
     sequenceRef.current += 1;
-    setVisible({id, count, sequence: sequenceRef.current});
+    setVisible((current) => addComboCelebration(current, {id, count, sequence: sequenceRef.current}));
   }, []);
 
   const onPresentationFinished = useCallback((id: number) => {
     trackerRef.current.finish(id, performance.now());
-    setVisible((current) => current?.id === id ? null : current);
+    setVisible((current) => current.filter((entry) => entry.id !== id));
   }, []);
 
   const reset = useCallback(() => {
     trackerRef.current.reset();
-    setVisible(null);
+    setVisible([]);
   }, []);
 
   useEffect(() => {
@@ -40,8 +41,7 @@ export function useComboFeedback(phase: ComboPhase) {
   }, [phase, reset]);
 
   return {
-    comboCount: visible?.count ?? 0,
-    comboSequence: visible?.sequence ?? 0,
+    celebrations: visible,
     onPresentationQueued,
     onPresentationStarted,
     onPresentationFinished,
