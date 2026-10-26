@@ -6,6 +6,7 @@ import { useWaterSortGame } from "@/hooks/use-water-sort-game";
 import { useComboFeedback } from "@/hooks/use-combo-feedback";
 import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
 import type { Level } from "@/lib/water-sort/domain/types";
+import { comboFontSizePixels } from "@/lib/water-sort/presentation/combo";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
 import {
   loadProgress,
@@ -267,7 +268,7 @@ function GameRuntime({
           role="status"
           aria-live="polite"
           data-combo-hue={(comboCount - 2) % 8}
-          style={{"--combo-font-px": Math.min(64, 32 + (Math.min(comboCount, 15) - 2) * 32 / 13)} as React.CSSProperties}
+          style={{"--combo-font-px": comboFontSizePixels(comboCount)} as React.CSSProperties}
         >
           <span className={styles.comboBurst} aria-hidden="true">
             {Array.from({length: 8}, (_, index) => (
