@@ -57,8 +57,9 @@ test("excluded complete vial does not increment an overlapping combo", () => {
 });
 
 test("newly completed destination and full mixed source remain eligible", () => {
-  const mixed: Board = [["sky", "coral", "sky", "coral"], ["coral"]];
+  const mixed: Board = [["sky", "coral", "sky", "coral"], ["coral", "coral", "coral"]];
   const poured = applyMove(mixed, {sourceVialIndex: 0, destinationVialIndex: 1}, 4);
+  assert.deepEqual(poured.newlyCompletedVialIndices, [1]);
   assert.equal(isComboEligible(poured, 4), true);
 });
 
