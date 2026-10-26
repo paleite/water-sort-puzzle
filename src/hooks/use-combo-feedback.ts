@@ -2,81 +2,48 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const COMBO_GRACE_MILLISECONDS = 500;
+import { addComboCelebration, type ComboCelebration } from "@/components/water-sort/combo-celebrations";
+import type { AppliedMove } from "@/lib/water-sort/domain/types";
+import { ComboTracker } from "@/lib/water-sort/presentation/combo";
 
 type ComboPhase = "idle" | "sourceSelected" | "presentingUndo" | "presentingRestart" | "completed";
 
-export function useComboFeedback({
-  moveCount,
-  activePourCount,
-  phase,
-}: {
-  moveCount: number;
-  activePourCount: number;
-  phase: ComboPhase;
-}) {
-  const [comboCount, setComboCount] = useState(0);
-  const [comboSequence, setComboSequence] = useState(0);
-  const lastMoveCountRef = useRef(moveCount);
-  const activePourCountRef = useRef(activePourCount);
-  const comboCountRef = useRef(0);
-  const graceDeadlineRef = useRef(0);
-  const graceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+export function useComboFeedback(phase: ComboPhase) {
+  const trackerRef = useRef(new ComboTracker());
+  const [visible, setVisible] = useState<ComboCelebration[]>([]);
+  const sequenceRef = useRef(0);
 
-  const clearGraceTimer = useCallback(() => {
-    if (graceTimerRef.current !== null) {
-      clearTimeout(graceTimerRef.current);
-      graceTimerRef.current = null;
-    }
+  const onPresentationQueued = useCallback((id: number, move: AppliedMove, capacity: number) => {
+    trackerRef.current.accept(id, move, capacity, performance.now());
   }, []);
 
-  const resetCombo = useCallback(() => {
-    clearGraceTimer();
-    graceDeadlineRef.current = 0;
-    comboCountRef.current = 0;
-    setComboCount(0);
-  }, [clearGraceTimer]);
+  const onPresentationStarted = useCallback((id: number) => {
+    const count = trackerRef.current.start(id);
+    if (count === null || count < 2) return;
+    const sequence = ++sequenceRef.current;
+    setVisible((current) => addComboCelebration(current, {id, count, sequence}));
+  }, []);
+
+  const onPresentationFinished = useCallback((id: number) => {
+    trackerRef.current.finish(id, performance.now());
+    setVisible((current) => current.filter((entry) => entry.id !== id));
+  }, []);
+
+  const reset = useCallback(() => {
+    trackerRef.current.reset();
+    setVisible([]);
+  }, []);
 
   useEffect(() => {
-    const previousMoveCount = lastMoveCountRef.current;
-    const previouslyActive = activePourCountRef.current > 0;
-    lastMoveCountRef.current = moveCount;
-    activePourCountRef.current = activePourCount;
-
-    if (phase === "presentingUndo" || phase === "presentingRestart" || moveCount < previousMoveCount) {
-      resetCombo();
-      return;
+    if (phase === "presentingUndo" || phase === "presentingRestart" || phase === "completed") {
+      reset();
     }
+  }, [phase, reset]);
 
-    if (moveCount > previousMoveCount) {
-      const withinGrace = performance.now() <= graceDeadlineRef.current;
-      const nextCount = previouslyActive || withinGrace ? comboCountRef.current + 1 : 1;
-      clearGraceTimer();
-      graceDeadlineRef.current = 0;
-      comboCountRef.current = nextCount;
-      setComboCount(nextCount);
-      if (nextCount >= 2) {
-        setComboSequence((current) => current + 1);
-      }
-    }
-
-    if (phase === "completed") {
-      clearGraceTimer();
-      return;
-    }
-
-    if (activePourCount === 0 && comboCountRef.current > 0 && graceTimerRef.current === null) {
-      graceDeadlineRef.current = performance.now() + COMBO_GRACE_MILLISECONDS;
-      graceTimerRef.current = setTimeout(() => {
-        graceTimerRef.current = null;
-        graceDeadlineRef.current = 0;
-        comboCountRef.current = 0;
-        setComboCount(0);
-      }, COMBO_GRACE_MILLISECONDS);
-    }
-  }, [activePourCount, moveCount, phase, clearGraceTimer, resetCombo]);
-
-  useEffect(() => clearGraceTimer, [clearGraceTimer]);
-
-  return {comboCount, comboSequence};
+  return {
+    celebrations: visible,
+    onPresentationQueued,
+    onPresentationStarted,
+    onPresentationFinished,
+  };
 }

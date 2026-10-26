@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useWaterSortGame } from "@/hooks/use-water-sort-game";
 import { useComboFeedback } from "@/hooks/use-combo-feedback";
+import { ComboCelebrations } from "./combo-celebrations";
 import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
 import type { Level } from "@/lib/water-sort/domain/types";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
@@ -105,11 +106,12 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
-  const {comboCount, comboSequence} = useComboFeedback({
-    moveCount: game.context.history.length,
-    activePourCount: game.context.activePresentations.length,
-    phase: game.phase,
-  });
+  const {
+    celebrations,
+    onPresentationQueued,
+    onPresentationStarted,
+    onPresentationFinished,
+  } = useComboFeedback(game.phase);
 
   const forceBoardRender = useCallback((): void => {
     window.dispatchEvent(new Event("resize"));
@@ -257,24 +259,7 @@ function GameRuntime({
         onRestart={game.restart}
       />
 
-      {comboCount >= 2 && (
-        <div
-          key={comboSequence}
-          className={styles.comboIndicator}
-          data-combo-tier={comboCount >= 8 ? "legendary" : comboCount >= 5 ? "high" : comboCount >= 3 ? "medium" : "low"}
-          role="status"
-          aria-live="polite"
-          data-combo-hue={(comboCount - 2) % 8}
-        >
-          <span className={styles.comboBurst} aria-hidden="true">
-            {Array.from({length: 8}, (_, index) => (
-              <span key={index} className={styles.comboSpark} />
-            ))}
-          </span>
-          <span className={styles.comboNumber}>{comboCount}×</span>
-          <span className={styles.comboLabel}>{comboCount >= 8 ? "UNSTOPPABLE" : comboCount >= 5 ? "INCREDIBLE" : comboCount >= 3 ? "GREAT CHAIN" : "COMBO"}</span>
-        </div>
-      )}
+      <ComboCelebrations celebrations={celebrations} classes={styles} />
 
       <GameBoard
         board={game.context.board}
@@ -286,6 +271,9 @@ function GameRuntime({
         hintMove={hints.state.status === "showing" ? hints.state.move : null}
         onVialPress={game.pressVial}
         onMovePresentationFinished={game.finishMovePresentation}
+        onComboPresentationQueued={onPresentationQueued}
+        onComboPresentationStarted={onPresentationStarted}
+        onComboPresentationFinished={onPresentationFinished}
         onUndoPresentationFinished={game.finishUndoPresentation}
         onRestartPresentationFinished={game.finishRestartPresentation}
       />
