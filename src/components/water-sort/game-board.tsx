@@ -95,6 +95,9 @@ export function GameBoard({
   hintMove,
   onVialPress,
   onMovePresentationFinished,
+  onComboPresentationQueued,
+  onComboPresentationStarted,
+  onComboPresentationFinished,
   onUndoPresentationFinished,
   onRestartPresentationFinished,
 }: {
@@ -107,6 +110,9 @@ export function GameBoard({
   hintMove: Move | null;
   onVialPress: (vialIndex: number) => void;
   onMovePresentationFinished: (presentationId: number) => void;
+  onComboPresentationQueued: (presentationId: number, move: AppliedMove, capacity: number) => void;
+  onComboPresentationStarted: (presentationId: number) => void;
+  onComboPresentationFinished: (presentationId: number) => void;
   onUndoPresentationFinished: () => void;
   onRestartPresentationFinished: () => void;
 }) {
@@ -267,6 +273,7 @@ export function GameBoard({
       if (!presentationIsReady(active, activePresentations, runtimes)) continue;
 
       runtime.started = true;
+      onComboPresentationStarted(active.id);
       appendDebugLog(`p${active.id} presentation:start`);
       runtime.presentation.timeline.play(0);
     }
@@ -292,7 +299,7 @@ export function GameBoard({
     }
 
     renderLatestRef.current();
-  }, [activePresentations, appendDebugLog]);
+  }, [activePresentations, appendDebugLog, onComboPresentationStarted]);
 
   startReadyPresentationsRef.current = startReadyPresentations;
 
@@ -384,6 +391,7 @@ export function GameBoard({
         onComplete: () => {
           commitPresentationContent(active.id, active.move);
           appendDebugLog(`p${active.id} complete`);
+          onComboPresentationFinished(active.id);
           onMovePresentationFinished(active.id);
         },
       });
@@ -398,6 +406,7 @@ export function GameBoard({
         expeditedReturnRequested: false,
       };
       presentationRuntimesRef.current.set(active.id, runtime);
+      onComboPresentationQueued(active.id, active.move, capacity);
 
       appendDebugLog(
         `MOVE#${active.id} v${sourceVialIndex + 1}->v${destinationVialIndex + 1} `
@@ -414,6 +423,9 @@ export function GameBoard({
     appendDebugLog,
     commitPresentationContent,
     onMovePresentationFinished,
+    onComboPresentationQueued,
+    onComboPresentationFinished,
+    capacity,
   ]);
 
   useEffect(() => () => {
