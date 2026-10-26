@@ -20,8 +20,8 @@ export function useComboFeedback(phase: ComboPhase) {
   const onPresentationStarted = useCallback((id: number) => {
     const count = trackerRef.current.start(id);
     if (count === null || count < 2) return;
-    sequenceRef.current += 1;
-    setVisible((current) => addComboCelebration(current, {id, count, sequence: sequenceRef.current}));
+    const sequence = ++sequenceRef.current;
+    setVisible((current) => addComboCelebration(current, {id, count, sequence}));
   }, []);
 
   const onPresentationFinished = useCallback((id: number) => {
