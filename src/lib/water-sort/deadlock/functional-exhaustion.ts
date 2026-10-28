@@ -22,7 +22,7 @@ export function createRunLayoutKey(board: Board): string {
 export function shouldSearchForExhaustion(
   board: Board,
   capacity: number,
-  maxDistinctSuccessors = 3,
+  maxDistinctSuccessors = 6,
 ): boolean {
   if (isSolved(board, capacity)) return false;
   const moves = getLegalMoves(board, capacity);
