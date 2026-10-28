@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createCanonicalBoardKey } from "@/lib/water-sort/domain/board";
 import type { Board } from "@/lib/water-sort/domain/types";
-import { shouldSearchForExhaustion } from "@/lib/water-sort/deadlock/functional-exhaustion";
+import { createRunLayoutKey, shouldSearchForExhaustion } from "@/lib/water-sort/deadlock/functional-exhaustion";
 import type {
   ExhaustionWorkerRequest,
   ExhaustionWorkerResponse,
@@ -34,14 +34,15 @@ export function useFunctionalExhaustion({
   hintSearching: boolean;
 }) {
   const boardKey = createCanonicalBoardKey(board);
+  const layoutKey = createRunLayoutKey(board);
   const [visiblePage, setVisiblePage] = useState(true);
   const [detected, setDetected] = useState<string | null>(null);
   const cacheRef = useRef(new Map<string, DetectionStatus>());
-  const dismissedRef = useRef(new Set<string>());
+  const dismissedLayoutsRef = useRef(new Set<string>());
   const requestIdRef = useRef(0);
 
   const ready = visiblePage && historyCount > 0 && activePourCount === 0
-    && (phase === "idle" || phase === "sourceSelected")
+    && phase === "idle"
     && !hardDeadEnd && !hintSearching;
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export function useFunctionalExhaustion({
   useEffect(() => {
     const requestId = ++requestIdRef.current;
     if (!ready) return;
-    if (dismissedRef.current.has(boardKey)) return;
+    if (dismissedLayoutsRef.current.has(layoutKey)) return;
 
     const cached = cacheRef.current.get(boardKey);
     if (cached !== undefined) {
@@ -94,7 +95,7 @@ export function useFunctionalExhaustion({
           if (first !== undefined) cache.delete(first);
         }
         cache.set(boardKey, response.status);
-        if (response.status === "exhausted" && !dismissedRef.current.has(boardKey)) {
+        if (response.status === "exhausted" && !dismissedLayoutsRef.current.has(layoutKey)) {
           setDetected(boardKey);
         }
       };
@@ -111,12 +112,13 @@ export function useFunctionalExhaustion({
       worker?.terminate();
       requestIdRef.current += 1;
     };
-  }, [board, boardKey, capacity, ready]);
+  }, [board, boardKey, layoutKey, capacity, ready]);
 
   const dismiss = useCallback(() => {
-    dismissedRef.current.add(boardKey);
+    // Suppress repeated warnings throughout this same reversible loop.
+    dismissedLayoutsRef.current.add(layoutKey);
     setDetected(null);
-  }, [boardKey]);
+  }, [layoutKey]);
 
   return {exhausted: ready && detected === boardKey && !dismissedRef.current.has(boardKey), dismiss};
 }
