@@ -264,7 +264,7 @@ function GameRuntime({
         moveCount={game.context.history.length}
         canUndo={game.context.history.length > 0 && !hasActivePours}
         isAnimating={isHudAnimating}
-        isDeadEnd={game.context.isDeadEnd}
+        isDeadEnd={game.context.isDeadEnd && !isHudAnimating}
         appearanceAnnouncement={appearanceAnnouncement}
         onPreviousPalette={() => cyclePalette(-1)}
         onNextPalette={() => cyclePalette(1)}
