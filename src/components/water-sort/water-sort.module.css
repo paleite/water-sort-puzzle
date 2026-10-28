@@ -295,11 +295,10 @@
   top: clamp(102px, 16dvh, 150px);
   left: 50%;
   z-index: 20;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-items: start;
   width: min(92vw, 540px);
   pointer-events: none;
   transform: translateX(-50%);
@@ -309,6 +308,8 @@
   --combo-pop: 1.18;
   --combo-burst: 1;
   --combo-lean: 10deg;
+  /* Each animated multiplier shares the same cell; never line them up. */
+  grid-area: 1 / 1;
   position: relative;
   display: flex;
   flex-direction: column;
