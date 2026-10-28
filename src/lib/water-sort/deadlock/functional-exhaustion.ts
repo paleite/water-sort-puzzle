@@ -79,7 +79,11 @@ export function searchForFunctionalExhaustion(
       return {status: "playable", exploredStateCount: explored};
     }
 
+    let moveIndex = 0;
     for (const move of getLegalMoves(current, capacity)) {
+      if ((moveIndex++ & 15) === 0 && now() - startedAt >= maxMilliseconds) {
+        return {status: "unknown", exploredStateCount: explored};
+      }
       const next = applyMove(current, move, capacity).nextBoard;
       // One reachable structural change means the position still offers
       // something to discover, even if the full puzzle is unsolvable.
