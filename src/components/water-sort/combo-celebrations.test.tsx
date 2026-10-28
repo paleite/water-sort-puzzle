@@ -70,13 +70,12 @@ test("finishing one concurrent pour leaves the other celebration intact", () => 
   assert.match(markup, /data-combo-presentation-id="13"/);
 });
 
-
 test("concurrent multipliers render in the same centered grid cell", () => {
   const styles = readFileSync(new URL("./water-sort.module.css", import.meta.url), "utf8");
-  const stage = styles.match(/\\.comboStage\\s*\\{([^}]*)\\}/)?.[1] ?? "";
-  const indicator = styles.match(/\\.comboIndicator\\s*\\{([^}]*)\\}/)?.[1] ?? "";
+  const stage = styles.match(/\.comboStage\s*\{([^}]*)\}/)?.[1] ?? "";
+  const indicator = styles.match(/\.comboIndicator\s*\{([^}]*)\}/)?.[1] ?? "";
 
-  assert.match(stage, /display:\\s*grid\\s*;/);
-  assert.match(stage, /justify-items:\\s*center\\s*;/);
-  assert.match(indicator, /grid-area:\\s*1\\s*\\/\\s*1\\s*;/);
+  assert.match(stage, /display:\s*grid\s*;/);
+  assert.match(stage, /justify-items:\s*center\s*;/);
+  assert.match(indicator, /grid-area:\s*1\s*\/\s*1\s*;/);
 });
