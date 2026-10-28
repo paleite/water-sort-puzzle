@@ -103,7 +103,18 @@ export function useFunctionalExhaustion({
 
       const message: ExhaustionWorkerRequest = {requestId, boardKey, board, capacity};
       runningWorker.postMessage(message);
-      watchdog = setTimeout(stop, WORKER_WATCHDOG_MILLISECONDS);
+      watchdog = setTimeout(() => {
+        if (requestId === requestIdRef.current) {
+          // Remember timed-out states so returning to one does not restart work.
+          const cache = cacheRef.current;
+          if (cache.size >= MAX_CACHED_STATES) {
+            const first = cache.keys().next().value;
+            if (first !== undefined) cache.delete(first);
+          }
+          cache.set(boardKey, "unknown");
+        }
+        stop();
+      }, WORKER_WATCHDOG_MILLISECONDS);
     }, DEBOUNCE_MILLISECONDS);
 
     return () => {
