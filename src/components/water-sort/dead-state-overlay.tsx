@@ -9,7 +9,7 @@ export function DeadStateOverlay({
   onRestart,
   onDismiss,
 }: {
-  reason: "no-moves" | "unsolvable";
+  reason: "no-moves" | "unsolvable" | "exhausted";
   canUndo: boolean;
   onUndo: () => void;
   onRestart: () => void;
@@ -19,10 +19,12 @@ export function DeadStateOverlay({
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/55 p-6" role="dialog" aria-modal="true">
       <div className="w-full max-w-sm rounded-2xl border border-white/15 bg-slate-950 p-6 text-center text-white shadow-2xl">
         <h2 className="text-xl font-semibold">
-          {reason === "no-moves" ? "No moves left" : "No solution from here"}
+          {reason === "no-moves" ? "No moves left" : reason === "exhausted" ? "No meaningful moves left" : "No solution from here"}
         </h2>
         <p className="mt-2 text-sm text-slate-300">
-          This position can’t be completed.
+          {reason === "exhausted"
+            ? "The remaining pours only rearrange liquid without unlocking new colors or space."
+            : "This position can’t be completed."}
         </p>
         <div className="mt-6 flex justify-center gap-2">
           <Button type="button" disabled={!canUndo} onClick={onUndo}>

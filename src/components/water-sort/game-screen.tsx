@@ -6,6 +6,7 @@ import { useWaterSortGame } from "@/hooks/use-water-sort-game";
 import { useComboFeedback } from "@/hooks/use-combo-feedback";
 import { ComboCelebrations } from "./combo-celebrations";
 import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
+import { useFunctionalExhaustion } from "@/hooks/use-functional-exhaustion";
 import type { Level } from "@/lib/water-sort/domain/types";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
 import {
@@ -114,6 +115,15 @@ function GameRuntime({
     game.phase === "presentingUndo" || game.phase === "presentingRestart";
   const hasActivePours = game.context.activePresentations.length > 0;
   const isHudAnimating = isTransitionAnimating || hasActivePours;
+  const functionalExhaustion = useFunctionalExhaustion({
+    board: game.context.board,
+    capacity: level.capacity,
+    phase: game.phase,
+    activePourCount: game.context.activePresentations.length,
+    historyCount: game.context.history.length,
+    hardDeadEnd: game.context.isDeadEnd,
+    hintSearching: hints.state.status === "searching",
+  });
   const {
     celebrations,
     onPresentationQueued,
@@ -254,7 +264,7 @@ function GameRuntime({
         moveCount={game.context.history.length}
         canUndo={game.context.history.length > 0 && !hasActivePours}
         isAnimating={isHudAnimating}
-        isDeadEnd={game.context.isDeadEnd}
+        isDeadEnd={game.context.isDeadEnd && !isHudAnimating}
         appearanceAnnouncement={appearanceAnnouncement}
         onPreviousPalette={() => cyclePalette(-1)}
         onNextPalette={() => cyclePalette(1)}
@@ -307,7 +317,7 @@ function GameRuntime({
         />
       )}
 
-      {game.context.isDeadEnd && game.phase !== "completed" && (
+      {game.context.isDeadEnd && !isHudAnimating && game.phase !== "completed" && (
         <DeadStateOverlay
           reason="no-moves"
           canUndo={game.context.history.length > 0}
@@ -316,7 +326,17 @@ function GameRuntime({
         />
       )}
 
-      {hints.state.status === "unsolvable" && !game.context.isDeadEnd && (
+      {functionalExhaustion.exhausted && !game.context.isDeadEnd && hints.state.status !== "unsolvable" && (
+        <DeadStateOverlay
+          reason="exhausted"
+          canUndo={game.context.history.length > 0}
+          onUndo={game.undo}
+          onRestart={game.restart}
+          onDismiss={functionalExhaustion.dismiss}
+        />
+      )}
+
+      {hints.state.status === "unsolvable" && !game.context.isDeadEnd && !isHudAnimating && (
         <DeadStateOverlay
           reason="unsolvable"
           canUndo={game.context.history.length > 0}
