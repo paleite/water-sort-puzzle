@@ -120,5 +120,5 @@ export function useFunctionalExhaustion({
     setDetected(null);
   }, [layoutKey]);
 
-  return {exhausted: ready && detected === boardKey && !dismissedRef.current.has(boardKey), dismiss};
+  return {exhausted: ready && detected === boardKey && !dismissedLayoutsRef.current.has(layoutKey), dismiss};
 }
