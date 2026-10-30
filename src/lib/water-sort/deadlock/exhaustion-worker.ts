@@ -10,14 +10,21 @@ export interface ExhaustionWorkerRequest {
   capacity: number;
 }
 
-export type ExhaustionWorkerResponse = ExhaustionSearchResult & {
-  requestId: number;
-  boardKey: string;
-};
+export type ExhaustionWorkerResponse =
+  | {type: "ready"}
+  | (ExhaustionSearchResult & {
+      type: "result";
+      requestId: number;
+      boardKey: string;
+    });
 
 self.onmessage = (event: MessageEvent<ExhaustionWorkerRequest>) => {
   const {requestId, boardKey, board, capacity} = event.data;
   const result = searchForFunctionalExhaustion(board, capacity);
-  const response: ExhaustionWorkerResponse = {requestId, boardKey, ...result};
+  const response: ExhaustionWorkerResponse = {type: "result", requestId, boardKey, ...result};
   self.postMessage(response);
 };
+
+// Module loading and evaluation have finished; startup time must not count
+// towards the short search execution watchdog on the main thread.
+self.postMessage({type: "ready"} satisfies ExhaustionWorkerResponse);
