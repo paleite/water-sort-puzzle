@@ -36,6 +36,7 @@ export type GameEvent =
   | {type: "VIAL.PRESSED"; vialIndex: number}
   | {type: "PRESENTATION.FINISHED"; presentationId: number}
   | {type: "UNDO"}
+  | {type: "REWIND_TO"; historyIndex: number}
   | {type: "UNDO.PRESENTATION_FINISHED"}
   | {type: "RESTART"}
   | {type: "RESTART.PRESENTATION_FINISHED"};
@@ -71,6 +72,12 @@ export const gameMachine = setup({
       resolvePress(context, event)?.type === "move",
     canUndo: ({context}) =>
       context.history.length > 0 && context.activePresentations.length === 0,
+    canRewindTo: ({context, event}) =>
+      event.type === "REWIND_TO"
+      && Number.isInteger(event.historyIndex)
+      && event.historyIndex >= 0
+      && event.historyIndex < context.history.length
+      && context.activePresentations.length === 0,
     finishingLastSolvedPresentation: ({context, event}) =>
       event.type === "PRESENTATION.FINISHED"
       && context.completionPending
@@ -138,6 +145,22 @@ export const gameMachine = setup({
       };
     }),
     finishUndo: assign(() => ({activeUndo: null})),
+    rewindToCheckpoint: assign(({context, event}) => {
+      if (event.type !== "REWIND_TO") return {};
+      const checkpoint = context.history[event.historyIndex];
+      if (checkpoint === undefined) return {};
+      const checkpointBoard = checkpoint.previousBoard;
+      return {
+        board: checkpointBoard,
+        history: context.history.slice(0, event.historyIndex),
+        activePresentations: [],
+        activeUndo: null,
+        selectedSourceVialIndex: null,
+        lastInteraction: null,
+        completionPending: false,
+        isDeadEnd: isDeadEnd(checkpointBoard, context.level.capacity),
+      };
+    }),
     restart: assign(({context}) => ({
       board: context.initialBoard,
       history: [],
@@ -191,6 +214,7 @@ export const gameMachine = setup({
               {actions: "recordNonMoveInteraction"},
             ],
             UNDO: {guard: "canUndo", target: "presentingUndo", actions: "prepareUndo"},
+            REWIND_TO: {guard: "canRewindTo", target: "presentingRestart", actions: "rewindToCheckpoint"},
             RESTART: {target: "presentingRestart", actions: "restart"},
           },
         },
@@ -211,6 +235,7 @@ export const gameMachine = setup({
               {actions: "recordNonMoveInteraction"},
             ],
             UNDO: {guard: "canUndo", target: "presentingUndo", actions: "prepareUndo"},
+            REWIND_TO: {guard: "canRewindTo", target: "presentingRestart", actions: "rewindToCheckpoint"},
             RESTART: {target: "presentingRestart", actions: "restart"},
           },
         },

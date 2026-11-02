@@ -34,6 +34,9 @@ export function useWaterSortGame(level: Level, savedGame?: SavedGame) {
   }, [send]);
 
   const undo = useCallback(() => send({type: "UNDO"}), [send]);
+  const rewindTo = useCallback((historyIndex: number) => {
+    send({type: "REWIND_TO", historyIndex});
+  }, [send]);
   const restart = useCallback(() => send({type: "RESTART"}), [send]);
   const finishMovePresentation = useCallback((presentationId: number) => {
     send({type: "PRESENTATION.FINISHED", presentationId});
@@ -53,6 +56,7 @@ export function useWaterSortGame(level: Level, savedGame?: SavedGame) {
     phase,
     pressVial,
     undo,
+    rewindTo,
     restart,
     finishMovePresentation,
     finishUndoPresentation,

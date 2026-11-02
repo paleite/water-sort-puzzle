@@ -7,6 +7,7 @@ import { useComboFeedback } from "@/hooks/use-combo-feedback";
 import { ComboCelebrations } from "./combo-celebrations";
 import { useWaterSortHints } from "@/hooks/use-water-sort-hints";
 import { useFunctionalExhaustion } from "@/hooks/use-functional-exhaustion";
+import { useSolvableRewind } from "@/hooks/use-solvable-rewind";
 import type { Level } from "@/lib/water-sort/domain/types";
 import { getLevel, getNextLevelId } from "@/lib/water-sort/levels/load-level";
 import {
@@ -96,6 +97,12 @@ function GameRuntime({
 }) {
   const game = useWaterSortGame(level, savedGame);
   const hints = useWaterSortHints(game.context.board, level.capacity);
+  const recovery = useSolvableRewind({
+    board: game.context.board,
+    history: game.context.history,
+    capacity: level.capacity,
+    onRewind: game.rewindTo,
+  });
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(
     DEFAULT_LIQUID_PALETTE_ID,
   );
@@ -321,6 +328,9 @@ function GameRuntime({
         <DeadStateOverlay
           reason="no-moves"
           canUndo={game.context.history.length > 0}
+          recoveryStatus={recovery.status}
+          onRecover={recovery.start}
+          onCancelRecovery={recovery.cancel}
           onUndo={game.undo}
           onRestart={game.restart}
         />
@@ -330,6 +340,9 @@ function GameRuntime({
         <DeadStateOverlay
           reason="exhausted"
           canUndo={game.context.history.length > 0}
+          recoveryStatus={recovery.status}
+          onRecover={recovery.start}
+          onCancelRecovery={recovery.cancel}
           onUndo={game.undo}
           onRestart={game.restart}
           onDismiss={functionalExhaustion.dismiss}
@@ -340,6 +353,9 @@ function GameRuntime({
         <DeadStateOverlay
           reason="unsolvable"
           canUndo={game.context.history.length > 0}
+          recoveryStatus={recovery.status}
+          onRecover={recovery.start}
+          onCancelRecovery={recovery.cancel}
           onUndo={game.undo}
           onRestart={game.restart}
           onDismiss={hints.dismiss}
