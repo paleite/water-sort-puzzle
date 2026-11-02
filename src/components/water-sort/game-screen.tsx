@@ -102,6 +102,7 @@ function GameRuntime({
     history: game.context.history,
     capacity: level.capacity,
     onRewind: game.rewindTo,
+    knowledge: hints.knowledge,
   });
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(
     DEFAULT_LIQUID_PALETTE_ID,
