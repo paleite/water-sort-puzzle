@@ -8,6 +8,7 @@ import { findLastSolvableHistoryIndex } from "./rewind-search";
 function createHistoryBoards(count: number): Board[] {
   return Array.from({length: count}, (_, index): Board => [
     ["coral"],
+    [],
     ...Array.from({length: index}, (): Board[number] => ["sky"]),
   ]);
 }
