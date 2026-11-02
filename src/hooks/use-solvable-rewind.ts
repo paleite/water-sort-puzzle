@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { createCanonicalBoardKey } from "@/lib/water-sort/domain/board";
 import type { AppliedTurn, Board } from "@/lib/water-sort/domain/types";
+import { mergeHintPath, type SolvabilityKnowledge } from "@/lib/water-sort/hints/hint-policy";
 import type {
   RewindWorkerRequest,
   RewindWorkerResponse,
@@ -17,11 +18,13 @@ export function useSolvableRewind({
   history,
   capacity,
   onRewind,
+  knowledge,
 }: {
   board: Board;
   history: readonly AppliedTurn[];
   capacity: number;
   onRewind: (historyIndex: number) => void;
+  knowledge: SolvabilityKnowledge;
 }) {
   const boardKey = createCanonicalBoardKey(board);
   const [status, setStatus] = useState<RewindRecoveryStatus>("idle");
@@ -76,6 +79,9 @@ export function useSolvableRewind({
       if (requestId !== requestIdRef.current || event.data.requestId !== requestId) return;
       const result = event.data;
       terminate();
+      // Reuse the worker's proofs in future Hint and recovery requests.
+      for (const key of result.learnedUnsolvableKeys) knowledge.unsolvableKeys.add(key);
+      for (const path of result.learnedPaths) mergeHintPath(knowledge.policy, path);
       if (result.status !== "found") {
         setStatus("unavailable");
         return;
@@ -92,13 +98,15 @@ export function useSolvableRewind({
       requestId,
       historyBoards: history.map((turn) => turn.previousBoard),
       capacity,
+      knownPolicyKeys: [...knowledge.policy.keys()],
+      knownUnsolvableKeys: [...knowledge.unsolvableKeys],
     };
     try {
       worker.postMessage(request);
     } catch {
       fail();
     }
-  }, [capacity, history, onRewind, status, terminate]);
+  }, [capacity, history, knowledge, onRewind, status, terminate]);
 
   return {status, start, cancel};
 }
