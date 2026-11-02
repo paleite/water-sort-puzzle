@@ -5,6 +5,13 @@ import type { Board, Move } from "../domain/types";
 
 export type HintPolicy = Map<string, string>;
 
+/** Proven facts shared by Hint and on-demand deadlock recovery in one game session. */
+export interface SolvabilityKnowledge {
+  policy: HintPolicy;
+  unsolvableKeys: Set<string>;
+}
+
+
 export function resolveHintMove(
   board: Board,
   capacity: number,

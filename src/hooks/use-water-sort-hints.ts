@@ -7,7 +7,7 @@ import type { Board, Move } from "@/lib/water-sort/domain/types";
 import {
   mergeHintPath,
   resolveHintMove,
-  type HintPolicy,
+  type SolvabilityKnowledge,
 } from "@/lib/water-sort/hints/hint-policy";
 import type {
   HintWorkerRequest,
@@ -24,8 +24,10 @@ export type HintState =
 
 export function useWaterSortHints(board: Board, capacity: number) {
   const [state, setState] = useState<HintState>({status: "idle"});
-  const policyRef = useRef<HintPolicy>(new Map());
-  const unsolvableKeysRef = useRef(new Set<string>());
+  const knowledgeRef = useRef<SolvabilityKnowledge>({
+    policy: new Map(),
+    unsolvableKeys: new Set(),
+  });
   const workerRef = useRef<Worker | null>(null);
   const requestIdRef = useRef(0);
   const slowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -51,19 +53,19 @@ export function useWaterSortHints(board: Board, capacity: number) {
 
   const requestHint = useCallback(() => {
     const currentKey = createCanonicalBoardKey(board);
-    if (unsolvableKeysRef.current.has(currentKey)) {
+    if (knowledgeRef.current.unsolvableKeys.has(currentKey)) {
       setState({status: "unsolvable"});
       return;
     }
 
-    const nextKey = policyRef.current.get(currentKey);
+    const nextKey = knowledgeRef.current.policy.get(currentKey);
     if (nextKey !== undefined) {
       const move = resolveHintMove(board, capacity, nextKey);
       if (move !== null) {
         setState({status: "showing", move});
         return;
       }
-      policyRef.current.delete(currentKey);
+      knowledgeRef.current.policy.delete(currentKey);
     }
 
     cancel();
@@ -91,7 +93,7 @@ export function useWaterSortHints(board: Board, capacity: number) {
       workerRef.current = null;
 
       if (event.data.status === "unsolvable") {
-        unsolvableKeysRef.current.add(currentKey);
+        knowledgeRef.current.unsolvableKeys.add(currentKey);
         setState({status: "unsolvable"});
         return;
       }
@@ -100,8 +102,8 @@ export function useWaterSortHints(board: Board, capacity: number) {
         return;
       }
 
-      mergeHintPath(policyRef.current, event.data.boards);
-      const resolvedNextKey = policyRef.current.get(currentKey);
+      mergeHintPath(knowledgeRef.current.policy, event.data.boards);
+      const resolvedNextKey = knowledgeRef.current.policy.get(currentKey);
       const move = resolvedNextKey === undefined
         ? null
         : resolveHintMove(board, capacity, resolvedNextKey);
@@ -120,12 +122,12 @@ export function useWaterSortHints(board: Board, capacity: number) {
       requestId,
       board,
       capacity,
-      knownPolicyKeys: [...policyRef.current.keys()],
+      knownPolicyKeys: [...knowledgeRef.current.policy.keys()],
     };
     worker.postMessage(request);
   }, [board, cancel, capacity, clearSlowTimer]);
 
   const dismiss = useCallback(() => setState({status: "idle"}), []);
 
-  return {state, requestHint, cancel, dismiss};
+  return {state, requestHint, cancel, dismiss, knowledge: knowledgeRef.current};
 }
