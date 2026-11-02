@@ -10,6 +10,62 @@ interface SearchNode {
   previousMove: Move | null;
 }
 
+interface QueueEntry {
+  nodeIndex: number;
+  cost: number;
+  estimate: number;
+  order: number;
+}
+
+/** Min-heap ordered by score, then insertion order to preserve A* ties. */
+class SearchQueue {
+  private readonly entries: QueueEntry[] = [];
+
+  get length(): number {
+    return this.entries.length;
+  }
+
+  push(entry: QueueEntry): void {
+    const entries = this.entries;
+    let index = entries.length;
+    entries.push(entry);
+    while (index > 0) {
+      const parent = (index - 1) >> 1;
+      const parentEntry = entries[parent]!;
+      if (!SearchQueue.less(entry, parentEntry)) break;
+      entries[index] = parentEntry;
+      index = parent;
+    }
+    entries[index] = entry;
+  }
+
+  pop(): QueueEntry | undefined {
+    const entries = this.entries;
+    const first = entries[0];
+    const last = entries.pop();
+    if (entries.length === 0 || last === undefined) return first;
+
+    let index = 0;
+    while (index * 2 + 1 < entries.length) {
+      let child = index * 2 + 1;
+      const right = child + 1;
+      if (right < entries.length && SearchQueue.less(entries[right]!, entries[child]!)) {
+        child = right;
+      }
+      if (!SearchQueue.less(entries[child]!, last)) break;
+      entries[index] = entries[child]!;
+      index = child;
+    }
+    entries[index] = last;
+    return first;
+  }
+
+  private static less(left: QueueEntry, right: QueueEntry): boolean {
+    return left.estimate < right.estimate
+      || (left.estimate === right.estimate && left.order < right.order);
+  }
+}
+
 export type HintSearchOutcome =
   | { status: "found"; boards: readonly Board[]; moves: readonly Move[]; exploredStateCount: number }
   | { status: "unsolvable"; exploredStateCount: number }
@@ -53,20 +109,14 @@ export function searchForHintPath(
   maxExploredStates = 2_000_000,
 ): HintSearchOutcome {
   const nodes: SearchNode[] = [{board: initialBoard, parentIndex: null, previousMove: null}];
-  const queue: Array<{nodeIndex: number; cost: number; estimate: number}> = [
-    {nodeIndex: 0, cost: 0, estimate: estimateRemainingMoves(initialBoard)},
-  ];
+  const queue = new SearchQueue();
+  queue.push({nodeIndex: 0, cost: 0, estimate: estimateRemainingMoves(initialBoard), order: 0});
+  let nextOrder = 1;
   const bestCost = new Map<string, number>([[createCanonicalBoardKey(initialBoard), 0]]);
   let exploredStateCount = 0;
 
   while (queue.length > 0) {
-    let bestQueueIndex = 0;
-    for (let index = 1; index < queue.length; index += 1) {
-      const candidate = queue[index]!;
-      const best = queue[bestQueueIndex]!;
-      if (candidate.estimate < best.estimate) bestQueueIndex = index;
-    }
-    const [entry] = queue.splice(bestQueueIndex, 1);
+    const entry = queue.pop();
     if (entry === undefined) break;
     const node = nodes[entry.nodeIndex];
     if (node === undefined) continue;
@@ -97,6 +147,7 @@ export function searchForHintPath(
         nodeIndex,
         cost: nextCost,
         estimate: nextCost + estimateRemainingMoves(nextBoard),
+        order: nextOrder++,
       });
     }
   }
