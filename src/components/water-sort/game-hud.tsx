@@ -6,6 +6,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ImageIcon,
+  FlaskConicalIcon,
   LightbulbIcon,
   RotateCcwIcon,
   Undo2Icon,
@@ -25,6 +26,7 @@ export function GameHud({
   onPreviousPalette,
   onNextPalette,
   onCycleBackground,
+  onCycleVialSkin,
   onHint,
   onCancelHint,
   hintSearching,
@@ -42,6 +44,7 @@ export function GameHud({
   onPreviousPalette: () => void;
   onNextPalette: () => void;
   onCycleBackground: () => void;
+  onCycleVialSkin: () => void;
   onHint: () => void;
   onCancelHint: () => void;
   hintSearching: boolean;
@@ -90,6 +93,17 @@ export function GameHud({
           onClick={onCycleBackground}
         >
           <ImageIcon />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="border border-white/20 bg-black/15"
+          aria-label="Change vial style"
+          disabled={isAnimating}
+          onClick={onCycleVialSkin}
+        >
+          <FlaskConicalIcon />
         </Button>
       </div>
 
