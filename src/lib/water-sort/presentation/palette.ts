@@ -4,6 +4,25 @@ export const PALETTE_STORAGE_KEY = "water-sort-palette";
 
 export const LIQUID_PALETTES = [
   {
+    id: "mad_alchemist",
+    name: "Mad Alchemist",
+    // Twelve saturated but distinct potion pigments. Shapes remain color-linked.
+    values: [
+      "#ef5aa9", // coral: pink flowers
+      "#f4852d", // amber: orange diamonds
+      "#f7cb32", // lemon: golden waves
+      "#a3ed35", // lime: green zigzags
+      "#38bf57", // emerald: leaves
+      "#20c7b9", // teal: spirals
+      "#38c9ee", // sky: bubbles
+      "#317df2", // cobalt: striped blue
+      "#a253ea", // violet: stars
+      "#df37bc", // magenta: crescent moons
+      "#df4269", // rose: hearts
+      "#a98251", // cocoa: constellations
+    ],
+  },
+  {
     id: "previous_ciede2000",
     name: "Previous CIEDE2000",
     values: [
