@@ -40,6 +40,7 @@ interface VialVisual {
   movingContainer: Container;
   uniforms: UniformGroup;
   debug: Graphics;
+  sparkles: readonly Graphics[];
 }
 
 interface Point {
@@ -220,6 +221,7 @@ export class PixiBoardRenderer {
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
   private elapsedSeconds = 0;
+  private prefersReducedMotion = false;
 
   constructor({boardElement, canvasHost}: {boardElement: HTMLElement; canvasHost: HTMLElement}) {
     this.boardElement = boardElement;
@@ -240,6 +242,7 @@ export class PixiBoardRenderer {
     });
 
     this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource);
+    this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (this.destroyRequested) {
       this.destroyApplication();
@@ -258,9 +261,23 @@ export class PixiBoardRenderer {
     );
     this.canvasHost.replaceChildren(this.app.canvas);
     this.app.ticker.add((ticker) => {
-      this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
-      for (const visual of this.visuals.values()) {
+      if (!this.prefersReducedMotion) {
+        this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
+      }
+      for (const [vialIndex, visual] of this.visuals.entries()) {
         visual.uniforms.uniforms.uTime = this.elapsedSeconds;
+        for (let sparkleIndex = 0; sparkleIndex < visual.sparkles.length; sparkleIndex++) {
+          const sparkle = visual.sparkles[sparkleIndex];
+          if (sparkle === undefined) continue;
+          if (this.prefersReducedMotion) {
+            sparkle.alpha = 0.35;
+            continue;
+          }
+          const phase = this.elapsedSeconds * 1.4 + vialIndex * 0.91 + sparkleIndex * 2.3;
+          const shimmer = (Math.sin(phase) + 1) / 2;
+          sparkle.alpha = 0.14 + shimmer * 0.34;
+          sparkle.scale.set(0.8 + shimmer * 0.28);
+        }
       }
     });
 
@@ -344,9 +361,16 @@ export class PixiBoardRenderer {
     mesh.mask = mask;
     const artwork = createVialArtwork(this.vialTexture);
     const debug = new Graphics();
+    // Two deliberately quiet gold glints per vial: animated, but not interactive.
+    // They live in the artwork container so they follow the original pour geometry.
+    const sparkles = [
+      new Graphics().circle(23, 78, 1.5).fill({color: 0xffe9ae}),
+      new Graphics().circle(79, 190, 1.2).fill({color: 0xffd692}),
+    ];
+    sparkles.forEach((sparkle) => { sparkle.alpha = 0.35; });
 
     liquidContainer.addChild(mesh, mask);
-    artworkContainer.addChild(artwork, debug);
+    artworkContainer.addChild(artwork, ...sparkles, debug);
     this.liquidLayer.addChild(liquidContainer);
     this.artworkLayer.addChild(artworkContainer);
     this.movingVialLayer.addChild(movingContainer);
@@ -357,6 +381,7 @@ export class PixiBoardRenderer {
       movingContainer,
       uniforms,
       debug,
+      sparkles,
     };
     this.visuals.set(vialIndex, visual);
     return visual;
