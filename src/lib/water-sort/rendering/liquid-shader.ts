@@ -104,63 +104,111 @@ vec4 topBandColor() {
   return uBand0;
 }
 
-float centeredLine(float coordinate, float width) {
-  float distanceToCenter = abs(fract(coordinate) - 0.5);
-  return 1.0 - smoothstep(width, width + 0.075, distanceToCenter);
+
+float alchemistDisc(vec2 offset, float radius) {
+  return 1.0 - smoothstep(radius * 0.82, radius, length(offset));
 }
 
-float dotGrid(vec2 point, float radius) {
-  vec2 cell = fract(point) - 0.5;
-  return 1.0 - smoothstep(radius, radius + 0.09, length(cell));
+float alchemistLine(vec2 point, vec2 start, vec2 end, float width) {
+  vec2 line = end - start;
+  float progress = clamp(dot(point - start, line) / max(dot(line, line), 0.0001), 0.0, 1.0);
+  return 1.0 - smoothstep(width * 0.7, width, length(point - start - progress * line));
 }
 
-float ringGrid(vec2 point) {
-  float radius = length(fract(point) - 0.5);
-  return 1.0 - smoothstep(0.07, 0.13, abs(radius - 0.28));
-}
-
-float diamondGrid(vec2 point) {
-  vec2 cell = abs(fract(point) - 0.5);
-  float distanceToEdge = abs(cell.x + cell.y - 0.38);
-  return 1.0 - smoothstep(0.05, 0.11, distanceToEdge);
-}
-
-float zigzagPattern(vec2 point) {
-  float triangle = abs(fract(point.x * 0.5) * 2.0 - 1.0);
-  float row = fract(point.y * 0.5);
-  return 1.0 - smoothstep(0.055, 0.12, abs(row - triangle));
-}
-
-float liquidPattern(float patternId) {
-  vec2 coarse = vec2(vUV.x * 6.2, vUV.y * 14.0);
-
-  if (patternId < 0.5) return centeredLine(coarse.x + coarse.y * 0.55, 0.12);
-  if (patternId < 1.5) return dotGrid(coarse, 0.17);
-  if (patternId < 2.5) return centeredLine(coarse.y, 0.12);
-  if (patternId < 3.5) return centeredLine(coarse.x, 0.12);
-  if (patternId < 4.5) {
-    return mod(floor(coarse.x) + floor(coarse.y), 2.0);
+float alchemistFlower(vec2 point) {
+  float petals = 0.0;
+  for (int index = 0; index < 5; index++) {
+    float angle = float(index) * 1.25663706 - 1.57079633;
+    vec2 center = 0.19 * vec2(cos(angle), sin(angle));
+    petals = max(petals, alchemistDisc(point - center, 0.14));
   }
-  if (patternId < 5.5) {
+  return max(petals * 0.88, alchemistDisc(point, 0.08));
+}
+
+float alchemistStar(vec2 point) {
+  float angle = atan(point.y, point.x);
+  float peaks = pow(0.5 + 0.5 * cos(angle * 5.0 + 1.57079633), 4.0);
+  float radius = mix(0.17, 0.37, peaks);
+  return 1.0 - smoothstep(radius - 0.035, radius + 0.02, length(point));
+}
+
+float alchemistHeart(vec2 point) {
+  // The standard implicit heart curve: negative values are inside.
+  vec2 heart = vec2(point.x * 3.0, (point.y + 0.02) * 3.0);
+  float squaredRadius = dot(heart, heart);
+  float shape = pow(squaredRadius - 1.0, 3.0) - heart.x * heart.x * heart.y * heart.y * heart.y;
+  return 1.0 - smoothstep(-0.05, 0.07, shape);
+}
+
+float alchemistLeaf(vec2 point, vec2 center, float rotation) {
+  float cosine = cos(rotation);
+  float sine = sin(rotation);
+  vec2 offset = point - center;
+  vec2 rotated = vec2(cosine * offset.x - sine * offset.y, sine * offset.x + cosine * offset.y);
+  float elliptical = length(rotated * vec2(4.5, 2.7));
+  return 1.0 - smoothstep(0.73, 0.98, elliptical);
+}
+
+float alchemistCrescent(vec2 point) {
+  float outer = alchemistDisc(point + vec2(0.05, 0.0), 0.36);
+  float inner = alchemistDisc(point + vec2(0.17, -0.09), 0.31);
+  return outer * (1.0 - inner);
+}
+
+float alchemistPattern(float patternId) {
+  // Match the twelve generated potion motifs. Patterns are locked to color IDs,
+  // not vial positions, so their visual identity survives every transfer.
+  vec2 uv = vec2(vUV.x * 2.7, vUV.y * 10.0);
+  vec2 point = fract(uv) - 0.5;
+
+  if (patternId < 0.5) return alchemistFlower(point); // coral: blossoms
+  if (patternId < 1.5) { // amber: engraved diamonds
+    float distanceToEdge = abs(point.x) + abs(point.y);
+    return 1.0 - smoothstep(0.30, 0.38, distanceToEdge);
+  }
+  if (patternId < 2.5) { // lemon: enchanted waves
+    float wave = point.y - 0.18 * sin(uv.x * 6.2831853);
+    return 1.0 - smoothstep(0.075, 0.14, abs(wave));
+  }
+  if (patternId < 3.5) { // lime: zigzag
+    float saw = abs(fract(uv.x) * 2.0 - 1.0);
+    float centerLine = (saw - 0.5) * 0.53;
+    return 1.0 - smoothstep(0.055, 0.115, abs(point.y - centerLine));
+  }
+  if (patternId < 4.5) { // emerald: floating leaves
     return max(
-      centeredLine(coarse.x + coarse.y, 0.09),
-      centeredLine(coarse.x - coarse.y, 0.09)
+      alchemistLeaf(point, vec2(-0.19, 0.17), 0.7),
+      alchemistLeaf(point, vec2(0.16, -0.16), -0.75)
     );
   }
-  if (patternId < 6.5) return diamondGrid(coarse);
-  if (patternId < 7.5) return ringGrid(coarse);
-  if (patternId < 8.5) return zigzagPattern(coarse);
-  if (patternId < 9.5) {
-    vec2 staggered = coarse;
-    staggered.x += mod(floor(staggered.y), 2.0) * 0.5;
-    return dotGrid(staggered, 0.145);
+  if (patternId < 5.5) { // teal: spiraling magic
+    float radius = length(point);
+    float angle = atan(point.y, point.x) / 6.2831853;
+    float spiral = abs(fract(angle - 1.7 * radius) - 0.5);
+    return (1.0 - smoothstep(0.03, 0.085, spiral)) * (1.0 - smoothstep(0.34, 0.45, radius));
   }
-  if (patternId < 10.5) {
-    return max(centeredLine(coarse.x, 0.08), centeredLine(coarse.y, 0.08));
+  if (patternId < 6.5) { // sky: floating bubbles
+    float ring = abs(length(point) - 0.27);
+    return 1.0 - smoothstep(0.035, 0.065, ring);
   }
+  if (patternId < 7.5) { // cobalt: diagonal stripes
+    float stripe = abs(fract(uv.x + uv.y * 0.67) - 0.5);
+    return 1.0 - smoothstep(0.18, 0.27, stripe);
+  }
+  if (patternId < 8.5) return alchemistStar(point); // violet: five-point stars
+  if (patternId < 9.5) return alchemistCrescent(point); // magenta: crescent moons
+  if (patternId < 10.5) return alchemistHeart(point); // rose: hearts
 
-  float speckle = hash(floor(coarse * 2.0));
-  return smoothstep(0.72, 0.88, speckle);
+  // cocoa: connected constellations, visually distinct from dots and stars
+  float connections = max(
+    alchemistLine(point, vec2(-0.32, 0.24), vec2(0.15, -0.23), 0.035),
+    alchemistLine(point, vec2(0.15, -0.23), vec2(0.32, 0.25), 0.035)
+  );
+  float stars = max(
+    alchemistDisc(point - vec2(-0.32, 0.24), 0.085),
+    max(alchemistDisc(point - vec2(0.15, -0.23), 0.085), alchemistDisc(point - vec2(0.32, 0.25), 0.085))
+  );
+  return max(connections * 0.65, stars);
 }
 
 float wrappedDistance(float first, float second) {
@@ -220,12 +268,12 @@ void main() {
   float sideLight = smoothstep(0.0, 0.24, vUV.x) * smoothstep(1.0, 0.76, vUV.x);
   vec3 color = band.rgb * (0.88 + sideLight * 0.12);
 
-  float pattern = liquidPattern(patternId);
+  float pattern = alchemistPattern(patternId);
   float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
   vec3 lightPatternColor = mix(color, vec3(1.0), 0.38);
   vec3 darkPatternColor = color * 0.62;
   vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
-  color = mix(color, patternColor, pattern * 0.28);
+  color = mix(color, patternColor, pattern * 0.58);
 
   float bubbleMask = 0.0;
   for (int index = 0; index < 7; index++) {
