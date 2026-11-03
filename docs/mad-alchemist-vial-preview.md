@@ -7,6 +7,7 @@ The generated fantasy-potion art inspired this theme. All artwork used by the ru
 - Transparent purple-and-brass potion vial: `public/vials/mad-alchemist.svg`
 - Matching full liquid colors, with **twelve** distinct shader-drawn motifs: flowers, diamonds, waves, zigzags, leaves, spirals, bubbles, stripes, stars, crescents, hearts, constellations
 - Twelve standalone, reusable 64×64 SVG liquid tiles under `public/potions/liquids/` with exactly the same color-to-pattern mapping
+- Five decorative cork/crystal/orb/moon stopper SVGs under `public/potions/stoppers/`, attached to the live vial sprites and hidden as a vial tips to pour
 - Calm glints on each vial, which freeze under `prefers-reduced-motion`
 - A **plain purple** default background; original backgrounds remain available
 - A vial-style switch in the HUD between `Mad Alchemist` and `Classic`, persisted in localStorage
@@ -31,7 +32,7 @@ The liquid shader draws decorative motifs in the same pass as the liquid, so the
 
 ## Not in scope
 
-The source Create Image PNG sheets are retained as design references outside the repository but are not directly used at runtime. Importing the opaque/sem-transparent bottle sprites as full texture layers would obscure the shader; the vector skin is purpose-built to remain transparent. The optional animated corks, dangling pendants, and extra particle sprites are not implemented yet.
+The source Create Image PNG sheets are retained as design references outside the repository but are not directly used at runtime. Importing the opaque/sem-transparent bottle sprites as full texture layers would obscure the shader; the vector skin is purpose-built to remain transparent. The animated dangling pendants and extra particle sprite variants are not implemented yet. The core glints and stopper overlays are integrated.
 
 ## Reviewer checklist
 
