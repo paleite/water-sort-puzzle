@@ -25,7 +25,7 @@ import {
   VIAL_VIEWBOX_HEIGHT,
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
-import {DEFAULT_VIAL_SKIN} from "../presentation/vial-skins";
+import {DEFAULT_VIAL_SKIN, getVialSkin, type VialSkinId} from "../presentation/vial-skins";
 import {calculateLiquidProjectionGeometry} from "./liquid-projection";
 import type {
   BoardRenderState,
@@ -41,6 +41,7 @@ interface VialVisual {
   uniforms: UniformGroup;
   debug: Graphics;
   sparkles: readonly Graphics[];
+  artwork: Sprite;
 }
 
 interface Point {
@@ -218,6 +219,7 @@ export class PixiBoardRenderer {
   private readonly streams = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
   private vialTexture: Texture | null = null;
+  private skinId: VialSkinId = DEFAULT_VIAL_SKIN.id;
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
   private elapsedSeconds = 0;
@@ -241,7 +243,8 @@ export class PixiBoardRenderer {
       resizeTo: this.boardElement,
     });
 
-    this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource);
+    const initialSkinId = this.skinId;
+    this.vialTexture = await Assets.load<Texture>(getVialSkin(initialSkinId).svgSource);
     this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (this.destroyRequested) {
@@ -283,6 +286,22 @@ export class PixiBoardRenderer {
 
     const pendingState = this.pendingState;
     if (pendingState !== null) this.render(pendingState);
+    if (this.skinId !== initialSkinId) {
+      void this.setVialSkin(this.skinId);
+    }
+  }
+
+  async setVialSkin(skinId: VialSkinId): Promise<void> {
+    this.skinId = skinId;
+    if (this.initializationState !== "ready") return;
+
+    const texture = await Assets.load<Texture>(getVialSkin(skinId).svgSource);
+    if (this.skinId !== skinId || this.initializationState !== "ready") return;
+
+    this.vialTexture = texture;
+    for (const visual of this.visuals.values()) {
+      visual.artwork.texture = texture;
+    }
   }
 
   destroy(): void {
@@ -382,6 +401,7 @@ export class PixiBoardRenderer {
       uniforms,
       debug,
       sparkles,
+      artwork,
     };
     this.visuals.set(vialIndex, visual);
     return visual;
