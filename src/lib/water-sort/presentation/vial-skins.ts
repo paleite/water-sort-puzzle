@@ -33,9 +33,9 @@ function publicPath(path: string): string {
 }
 
 export const DEFAULT_VIAL_SKIN = {
-  id: "classic",
-  name: "Classic",
-  svgSource: publicPath("/vials/classic.svg"),
+  id: "mad-alchemist",
+  name: "Mad Alchemist",
+  svgSource: publicPath("/vials/mad-alchemist.svg"),
   viewBox: {width: 100, height: 272},
   liquidPolygon: [
     {x: 14.5, y: 22},
