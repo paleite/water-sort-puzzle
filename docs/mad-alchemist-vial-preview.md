@@ -1,34 +1,38 @@
-# Mad Alchemist vial preview
+# Mad Alchemist — playable visual theme
 
-This is a first, **reviewable visual integration** of the witch / mad-scientist water-sort concept, not the full generated asset pack.
+The generated fantasy-potion art inspired this theme. All artwork used by the runtime is a cleaned-up vector recreation rather than the original raster sprite sheet, which had baked-in interior color and edge fringing.
 
-## Included
+## Implemented
 
-- `public/vials/mad-alchemist.svg`: transparent potion-glass artwork with violet reflections, gold trim, an open lip, and a small amethyst setting.
-- Existing PixiJS rendering and GSAP pour presentation continue to supply liquid movement, bubbles, foam, wave motion, and the 12 gameplay patterns.
-- The vial keeps the **exact 100 × 272 viewBox**, liquid polygon, fill surface at `y=22`, and mouth anchors at `(12,18)` / `(88,18)` used by the current renderer. Only the overlay artwork changes.
-- The original `classic.svg` remains in the repo for comparison.
+- Transparent purple-and-brass potion vial: `public/vials/mad-alchemist.svg`
+- Matching full liquid colors, with **twelve** distinct shader-drawn motifs: flowers, diamonds, waves, zigzags, leaves, spirals, bubbles, stripes, stars, crescents, hearts, constellations
+- Twelve standalone, reusable 64×64 SVG liquid tiles under `public/potions/liquids/` with exactly the same color-to-pattern mapping
+- Calm glints on each vial, which freeze under `prefers-reduced-motion`
+- A **plain purple** default background; original backgrounds remain available
+- A vial-style switch in the HUD between `Mad Alchemist` and `Classic`, persisted in localStorage
+- Existing PixiJS liquid-volume projection and GSAP transfer timings preserved
+- Pull-request workflow for typecheck, lint, tests, and production build
+- Unit tests for 12-color/pattern uniqueness and default theme settings
 
-## Why SVG rather than the generated PNG atlases?
+## Implementation details
 
-The Create Image outputs establish the visual direction, but contain semi-transparent color inside the bottles and some unwanted edge effects. Shipping them as full-vial textures would obscure the dynamically rendered liquid and make pouring harder to animate correctly.
+The original `classic.svg` is preserved, and both skins use the same 100×272 viewBox, liquid polygon, fill surface (y=22), and mouth anchors ((12,18) and (88,18)). Therefore the existing rotated-pour geometry works with both art styles.
 
-This first pass redraws the glass as a small transparency-aware SVG. The image-generated **pattern atlases, corks, and particles are not yet part of this PR**.
+The liquid shader draws decorative motifs in the same pass as the liquid, so they stay clipped and oriented correctly while vials move. UI tiles are available as SVG for thumbnails and other views without requiring a raster image texture for every liquid band.
 
-## Review checklist
+## Validation
 
-- [ ] Validate the Next.js production build and TypeScript checks
-- [ ] Check full / partially filled / empty vial visibility, especially at mobile scale
-- [ ] Check pour origins, liquid surfaces, clipping, and moving vial rotation
-- [ ] Confirm sufficient contrast on all existing backgrounds and color palettes
-- [ ] Check reduced-motion behavior and frame times with 14 visible vials
-- [ ] Assess whether the glass opacity is too strong over pale liquid colors
+- [x] Pull-request CI runs typecheck, lint, unit tests, and build (see Checks tab for current status)
+- [x] Invariant tests for twelve colors and distinct patterns
+- [ ] Visual review on iPhone Safari and Android Chrome with 14 visible vials
+- [ ] Inspect partially filled vials and color contrast under all palettes
+- [ ] Check reduced-motion behavior on physical devices
+- [ ] Review texture differences between shader motifs and the reusable SVG tiles
 
-## Follow-up assets
+## Not in scope
 
-1. Extract/clean the 12 image-generated liquid motifs, or reimplement the same motifs in the existing GLSL shader without introducing per-vial sprites.
-2. Separate independent stopper and pendant assets and animate them inside the existing PixiJS scene.
-3. Add an appearance selector that can switch between `classic` and `mad-alchemist` without affecting puzzles or saved progress.
-4. Add visual regression screenshots for mobile portrait layouts.
+The source Create Image PNG sheets are retained as design references outside the repository but are not directly used at runtime. Importing the opaque/sem-transparent bottle sprites as full texture layers would obscure the shader; the vector skin is purpose-built to remain transparent. The optional animated corks, dangling pendants, and extra particle sprites are not implemented yet.
 
-The aim is to review rendering and geometry first, before importing large sprite atlases or changing the animation architecture.
+## Reviewer checklist
+
+Load a level with 12–14 vials in a phone-sized viewport, select and pour between vials, change the palette and background, then tap the flask icon to switch the glass style while preserving the game state.
