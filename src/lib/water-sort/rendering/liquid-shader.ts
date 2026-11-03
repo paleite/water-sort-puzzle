@@ -136,7 +136,8 @@ float alchemistHeart(vec2 point) {
   // The standard implicit heart curve: negative values are inside.
   vec2 heart = vec2(point.x * 3.0, (point.y + 0.02) * 3.0);
   float squaredRadius = dot(heart, heart);
-  float shape = pow(squaredRadius - 1.0, 3.0) - heart.x * heart.x * heart.y * heart.y * heart.y;
+  float base = squaredRadius - 1.0;
+  float shape = base * base * base - heart.x * heart.x * heart.y * heart.y * heart.y;
   return 1.0 - smoothstep(-0.05, 0.07, shape);
 }
 
