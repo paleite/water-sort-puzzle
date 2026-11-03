@@ -59,6 +59,30 @@ export const DEFAULT_VIAL_SKIN = {
   },
 } as const satisfies VialSkinDefinition;
 
+export const VIAL_SKIN_STORAGE_KEY = "water-sort-vial-skin";
+
+export const CLASSIC_VIAL_SKIN = {
+  ...DEFAULT_VIAL_SKIN,
+  id: "classic",
+  name: "Classic",
+  svgSource: publicPath("/vials/classic.svg"),
+} as const satisfies VialSkinDefinition;
+
+export const VIAL_SKINS = [DEFAULT_VIAL_SKIN, CLASSIC_VIAL_SKIN] as const;
+export type VialSkinId = (typeof VIAL_SKINS)[number]["id"];
+
+export function getVialSkin(id: VialSkinId): VialSkinDefinition {
+  return VIAL_SKINS.find((skin) => skin.id === id) ?? DEFAULT_VIAL_SKIN;
+}
+
+export function isVialSkinId(value: string | null): value is VialSkinId {
+  return VIAL_SKINS.some((skin) => skin.id === value);
+}
+
+export function getNextVialSkinId(currentId: VialSkinId): VialSkinId {
+  return currentId === DEFAULT_VIAL_SKIN.id ? CLASSIC_VIAL_SKIN.id : DEFAULT_VIAL_SKIN.id;
+}
+
 export function getVialSkinLiquidBounds(skin: VialSkinDefinition): VialSkinBounds {
   if (skin.liquidPolygon.length < 3) {
     throw new Error(`Vial skin ${skin.id} must define at least three liquid polygon points.`);
