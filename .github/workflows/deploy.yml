@@ -24,6 +24,8 @@ concurrency:
 jobs:
   # Build job
   build:
+    outputs:
+      site_changed: ${{ steps.site_diff.outputs.changed }}
     # Defense in depth if pull_request triggers are added later.
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
@@ -94,13 +96,29 @@ jobs:
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
-      - name: Upload artifact
+      - name: Compare exported site with last successful deployment
+        id: site_diff
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/ci/compare-site-output.sh
+
+      - name: Save output manifest for future comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-output-manifest
+          path: ${{ runner.temp }}/site-output.manifest
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Upload Pages artifact only when site content changed
+        if: steps.site_diff.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
   # Deployment job
   deploy:
+    if: needs.build.outputs.site_changed == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
