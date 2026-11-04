@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Hermetic checks of the deployment-baseline selection, including failed
-# previous runs, inaccessible run history, and non-ancestor successes.
+# Simulate one successful deploy behind an irrelevant newer workflow run.
 repository_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 fixture_directory="$(mktemp -d)"
 trap 'rm -rf "${fixture_directory}"' EXIT
@@ -10,20 +9,21 @@ mkdir -p "${fixture_directory}/bin"
 
 cat > "${fixture_directory}/bin/gh" <<'MOCK_GH'
 #!/usr/bin/env bash
-case "${MOCK_GH_MODE:-success}" in
-  success)
-    # A newer successful deployment on a diverged ref must be ignored.
-    printf '%s\n' "unrelated-success" "last-deployed-ancestor"
-    ;;
-  unavailable)
-    exit 1
-    ;;
-  empty)
-    ;;
-  *)
-    exit 2
-    ;;
-esac
+if [[ "${MOCK_GH_MODE:-success}" == "unavailable" ]]; then
+  exit 1
+fi
+if [[ "${MOCK_GH_MODE:-success}" == "empty" ]]; then
+  exit 0
+fi
+if [[ "$*" == *"/jobs?"* ]]; then
+  if [[ "$*" == *"/100/jobs?"* ]]; then
+    printf '0\n' # Successful workflow but deploy was skipped.
+  else
+    printf '1\n' # Deploy actually succeeded.
+  fi
+else
+  printf '%s\n' "100 skipped-deploy" "101 last-deployed-ancestor"
+fi
 MOCK_GH
 
 cat > "${fixture_directory}/bin/git" <<'MOCK_GIT'
@@ -31,7 +31,7 @@ cat > "${fixture_directory}/bin/git" <<'MOCK_GIT'
 if [[ "${1:-}" != "merge-base" || "${2:-}" != "--is-ancestor" ]]; then
   exit 2
 fi
-[[ "${3:-}" == "last-deployed-ancestor" && "${4:-}" == "HEAD" ]]
+[[ "${3:-}" == "last-deployed-ancestor" || "${3:-}" == "skipped-deploy" ]]
 MOCK_GIT
 
 cat > "${fixture_directory}/bin/pnpm" <<'MOCK_PNPM'
