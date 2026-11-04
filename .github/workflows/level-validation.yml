@@ -41,6 +41,9 @@ jobs:
           pnpm run compile:levels
           git diff --exit-code -- src/lib/water-sort/levels/levels.generated.ts
 
+      - name: Test last-deployment baseline selection
+        run: bash scripts/water-sort/verify-since-last-deploy.test.sh
+
       - name: Verify added and modified PR levels
         env:
           LEVELS_BASE_REF: ${{ github.event.pull_request.base.sha }}
