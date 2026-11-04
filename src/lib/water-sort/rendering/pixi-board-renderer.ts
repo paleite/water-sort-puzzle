@@ -25,7 +25,7 @@ import {
   VIAL_VIEWBOX_HEIGHT,
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
-import {DEFAULT_VIAL_SKIN} from "../presentation/vial-skins";
+import {DEFAULT_VIAL_SKIN, getVialSkin, type VialSkinId} from "../presentation/vial-skins";
 import {calculateLiquidProjectionGeometry} from "./liquid-projection";
 import type {
   BoardRenderState,
@@ -40,6 +40,9 @@ interface VialVisual {
   movingContainer: Container;
   uniforms: UniformGroup;
   debug: Graphics;
+  sparkles: readonly Graphics[];
+  artwork: Sprite;
+  stopper: Sprite | null;
 }
 
 interface Point {
@@ -59,6 +62,7 @@ const SURFACE_SAMPLE_COUNT = 11;
 const SURFACE_WAVE_VISUAL_GAIN = 2.15;
 const MAX_NORMALIZED_WAVE_OFFSET = 0.075;
 const STREAM_SAMPLE_COUNT = 10;
+const STOPPER_VARIANTS = ["cork", "wax", "crystal", "orb", "moon"] as const;
 
 function hexToPackedColor(hex: string): number {
   return Number.parseInt(hex.replace("#", ""), 16);
@@ -217,9 +221,12 @@ export class PixiBoardRenderer {
   private readonly streams = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
   private vialTexture: Texture | null = null;
+  private stopperTextures: readonly Texture[] = [];
+  private skinId: VialSkinId = DEFAULT_VIAL_SKIN.id;
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
   private elapsedSeconds = 0;
+  private prefersReducedMotion = false;
 
   constructor({boardElement, canvasHost}: {boardElement: HTMLElement; canvasHost: HTMLElement}) {
     this.boardElement = boardElement;
@@ -239,7 +246,21 @@ export class PixiBoardRenderer {
       resizeTo: this.boardElement,
     });
 
-    this.vialTexture = await Assets.load<Texture>(DEFAULT_VIAL_SKIN.svgSource);
+    const initialSkinId = this.skinId;
+    this.vialTexture = await Assets.load<Texture>(getVialSkin(initialSkinId).svgSource);
+    const basePath = process.env["NEXT_PUBLIC_BASE_PATH"] ?? "";
+    try {
+      this.stopperTextures = await Promise.all(
+        STOPPER_VARIANTS.map((variant) =>
+          Assets.load<Texture>(`${basePath}/potions/stoppers/${variant}.svg`)
+        ),
+      );
+    } catch (error: unknown) {
+      // Decorative assets must not stop the puzzle from rendering or loading.
+      console.warn("Unable to load optional potion stoppers.", error);
+      this.stopperTextures = [];
+    }
+    this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (this.destroyRequested) {
       this.destroyApplication();
@@ -258,14 +279,47 @@ export class PixiBoardRenderer {
     );
     this.canvasHost.replaceChildren(this.app.canvas);
     this.app.ticker.add((ticker) => {
-      this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
-      for (const visual of this.visuals.values()) {
+      if (!this.prefersReducedMotion) {
+        this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
+      }
+      for (const [vialIndex, visual] of this.visuals.entries()) {
         visual.uniforms.uniforms.uTime = this.elapsedSeconds;
+        for (let sparkleIndex = 0; sparkleIndex < visual.sparkles.length; sparkleIndex++) {
+          const sparkle = visual.sparkles[sparkleIndex];
+          if (sparkle === undefined) continue;
+          if (this.prefersReducedMotion) {
+            sparkle.alpha = 0.35;
+            continue;
+          }
+          const phase = this.elapsedSeconds * 1.4 + vialIndex * 0.91 + sparkleIndex * 2.3;
+          const shimmer = (Math.sin(phase) + 1) / 2;
+          sparkle.alpha = 0.14 + shimmer * 0.34;
+          sparkle.scale.set(0.8 + shimmer * 0.28);
+        }
       }
     });
 
     const pendingState = this.pendingState;
     if (pendingState !== null) this.render(pendingState);
+    if (this.skinId !== initialSkinId) {
+      void this.setVialSkin(this.skinId);
+    }
+  }
+
+  async setVialSkin(skinId: VialSkinId): Promise<void> {
+    this.skinId = skinId;
+    if (this.initializationState !== "ready") return;
+
+    const texture = await Assets.load<Texture>(getVialSkin(skinId).svgSource);
+    if (this.skinId !== skinId || this.initializationState !== "ready") return;
+
+    this.vialTexture = texture;
+    for (const visual of this.visuals.values()) {
+      visual.artwork.texture = texture;
+      if (visual.stopper !== null) {
+        visual.stopper.visible = skinId === DEFAULT_VIAL_SKIN.id;
+      }
+    }
   }
 
   destroy(): void {
@@ -343,10 +397,29 @@ export class PixiBoardRenderer {
     const mesh = new Mesh({geometry: createLiquidGeometry(), shader});
     mesh.mask = mask;
     const artwork = createVialArtwork(this.vialTexture);
+    const stopperTexture = this.stopperTextures[
+      vialIndex % this.stopperTextures.length
+    ];
+    const stopper = stopperTexture === undefined ? null : new Sprite(stopperTexture);
+    if (stopper !== null) {
+      stopper.position.set(0, -44);
+      stopper.width = VIAL_VIEWBOX_WIDTH;
+      stopper.height = 60;
+      stopper.visible = this.skinId === DEFAULT_VIAL_SKIN.id;
+    }
     const debug = new Graphics();
+    // Two deliberately quiet gold glints per vial: animated, but not interactive.
+    // They live in the artwork container so they follow the original pour geometry.
+    const sparkles = [
+      new Graphics().circle(23, 78, 1.5).fill({color: 0xffe9ae}),
+      new Graphics().circle(79, 190, 1.2).fill({color: 0xffd692}),
+    ];
+    sparkles.forEach((sparkle) => { sparkle.alpha = 0.35; });
 
     liquidContainer.addChild(mesh, mask);
-    artworkContainer.addChild(artwork, debug);
+    artworkContainer.addChild(artwork);
+    if (stopper !== null) artworkContainer.addChild(stopper);
+    artworkContainer.addChild(...sparkles, debug);
     this.liquidLayer.addChild(liquidContainer);
     this.artworkLayer.addChild(artworkContainer);
     this.movingVialLayer.addChild(movingContainer);
@@ -357,6 +430,9 @@ export class PixiBoardRenderer {
       movingContainer,
       uniforms,
       debug,
+      sparkles,
+      artwork,
+      stopper,
     };
     this.visuals.set(vialIndex, visual);
     return visual;
@@ -416,6 +492,13 @@ export class PixiBoardRenderer {
         : {x: VIAL_CENTER_X, y: VIAL_CENTER_Y};
 
     this.placeVialVisual(visual, state.pivot !== "center");
+    if (visual.stopper !== null) {
+      visual.stopper.visible = this.skinId === DEFAULT_VIAL_SKIN.id;
+      // Open the mouth during pours: the ornament fades before the stream starts.
+      visual.stopper.alpha = state.pivot === "center"
+        ? 1
+        : Math.max(0, 1 - Math.abs(state.rotationDegrees) / 7);
+    }
     this.applyVialTransform(visual.liquidContainer, state, baseScale, pivotPoint);
     this.applyVialTransform(visual.artworkContainer, state, baseScale, pivotPoint);
 

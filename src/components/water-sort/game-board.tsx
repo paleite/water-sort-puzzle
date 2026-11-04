@@ -28,6 +28,7 @@ import type { ActiveMovePresentation } from "@/lib/water-sort/machine/game-machi
 import { applyPresentationMoveToBoard } from "@/lib/water-sort/presentation/visual-board";
 import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
 import { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
+import type { VialSkinId } from "@/lib/water-sort/presentation/vial-skins";
 import {
   buildConcurrentPourBoardRenderState,
   buildGhostHintRenderState,
@@ -89,6 +90,7 @@ export function GameBoard({
   board,
   capacity,
   phase,
+  vialSkinId,
   selectedSourceVialIndex,
   activePresentations,
   activeUndo,
@@ -104,6 +106,7 @@ export function GameBoard({
   board: Board;
   capacity: number;
   phase: GamePhase;
+  vialSkinId: VialSkinId;
   selectedSourceVialIndex: number | null;
   activePresentations: readonly ActiveMovePresentation[];
   activeUndo: AppliedTurn | null;
@@ -343,6 +346,11 @@ export function GameBoard({
       if (rendererRef.current === renderer) rendererRef.current = null;
     };
   }, [board.length]);
+
+  useEffect(() => {
+    // Texture swaps do not mutate game state, pour geometry, or liquid masks.
+    void rendererRef.current?.setVialSkin(vialSkinId);
+  }, [vialSkinId]);
 
   useLayoutEffect(() => {
     const boardElement = boardRef.current;

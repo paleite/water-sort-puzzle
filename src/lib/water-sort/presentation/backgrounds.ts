@@ -2,6 +2,11 @@ export const BACKGROUND_STORAGE_KEY = "water-sort-background";
 
 export const GAME_BACKGROUNDS = [
   {
+    id: "arcane",
+    name: "Plain Arcane Purple",
+    css: "#210d38",
+  },
+  {
     id: "charcoal",
     name: "Charcoal",
     css: "#222",

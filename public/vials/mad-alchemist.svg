@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="272" viewBox="0 0 100 272" fill="none">
+  <defs>
+    <linearGradient id="glass" x1="11" y1="135" x2="89" y2="135" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b66aff" stop-opacity=".31"/>
+      <stop offset=".16" stop-color="#fff7ff" stop-opacity=".055"/>
+      <stop offset=".50" stop-color="#9c59e2" stop-opacity=".025"/>
+      <stop offset=".83" stop-color="#fff7ff" stop-opacity=".04"/>
+      <stop offset="1" stop-color="#a753ed" stop-opacity=".33"/>
+    </linearGradient>
+    <linearGradient id="edge" x1="12" y1="0" x2="88" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e5a5ff"/>
+      <stop offset=".22" stop-color="#8c44ca"/>
+      <stop offset=".52" stop-color="#f4d4ff"/>
+      <stop offset=".82" stop-color="#8b51d7"/>
+      <stop offset="1" stop-color="#efaeff"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="10" y1="0" x2="90" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7e3a13"/>
+      <stop offset=".16" stop-color="#ec9b3b"/>
+      <stop offset=".38" stop-color="#ffe5a0"/>
+      <stop offset=".55" stop-color="#bb6722"/>
+      <stop offset=".78" stop-color="#ffd477"/>
+      <stop offset="1" stop-color="#90400e"/>
+    </linearGradient>
+    <linearGradient id="gem" x1="44" y1="26" x2="58" y2="43" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffcbff"/>
+      <stop offset=".42" stop-color="#c03cf7"/>
+      <stop offset="1" stop-color="#6522a4"/>
+    </linearGradient>
+  </defs>
+  <!-- Keeps the same interior silhouette and pouring geometry as classic.svg. -->
+  <path d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18Z" fill="url(#glass)"/>
+  <path d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18" stroke="#6d287f" stroke-opacity=".68" stroke-width="7" stroke-linecap="round"/>
+  <path d="M12 18V214C12 246 28 262 50 262C72 262 88 246 88 214V18" stroke="url(#edge)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M19 35V202C19 228 28 245 42 252" stroke="#fff5ff" stroke-opacity=".72" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M81 40V206C81 225 76 241 66 250" stroke="#e5a6ff" stroke-opacity=".48" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M26 251Q50 263 74 251" stroke="#fff1ff" stroke-opacity=".3" stroke-width="2.3" stroke-linecap="round"/>
+  <!-- Brass base sits outside the four-slot liquid interior. -->
+  <path d="M26 259Q50 273 74 259V264Q50 278 26 264Z" fill="url(#gold)" stroke="#79360b" stroke-width="1.7"/>
+  <path d="M30 261Q50 270 70 261" stroke="#fff1ae" stroke-opacity=".8" stroke-width="1.7"/>
+  <!-- An open, unobstructed mouth remains at y=18 for the pour stream. -->
+  <ellipse cx="50" cy="18" rx="38" ry="7.3" fill="#210d34" fill-opacity=".45" stroke="#ffd47d" stroke-width="3"/>
+  <ellipse cx="50" cy="18" rx="31" ry="4.2" fill="#250e3e" fill-opacity=".36" stroke="#ffe3b1" stroke-opacity=".55" stroke-width="1.2"/>
+  <path d="M11 19Q50 29 89 19" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M16 21Q50 29 84 21" stroke="#ffe49a" stroke-width="1.7" stroke-opacity=".9"/>
+  <!-- Small brass filigree and a jewel are anchored below the lip. -->
+  <path d="M18 28Q28 39 39 31M82 28Q72 39 61 31" stroke="#c67b32" stroke-width="4" stroke-linecap="round"/>
+  <path d="M18 28Q28 39 39 31M82 28Q72 39 61 31" stroke="#ffe9a7" stroke-opacity=".76" stroke-width="1.3" stroke-linecap="round"/>
+  <path d="M50 26L58 35L50 44L42 35Z" fill="url(#gold)" stroke="#783c15" stroke-width="1.5"/>
+  <path d="M50 29L55 35L50 40L45 35Z" fill="url(#gem)" stroke="#ffe5fd" stroke-width=".8"/>
+  <circle cx="48.5" cy="32.5" r="1.6" fill="#fff7ff" fill-opacity=".88"/>
+</svg>
