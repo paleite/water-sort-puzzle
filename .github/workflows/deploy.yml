@@ -11,6 +11,7 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -69,29 +70,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Verify generated levels
+      - name: Validate all level JSON and generated TypeScript
         run: |
           pnpm run compile:levels
           git diff --exit-code -- src/lib/water-sort/levels/levels.generated.ts
 
-      - name: Typecheck
+      - name: TypeScript typecheck
         run: pnpm run typecheck
 
-      - name: Lint
+      - name: ESLint checks
         run: pnpm run lint
 
       - name: Unit tests
         run: pnpm run test:unit
 
-      - name: Verify new levels
+      - name: Verify added and modified levels since last successful deploy
         env:
-          LEVELS_BASE_REF: ${{ github.event.before }}
-        run: |
-          if [ -n "$LEVELS_BASE_REF" ] && [[ ! "$LEVELS_BASE_REF" =~ ^0+$ ]]; then
-            pnpm run verify:levels --changed-from "$LEVELS_BASE_REF"
-          else
-            echo "No push base ref; skipping new-level verification."
-          fi
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/water-sort/verify-since-last-deploy.sh
 
       - name: Build with Next.js
         run: pnpm run build
