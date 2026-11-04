@@ -6,6 +6,7 @@ on:
     paths:
       - "levels/**"
       - "scripts/water-sort/**"
+      - "scripts/ci/**"
       - "src/lib/water-sort/levels/**"
       - ".github/workflows/level-validation.yml"
       - ".github/workflows/deploy.yml"
@@ -43,6 +44,9 @@ jobs:
 
       - name: Test last-deployment baseline selection
         run: bash scripts/water-sort/verify-since-last-deploy.test.sh
+
+      - name: Test exact site-output change detection
+        run: bash scripts/ci/compare-site-output.test.sh
 
       - name: Verify added and modified PR levels
         env:
