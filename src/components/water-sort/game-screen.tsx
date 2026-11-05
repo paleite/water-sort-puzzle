@@ -24,7 +24,7 @@ import {
   type GameBackgroundId,
 } from "@/lib/water-sort/presentation/backgrounds";
 import {
-  DEFAULT_VIAL_SKIN,
+  DEFAULT_VIAL_SKIN_ID,
   VIAL_SKIN_STORAGE_KEY,
   getNextVialSkinId,
   getVialSkin,
@@ -115,7 +115,7 @@ function GameRuntime({
   const [paletteId, setPaletteId] = useState<LiquidPaletteId>(
     DEFAULT_LIQUID_PALETTE_ID,
   );
-  const [vialSkinId, setVialSkinId] = useState<VialSkinId>(DEFAULT_VIAL_SKIN.id);
+  const [vialSkinId, setVialSkinId] = useState<VialSkinId>(DEFAULT_VIAL_SKIN_ID);
   const [backgroundId, setBackgroundId] = useState<GameBackgroundId>(
     DEFAULT_GAME_BACKGROUND_ID,
   );
@@ -227,7 +227,7 @@ function GameRuntime({
       : DEFAULT_GAME_BACKGROUND_ID;
     const resolvedVialSkinId = isVialSkinId(storedVialSkinId)
       ? storedVialSkinId
-      : DEFAULT_VIAL_SKIN.id;
+      : DEFAULT_VIAL_SKIN_ID;
 
     applyLiquidPalette(resolvedPaletteId);
     setPaletteId(resolvedPaletteId);
