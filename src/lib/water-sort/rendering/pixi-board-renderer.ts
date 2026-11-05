@@ -352,8 +352,14 @@ export class PixiBoardRenderer {
     this.stopperTextures = textures.stoppers;
 
     for (const [vialIndex, visual] of this.visuals) {
+      // Pixi sprites retain their texture-dependent scale: reset logical
+      // dimensions after each skin swap (PNG sources are exported at 4x).
       visual.artwork.texture = textures.front;
+      visual.artwork.width = VIAL_VIEWBOX_WIDTH;
+      visual.artwork.height = VIAL_VIEWBOX_HEIGHT;
       visual.glassBackground.texture = textures.background ?? Texture.EMPTY;
+      visual.glassBackground.width = VIAL_VIEWBOX_WIDTH;
+      visual.glassBackground.height = VIAL_VIEWBOX_HEIGHT;
       visual.glassBackground.visible = textures.background !== null;
       this.applyStopperTexture(visual, vialIndex);
     }
