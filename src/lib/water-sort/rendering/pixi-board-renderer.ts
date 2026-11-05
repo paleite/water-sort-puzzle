@@ -25,7 +25,12 @@ import {
   VIAL_VIEWBOX_HEIGHT,
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
-import {DEFAULT_VIAL_SKIN, getVialSkin, type VialSkinId} from "../presentation/vial-skins";
+import {
+  DEFAULT_VIAL_SKIN,
+  DEFAULT_VIAL_SKIN_ID,
+  getVialSkin,
+  type VialSkinId,
+} from "../presentation/vial-skins";
 import {calculateLiquidProjectionGeometry} from "./liquid-projection";
 import type {
   BoardRenderState,
@@ -42,7 +47,14 @@ interface VialVisual {
   debug: Graphics;
   sparkles: readonly Graphics[];
   artwork: Sprite;
-  stopper: Sprite | null;
+  glassBackground: Sprite;
+  stopper: Sprite;
+}
+
+interface VialArtTextures {
+  front: Texture;
+  background: Texture | null;
+  stoppers: readonly Texture[];
 }
 
 interface Point {
@@ -221,8 +233,9 @@ export class PixiBoardRenderer {
   private readonly streams = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
   private vialTexture: Texture | null = null;
+  private glassBackgroundTexture: Texture | null = null;
   private stopperTextures: readonly Texture[] = [];
-  private skinId: VialSkinId = DEFAULT_VIAL_SKIN.id;
+  private skinId: VialSkinId = DEFAULT_VIAL_SKIN_ID;
   private initializationState: "idle" | "initializing" | "ready" | "destroyed" = "idle";
   private destroyRequested = false;
   private elapsedSeconds = 0;
@@ -247,19 +260,10 @@ export class PixiBoardRenderer {
     });
 
     const initialSkinId = this.skinId;
-    this.vialTexture = await Assets.load<Texture>(getVialSkin(initialSkinId).svgSource);
-    const basePath = process.env["NEXT_PUBLIC_BASE_PATH"] ?? "";
-    try {
-      this.stopperTextures = await Promise.all(
-        STOPPER_VARIANTS.map((variant) =>
-          Assets.load<Texture>(`${basePath}/potions/stoppers/${variant}.svg`)
-        ),
-      );
-    } catch (error: unknown) {
-      // Decorative assets must not stop the puzzle from rendering or loading.
-      console.warn("Unable to load optional potion stoppers.", error);
-      this.stopperTextures = [];
-    }
+    const initialTextures = await this.loadSkinTextures(initialSkinId);
+    this.vialTexture = initialTextures.front;
+    this.glassBackgroundTexture = initialTextures.background;
+    this.stopperTextures = initialTextures.stoppers;
     this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (this.destroyRequested) {
@@ -306,20 +310,67 @@ export class PixiBoardRenderer {
     }
   }
 
+  private async loadSkinTextures(skinId: VialSkinId): Promise<VialArtTextures> {
+    const skin = getVialSkin(skinId);
+    const basePath = process.env["NEXT_PUBLIC_BASE_PATH"] ?? "";
+    const stopperSources = skin.stopperSources
+      ?? (skinId === DEFAULT_VIAL_SKIN.id
+        ? STOPPER_VARIANTS.map((name) => `${basePath}/potions/stoppers/${name}.svg`)
+        : []);
+
+    const [front, background, stoppers] = await Promise.all([
+      Assets.load<Texture>(skin.svgSource),
+      skin.backgroundSource === undefined
+        ? Promise.resolve(null)
+        : Assets.load<Texture>(skin.backgroundSource),
+      Promise.all(stopperSources.map((source) => Assets.load<Texture>(source)))
+        .catch((error: unknown): Texture[] => {
+          // Optional ornaments must not prevent the game board from loading.
+          console.warn("Unable to load potion stoppers.", error);
+          return [];
+        }),
+    ]);
+
+    return {front, background, stoppers};
+  }
+
   async setVialSkin(skinId: VialSkinId): Promise<void> {
     this.skinId = skinId;
     if (this.initializationState !== "ready") return;
 
-    const texture = await Assets.load<Texture>(getVialSkin(skinId).svgSource);
+    let textures: VialArtTextures;
+    try {
+      textures = await this.loadSkinTextures(skinId);
+    } catch (error: unknown) {
+      console.error("Unable to load potion vial artwork.", error);
+      return;
+    }
     if (this.skinId !== skinId || this.initializationState !== "ready") return;
 
-    this.vialTexture = texture;
-    for (const visual of this.visuals.values()) {
-      visual.artwork.texture = texture;
-      if (visual.stopper !== null) {
-        visual.stopper.visible = skinId === DEFAULT_VIAL_SKIN.id;
-      }
+    this.vialTexture = textures.front;
+    this.glassBackgroundTexture = textures.background;
+    this.stopperTextures = textures.stoppers;
+
+    for (const [vialIndex, visual] of this.visuals) {
+      visual.artwork.texture = textures.front;
+      visual.glassBackground.texture = textures.background ?? Texture.EMPTY;
+      visual.glassBackground.visible = textures.background !== null;
+      this.applyStopperTexture(visual, vialIndex);
     }
+  }
+
+  private applyStopperTexture(visual: VialVisual, vialIndex: number): void {
+    const texture = this.stopperTextures[vialIndex % this.stopperTextures.length];
+    visual.stopper.visible = texture !== undefined;
+    if (texture === undefined) return;
+
+    const bounds = getVialSkin(this.skinId).stopperBounds
+      ?? {x: 0, y: 0, width: VIAL_VIEWBOX_WIDTH, height: 18};
+    visual.stopper.texture = texture;
+    // All ornament variants must stay inside the existing 100x272 vial box.
+    visual.stopper.position.set(bounds.x, bounds.y);
+    visual.stopper.width = bounds.width;
+    visual.stopper.height = bounds.height;
   }
 
   destroy(): void {
@@ -397,16 +448,9 @@ export class PixiBoardRenderer {
     const mesh = new Mesh({geometry: createLiquidGeometry(), shader});
     mesh.mask = mask;
     const artwork = createVialArtwork(this.vialTexture);
-    const stopperTexture = this.stopperTextures[
-      vialIndex % this.stopperTextures.length
-    ];
-    const stopper = stopperTexture === undefined ? null : new Sprite(stopperTexture);
-    if (stopper !== null) {
-      stopper.position.set(0, -44);
-      stopper.width = VIAL_VIEWBOX_WIDTH;
-      stopper.height = 60;
-      stopper.visible = this.skinId === DEFAULT_VIAL_SKIN.id;
-    }
+    const glassBackground = createVialArtwork(this.glassBackgroundTexture ?? Texture.EMPTY);
+    glassBackground.visible = this.glassBackgroundTexture !== null;
+    const stopper = new Sprite(Texture.EMPTY);
     const debug = new Graphics();
     // Two deliberately quiet gold glints per vial: animated, but not interactive.
     // They live in the artwork container so they follow the original pour geometry.
@@ -416,10 +460,8 @@ export class PixiBoardRenderer {
     ];
     sparkles.forEach((sparkle) => { sparkle.alpha = 0.35; });
 
-    liquidContainer.addChild(mesh, mask);
-    artworkContainer.addChild(artwork);
-    if (stopper !== null) artworkContainer.addChild(stopper);
-    artworkContainer.addChild(...sparkles, debug);
+    liquidContainer.addChild(glassBackground, mesh, mask);
+    artworkContainer.addChild(artwork, stopper, ...sparkles, debug);
     this.liquidLayer.addChild(liquidContainer);
     this.artworkLayer.addChild(artworkContainer);
     this.movingVialLayer.addChild(movingContainer);
@@ -432,8 +474,10 @@ export class PixiBoardRenderer {
       debug,
       sparkles,
       artwork,
+      glassBackground,
       stopper,
     };
+    this.applyStopperTexture(visual, vialIndex);
     this.visuals.set(vialIndex, visual);
     return visual;
   }
@@ -492,13 +536,10 @@ export class PixiBoardRenderer {
         : {x: VIAL_CENTER_X, y: VIAL_CENTER_Y};
 
     this.placeVialVisual(visual, state.pivot !== "center");
-    if (visual.stopper !== null) {
-      visual.stopper.visible = this.skinId === DEFAULT_VIAL_SKIN.id;
-      // Open the mouth during pours: the ornament fades before the stream starts.
-      visual.stopper.alpha = state.pivot === "center"
-        ? 1
-        : Math.max(0, 1 - Math.abs(state.rotationDegrees) / 7);
-    }
+    // Open the mouth during pours; no stopper ever extends above y=0.
+    visual.stopper.alpha = state.pivot === "center"
+      ? 1
+      : Math.max(0, 1 - Math.abs(state.rotationDegrees) / 7);
     this.applyVialTransform(visual.liquidContainer, state, baseScale, pivotPoint);
     this.applyVialTransform(visual.artworkContainer, state, baseScale, pivotPoint);
 
