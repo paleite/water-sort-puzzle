@@ -7,7 +7,7 @@ import {
   MeshGeometry,
   Shader,
   Sprite,
-  type Texture,
+  Texture,
   UniformGroup,
 } from "pixi.js";
 
