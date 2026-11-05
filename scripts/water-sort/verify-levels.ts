@@ -53,44 +53,44 @@ async function main(): Promise<void> {
     throw new Error("Usage: verify-levels [directory] [--changed-from <git-ref>]");
   }
   const directory = path.resolve(positionalArgs[0] ?? "levels");
-  let newLevelIds: Set<string> | null = null;
+  let changedLevelIds: Set<string> | null = null;
   if (changedFrom !== undefined) {
     const relativeDirectory = path.relative(process.cwd(), directory).split(path.sep).join("/");
     if (relativeDirectory.startsWith("..") || path.isAbsolute(relativeDirectory)) {
       throw new Error("Changed-level verification requires a directory inside the repository.");
     }
     const { stdout } = await execFileAsync("git", [
-      "diff", "--name-only", "--diff-filter=A", changedFrom, "HEAD", "--", relativeDirectory,
+      "diff", "--name-only", "--diff-filter=ACMR", changedFrom, "HEAD", "--", relativeDirectory,
     ]);
     const directoryPrefix = `${relativeDirectory}/`;
-    newLevelIds = new Set(
+    changedLevelIds = new Set(
       stdout.split(/\r?\n/)
         .filter((filename) => filename.startsWith(directoryPrefix))
         .map((filename) => filename.slice(directoryPrefix.length))
         .filter((filename) => filename !== "manifest.json" && /^[^/]+\.json$/.test(filename))
         .map((filename) => filename.slice(0, -".json".length)),
     );
-    if (newLevelIds.size === 0) {
-      console.log("No new levels in this change; verification passed.");
+    if (changedLevelIds.size === 0) {
+      console.log("No added or modified levels in this change; verification passed.");
       return;
     }
   }
   const manifest = await readJson<Manifest>(path.join(directory, "manifest.json"));
-  if (newLevelIds !== null) {
+  if (changedLevelIds !== null) {
     const manifestIds = new Set(manifest.levels.map((entry) => entry.id));
-    for (const levelId of newLevelIds) {
+    for (const levelId of changedLevelIds) {
       if (!manifestIds.has(levelId)) {
-        throw new Error(`New level ${levelId} is missing from the manifest.`);
+        throw new Error(`Changed level ${levelId} is missing from the manifest.`);
       }
     }
   }
   let failed = false;
   const seenBoards = new Map<string, string>();
 
-  // Compare new boards against existing boards without re-solving old levels.
-  if (newLevelIds !== null) {
+  // Compare added/modified boards against unchanged boards without re-solving them.
+  if (changedLevelIds !== null) {
     for (const entry of manifest.levels) {
-      if (newLevelIds.has(entry.id)) continue;
+      if (changedLevelIds.has(entry.id)) continue;
       const existing = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
       const existingBoard: Board = existing.vials.map((vial) => [...vial].reverse());
       seenBoards.set(createCanonicalBoardKey(existingBoard), entry.id);
@@ -98,7 +98,7 @@ async function main(): Promise<void> {
   }
 
   for (const entry of manifest.levels) {
-    if (newLevelIds !== null && !newLevelIds.has(entry.id)) continue;
+    if (changedLevelIds !== null && !changedLevelIds.has(entry.id)) continue;
     const raw = await readJson<RawLevel>(path.join(directory, `${entry.id}.json`));
     if (raw.id !== entry.id) {
       console.error(`${entry.id}: FAIL · file id is ${raw.id}`);
@@ -138,9 +138,9 @@ async function main(): Promise<void> {
   }
 
   if (failed) process.exitCode = 1;
-  else console.log(newLevelIds === null
+  else console.log(changedLevelIds === null
     ? `Verified ${manifest.levels.length} levels.`
-    : `Verified ${newLevelIds.size} new levels.`);
+    : `Verified ${changedLevelIds.size} added or modified levels.`);
 }
 
 void main().catch((error: unknown) => {

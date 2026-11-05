@@ -1,0 +1,54 @@
+name: Validate level changes in pull requests
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "levels/**"
+      - "scripts/water-sort/**"
+      - "scripts/ci/**"
+      - "src/lib/water-sort/levels/**"
+      - ".github/workflows/level-validation.yml"
+      - ".github/workflows/deploy.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate-levels:
+    name: Validate level sources and solve added/modified levels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR with full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate all level JSON and generated TypeScript
+        run: |
+          pnpm run compile:levels
+          git diff --exit-code -- src/lib/water-sort/levels/levels.generated.ts
+
+      - name: Test last-deployment baseline selection
+        run: bash scripts/water-sort/verify-since-last-deploy.test.sh
+
+      - name: Test exact site-output change detection
+        run: bash scripts/ci/compare-site-output.test.sh
+
+      - name: Verify added and modified PR levels
+        env:
+          LEVELS_BASE_REF: ${{ github.event.pull_request.base.sha }}
+        run: pnpm run verify:levels --changed-from "$LEVELS_BASE_REF"

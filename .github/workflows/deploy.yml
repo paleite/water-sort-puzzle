@@ -11,6 +11,7 @@ on:
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -23,6 +24,8 @@ concurrency:
 jobs:
   # Build job
   build:
+    outputs:
+      site_changed: ${{ steps.site_diff.outputs.changed }}
     # Defense in depth if pull_request triggers are added later.
     if: github.event_name != 'pull_request' || github.event.pull_request.draft == false
     runs-on: ubuntu-latest
@@ -69,42 +72,53 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Verify generated levels
+      - name: Validate all level JSON and generated TypeScript
         run: |
           pnpm run compile:levels
           git diff --exit-code -- src/lib/water-sort/levels/levels.generated.ts
 
-      - name: Typecheck
+      - name: TypeScript typecheck
         run: pnpm run typecheck
 
-      - name: Lint
+      - name: ESLint checks
         run: pnpm run lint
 
       - name: Unit tests
         run: pnpm run test:unit
 
-      - name: Verify new levels
+      - name: Verify added and modified levels since last successful deploy
         env:
-          LEVELS_BASE_REF: ${{ github.event.before }}
-        run: |
-          if [ -n "$LEVELS_BASE_REF" ] && [[ ! "$LEVELS_BASE_REF" =~ ^0+$ ]]; then
-            pnpm run verify:levels --changed-from "$LEVELS_BASE_REF"
-          else
-            echo "No push base ref; skipping new-level verification."
-          fi
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/water-sort/verify-since-last-deploy.sh
 
       - name: Build with Next.js
         run: pnpm run build
         env:
           NEXT_PUBLIC_BASE_PATH: ${{ steps.pages.outputs.base_path }}
 
-      - name: Upload artifact
+      - name: Compare exported site with last successful deployment
+        id: site_diff
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash scripts/ci/compare-site-output.sh
+
+      - name: Save output manifest for future comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-output-manifest
+          path: ${{ runner.temp }}/site-output.manifest
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Upload Pages artifact only when site content changed
+        if: steps.site_diff.outputs.changed == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
   # Deployment job
   deploy:
+    if: needs.build.outputs.site_changed == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
