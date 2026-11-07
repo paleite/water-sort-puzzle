@@ -1,0 +1,127 @@
+{
+  "format_version": 1,
+  "reference": {
+    "repository": "paleite/water-sort-puzzle",
+    "skin": "mad-alchemist",
+    "logical_viewBox": [100, 272],
+    "scale": 4,
+    "vial_size_px": [400, 1088],
+    "mouth": {
+      "left": [12, 18],
+      "right": [88, 18]
+    },
+    "liquid_bounds": {
+      "left": 14.5,
+      "right": 85.5,
+      "top": 22,
+      "bottom": 259
+    },
+    "liquid_band_height_logical": 59.25,
+    "liquid_band_height_px": 237,
+    "topper_visible_bounds_logical": {
+      "x": [0, 100],
+      "y": [0, 18]
+    },
+    "stopper_sprite_anchor_px": "top-left of vial (0,0); fully contained in first 72px"
+  },
+  "alpha": {
+    "all_files_rgba": true,
+    "background_alpha": 0,
+    "glass_interior": "translucent",
+    "liquid_tiles": "opaque by design"
+  },
+  "files": {
+    "glass_back": "assets/vial/glass_back.png",
+    "glass_front": "assets/vial/glass_front.png",
+    "glass_front_glossy_variant": "assets/vial/glass_front_glossy_variant.png",
+    "toppers": {
+      "cork": "assets/toppers/cork.png",
+      "wax": "assets/toppers/wax.png",
+      "crystal": "assets/toppers/crystal.png",
+      "orb": "assets/toppers/orb.png",
+      "moon": "assets/toppers/moon.png"
+    },
+    "liquid_tiles": {
+      "coral": "assets/liquid/tiles/coral.png",
+      "amber": "assets/liquid/tiles/amber.png",
+      "lemon": "assets/liquid/tiles/lemon.png",
+      "lime": "assets/liquid/tiles/lime.png",
+      "emerald": "assets/liquid/tiles/emerald.png",
+      "teal": "assets/liquid/tiles/teal.png",
+      "sky": "assets/liquid/tiles/sky.png",
+      "cobalt": "assets/liquid/tiles/cobalt.png",
+      "violet": "assets/liquid/tiles/violet.png",
+      "magenta": "assets/liquid/tiles/magenta.png",
+      "rose": "assets/liquid/tiles/rose.png",
+      "cocoa": "assets/liquid/tiles/cocoa.png"
+    },
+    "liquid_bands": {
+      "coral": "assets/liquid/bands/coral.png",
+      "amber": "assets/liquid/bands/amber.png",
+      "lemon": "assets/liquid/bands/lemon.png",
+      "lime": "assets/liquid/bands/lime.png",
+      "emerald": "assets/liquid/bands/emerald.png",
+      "teal": "assets/liquid/bands/teal.png",
+      "sky": "assets/liquid/bands/sky.png",
+      "cobalt": "assets/liquid/bands/cobalt.png",
+      "violet": "assets/liquid/bands/violet.png",
+      "magenta": "assets/liquid/bands/magenta.png",
+      "rose": "assets/liquid/bands/rose.png",
+      "cocoa": "assets/liquid/bands/cocoa.png"
+    },
+    "effects": {
+      "bubble_small": "assets/effects/bubble_small.png",
+      "bubble_cluster": "assets/effects/bubble_cluster.png",
+      "sparkle_single": "assets/effects/sparkle_single.png",
+      "sparkle_burst": "assets/effects/sparkle_burst.png",
+      "foam_cluster": "assets/effects/foam_cluster.png",
+      "splash_drops": "assets/effects/splash_drops.png"
+    },
+    "atlas": {
+      "vial": "atlases/vial_layers_3x1.png",
+      "toppers": "atlases/toppers_5x1.png",
+      "liquids": "atlases/liquid_4x3.png",
+      "effects": "atlases/effects_3x2.png"
+    }
+  },
+  "dimensions_px": {
+    "vial_layers": [400, 1088],
+    "toppers": [400, 72],
+    "liquid_tiles": [256, 256],
+    "liquid_bands": [284, 237],
+    "effects": [128, 128]
+  },
+  "source_tile_positions": {
+    "coral": [0, 0],
+    "lemon": [0, 1],
+    "cobalt": [0, 2],
+    "violet": [0, 3],
+    "emerald": [1, 0],
+    "rose": [1, 1],
+    "sky": [1, 2],
+    "amber": [1, 3],
+    "teal": [2, 0],
+    "lime": [2, 1],
+    "magenta": [2, 2],
+    "cocoa": [2, 3]
+  },
+  "palette": {
+    "coral": "#ef5aa9",
+    "amber": "#f4852d",
+    "lemon": "#f7cb32",
+    "lime": "#a3ed35",
+    "emerald": "#38bf57",
+    "teal": "#20c7b9",
+    "sky": "#38c9ee",
+    "cobalt": "#317df2",
+    "violet": "#a253ea",
+    "magenta": "#df37bc",
+    "rose": "#df4269",
+    "cocoa": "#a98251"
+  },
+  "warnings": [
+    "The generated raster texture tiles are not mathematically seamless; tile repeat edges need checking.",
+    "Dynamic pour streams, liquid masks, and slosh are rendered by PixiJS/GSAP, not animated PNG frames.",
+    "These PNGs are normalized exports; original Create Image files do not reliably honor specified pixel sizes or alpha."
+  ]
+}
