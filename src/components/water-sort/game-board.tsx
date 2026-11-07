@@ -233,23 +233,45 @@ export function GameBoard({
           capacity,
         });
 
-    // Selection feedback is presentation-only. Concurrent pours retain
-    // exclusive control of the source's squash/stretch timeline.
-    if (presentations.length !== 0 || selectionDeformationsRef.current.size === 0) {
+    const handoffPoses = nextSourceHandoffPoseRef.current;
+    const selectionDeformations = selectionDeformationsRef.current;
+    if (
+      handoffPoses.size === 0
+      && (presentations.length !== 0 || selectionDeformations.size === 0)
+    ) {
       renderer.render(nextState);
-    } else {
-      renderer.render({
-        ...nextState,
-        vials: nextState.vials.map((vial) => {
-          const deformation = selectionDeformationsRef.current.get(vial.vialIndex);
-          return deformation === undefined ? vial : {
-            ...vial,
-            scaleX: deformation.scaleX,
-            scaleY: deformation.scaleY,
-          };
-        }),
-      });
+      return;
     }
+
+    const movingSourceIndices = new Set(
+      presentations.filter(({started}) => started).map(({move}) => move.move.sourceVialIndex),
+    );
+    renderer.render({
+      ...nextState,
+      vials: nextState.vials.map((vial) => {
+        const handoff = handoffPoses.get(vial.vialIndex);
+        if (handoff !== undefined && !movingSourceIndices.has(vial.vialIndex)) {
+          // Keep the actual vial airborne between the two XState presentations.
+          // A state update must not draw a one-frame return to its home slot.
+          return {
+            ...vial,
+            translationX: handoff.x,
+            translationY: handoff.y,
+            selectionOffsetY: 0,
+            pivot: "left-mouth" as const,
+          };
+        }
+        // Selection feedback is presentation-only; moving pours own their pose.
+        const deformation = presentations.length === 0
+          ? selectionDeformations.get(vial.vialIndex)
+          : undefined;
+        return deformation === undefined ? vial : {
+          ...vial,
+          scaleX: deformation.scaleX,
+          scaleY: deformation.scaleY,
+        };
+      }),
+    });
   }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
