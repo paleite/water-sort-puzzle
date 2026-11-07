@@ -48,13 +48,17 @@ jobs:
       - name: Compile levels and validate checked-in runtime module
         run: pnpm compile:levels
 
-      - name: Verify new levels are solvable, optimal and unique
-        run: pnpm verify:levels --changed-from "$BASE_COMMIT"
-
-      - name: Commit and push validated levels to main
+      - name: Commit generated levels locally
         run: |
           git add levels src/lib/water-sort/levels/levels.generated.ts
-          test "$(git diff --cached --name-only | grep -c '^levels/[0-9][0-9][0-9]\\.json$')" -eq 50
+          changed_level_count="$(git diff --cached --name-only --diff-filter=A -- levels | grep --extended-regexp --count '^levels/[0-9]{3}\\.json
+ || true)"
+          test "$changed_level_count" -eq 50
           git diff --cached --quiet && { echo "No level changes"; exit 1; }
           git commit -m "Add 50 generated levels"
-          git push origin main
+
+      - name: Verify committed new levels are solvable, optimal and unique
+        run: pnpm verify:levels --changed-from "$BASE_COMMIT"
+
+      - name: Push verified levels to main
+        run: git push origin main
