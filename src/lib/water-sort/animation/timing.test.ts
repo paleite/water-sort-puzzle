@@ -76,7 +76,7 @@ test("pickup and landing squash/stretch restore identity at every stable stage",
 });
 
 test("queued same-source pour retains its airborne position without a landing squash", () => {
-  const initialBoard = [["coral", "coral"] as const, [] as const, [] as const];
+  const initialBoard = [["coral", "amber"] as const, [] as const, [] as const];
   const firstMove = applyMove(initialBoard, {sourceVialIndex: 0, destinationVialIndex: 1}, 4);
   const secondMove = applyMove(firstMove.nextBoard, {sourceVialIndex: 0, destinationVialIndex: 2}, 4);
   const first = createPourTimeline({
@@ -126,7 +126,7 @@ test("queued same-source pour retains its airborne position without a landing sq
 });
 
 test("only the earliest queued interaction with the same vial can hand off its pose", () => {
-  const initialBoard = [["coral", "coral"] as const, ["coral"] as const, [] as const];
+  const initialBoard = [["coral", "amber"] as const, ["amber"] as const, [] as const];
   const first = applyMove(initialBoard, {sourceVialIndex: 0, destinationVialIndex: 1}, 4);
   const second = applyMove(first.nextBoard, {sourceVialIndex: 0, destinationVialIndex: 2}, 4);
   const runtimeStates = new Map([
