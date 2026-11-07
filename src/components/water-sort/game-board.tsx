@@ -353,6 +353,7 @@ export function GameBoard({
       const handoffPose = nextSourceHandoffPoseRef.current.get(sourceVialIndex);
       if (handoffPose !== undefined) {
         runtime.presentation.setStartingPose(handoffPose);
+        runtime.snapshot = runtime.presentation.getSnapshot();
         nextSourceHandoffPoseRef.current.delete(sourceVialIndex);
         appendDebugLog(`p${active.id} source:handoff`);
       }
