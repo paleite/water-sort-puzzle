@@ -1,0 +1,60 @@
+name: Append 50 verified water-sort levels (one time)
+
+on:
+  push:
+    branches:
+      - ops/append-50-levels
+
+permissions:
+  contents: write
+
+jobs:
+  append-levels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout repository history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Checkout latest main
+        run: |
+          git fetch origin main
+          git checkout -B main origin/main
+          git pull --ff-only origin main
+          echo "BASE_COMMIT=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Append 50 levels using repository generator
+        run: pnpm generate:levels -- --count 50 --append
+
+      - name: Compile levels and validate checked-in runtime module
+        run: pnpm compile:levels
+
+      - name: Verify new levels are solvable, optimal and unique
+        run: pnpm verify:levels --changed-from "$BASE_COMMIT"
+
+      - name: Commit and push validated levels to main
+        run: |
+          git add levels src/lib/water-sort/levels/levels.generated.ts
+          test "$(git diff --cached --name-only | grep -c '^levels/[0-9][0-9][0-9]\\.json$')" -eq 50
+          git diff --cached --quiet && { echo "No level changes"; exit 1; }
+          git commit -m "Add 50 generated levels"
+          git push origin main
