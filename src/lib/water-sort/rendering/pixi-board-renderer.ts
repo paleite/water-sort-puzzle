@@ -522,7 +522,8 @@ export class PixiBoardRenderer {
       pivotRestX + state.translationX,
       pivotRestY + state.translationY + state.selectionOffsetY,
     );
-    container.scale.set(scale);
+    // Deform glass, liquid mesh, mask and ornaments together in local space.
+    container.scale.set(scale * (state.scaleX ?? 1), scale * (state.scaleY ?? 1));
     container.rotation = (state.rotationDegrees * Math.PI) / 180;
     container.alpha = state.alpha;
     container.zIndex = state.pivot === "center" ? 0 : 20;

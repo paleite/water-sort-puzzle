@@ -11,7 +11,7 @@ export interface LiquidSurfaceRenderState {freeSurfaceAngleDegrees: number; curv
 export type VialPivot = "center" | "left-mouth" | "right-mouth";
 export interface VialRenderState {
   vialIndex: number; anchor: VialAnchor; translationX: number; translationY: number; rotationDegrees: number;
-  scale: number; alpha: number; selectionOffsetY: number; pivot: VialPivot; bands: readonly LiquidBandRenderState[]; surface: LiquidSurfaceRenderState;
+  scale: number; scaleX?: number; scaleY?: number; alpha: number; selectionOffsetY: number; pivot: VialPivot; bands: readonly LiquidBandRenderState[]; surface: LiquidSurfaceRenderState;
 }
 export interface PourStreamRenderState {
   color: ColorId; opacity: number; sourceVialIndex: number; destinationVialIndex: number; direction: "left" | "right";
@@ -73,7 +73,9 @@ export function buildConcurrentPourBoardRenderState({board, anchors, presentatio
     if (sourcePresentation !== undefined) {
       const {geometry, presentation} = sourcePresentation;
       return {vialIndex, anchor: anchors[vialIndex] ?? {x: 0, y: 0, width: 1, height: 1}, translationX: presentation.sourceX,
-        translationY: presentation.sourceY, rotationDegrees: presentation.sourceRotationDegrees, scale: 1, alpha: 1, selectionOffsetY: 0,
+        translationY: presentation.sourceY, rotationDegrees: presentation.sourceRotationDegrees, scale: 1,
+        scaleX: presentation.sourceScaleX, scaleY: presentation.sourceScaleY,
+        alpha: 1, selectionOffsetY: 0,
         pivot: geometry.direction === "right" ? "right-mouth" : "left-mouth", bands: visualBands[vialIndex] ?? [],
         surface: {freeSurfaceAngleDegrees: presentation.liquid.sourceLocalAngleDegrees, curvatureAmplitude: presentation.liquid.sourceCurvatureAmplitude,
           waveSamples: [], activity: clamp(Math.abs(presentation.liquid.sourceAngularVelocity) / 90, 0, 1)}};
