@@ -130,6 +130,8 @@ export function GameBoard({
   const startReadyPresentationsRef = useRef<() => void>(() => {});
   const debugSequenceRef = useRef(0);
   const previousPhaseRef = useRef<GamePhase | null>(null);
+  const previousSelectedVialIndexRef = useRef<number | null>(null);
+  const selectionDeformationsRef = useRef(new Map<number, {scaleX: number; scaleY: number}>());
   const [visibleBoard, setVisibleBoard] = useState<Board>(board);
   const [debugEntries, setDebugEntries] = useState<string[]>([]);
   // Keep the debug data path intact while the overlay JSX is commented out below.
@@ -213,25 +215,72 @@ export function GameBoard({
           }];
     });
 
-    renderer.render(
-      presentations.length === 0
-        ? buildStaticBoardRenderState({
-            board: settledVisibleBoard,
-            anchors,
-            selectedSourceVialIndex,
-            capacity,
-          })
-        : buildConcurrentPourBoardRenderState({
-            board: settledVisibleBoard,
-            anchors,
-            presentations,
-            selectedSourceVialIndex,
-            capacity,
-          }),
-    );
+    const nextState = presentations.length === 0
+      ? buildStaticBoardRenderState({
+          board: settledVisibleBoard,
+          anchors,
+          selectedSourceVialIndex,
+          capacity,
+        })
+      : buildConcurrentPourBoardRenderState({
+          board: settledVisibleBoard,
+          anchors,
+          presentations,
+          selectedSourceVialIndex,
+          capacity,
+        });
+
+    // Selection feedback is presentation-only. Concurrent pours retain
+    // exclusive control of the source's squash/stretch timeline.
+    if (presentations.length !== 0 || selectionDeformationsRef.current.size === 0) {
+      renderer.render(nextState);
+    } else {
+      renderer.render({
+        ...nextState,
+        vials: nextState.vials.map((vial) => {
+          const deformation = selectionDeformationsRef.current.get(vial.vialIndex);
+          return deformation === undefined ? vial : {
+            ...vial,
+            scaleX: deformation.scaleX,
+            scaleY: deformation.scaleY,
+          };
+        }),
+      });
+    }
   }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
+
+  useEffect(() => {
+    const previouslySelected = previousSelectedVialIndexRef.current;
+    previousSelectedVialIndexRef.current = selectedSourceVialIndex;
+
+    if (previouslySelected === selectedSourceVialIndex || activePresentations.length > 0) {
+      selectionDeformationsRef.current.clear();
+      return;
+    }
+
+    const vialIndex = selectedSourceVialIndex ?? previouslySelected;
+    if (vialIndex === null) return;
+    const deformation = {scaleX: 1.045, scaleY: 0.96};
+    selectionDeformationsRef.current.set(vialIndex, deformation);
+
+    const timeline = gsap.timeline({
+      onUpdate: () => renderLatestRef.current(),
+      onComplete: () => {
+        selectionDeformationsRef.current.delete(vialIndex);
+        renderLatestRef.current();
+      },
+    });
+    timeline
+      .to(deformation, {scaleX: 0.975, scaleY: 1.03, duration: 0.085, ease: "power2.out"})
+      .to(deformation, {scaleX: 1, scaleY: 1, duration: 0.10, ease: "power2.inOut"});
+
+    return () => {
+      timeline.kill();
+      selectionDeformationsRef.current.delete(vialIndex);
+    };
+  }, [selectedSourceVialIndex, activePresentations.length]);
 
   useEffect(() => {
     if (hintMove === null || activePresentations.length > 0 || phase !== "idle") return;
