@@ -51,8 +51,7 @@ jobs:
       - name: Commit generated levels locally
         run: |
           git add levels src/lib/water-sort/levels/levels.generated.ts
-          changed_level_count="$(git diff --cached --name-only --diff-filter=A -- levels | grep --extended-regexp --count '^levels/[0-9]{3}\\.json
- || true)"
+          changed_level_count="$(git diff --cached --name-only --diff-filter=A -- levels | grep --extended-regexp --count '^levels/[0-9]{3}[.]json$' || true)"
           test "$changed_level_count" -eq 50
           git diff --cached --quiet && { echo "No level changes"; exit 1; }
           git commit -m "Add 50 generated levels"
