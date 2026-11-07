@@ -42,6 +42,8 @@ function snapshot(
     sourceRotationDegrees: 0,
     streamOpacity: 0,
     destinationScale: 1,
+    sourceScaleX: 1,
+    sourceScaleY: 1,
     liquid: {
       timeSeconds,
       sourceWorldAngleDegrees: 0,
@@ -204,4 +206,27 @@ test("independent running pours still interpolate concurrently", () => {
   assertClose(getBands(state, 2)[0]?.volume, 0.5);
   assert.equal(getBands(state, 3)[0]?.color, "amber");
   assertClose(getBands(state, 3)[0]?.volume, 0.5);
+});
+
+test("source squash/stretch affects only the moving vial, not the target liquid", () => {
+  const board: Board = [["coral"], [], [], []];
+  const move = applyMove(board, {sourceVialIndex: 0, destinationVialIndex: 1}, CAPACITY);
+  const state = buildConcurrentPourBoardRenderState({
+    board,
+    anchors: ANCHORS,
+    presentations: [{
+      move,
+      geometry: GEOMETRY,
+      presentation: snapshot(0.05, {sourceScaleX: 1.055, sourceScaleY: 0.95}),
+      started: true,
+      contentCommitted: false,
+    }],
+    selectedSourceVialIndex: null,
+    capacity: CAPACITY,
+  });
+
+  assert.equal(state.vials[0]?.scaleX, 1.055);
+  assert.equal(state.vials[0]?.scaleY, 0.95);
+  assert.equal(state.vials[1]?.scaleX, undefined);
+  assert.equal(state.vials[1]?.scaleY, undefined);
 });
