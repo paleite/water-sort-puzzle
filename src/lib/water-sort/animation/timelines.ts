@@ -7,10 +7,14 @@ import {GAME_TIMING} from "./timing";
 
 const DEBUG_SEEK_STEP_SECONDS = 1 / 120;
 interface PourDebugMarker {label: string; timeSeconds: number}
-interface PourMotionState {x: number; y: number; rotationDegrees: number; streamOpacity: number; destinationScale: number}
+interface PourMotionState {
+  x: number; y: number; rotationDegrees: number; streamOpacity: number; destinationScale: number;
+  sourceScaleX: number; sourceScaleY: number;
+}
 export interface PourPresentationSnapshot {
   timeSeconds: number; progress: number; sourceX: number; sourceY: number;
-  sourceRotationDegrees: number; streamOpacity: number; destinationScale: number; liquid: LiquidSimulationSnapshot;
+  sourceRotationDegrees: number; streamOpacity: number; destinationScale: number;
+  sourceScaleX: number; sourceScaleY: number; liquid: LiquidSimulationSnapshot;
 }
 export interface PourPresentation {
   timeline: gsap.core.Timeline;
@@ -25,7 +29,10 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   onDebug?: (event: string, timeSeconds: number) => void; onFrame?: (snapshot: PourPresentationSnapshot) => void; paused?: boolean;
 }): PourPresentation {
   const destinationVialIndex = move.move.destinationVialIndex;
-  const motion: PourMotionState = {x: 0, y: 0, rotationDegrees: 0, streamOpacity: 0, destinationScale: 1};
+  const motion: PourMotionState = {
+    x: 0, y: 0, rotationDegrees: 0, streamOpacity: 0, destinationScale: 1,
+    sourceScaleX: 1, sourceScaleY: 1,
+  };
   const liquidSimulation = createLiquidSimulation({
     sourceWidthPixels,
     getSourceMotion: () => ({x: motion.x, y: motion.y, rotationDegrees: motion.rotationDegrees}),
@@ -62,7 +69,9 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
       timeSeconds,
       progress: GAME_TIMING.pour.totalSeconds <= 0 ? 0 : timeSeconds / GAME_TIMING.pour.totalSeconds,
       sourceX: motion.x, sourceY: motion.y, sourceRotationDegrees: motion.rotationDegrees,
-      streamOpacity: motion.streamOpacity, destinationScale: motion.destinationScale, liquid: liquidSimulation.getSnapshot(),
+      streamOpacity: motion.streamOpacity, destinationScale: motion.destinationScale,
+      sourceScaleX: motion.sourceScaleX, sourceScaleY: motion.sourceScaleY,
+      liquid: liquidSimulation.getSnapshot(),
     };
   }
   function emitFrame(): void { onFrame?.(getSnapshot()); }
@@ -80,6 +89,14 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   const approachLiftPixels = Math.max(8, sourceWidthPixels * 0.18);
   const travelLiftSeconds = GAME_TIMING.pour.travelSeconds * 0.62;
   const travelSettleSeconds = GAME_TIMING.pour.travelSeconds - travelLiftSeconds;
+  // Small, volume-neutral cartoon squash/stretch at lift-off and landing.
+  // Both axes return to 1 before the pour begins and at the final frame.
+  timeline.to(motion, {sourceScaleX: 1.055, sourceScaleY: 0.95, duration: 0.045, ease: "power2.out"}, 0);
+  timeline.to(motion, {sourceScaleX: 0.97, sourceScaleY: 1.035, duration: 0.075, ease: "power2.out"}, 0.045);
+  timeline.to(motion, {sourceScaleX: 1, sourceScaleY: 1, duration: 0.09, ease: "power2.inOut"}, 0.12);
+  // Impact squash occurs as the bottle returns to its resting position.
+  timeline.to(motion, {sourceScaleX: 1.045, sourceScaleY: 0.958, duration: 0.045, ease: "power2.out"}, 0.95);
+  timeline.to(motion, {sourceScaleX: 1, sourceScaleY: 1, duration: 0.04, ease: "power2.inOut"}, 1.0);
   timeline.to(motion, {x: geometry.translationX, duration: GAME_TIMING.pour.travelSeconds, ease: "power2.inOut"}, 0);
   timeline.to(motion, {y: geometry.translationY - approachLiftPixels, duration: travelLiftSeconds, ease: "power2.out"}, 0);
   timeline.to(motion, {y: geometry.translationY, duration: travelSettleSeconds, ease: "power1.inOut"}, travelLiftSeconds);
