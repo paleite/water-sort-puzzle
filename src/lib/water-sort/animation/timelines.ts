@@ -21,6 +21,8 @@ export interface PourPresentation {
   seek(timeSeconds: number): void;
   getSnapshot(): PourPresentationSnapshot;
   requestExpeditedReturn(): void;
+  requestDirectHandoff(): boolean;
+  setStartingPose(pose: {x: number; y: number}): void;
   setPlaybackRate(playbackRate: number): void;
 }
 
@@ -54,6 +56,8 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   ].sort((first, second) => first.timeSeconds - second.timeSeconds);
   let nextDebugMarkerIndex = 0;
   let expeditedReturnRequested = false;
+  let directHandoffRequested = false;
+  let hasStartingHandoffPose = false;
   let basePlaybackRate = 1;
   const timeline = gsap.timeline({defaults: {overwrite: "auto"}, paused});
 
@@ -91,11 +95,23 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   const travelSettleSeconds = GAME_TIMING.pour.travelSeconds - travelLiftSeconds;
   // Small, volume-neutral cartoon squash/stretch at lift-off and landing.
   // Both axes return to 1 before the pour begins and at the final frame.
-  timeline.to(motion, {sourceScaleX: 1.055, sourceScaleY: 0.95, duration: 0.045, ease: "power2.out"}, 0);
-  timeline.to(motion, {sourceScaleX: 0.97, sourceScaleY: 1.035, duration: 0.075, ease: "power2.out"}, 0.045);
+  timeline.to(motion, {
+    sourceScaleX: () => hasStartingHandoffPose ? 1 : 1.055,
+    sourceScaleY: () => hasStartingHandoffPose ? 1 : 0.95,
+    duration: 0.045, ease: "power2.out",
+  }, 0);
+  timeline.to(motion, {
+    sourceScaleX: () => hasStartingHandoffPose ? 1 : 0.97,
+    sourceScaleY: () => hasStartingHandoffPose ? 1 : 1.035,
+    duration: 0.075, ease: "power2.out",
+  }, 0.045);
   timeline.to(motion, {sourceScaleX: 1, sourceScaleY: 1, duration: 0.09, ease: "power2.inOut"}, 0.12);
   // Impact squash occurs as the bottle returns to its resting position.
-  timeline.to(motion, {sourceScaleX: 1.045, sourceScaleY: 0.958, duration: 0.045, ease: "power2.out"}, 0.95);
+  timeline.to(motion, {
+    sourceScaleX: () => directHandoffRequested ? 1 : 1.045,
+    sourceScaleY: () => directHandoffRequested ? 1 : 0.958,
+    duration: 0.045, ease: "power2.out",
+  }, 0.95);
   timeline.to(motion, {sourceScaleX: 1, sourceScaleY: 1, duration: 0.04, ease: "power2.inOut"}, 1.0);
   timeline.to(motion, {x: geometry.translationX, duration: GAME_TIMING.pour.travelSeconds, ease: "power2.inOut"}, 0);
   timeline.to(motion, {y: geometry.translationY - approachLiftPixels, duration: travelLiftSeconds, ease: "power2.out"}, 0);
@@ -111,7 +127,12 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
     timeline.to(motion, {destinationScale: 1.04, duration: GAME_TIMING.completedVialSeconds / 2, ease: "power2.out", yoyo: true, repeat: 1}, GAME_TIMING.pour.streamCloseSeconds);
   }
   timeline.to(motion, {rotationDegrees: 0, duration: GAME_TIMING.pour.returnRotationDurationSeconds, ease: "power2.inOut"}, GAME_TIMING.pour.returnRotationSeconds);
-  timeline.to(motion, {x: 0, y: 0, duration: GAME_TIMING.pour.returnTravelDurationSeconds, ease: "power2.inOut"}, GAME_TIMING.pour.returnTravelSeconds);
+  timeline.to(motion, {
+    x: () => directHandoffRequested ? geometry.translationX : 0,
+    y: () => directHandoffRequested ? geometry.translationY : 0,
+    duration: GAME_TIMING.pour.returnTravelDurationSeconds,
+    ease: "power2.inOut",
+  }, GAME_TIMING.pour.returnTravelSeconds);
   timeline.set(motion, {streamOpacity: 0}, GAME_TIMING.pour.totalSeconds);
 
   function seek(timeSeconds: number): void {
@@ -125,9 +146,34 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
     nextDebugMarkerIndex = firstFutureMarkerIndex === -1 ? debugMarkers.length : firstFutureMarkerIndex;
     emitFrame();
   }
-  function requestExpeditedReturn(): void {expeditedReturnRequested = true; updateTimelineSpeed();}
-  function setPlaybackRate(playbackRate: number): void {basePlaybackRate = gsap.utils.clamp(0.05, 4, playbackRate); updateTimelineSpeed();}
-  return {timeline, seek, getSnapshot, requestExpeditedReturn, setPlaybackRate};
+  function requestExpeditedReturn(): void {
+    expeditedReturnRequested = true;
+    updateTimelineSpeed();
+  }
+  function requestDirectHandoff(): boolean {
+    // Once return travel has begun, finishing at home is the safe fallback.
+    // The queued move may still start immediately from the resting pose.
+    if (timeline.time() >= GAME_TIMING.pour.returnTravelSeconds) return false;
+    directHandoffRequested = true;
+    return true;
+  }
+  function setStartingPose(pose: {x: number; y: number}): void {
+    if (timeline.time() > 0) {
+      throw new Error("A vial handoff must be initialized before the next pour starts.");
+    }
+    hasStartingHandoffPose = true;
+    motion.x = pose.x;
+    motion.y = pose.y;
+    timeline.invalidate();
+  }
+  function setPlaybackRate(playbackRate: number): void {
+    basePlaybackRate = gsap.utils.clamp(0.05, 4, playbackRate);
+    updateTimelineSpeed();
+  }
+  return {
+    timeline, seek, getSnapshot, requestExpeditedReturn, requestDirectHandoff,
+    setStartingPose, setPlaybackRate,
+  };
 }
 
 export function createUndoTimeline(sourceElement: HTMLElement, destinationElement: HTMLElement, onComplete: () => void): gsap.core.Timeline {
