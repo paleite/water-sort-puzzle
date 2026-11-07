@@ -165,6 +165,10 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
     motion.x = pose.x;
     motion.y = pose.y;
     timeline.invalidate();
+    // Seed the new liquid simulation at the inherited position, not at home.
+    // Otherwise the first tick sees a synthetic teleport and spikes acceleration.
+    liquidSimulation.reset();
+    liquidSimulation.update(0);
   }
   function setPlaybackRate(playbackRate: number): void {
     basePlaybackRate = gsap.utils.clamp(0.05, 4, playbackRate);
