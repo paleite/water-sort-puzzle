@@ -74,3 +74,29 @@ export function presentationHasQueuedFinishDependent(
       && getPresentationDependency(candidate, blocker) === "presentation-finished";
   });
 }
+
+/**
+ * Only a queued next pour FROM the same physical vial can reuse its airborne
+ * pose. An intervening incoming pour must finish before that vial can depart.
+ */
+export function getQueuedSameSourceSuccessor(
+  blocker: QueuedMovePresentation,
+  activePresentations: readonly QueuedMovePresentation[],
+  runtimes: ReadonlyMap<number, PresentationRuntimeState>,
+): QueuedMovePresentation | null {
+  const sourceVialIndex = blocker.move.move.sourceVialIndex;
+  const nextInteraction = activePresentations
+    .filter((candidate) =>
+      candidate.id > blocker.id
+      && runtimes.get(candidate.id)?.started === false
+      && (
+        candidate.move.move.sourceVialIndex === sourceVialIndex
+        || candidate.move.move.destinationVialIndex === sourceVialIndex
+      ),
+    )
+    .sort((first, second) => first.id - second.id)[0];
+
+  return nextInteraction?.move.move.sourceVialIndex === sourceVialIndex
+    ? nextInteraction
+    : null;
+}

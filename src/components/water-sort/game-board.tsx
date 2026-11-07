@@ -14,6 +14,7 @@ import {
 import type { GamePhase } from "@/hooks/use-water-sort-game";
 import { calculatePourGeometry } from "@/lib/water-sort/animation/pour-geometry";
 import {
+  getQueuedSameSourceSuccessor,
   presentationHasQueuedFinishDependent,
   presentationIsReady,
 } from "@/lib/water-sort/animation/presentation-scheduler";
@@ -52,6 +53,7 @@ interface PresentationRuntime {
   started: boolean;
   contentCommitted: boolean;
   expeditedReturnRequested: boolean;
+  directHandoffRequested: boolean;
 }
 
 function setVialRef(
@@ -124,6 +126,7 @@ export function GameBoard({
   const vialRefs = useRef(new Map<number, HTMLButtonElement>());
   const rendererRef = useRef<PixiBoardRenderer | null>(null);
   const presentationRuntimesRef = useRef(new Map<number, PresentationRuntime>());
+  const nextSourceHandoffPoseRef = useRef(new Map<number, {x: number; y: number}>());
   const visibleBoardRef = useRef<Board>(board);
   const transientStateBuilderRef = useRef<TransientStateBuilder | null>(null);
   const renderLatestRef = useRef<() => void>(() => {});
@@ -230,23 +233,45 @@ export function GameBoard({
           capacity,
         });
 
-    // Selection feedback is presentation-only. Concurrent pours retain
-    // exclusive control of the source's squash/stretch timeline.
-    if (presentations.length !== 0 || selectionDeformationsRef.current.size === 0) {
+    const handoffPoses = nextSourceHandoffPoseRef.current;
+    const selectionDeformations = selectionDeformationsRef.current;
+    if (
+      handoffPoses.size === 0
+      && (presentations.length !== 0 || selectionDeformations.size === 0)
+    ) {
       renderer.render(nextState);
-    } else {
-      renderer.render({
-        ...nextState,
-        vials: nextState.vials.map((vial) => {
-          const deformation = selectionDeformationsRef.current.get(vial.vialIndex);
-          return deformation === undefined ? vial : {
-            ...vial,
-            scaleX: deformation.scaleX,
-            scaleY: deformation.scaleY,
-          };
-        }),
-      });
+      return;
     }
+
+    const movingSourceIndices = new Set(
+      presentations.filter(({started}) => started).map(({move}) => move.move.sourceVialIndex),
+    );
+    renderer.render({
+      ...nextState,
+      vials: nextState.vials.map((vial) => {
+        const handoff = handoffPoses.get(vial.vialIndex);
+        if (handoff !== undefined && !movingSourceIndices.has(vial.vialIndex)) {
+          // Keep the actual vial airborne between the two XState presentations.
+          // A state update must not draw a one-frame return to its home slot.
+          return {
+            ...vial,
+            translationX: handoff.x,
+            translationY: handoff.y,
+            selectionOffsetY: 0,
+            pivot: "left-mouth" as const,
+          };
+        }
+        // Selection feedback is presentation-only; moving pours own their pose.
+        const deformation = presentations.length === 0
+          ? selectionDeformations.get(vial.vialIndex)
+          : undefined;
+        return deformation === undefined ? vial : {
+          ...vial,
+          scaleX: deformation.scaleX,
+          scaleY: deformation.scaleY,
+        };
+      }),
+    });
   }, [activePresentations, capacity, selectedSourceVialIndex]);
 
   renderLatestRef.current = renderLatest;
@@ -324,6 +349,14 @@ export function GameBoard({
       if (runtime === undefined || runtime.started) continue;
       if (!presentationIsReady(active, activePresentations, runtimes)) continue;
 
+      const sourceVialIndex = active.move.move.sourceVialIndex;
+      const handoffPose = nextSourceHandoffPoseRef.current.get(sourceVialIndex);
+      if (handoffPose !== undefined) {
+        runtime.presentation.setStartingPose(handoffPose);
+        runtime.snapshot = runtime.presentation.getSnapshot();
+        nextSourceHandoffPoseRef.current.delete(sourceVialIndex);
+        appendDebugLog(`p${active.id} source:handoff`);
+      }
       runtime.started = true;
       onComboPresentationStarted(active.id);
       appendDebugLog(`p${active.id} presentation:start`);
@@ -345,9 +378,22 @@ export function GameBoard({
         continue;
       }
 
+      const sameSourceSuccessor = getQueuedSameSourceSuccessor(
+        active,
+        activePresentations,
+        runtimes,
+      );
+      if (sameSourceSuccessor !== null) {
+        runtime.directHandoffRequested = runtime.presentation.requestDirectHandoff();
+        if (runtime.directHandoffRequested) {
+          appendDebugLog(`p${active.id} return:direct-to-p${sameSourceSuccessor.id}`);
+        }
+      }
       runtime.expeditedReturnRequested = true;
       runtime.presentation.requestExpeditedReturn();
-      appendDebugLog(`p${active.id} return:expedited`);
+      if (!runtime.directHandoffRequested) {
+        appendDebugLog(`p${active.id} return:expedited`);
+      }
     }
 
     renderLatestRef.current();
@@ -446,6 +492,14 @@ export function GameBoard({
           appendDebugLog(`p${active.id} t=${timeSeconds.toFixed(3)} ${event}`);
         },
         onComplete: () => {
+          const currentRuntime = presentationRuntimesRef.current.get(active.id);
+          if (currentRuntime?.directHandoffRequested) {
+            const finalPose = currentRuntime.presentation.getSnapshot();
+            nextSourceHandoffPoseRef.current.set(sourceVialIndex, {
+              x: finalPose.sourceX,
+              y: finalPose.sourceY,
+            });
+          }
           commitPresentationContent(active.id, active.move);
           appendDebugLog(`p${active.id} complete`);
           onComboPresentationFinished(active.id);
@@ -461,6 +515,7 @@ export function GameBoard({
         started: false,
         contentCommitted: false,
         expeditedReturnRequested: false,
+        directHandoffRequested: false,
       };
       presentationRuntimesRef.current.set(active.id, runtime);
       onComboPresentationQueued(active.id, active.move, capacity);
@@ -490,6 +545,7 @@ export function GameBoard({
       runtime.presentation.timeline.kill();
     }
     presentationRuntimesRef.current.clear();
+    nextSourceHandoffPoseRef.current.clear();
   }, []);
 
   useLayoutEffect(() => {
