@@ -14,7 +14,7 @@ export interface VialRenderState {
   scale: number; scaleX?: number; scaleY?: number; alpha: number; selectionOffsetY: number; pivot: VialPivot; bands: readonly LiquidBandRenderState[]; surface: LiquidSurfaceRenderState;
 }
 export interface PourStreamRenderState {
-  color: ColorId; opacity: number; sourceVialIndex: number; destinationVialIndex: number; direction: "left" | "right";
+  color: ColorId; opacity: number; timeSeconds: number; sourceVialIndex: number; destinationVialIndex: number; direction: "left" | "right";
   destinationFill: number; impactXNormalized: number; widthScale: number; surfaceActivity: number;
   splashProgress: number; splashOpacity: number; terminalDropletProgress: number; terminalDropletOpacity: number; visualSeed: number;
 }
@@ -96,7 +96,7 @@ export function buildConcurrentPourBoardRenderState({board, anchors, presentatio
   const streams = renderablePresentations.flatMap(({move, geometry, presentation}) => {
     const phase = getPourVisualPhase(presentation.timeSeconds);
     if (presentation.streamOpacity <= 0.001 && phase.splashOpacity <= 0.001 && phase.terminalDropletOpacity <= 0.001) return [];
-    return [{color: move.color, opacity: presentation.streamOpacity, sourceVialIndex: move.move.sourceVialIndex,
+    return [{color: move.color, opacity: presentation.streamOpacity, timeSeconds: presentation.timeSeconds, sourceVialIndex: move.move.sourceVialIndex,
       destinationVialIndex: move.move.destinationVialIndex, direction: geometry.direction,
       destinationFill: destinationFillByIndex.get(move.move.destinationVialIndex) ?? (board[move.move.destinationVialIndex]?.length ?? 0),
       impactXNormalized: getDestinationImpactXNormalized(geometry.direction), widthScale: phase.streamWidthScale, surfaceActivity: phase.surfaceActivity,
