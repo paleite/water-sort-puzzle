@@ -38,6 +38,7 @@ import type {
   VialRenderState,
 } from "./render-state";
 import {liquidFragmentShader, liquidVertexShader} from "./liquid-shader";
+import {getStreamParticleSamples} from "./stream-particles";
 
 interface VialVisual {
   liquidContainer: Container;
@@ -775,9 +776,48 @@ export class PixiBoardRenderer {
       graphics
         .circle(destination.x, destination.y, destinationHalfWidth * 1.15)
         .fill({color, alpha: opacity * 0.74});
+
+      // Glowing liquid beads flow along the existing ribbon; the same GSAP
+      // timeline owns their positions, even during concurrent/seeked pours.
+      if (!this.prefersReducedMotion) {
+        const particles = getStreamParticleSamples({
+          timeSeconds: streamState.timeSeconds,
+          visualSeed: streamState.visualSeed,
+          opacity,
+        });
+        for (const particle of particles) {
+          const point = quadraticPoint(curve, particle.progress);
+          const tangent = quadraticTangent(curve, particle.progress);
+          const tangentLength = Math.max(0.001, Math.hypot(tangent.x, tangent.y));
+          const tangentX = tangent.x / tangentLength;
+          const tangentY = tangent.y / tangentLength;
+          const halfWidth = streamHalfWidth(
+            particle.progress,
+            sourceHalfWidth,
+            middleHalfWidth,
+            destinationHalfWidth,
+          );
+          const particleX = point.x - tangentY * halfWidth * particle.lateralOffset;
+          const particleY = point.y + tangentX * halfWidth * particle.lateralOffset;
+          const radius = Math.min(particle.radius * widthScale, halfWidth * 0.36);
+          const streakLength = Math.min(particle.streakLength * widthScale, halfWidth * 2.2);
+          graphics
+            .moveTo(particleX - tangentX * streakLength * 0.5, particleY - tangentY * streakLength * 0.5)
+            .lineTo(particleX + tangentX * streakLength * 0.5, particleY + tangentY * streakLength * 0.5)
+            .stroke({color: 0xffffff, width: radius * 0.7, alpha: particle.opacity * 0.75});
+          graphics
+            .circle(particleX, particleY, radius)
+            .fill({color: 0xffffff, alpha: particle.opacity * 0.4});
+        }
+      }
     }
 
     if (streamState.splashOpacity > 0.001) {
+      if (!this.prefersReducedMotion) {
+        graphics
+          .circle(destination.x, destination.y, 1.5 + streamState.splashProgress * 7)
+          .stroke({color: 0xffffff, width: 0.65, alpha: streamState.splashOpacity * 0.28});
+      }
       const splashTime = streamState.splashProgress * 0.24;
       for (let index = 0; index < 3; index += 1) {
         const horizontalRandom = deterministicUnit(streamState.visualSeed + index * 13 + 1);
