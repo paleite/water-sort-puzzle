@@ -13,8 +13,8 @@ test("glitter stays inside the volume-clipped liquid with pigment-linked identit
   assert.ok(pigment > cutout, "Glitter may only use the visible pigment");
   assert.ok(glitter > pigment, "Glitter must be shaded after the volume cutout");
   assert.ok(output > glitter, "The final pixel includes the glitter layers");
-  assert.match(liquidFragmentShader, /glitterFleck\(liquidPoint, patternId, 0\.0\)/);
-  assert.match(liquidFragmentShader, /glitterFleck\(liquidPoint, patternId, 1\.0\)/);
+  assert.match(liquidFragmentShader, /glitterFleck\(flowUv, patternId, 0\.0\)/);
+  assert.match(liquidFragmentShader, /flowUv \+ surfaceNormal \* \(uTime \* 0\.003\), patternId, 1\.0/);
 });
 
 test("slime wobble is activity-gated without changing the CPU-owned band thresholds", () => {
@@ -25,8 +25,14 @@ test("slime wobble is activity-gated without changing the CPU-owned band thresho
   assert.match(liquidFragmentShader, /vec4 band = chooseBand\(liquidProjection\);/);
 });
 
-test("suspended flecks shimmer on the existing shader clock and freeze with reduced motion", () => {
-  assert.match(liquidFragmentShader, /coordinate\.y \+= uTime \* flowSpeed;/);
+test("pigment-linked droplets follow gravity and activity without changing band thresholds", () => {
+  const clip = liquidFragmentShader.indexOf("if (surfaceDepth < 0.0) discard;");
+  const bandSelection = liquidFragmentShader.indexOf("vec4 band = chooseBand(liquidProjection);");
+  const flow = liquidFragmentShader.indexOf("vec2 flowUv = liquidPoint");
+  assert.ok(flow > bandSelection && bandSelection > clip);
+  assert.match(liquidFragmentShader, /surfaceNormal \* \(uTime \* 0\.0055\)/);
+  assert.match(liquidFragmentShader, /surfaceTangent \* circulation;/);
+  assert.match(liquidFragmentShader, /0\.012 \* flowActivity;/);
   assert.match(liquidFragmentShader, /sin\(uTime \* \(1\.25 \+ layer \* 0\.65\) \+ phase\)/);
   assert.doesNotMatch(liquidFragmentShader, /uniform float uGlitterClock;/);
 });
