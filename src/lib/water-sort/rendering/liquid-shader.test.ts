@@ -3,30 +3,35 @@ import test from "node:test";
 
 import {liquidFragmentShader} from "./liquid-shader";
 
-test("glitter stays inside the volume-clipped liquid with pigment-linked identity", () => {
+test("dense metallic glitter is clipped by the existing liquid surface and pigment bands", () => {
   const cutout = liquidFragmentShader.indexOf("if (surfaceDepth < 0.0) discard;");
   const pigment = liquidFragmentShader.indexOf("float patternId = choosePattern(liquidProjection);");
-  const glitter = liquidFragmentShader.indexOf("float backGlitter = glitterFleck(");
+  const glitter = liquidFragmentShader.indexOf("float deepMetal = metallicGlitter(");
   const output = liquidFragmentShader.indexOf("gl_FragColor =");
 
-  assert.ok(cutout >= 0, "Liquid must discard pixels outside the free surface");
-  assert.ok(pigment > cutout, "Glitter may only use the visible pigment");
-  assert.ok(glitter > pigment, "Glitter must be shaded after the volume cutout");
-  assert.ok(output > glitter, "The final pixel includes the glitter layers");
-  assert.match(liquidFragmentShader, /glitterFleck\(liquidPoint, patternId, 0\.0\)/);
-  assert.match(liquidFragmentShader, /glitterFleck\(liquidPoint, patternId, 1\.0\)/);
+  assert.ok(cutout >= 0);
+  assert.ok(pigment > cutout);
+  assert.ok(glitter > pigment);
+  assert.ok(output > glitter);
+  assert.match(liquidFragmentShader, /metallicGlitter\(liquidPoint, patternId, 0\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(liquidPoint, patternId, 1\.0, activity\)/);
+  assert.match(liquidFragmentShader, /gridSize = mix\(50\.0, 68\.0, depthLayer\)/);
 });
 
-test("slime wobble is activity-gated without changing the CPU-owned band thresholds", () => {
-  assert.match(liquidFragmentShader, /uniform float uJellyActivity;/);
-  assert.match(liquidFragmentShader, /clamp\(uJellyActivity, 0\.0, 1\.0\)/);
-  assert.match(liquidFragmentShader, /float meniscus = 1\.0 - smoothstep/);
-  assert.match(liquidFragmentShader, /float liquidProjection = dot\(liquidPoint, surfaceNormal\);/);
+test("color identity and CPU-owned fluid volumes remain independent of cosmetic glitter", () => {
   assert.match(liquidFragmentShader, /vec4 band = chooseBand\(liquidProjection\);/);
+  assert.match(liquidFragmentShader, /float patternId = choosePattern\(liquidProjection\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, patternColor, pattern \* 0\.13\);/);
+  assert.match(liquidFragmentShader, /uniform vec4 uBandThresholds;/);
+  assert.match(liquidFragmentShader, /uniform vec4 uBandVolumes;/);
+  assert.match(liquidFragmentShader, /float liquidProjection = dot\(liquidPoint, surfaceNormal\);/);
+  assert.match(liquidFragmentShader, /float meniscus = 1\.0 - smoothstep/);
 });
 
-test("suspended flecks shimmer on the existing shader clock and freeze with reduced motion", () => {
-  assert.match(liquidFragmentShader, /coordinate\.y \+= uTime \* flowSpeed;/);
-  assert.match(liquidFragmentShader, /sin\(uTime \* \(1\.25 \+ layer \* 0\.65\) \+ phase\)/);
+test("glitter reacts to movement and reduced-motion freezes ambient shader time", () => {
+  assert.match(liquidFragmentShader, /uniform float uJellyActivity;/);
+  assert.match(liquidFragmentShader, /activity \* 0\.09/);
+  assert.match(liquidFragmentShader, /activity \* 4\.2/);
+  assert.match(liquidFragmentShader, /uTime \* \(0\.012/);
   assert.doesNotMatch(liquidFragmentShader, /uniform float uGlitterClock;/);
 });
