@@ -24,6 +24,7 @@ varying vec2 vUV;
 
 uniform float uTime;
 uniform float uFill;
+uniform float uJellyActivity;
 uniform vec2 uSurfaceNormal;
 uniform float uInteriorAspect;
 uniform float uFreeSurfaceThreshold;
@@ -212,6 +213,36 @@ float alchemistPattern(float patternId) {
   return max(connections * 0.65, stars);
 }
 
+// Two sparse layers of reflective fragments floating inside the pigment.
+// The grid is evaluated in liquid-space coordinates, so flecks move with
+// the surface normal rather than being painted onto the glass artwork.
+float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
+  float depthScale = mix(1.0, 1.65, layer);
+  float flowSpeed = mix(0.075, 0.115, layer);
+  vec2 coordinate = liquidUv * (19.0 * depthScale);
+  // Positive UV Y points downward; increasing grid Y makes flecks drift up.
+  coordinate.y += uTime * flowSpeed;
+  vec2 cell = floor(coordinate);
+  vec2 cellUv = fract(coordinate);
+  vec2 seed = cell + vec2(pigmentId * 7.11, pigmentId * 13.73)
+    + layer * vec2(31.7, 17.3);
+
+  // Only a minority of cells contain a particle; skip expensive detail
+  // calculations in empty cells on the usual mobile-sized board.
+  if (hash(seed) < mix(0.75, 0.82, layer)) return 0.0;
+  vec2 center = vec2(
+    0.22 + 0.56 * hash(seed + vec2(8.1, 2.3)),
+    0.22 + 0.56 * hash(seed + vec2(3.7, 9.4))
+  );
+  vec2 offset = cellUv - center;
+  float size = mix(0.060, 0.105, hash(seed + vec2(4.2, 6.7)));
+  float diamond = abs(offset.x) + abs(offset.y) * 0.80;
+  float flake = 1.0 - smoothstep(size * 0.62, size, diamond);
+  float phase = hash(seed + vec2(9.6, 1.2)) * 6.2831853;
+  float shimmer = 0.50 + 0.50 * sin(uTime * (1.25 + layer * 0.65) + phase);
+  return flake * (0.45 + 0.55 * shimmer);
+}
+
 float wrappedDistance(float first, float second) {
   float direct = abs(first - second);
   return min(direct, 1.0 - direct);
@@ -255,6 +286,10 @@ void main() {
   surfaceOffset += sampleWave(vUV.x);
   surfaceOffset += sin(vUV.x * 12.5663706144 - uTime * 9.5) * 0.0075 * agitation;
   surfaceOffset += sin(vUV.x * 25.1327412287 + uTime * 6.5) * 0.0035 * agitation;
+  // Restrained viscous wobble only while the vial or receiving liquid moves.
+  // The CPU continues to own the actual color-volume projection.
+  surfaceOffset += sin(vUV.x * 9.42477796 - uTime * 3.6)
+    * 0.0018 * clamp(uJellyActivity, 0.0, 1.0);
   float surfaceDepth = liquidProjection - uFreeSurfaceThreshold - surfaceOffset;
 
   // The free surface and each internal color boundary are independent
@@ -267,14 +302,32 @@ void main() {
   float patternId = choosePattern(liquidProjection);
 
   float sideLight = smoothstep(0.0, 0.24, vUV.x) * smoothstep(1.0, 0.76, vUV.x);
-  vec3 color = band.rgb * (0.88 + sideLight * 0.12);
+  float edgeShade = smoothstep(0.0, 0.22, vUV.x)
+    * (1.0 - smoothstep(0.76, 1.0, vUV.x));
+  float depthTint = 0.89 + 0.09 * clamp(surfaceDepth, 0.0, 1.0);
+  vec3 color = band.rgb * depthTint * (0.81 + sideLight * 0.18 + edgeShade * 0.06);
 
   float pattern = alchemistPattern(patternId);
   float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
   vec3 lightPatternColor = mix(color, vec3(1.0), 0.38);
   vec3 darkPatternColor = color * 0.62;
   vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
-  color = mix(color, patternColor, pattern * 0.58);
+  color = mix(color, patternColor, pattern * 0.40);
+
+  // Pearly depth glints and sharper foreground flakes. Each is tied to its
+  // pigment identity, while both remain inside the existing liquid mask.
+  float backGlitter = glitterFleck(liquidPoint, patternId, 0.0);
+  float frontGlitter = glitterFleck(liquidPoint, patternId, 1.0);
+  color = mix(color, mix(band.rgb, vec3(1.0, 0.91, 0.78), 0.67), backGlitter * 0.38);
+  color = mix(color, vec3(1.0, 0.98, 0.88), frontGlitter * 0.76);
+
+  // A broad wet gloss plus one thin specular streak, beneath the glass layer.
+  float broadGloss = 1.0 - smoothstep(0.045, 0.23, abs(vUV.x - 0.29));
+  float thinGloss = 1.0 - smoothstep(0.008, 0.047, abs(vUV.x - 0.67));
+  float verticalGloss = smoothstep(0.02, 0.20, vUV.y)
+    * (1.0 - smoothstep(0.80, 0.98, vUV.y));
+  float gloss = (broadGloss * 0.17 + thinGloss * 0.19) * verticalGloss;
+  color = mix(color, vec3(1.0, 0.97, 0.94), gloss);
 
   float bubbleMask = 0.0;
   for (int index = 0; index < 7; index++) {
@@ -307,6 +360,9 @@ void main() {
   vec3 foamColor = mix(topColor, vec3(1.0), 0.28);
   color = mix(color, foamColor, clamp(foam, 0.0, 0.82));
 
-  gl_FragColor = vec4(color, 0.96);
+  // Bright curved meniscus sells gel viscosity without changing fill volume.
+  float meniscus = 1.0 - smoothstep(0.001, 0.017, surfaceDepth);
+  color = mix(color, mix(topColor, vec3(1.0), 0.52), meniscus * 0.48);
+  gl_FragColor = vec4(color, 0.93);
 }
 `;
