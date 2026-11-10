@@ -220,15 +220,16 @@ float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
   float depthScale = mix(1.0, 1.65, layer);
   float flowSpeed = mix(0.075, 0.115, layer);
   vec2 coordinate = liquidUv * (19.0 * depthScale);
-  coordinate.y -= uTime * flowSpeed;
+  // Positive UV Y points downward; increasing grid Y makes flecks drift up.
+  coordinate.y += uTime * flowSpeed;
   vec2 cell = floor(coordinate);
   vec2 cellUv = fract(coordinate);
   vec2 seed = cell + vec2(pigmentId * 7.11, pigmentId * 13.73)
     + layer * vec2(31.7, 17.3);
 
-  float population = hash(seed);
-  // Only a minority of cells contain a particle; keep color patterns legible.
-  float occupied = step(mix(0.75, 0.82, layer), population);
+  // Only a minority of cells contain a particle; skip expensive detail
+  // calculations in empty cells on the usual mobile-sized board.
+  if (hash(seed) < mix(0.75, 0.82, layer)) return 0.0;
   vec2 center = vec2(
     0.22 + 0.56 * hash(seed + vec2(8.1, 2.3)),
     0.22 + 0.56 * hash(seed + vec2(3.7, 9.4))
@@ -239,7 +240,7 @@ float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
   float flake = 1.0 - smoothstep(size * 0.62, size, diamond);
   float phase = hash(seed + vec2(9.6, 1.2)) * 6.2831853;
   float shimmer = 0.50 + 0.50 * sin(uTime * (1.25 + layer * 0.65) + phase);
-  return occupied * flake * (0.45 + 0.55 * shimmer);
+  return flake * (0.45 + 0.55 * shimmer);
 }
 
 float wrappedDistance(float first, float second) {
