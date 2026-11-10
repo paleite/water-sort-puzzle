@@ -213,34 +213,45 @@ float alchemistPattern(float patternId) {
   return max(connections * 0.65, stars);
 }
 
-// Two sparse layers of reflective fragments floating inside the pigment.
-// The grid is evaluated in liquid-space coordinates, so flecks move with
-// the surface normal rather than being painted onto the glass artwork.
-float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
-  float depthScale = mix(1.0, 1.65, layer);
-  float flowSpeed = mix(0.075, 0.115, layer);
-  vec2 coordinate = liquidUv * (19.0 * depthScale);
-  // Positive UV Y points downward; increasing grid Y makes flecks drift up.
-  coordinate.y += uTime * flowSpeed;
-  vec2 cell = floor(coordinate);
-  vec2 cellUv = fract(coordinate);
-  vec2 seed = cell + vec2(pigmentId * 7.11, pigmentId * 13.73)
-    + layer * vec2(31.7, 17.3);
-
-  // Only a minority of cells contain a particle; skip expensive detail
-  // calculations in empty cells on the usual mobile-sized board.
-  if (hash(seed) < mix(0.75, 0.82, layer)) return 0.0;
-  vec2 center = vec2(
-    0.22 + 0.56 * hash(seed + vec2(8.1, 2.3)),
-    0.22 + 0.56 * hash(seed + vec2(3.7, 9.4))
+// Dense fine-grained metallic inclusions in two apparent gel depths.
+// A pigment-locked seed keeps neighboring colors visually distinct.
+// A regular spatial cell grid gives bounded per-pixel work, not particles.
+float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer, float activity) {
+  float gridSize = mix(50.0, 68.0, depthLayer);
+  float drift = uTime * (0.012 + activity * 0.09) * mix(1.0, 1.4, depthLayer);
+  vec2 coordinate = liquidUv * gridSize + vec2(
+    0.022 * sin(uTime * 0.7 + liquidUv.y * 12.0) * activity,
+    drift
   );
-  vec2 offset = cellUv - center;
-  float size = mix(0.060, 0.105, hash(seed + vec2(4.2, 6.7)));
-  float diamond = abs(offset.x) + abs(offset.y) * 0.80;
-  float flake = 1.0 - smoothstep(size * 0.62, size, diamond);
-  float phase = hash(seed + vec2(9.6, 1.2)) * 6.2831853;
-  float shimmer = 0.50 + 0.50 * sin(uTime * (1.25 + layer * 0.65) + phase);
-  return flake * (0.45 + 0.55 * shimmer);
+  vec2 cell = floor(coordinate);
+  vec2 localUv = fract(coordinate);
+  vec2 seed = cell + vec2(pigmentId * 13.71, pigmentId * 7.39)
+    + depthLayer * vec2(19.17, 37.19);
+  float occupancy = hash(seed);
+  // High coverage, but almost all fragments are smaller than a cell.
+  if (occupancy < mix(0.28, 0.38, depthLayer)) return 0.0;
+  vec2 center = 0.16 + 0.68 * vec2(
+    hash(seed + vec2(5.17, 2.43)),
+    hash(seed + vec2(3.83, 9.61))
+  );
+  vec2 offset = localUv - center;
+  float angle = hash(seed + vec2(6.17, 4.19)) * 6.2831853;
+  float cosine = cos(angle);
+  float sine = sin(angle);
+  vec2 rotated = vec2(
+    cosine * offset.x - sine * offset.y,
+    sine * offset.x + cosine * offset.y
+  );
+  float size = mix(0.12, 0.23, hash(seed + vec2(11.3, 1.7)));
+  // Faceted flakes look more metallic than soft circular glitter dots.
+  float facet = abs(rotated.x) * 0.82 + abs(rotated.y) * 1.15;
+  float flake = 1.0 - smoothstep(size * 0.68, size, facet);
+  float phase = hash(seed + vec2(8.19, 3.27)) * 6.2831853;
+  float glint = pow(
+    0.5 + 0.5 * sin(uTime * (0.85 + activity * 4.2) + phase),
+    5.0
+  );
+  return flake * (0.36 + 0.64 * glint);
 }
 
 float wrappedDistance(float first, float second) {
@@ -312,22 +323,33 @@ void main() {
   vec3 lightPatternColor = mix(color, vec3(1.0), 0.38);
   vec3 darkPatternColor = color * 0.62;
   vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
-  color = mix(color, patternColor, pattern * 0.40);
+  // Patterns remain linked to pigment IDs, but no longer dominate the gel.
+  color = mix(color, patternColor, pattern * 0.13);
 
-  // Pearly depth glints and sharper foreground flakes. Each is tied to its
-  // pigment identity, while both remain inside the existing liquid mask.
-  float backGlitter = glitterFleck(liquidPoint, patternId, 0.0);
-  float frontGlitter = glitterFleck(liquidPoint, patternId, 1.0);
-  color = mix(color, mix(band.rgb, vec3(1.0, 0.91, 0.78), 0.67), backGlitter * 0.38);
-  color = mix(color, vec3(1.0, 0.98, 0.88), frontGlitter * 0.76);
+  // Semi-transparent candy depth: rim shadow, creamy core, and a
+  // curved pearlescent sheen below the actual front-glass artwork.
+  float rimDepth = smoothstep(0.01, 0.27, vUV.x)
+    * (1.0 - smoothstep(0.73, 0.99, vUV.x));
+  float translucency = 0.07 * rimDepth
+    + 0.035 * sin(vUV.y * 12.0 + uTime * 0.5) * rimDepth;
+  color = mix(color, vec3(1.0, 0.92, 0.97), translucency);
+  float softGloss = exp(-pow((vUV.x - 0.26) / 0.18, 2.0));
+  float streak = exp(-pow((vUV.x - 0.70) / 0.068, 2.0));
+  float glossVertical = smoothstep(0.015, 0.18, vUV.y)
+    * (1.0 - smoothstep(0.83, 0.99, vUV.y));
+  float wetLight = glossVertical * (0.13 * softGloss + 0.11 * streak);
+  color = mix(color, vec3(1.0, 0.96, 0.91), wetLight);
 
-  // A broad wet gloss plus one thin specular streak, beneath the glass layer.
-  float broadGloss = 1.0 - smoothstep(0.045, 0.23, abs(vUV.x - 0.29));
-  float thinGloss = 1.0 - smoothstep(0.008, 0.047, abs(vUV.x - 0.67));
-  float verticalGloss = smoothstep(0.02, 0.20, vUV.y)
-    * (1.0 - smoothstep(0.80, 0.98, vUV.y));
-  float gloss = (broadGloss * 0.17 + thinGloss * 0.19) * verticalGloss;
-  color = mix(color, vec3(1.0, 0.97, 0.94), gloss);
+  float activity = clamp(uJellyActivity, 0.0, 1.0);
+  float deepMetal = metallicGlitter(liquidPoint, patternId, 0.0, activity);
+  float nearMetal = metallicGlitter(liquidPoint, patternId, 1.0, activity);
+  // Two differently sized inclusions approximate glitter embedded in gel,
+  // not a textured sticker applied to the front of the vial.
+  color = mix(color, vec3(0.91, 0.77, 0.93), deepMetal * 0.52);
+  color = mix(color, vec3(1.0, 0.93, 0.75), nearMetal * 0.79);
+  // Sharp metallic flashes grow only with actual source/receiver motion.
+  float reactiveFlash = pow(max(deepMetal, nearMetal), 3.0) * activity;
+  color = mix(color, vec3(1.0), reactiveFlash * 0.22);
 
   float bubbleMask = 0.0;
   for (int index = 0; index < 7; index++) {
@@ -363,6 +385,6 @@ void main() {
   // Bright curved meniscus sells gel viscosity without changing fill volume.
   float meniscus = 1.0 - smoothstep(0.001, 0.017, surfaceDepth);
   color = mix(color, mix(topColor, vec3(1.0), 0.52), meniscus * 0.48);
-  gl_FragColor = vec4(color, 0.93);
+  gl_FragColor = vec4(color, 0.92);
 }
 `;
