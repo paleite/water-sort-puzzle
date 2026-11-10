@@ -213,15 +213,11 @@ float alchemistPattern(float patternId) {
   return max(connections * 0.65, stars);
 }
 
-// Two sparse layers of reflective fragments floating inside the pigment.
-// The grid is evaluated in liquid-space coordinates, so flecks move with
-// the surface normal rather than being painted onto the glass artwork.
+// Sparse translucent droplets, retained as two pigment-seeded depth layers.
+// Flow is applied to the sampling coordinate, never to the color volume.
 float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
   float depthScale = mix(1.0, 1.65, layer);
-  float flowSpeed = mix(0.075, 0.115, layer);
   vec2 coordinate = liquidUv * (19.0 * depthScale);
-  // Positive UV Y points downward; increasing grid Y makes flecks drift up.
-  coordinate.y += uTime * flowSpeed;
   vec2 cell = floor(coordinate);
   vec2 cellUv = fract(coordinate);
   vec2 seed = cell + vec2(pigmentId * 7.11, pigmentId * 13.73)
@@ -235,12 +231,16 @@ float glitterFleck(vec2 liquidUv, float pigmentId, float layer) {
     0.22 + 0.56 * hash(seed + vec2(3.7, 9.4))
   );
   vec2 offset = cellUv - center;
-  float size = mix(0.060, 0.105, hash(seed + vec2(4.2, 6.7)));
-  float diamond = abs(offset.x) + abs(offset.y) * 0.80;
-  float flake = 1.0 - smoothstep(size * 0.62, size, diamond);
+  float size = mix(0.090, 0.145, hash(seed + vec2(4.2, 6.7)));
+  vec2 dropletOffset = vec2(offset.x, offset.y * mix(1.20, 0.92, layer));
+  float droplet = 1.0 - smoothstep(size * 0.58, size, length(dropletOffset));
+  float highlight = 1.0 - smoothstep(
+    size * 0.17, size * 0.44,
+    length(dropletOffset + vec2(size * 0.25, size * 0.22))
+  );
   float phase = hash(seed + vec2(9.6, 1.2)) * 6.2831853;
   float shimmer = 0.50 + 0.50 * sin(uTime * (1.25 + layer * 0.65) + phase);
-  return flake * (0.45 + 0.55 * shimmer);
+  return droplet * (0.32 + 0.46 * shimmer) + highlight * 0.14;
 }
 
 float wrappedDistance(float first, float second) {
@@ -314,10 +314,21 @@ void main() {
   vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
   color = mix(color, patternColor, pattern * 0.40);
 
-  // Pearly depth glints and sharper foreground flakes. Each is tied to its
-  // pigment identity, while both remain inside the existing liquid mask.
-  float backGlitter = glitterFleck(liquidPoint, patternId, 0.0);
-  float frontGlitter = glitterFleck(liquidPoint, patternId, 1.0);
+  // Drift against the free-surface normal and briefly swirl while pouring.
+  // Color-band selection above stays in unmodified liquid coordinates.
+  float flowActivity = clamp(uJellyActivity, 0.0, 1.0);
+  float circulation = sin(
+    dot(liquidPoint, surfaceTangent) * 17.0
+    + dot(liquidPoint, surfaceNormal) * 7.0
+    - uTime * 2.1 + patternId
+  ) * 0.012 * flowActivity;
+  vec2 flowUv = liquidPoint
+    + surfaceNormal * (uTime * 0.0055)
+    + surfaceTangent * circulation;
+  float backGlitter = glitterFleck(flowUv, patternId, 0.0);
+  float frontGlitter = glitterFleck(
+    flowUv + surfaceNormal * (uTime * 0.003), patternId, 1.0
+  );
   color = mix(color, mix(band.rgb, vec3(1.0, 0.91, 0.78), 0.67), backGlitter * 0.38);
   color = mix(color, vec3(1.0, 0.98, 0.88), frontGlitter * 0.76);
 
