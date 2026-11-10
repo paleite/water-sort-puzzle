@@ -148,6 +148,7 @@ function createUniforms(): UniformGroup {
   return new UniformGroup({
     uTime: {value: 0, type: "f32"},
     uFill: {value: 0, type: "f32"},
+    uJellyActivity: {value: 0, type: "f32"},
     uSurfaceNormal: {value: new Float32Array([0, 1]), type: "vec2<f32>"},
     uInteriorAspect: {value: VIAL_INNER_WIDTH / VIAL_INNER_HEIGHT, type: "f32"},
     uFreeSurfaceThreshold: {value: 0, type: "f32"},
@@ -562,6 +563,7 @@ export class PixiBoardRenderer {
     const uniforms = visual.uniforms.uniforms;
     uniforms.uTime = this.elapsedSeconds;
     uniforms.uFill = clamp(totalUnits / capacity, 0, 1);
+    uniforms.uJellyActivity = clamp(state.surface.activity, 0, 1);
     uniforms.uInteriorAspect = projectionGeometry.interiorAspect;
     uniforms.uFreeSurfaceThreshold = projectionGeometry.freeSurfaceThreshold;
 
