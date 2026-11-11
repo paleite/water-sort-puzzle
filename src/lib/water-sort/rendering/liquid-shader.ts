@@ -219,19 +219,17 @@ float alchemistPattern(float patternId) {
 // Dense fine-grained metallic inclusions in two apparent gel depths.
 // A pigment-locked seed keeps neighboring colors visually distinct.
 // A regular spatial cell grid gives bounded per-pixel work, not particles.
-float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer, float activity) {
-  // X is scaled by the interior aspect ratio: 16 cells in liquid space
-  // produce readable 2–5 px facets on a phone, not subpixel noise.
+// Metallic pigments are defined in the material's native coordinates.
+// Seeded facets retain their brightness while moving: no shared per-frame
+// activity term can suddenly re-phase an entire vial's glitter.
+float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer) {
   float gridSize = mix(39.0, 16.0, depthLayer);
-  // Motion is injected through gelUv by the scanline field. Do not add
-  // absolute-time drift: the bottom must remain anchored after the pour.
   vec2 coordinate = liquidUv * gridSize;
   vec2 cell = floor(coordinate);
   vec2 localUv = fract(coordinate);
   vec2 seed = cell + vec2(pigmentId * 13.71, pigmentId * 7.39)
     + depthLayer * vec2(19.17, 37.19);
   float occupancy = hash(seed);
-  // High coverage, but almost all fragments are smaller than a cell.
   if (occupancy < mix(0.27, 0.43, depthLayer)) return 0.0;
   vec2 center = 0.16 + 0.68 * vec2(
     hash(seed + vec2(5.17, 2.43)),
@@ -247,24 +245,33 @@ float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer, float ac
   );
   float size = mix(0.17, 0.29, hash(seed + vec2(11.3, 1.7)));
   size *= mix(0.90, 1.18, depthLayer);
-  // Faceted flakes look more metallic than soft circular glitter dots.
   float facet = abs(rotated.x) * 0.82 + abs(rotated.y) * 1.15;
   float flake = 1.0 - smoothstep(size * 0.63, size, facet);
-  // A small proportion of foreground facets flash as four-point diamonds.
+
+  // Sparse restrained four-point facets, tied to material rather than time.
   float flare = 0.0;
-  if (depthLayer > 0.5 && hash(seed + vec2(2.91, 8.37)) > 0.76) {
+  if (depthLayer > 0.5 && hash(seed + vec2(2.91, 8.37)) > 0.83) {
     float bladeX = 1.0 - smoothstep(size * 0.06, size * 0.24, abs(offset.x));
     float bladeY = 1.0 - smoothstep(size * 0.06, size * 0.24, abs(offset.y));
-    float reachX = 1.0 - smoothstep(size * 0.55, size * 1.75, abs(offset.x));
-    float reachY = 1.0 - smoothstep(size * 0.55, size * 1.75, abs(offset.y));
-    flare = max(bladeX * reachY, bladeY * reachX) * 0.65;
+    float reachX = 1.0 - smoothstep(size * 0.55, size * 1.65, abs(offset.x));
+    float reachY = 1.0 - smoothstep(size * 0.55, size * 1.65, abs(offset.y));
+    flare = max(bladeX * reachY, bladeY * reachX) * 0.32;
   }
-  float phase = hash(seed + vec2(8.19, 3.27)) * 6.2831853;
-  float glint = pow(
-    0.5 + 0.5 * sin(uTime * (0.85 + activity * 4.2) + phase),
-    5.0
-  );
-  return max(flake, flare * glint) * (0.48 + 0.52 * glint);
+
+  // The sign represents a reflective or shadowed metallic facet. Magnitude
+  // is fixed per cell, so shimmer comes from advection of the gel texture.
+  float facetPolarity = hash(seed + vec2(4.73, 6.11)) < 0.48 ? -1.0 : 1.0;
+  float intensity = 0.40 + 0.60 * hash(seed + vec2(8.19, 3.27));
+  return facetPolarity * max(flake, flare) * intensity;
+}
+
+// Photoshop-style soft-light blend: preserves pigment hue while allowing
+// glitter to both shade and illuminate the same base liquid.
+vec3 softLightPigment(vec3 baseColor, vec3 blendColor) {
+  vec3 base = clamp(baseColor, 0.0, 1.0);
+  vec3 shadow = base - (1.0 - 2.0 * blendColor) * base * (1.0 - base);
+  vec3 highlight = base + (2.0 * blendColor - 1.0) * (sqrt(base) - base);
+  return mix(shadow, highlight, step(vec3(0.5), blendColor));
 }
 
 // A continuous displacement field defined on every projected scanline.
@@ -372,7 +379,6 @@ void main() {
   float wetLight = glossVertical * (0.41 * leftGloss + 0.23 * rightGloss);
   color = mix(color, vec3(1.0, 0.98, 0.96), wetLight);
 
-  float activity = clamp(uJellyActivity, 0.0, 1.0);
   // Projected depth is measured from the actual angled surface to the
   // furthest interior vertex, not from a color slot or absolute screen Y.
   float gelDepth = clamp(
@@ -380,17 +386,11 @@ void main() {
     0.0, 1.0
   );
   float gelShift = gelScanlineShift(gelDepth);
-  vec2 gelUv = liquidPoint + vec2(gelShift, 0.38 * gelShift);
-  float deepMetal = metallicGlitter(gelUv, patternId, 0.0, activity);
-  float nearMetal = metallicGlitter(gelUv, patternId, 1.0, activity);
-  // Two differently sized inclusions approximate glitter embedded in gel,
-  // not a textured sticker applied to the front of the vial.
-  color = mix(color, vec3(0.94, 0.79, 1.0), deepMetal * 0.54);
-  color = mix(color, vec3(1.0, 0.96, 0.79), nearMetal * 0.88);
-  // Sharp metallic flashes grow only with actual source/receiver motion.
-  float reactiveFlash = pow(max(deepMetal, nearMetal), 3.0) * activity;
-  color = mix(color, vec3(1.0), reactiveFlash * 0.30);
 
+  // A rising bubble displaces only neighboring embedded glitter. Use exactly
+  // the same bubble centers/radii as the visible bubbles below; the field
+  // falls off smoothly and vanishes as each bubble passes.
+  vec2 bubbleShift = vec2(0.0);
   float bubbleMask = 0.0;
   for (int index = 0; index < 7; index++) {
     float fi = float(index);
@@ -399,9 +399,33 @@ void main() {
     float bubbleY = 1.08 - fract(uTime * speed + fi * 0.173) * (uFill + 0.14);
     float radius = 0.018 + mod(fi, 2.0) * 0.008;
     vec2 bubbleDelta = vec2((vUV.x - bubbleX) * 0.72, vUV.y - bubbleY);
-    float bubble = 1.0 - smoothstep(radius * 0.70, radius, length(bubbleDelta));
+    float bubbleDistance = length(bubbleDelta);
+    float bubble = 1.0 - smoothstep(radius * 0.70, radius, bubbleDistance);
     bubbleMask = max(bubbleMask, bubble);
+
+    // A smooth local field instead of a rigid moving hole. Particles ahead
+    // of the bubble move sideways and slightly upward; away from its radius
+    // the influence tends quickly to zero, restoring their original pose.
+    float normalizedDistance = bubbleDistance / max(radius, 0.0001);
+    float influence = exp(-2.8 * normalizedDistance * normalizedDistance);
+    float lateral = bubbleDelta.x / max(radius, abs(bubbleDelta.x));
+    bubbleShift += vec2(
+      lateral * radius * 0.52,
+      -radius * 0.18
+    ) * influence;
   }
+
+  vec2 gelUv = liquidPoint + vec2(
+    gelShift + bubbleShift.x * uInteriorAspect,
+    0.38 * gelShift + bubbleShift.y
+  );
+  float deepMetal = metallicGlitter(gelUv, patternId, 0.0);
+  float nearMetal = metallicGlitter(gelUv, patternId, 1.0);
+  // Blend both positive and negative facets against the underlying pigment.
+  // Limited strength avoids bleaching bright colors into white confetti.
+  float signedMetal = clamp(deepMetal * 0.35 + nearMetal * 0.65, -1.0, 1.0);
+  vec3 metallicBlend = vec3(0.5 + signedMetal * 0.33);
+  color = mix(color, softLightPigment(color, metallicBlend), 0.65);
 
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);
