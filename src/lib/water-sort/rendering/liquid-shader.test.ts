@@ -13,8 +13,8 @@ test("dense metallic glitter is clipped by the existing liquid surface and pigme
   assert.ok(pigment > cutout);
   assert.ok(glitter > pigment);
   assert.ok(output > glitter);
-  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0, activity\)/);
-  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0\)/);
   assert.match(liquidFragmentShader, /gridSize = mix\(39\.0, 16\.0, depthLayer\)/);
 });
 
@@ -28,10 +28,10 @@ test("color identity and CPU-owned fluid volumes remain independent of cosmetic 
   assert.match(liquidFragmentShader, /float meniscus = 1\.0 - smoothstep/);
 });
 
-test("glitter reacts to movement and reduced-motion freezes ambient shader time", () => {
+test("gel displacement drives glitter without a flashing activity-dependent phase", () => {
   assert.match(liquidFragmentShader, /uniform float uJellyActivity;/);
   assert.match(liquidFragmentShader, /uGelElapsedSeconds - depth \* 0\.70/);
-  assert.match(liquidFragmentShader, /activity \* 4\.2/);
+  assert.doesNotMatch(liquidFragmentShader, /activity \* 4\.2/);
   assert.doesNotMatch(liquidFragmentShader, /uTime \* \(0\.012/);
   assert.doesNotMatch(liquidFragmentShader, /uniform float uGlitterClock;/);
 });
@@ -56,7 +56,27 @@ test("scanline gel shear is sampled continuously before pigment-linked glitter",
   assert.match(liquidFragmentShader, /float gelDepth = clamp/);
   assert.match(liquidFragmentShader, /surfaceDepth \/ max\(0\.0001, uGelBottomProjection - uFreeSurfaceThreshold\)/);
   assert.match(liquidFragmentShader, /vec2 gelUv = liquidPoint \+ vec2\(gelShift, 0\.38 \* gelShift\)/);
-  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0, activity\)/);
-  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0\)/);
   assert.doesNotMatch(liquidFragmentShader, /gelScanlineShift\(float depth, float bandId\)/);
+});
+
+test("metallic flakes darken and brighten via pigment-relative soft-light rather than white overlays", () => {
+  assert.match(liquidFragmentShader, /vec3 softLightPigment\(vec3 baseColor, vec3 blendColor\)/);
+  assert.match(liquidFragmentShader, /float sign = hash\(seed \+ vec2\(4\.73, 6\.11\)\) < 0\.48 \? -1\.0 : 1\.0;/);
+  assert.match(liquidFragmentShader, /float signedMetal = clamp\(deepMetal \* 0\.35 \+ nearMetal \* 0\.65, -1\.0, 1\.0\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, metallicBlend\), 0\.65\);/);
+  assert.doesNotMatch(liquidFragmentShader, /color = mix\(color, vec3\(1\.0, 0\.96, 0\.79\), nearMetal/);
+  assert.doesNotMatch(liquidFragmentShader, /reactiveFlash/);
+});
+
+test("individual glitter intensities cannot be re-phased by a changing pour-activity uniform", () => {
+  const functionStart = liquidFragmentShader.indexOf("float metallicGlitter(");
+  const functionEnd = liquidFragmentShader.indexOf("vec3 softLightPigment(", functionStart);
+  const functionBody = liquidFragmentShader.slice(functionStart, functionEnd);
+  assert.ok(functionStart >= 0 && functionEnd > functionStart);
+  assert.doesNotMatch(functionBody, /uTime/);
+  assert.doesNotMatch(functionBody, /activity/);
+  assert.doesNotMatch(functionBody, /uJellyActivity/);
+  assert.match(functionBody, /float intensity = 0\.40 \+ 0\.60 \* hash/);
 });
