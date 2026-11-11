@@ -30,7 +30,7 @@ test("color identity and CPU-owned fluid volumes remain independent of cosmetic 
 
 test("glitter reacts to movement and reduced-motion freezes ambient shader time", () => {
   assert.match(liquidFragmentShader, /uniform float uJellyActivity;/);
-  assert.match(liquidFragmentShader, /activity \* 0\.09/);
+  assert.match(liquidFragmentShader, /uGelElapsedSeconds - depth \* 0\.70/);
   assert.match(liquidFragmentShader, /activity \* 4\.2/);
   assert.doesNotMatch(liquidFragmentShader, /uTime \* \(0\.012/);
   assert.doesNotMatch(liquidFragmentShader, /uniform float uGlitterClock;/);
