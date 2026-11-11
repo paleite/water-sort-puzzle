@@ -13,8 +13,8 @@ test("dense metallic glitter is clipped by the existing liquid surface and pigme
   assert.ok(pigment > cutout);
   assert.ok(glitter > pigment);
   assert.ok(output > glitter);
-  assert.match(liquidFragmentShader, /metallicGlitter\(liquidPoint, patternId, 0\.0, activity\)/);
-  assert.match(liquidFragmentShader, /metallicGlitter\(liquidPoint, patternId, 1\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0, activity\)/);
   assert.match(liquidFragmentShader, /gridSize = mix\(39\.0, 16\.0, depthLayer\)/);
 });
 
@@ -32,7 +32,7 @@ test("glitter reacts to movement and reduced-motion freezes ambient shader time"
   assert.match(liquidFragmentShader, /uniform float uJellyActivity;/);
   assert.match(liquidFragmentShader, /activity \* 0\.09/);
   assert.match(liquidFragmentShader, /activity \* 4\.2/);
-  assert.match(liquidFragmentShader, /uTime \* \(0\.012/);
+  assert.doesNotMatch(liquidFragmentShader, /uTime \* \(0\.012/);
   assert.doesNotMatch(liquidFragmentShader, /uniform float uGlitterClock;/);
 });
 
@@ -44,4 +44,19 @@ test("visible mobile-scale material has curved specular highlights and faceted g
   assert.match(liquidFragmentShader, /float flare = 0\.0;/);
   assert.match(liquidFragmentShader, /float reachY = 1\.0 - smoothstep/);
   assert.match(liquidFragmentShader, /pattern \* 0\.13/);
+});
+
+test("scanline gel shear is sampled continuously before pigment-linked glitter", () => {
+  assert.match(liquidFragmentShader, /uniform float uGelElapsedSeconds;/);
+  assert.match(liquidFragmentShader, /uniform float uGelStrength;/);
+  assert.match(liquidFragmentShader, /uniform float uGelBottomProjection;/);
+  assert.match(liquidFragmentShader, /float gelScanlineShift\(float depth\)/);
+  assert.match(liquidFragmentShader, /uGelElapsedSeconds - depth \* 0\.70/);
+  assert.match(liquidFragmentShader, /pow\(1\.0 - depth, 1\.6\)/);
+  assert.match(liquidFragmentShader, /float gelDepth = clamp/);
+  assert.match(liquidFragmentShader, /surfaceDepth \/ max\(0\.0001, uGelBottomProjection - uFreeSurfaceThreshold\)/);
+  assert.match(liquidFragmentShader, /vec2 gelUv = liquidPoint \+ vec2\(gelShift, 0\.38 \* gelShift\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 0\.0, activity\)/);
+  assert.match(liquidFragmentShader, /metallicGlitter\(gelUv, patternId, 1\.0, activity\)/);
+  assert.doesNotMatch(liquidFragmentShader, /gelScanlineShift\(float depth, float bandId\)/);
 });
