@@ -260,9 +260,9 @@ float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer) {
 
   // The sign represents a reflective or shadowed metallic facet. Magnitude
   // is fixed per cell, so shimmer comes from advection of the gel texture.
-  float sign = hash(seed + vec2(4.73, 6.11)) < 0.48 ? -1.0 : 1.0;
+  float facetPolarity = hash(seed + vec2(4.73, 6.11)) < 0.48 ? -1.0 : 1.0;
   float intensity = 0.40 + 0.60 * hash(seed + vec2(8.19, 3.27));
-  return sign * max(flake, flare) * intensity;
+  return facetPolarity * max(flake, flare) * intensity;
 }
 
 // Photoshop-style soft-light blend: preserves pigment hue while allowing
