@@ -505,6 +505,8 @@ export class PixiBoardRenderer {
       artwork,
       glassBackground,
       stopper,
+      gelState: createGelSettlingState(),
+      gelReceiving: false,
     };
     this.applyStopperTexture(visual, vialIndex);
     this.visuals.set(vialIndex, visual);
