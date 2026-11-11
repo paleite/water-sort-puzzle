@@ -31,8 +31,9 @@ import {
   getVialSkin,
   type VialSkinId,
 } from "../presentation/vial-skins";
+import {advanceGelSettling, createGelSettlingState, type GelSettlingState} from "./gel-settling";
 import {getStreamGlitterFlecks} from "./glitter-effects";
-import {calculateLiquidProjectionGeometry} from "./liquid-projection";
+import {calculateLiquidProjectionGeometry, DEFAULT_LIQUID_PROJECTION_POLYGON} from "./liquid-projection";
 import type {
   BoardRenderState,
   PourStreamRenderState,
@@ -50,6 +51,8 @@ interface VialVisual {
   artwork: Sprite;
   glassBackground: Sprite;
   stopper: Sprite;
+  gelState: GelSettlingState;
+  gelReceiving: boolean;
 }
 
 interface VialArtTextures {
@@ -150,6 +153,9 @@ function createUniforms(): UniformGroup {
     uTime: {value: 0, type: "f32"},
     uFill: {value: 0, type: "f32"},
     uJellyActivity: {value: 0, type: "f32"},
+    uGelElapsedSeconds: {value: 0, type: "f32"},
+    uGelStrength: {value: 0, type: "f32"},
+    uGelBottomProjection: {value: 1, type: "f32"},
     uSurfaceNormal: {value: new Float32Array([0, 1]), type: "vec2<f32>"},
     uInteriorAspect: {value: VIAL_INNER_WIDTH / VIAL_INNER_HEIGHT, type: "f32"},
     uFreeSurfaceThreshold: {value: 0, type: "f32"},
@@ -285,11 +291,20 @@ export class PixiBoardRenderer {
     );
     this.canvasHost.replaceChildren(this.app.canvas);
     this.app.ticker.add((ticker) => {
+      const frameSeconds = Math.min(ticker.deltaMS / 1000, 0.05);
       if (!this.prefersReducedMotion) {
-        this.elapsedSeconds += Math.min(ticker.deltaMS / 1000, 0.05);
+        this.elapsedSeconds += frameSeconds;
       }
       for (const [vialIndex, visual] of this.visuals.entries()) {
+        visual.gelState = advanceGelSettling(
+          visual.gelState,
+          frameSeconds,
+          visual.gelReceiving,
+          this.prefersReducedMotion,
+        );
         visual.uniforms.uniforms.uTime = this.elapsedSeconds;
+        visual.uniforms.uniforms.uGelElapsedSeconds = visual.gelState.elapsedSeconds;
+        visual.uniforms.uniforms.uGelStrength = visual.gelState.strength;
         for (let sparkleIndex = 0; sparkleIndex < visual.sparkles.length; sparkleIndex++) {
           const sparkle = visual.sparkles[sparkleIndex];
           if (sparkle === undefined) continue;
@@ -408,10 +423,16 @@ export class PixiBoardRenderer {
       layer.scale.set(state.boardScale);
     }
 
+    const receivingIndices = new Set(
+      state.streams
+        .filter((stream) => stream.opacity > 0.01 || stream.splashOpacity > 0.01)
+        .map((stream) => stream.destinationVialIndex),
+    );
     const visibleIndices = new Set<number>();
     for (const vialState of state.vials) {
       visibleIndices.add(vialState.vialIndex);
       const visual = this.ensureVialVisual(vialState.vialIndex);
+      visual.gelReceiving = receivingIndices.has(vialState.vialIndex);
       this.renderVial(visual, vialState, state.capacity, state.debugGeometry);
     }
 
@@ -484,6 +505,8 @@ export class PixiBoardRenderer {
       artwork,
       glassBackground,
       stopper,
+      gelState: createGelSettlingState(),
+      gelReceiving: false,
     };
     this.applyStopperTexture(visual, vialIndex);
     this.visuals.set(vialIndex, visual);
@@ -567,6 +590,11 @@ export class PixiBoardRenderer {
     uniforms.uJellyActivity = clamp(state.surface.activity, 0, 1);
     uniforms.uInteriorAspect = projectionGeometry.interiorAspect;
     uniforms.uFreeSurfaceThreshold = projectionGeometry.freeSurfaceThreshold;
+    uniforms.uGelBottomProjection = Math.max(
+      ...DEFAULT_LIQUID_PROJECTION_POLYGON.map((point) =>
+        point.x * projectionGeometry.normal.x + point.y * projectionGeometry.normal.y,
+      ),
+    );
 
     const surfaceNormal = uniforms.uSurfaceNormal as Float32Array;
     surfaceNormal[0] = projectionGeometry.normal.x;

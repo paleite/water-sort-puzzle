@@ -25,6 +25,9 @@ varying vec2 vUV;
 uniform float uTime;
 uniform float uFill;
 uniform float uJellyActivity;
+uniform float uGelElapsedSeconds;
+uniform float uGelStrength;
+uniform float uGelBottomProjection;
 uniform vec2 uSurfaceNormal;
 uniform float uInteriorAspect;
 uniform float uFreeSurfaceThreshold;
@@ -220,11 +223,9 @@ float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer, float ac
   // X is scaled by the interior aspect ratio: 16 cells in liquid space
   // produce readable 2–5 px facets on a phone, not subpixel noise.
   float gridSize = mix(39.0, 16.0, depthLayer);
-  float drift = uTime * (0.012 + activity * 0.09) * mix(1.0, 1.4, depthLayer);
-  vec2 coordinate = liquidUv * gridSize + vec2(
-    0.022 * sin(uTime * 0.7 + liquidUv.y * 12.0) * activity,
-    drift
-  );
+  // Motion is injected through gelUv by the scanline field. Do not add
+  // absolute-time drift: the bottom must remain anchored after the pour.
+  vec2 coordinate = liquidUv * gridSize;
   vec2 cell = floor(coordinate);
   vec2 localUv = fract(coordinate);
   vec2 seed = cell + vec2(pigmentId * 13.71, pigmentId * 7.39)
@@ -264,6 +265,17 @@ float metallicGlitter(vec2 liquidUv, float pigmentId, float depthLayer, float ac
     5.0
   );
   return max(flake, flare * glint) * (0.48 + 0.52 * glint);
+}
+
+// A continuous displacement field defined on every projected scanline.
+// No color-band indices or fixed slot boundaries occur in this calculation.
+// At the bottom (depth == 1), attenuation is exactly zero.
+float gelScanlineShift(float depth) {
+  float localTime = max(0.0, uGelElapsedSeconds - depth * 0.70);
+  float arrival = smoothstep(0.0, 0.18, localTime);
+  float attenuation = exp(-2.6 * depth) * pow(1.0 - depth, 1.6);
+  return 0.037 * clamp(uGelStrength, 0.0, 1.0) * attenuation
+    * arrival * sin(localTime * 5.2);
 }
 
 float wrappedDistance(float first, float second) {
@@ -361,8 +373,16 @@ void main() {
   color = mix(color, vec3(1.0, 0.98, 0.96), wetLight);
 
   float activity = clamp(uJellyActivity, 0.0, 1.0);
-  float deepMetal = metallicGlitter(liquidPoint, patternId, 0.0, activity);
-  float nearMetal = metallicGlitter(liquidPoint, patternId, 1.0, activity);
+  // Projected depth is measured from the actual angled surface to the
+  // furthest interior vertex, not from a color slot or absolute screen Y.
+  float gelDepth = clamp(
+    surfaceDepth / max(0.0001, uGelBottomProjection - uFreeSurfaceThreshold),
+    0.0, 1.0
+  );
+  float gelShift = gelScanlineShift(gelDepth);
+  vec2 gelUv = liquidPoint + vec2(gelShift, 0.38 * gelShift);
+  float deepMetal = metallicGlitter(gelUv, patternId, 0.0, activity);
+  float nearMetal = metallicGlitter(gelUv, patternId, 1.0, activity);
   // Two differently sized inclusions approximate glitter embedded in gel,
   // not a textured sticker applied to the front of the vial.
   color = mix(color, vec3(0.94, 0.79, 1.0), deepMetal * 0.54);
