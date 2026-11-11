@@ -31,6 +31,7 @@ import {
   getVialSkin,
   type VialSkinId,
 } from "../presentation/vial-skins";
+import {getStreamGlitterFlecks} from "./glitter-effects";
 import {calculateLiquidProjectionGeometry} from "./liquid-projection";
 import type {
   BoardRenderState,
@@ -770,11 +771,59 @@ export class PixiBoardRenderer {
       for (const point of [...rightPoints].reverse()) {
         graphics.lineTo(point.x, point.y);
       }
-      graphics.closePath().fill({color, alpha: opacity * 0.96});
+      graphics.closePath().fill({color, alpha: opacity * 0.95});
+
+      // A smooth, narrow inner highlight makes the colored ribbon read as
+      // viscous gel rather than a flat filled polygon. It follows the
+      // existing geometry and never alters the transfer or splash anchors.
+      for (let index = 0; index <= STREAM_SAMPLE_COUNT; index += 1) {
+        const progress = index / STREAM_SAMPLE_COUNT;
+        const point = quadraticPoint(curve, progress);
+        const tangent = quadraticTangent(curve, progress);
+        const tangentLength = Math.max(0.001, Math.hypot(tangent.x, tangent.y));
+        const innerX = point.x - (tangent.y / tangentLength) * middleHalfWidth * 0.28;
+        const innerY = point.y + (tangent.x / tangentLength) * middleHalfWidth * 0.28;
+        if (index === 0) graphics.moveTo(innerX, innerY);
+        else graphics.lineTo(innerX, innerY);
+      }
+      graphics.stroke({color: 0xfff1dc, alpha: opacity * 0.32, width: 0.75});
+
+      // Dense flecks travel along the same actual quadratic stream curve.
+      // Clamped offsets keep every flake within the colored stream silhouette.
+      const fleckCount = this.prefersReducedMotion ? 12 : 22;
+      for (const flake of getStreamGlitterFlecks({
+        visualSeed: streamState.visualSeed,
+        flowProgress: streamState.flowProgress,
+        count: fleckCount,
+      })) {
+        const point = quadraticPoint(curve, flake.pathProgress);
+        const tangent = quadraticTangent(curve, flake.pathProgress);
+        const tangentLength = Math.max(0.001, Math.hypot(tangent.x, tangent.y));
+        const halfWidth = streamHalfWidth(
+          flake.pathProgress,
+          sourceHalfWidth,
+          middleHalfWidth,
+          destinationHalfWidth,
+        );
+        const offset = halfWidth * flake.normalOffset;
+        const flakeX = point.x - (tangent.y / tangentLength) * offset;
+        const flakeY = point.y + (tangent.x / tangentLength) * offset;
+        const radius = Math.min(flake.radius, halfWidth * 0.22);
+        graphics
+          .moveTo(flakeX, flakeY - radius)
+          .lineTo(flakeX + radius * 0.68, flakeY)
+          .lineTo(flakeX, flakeY + radius)
+          .lineTo(flakeX - radius * 0.68, flakeY)
+          .closePath()
+          .fill({color: 0xfff0c2, alpha: opacity * flake.brightness * 0.78});
+      }
 
       graphics
         .circle(destination.x, destination.y, destinationHalfWidth * 1.15)
         .fill({color, alpha: opacity * 0.74});
+      graphics
+        .circle(destination.x - destinationHalfWidth * 0.26, destination.y - destinationHalfWidth * 0.2, destinationHalfWidth * 0.30)
+        .fill({color: 0xfff3e4, alpha: opacity * 0.38});
     }
 
     if (streamState.splashOpacity > 0.001) {
@@ -791,9 +840,18 @@ export class PixiBoardRenderer {
           + verticalVelocity * splashTime
           + 0.5 * 150 * splashTime * splashTime;
 
+        const dropletRadius = 0.9 + radiusRandom * 1.25;
         graphics
-          .circle(splashX, splashY, 0.9 + radiusRandom * 1.25)
-          .fill({color, alpha: streamState.splashOpacity * 0.82});
+          .circle(splashX, splashY, dropletRadius)
+          .fill({color, alpha: streamState.splashOpacity * 0.86});
+        // Metallic glint is part of the droplet; it is not a separate
+        // free-flying spark with an unrelated trajectory.
+        graphics
+          .circle(splashX - dropletRadius * 0.25, splashY - dropletRadius * 0.3, dropletRadius * 0.32)
+          .fill({color: 0xffefd5, alpha: streamState.splashOpacity * 0.70});
+        graphics
+          .circle(splashX + dropletRadius * 0.27, splashY + dropletRadius * 0.16, dropletRadius * 0.16)
+          .fill({color: 0xffffff, alpha: streamState.splashOpacity * 0.48});
       }
     }
 
@@ -805,6 +863,9 @@ export class PixiBoardRenderer {
       graphics
         .circle(dropletPoint.x, dropletPoint.y, dropletRadius)
         .fill({color, alpha: streamState.terminalDropletOpacity});
+      graphics
+        .circle(dropletPoint.x - dropletRadius * 0.2, dropletPoint.y - dropletRadius * 0.24, dropletRadius * 0.30)
+        .fill({color: 0xffefd5, alpha: streamState.terminalDropletOpacity * 0.72});
     }
 
     if (debugGeometry) {

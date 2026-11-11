@@ -15,7 +15,7 @@ export interface VialRenderState {
 }
 export interface PourStreamRenderState {
   color: ColorId; opacity: number; sourceVialIndex: number; destinationVialIndex: number; direction: "left" | "right";
-  destinationFill: number; impactXNormalized: number; widthScale: number; surfaceActivity: number;
+  destinationFill: number; impactXNormalized: number; widthScale: number; surfaceActivity: number; flowProgress: number;
   splashProgress: number; splashOpacity: number; terminalDropletProgress: number; terminalDropletOpacity: number; visualSeed: number;
 }
 export interface BoardRenderState {capacity: number; vials: readonly VialRenderState[]; streams: readonly PourStreamRenderState[]; boardAlpha: number; boardScale: number; debugGeometry: boolean}
@@ -100,6 +100,7 @@ export function buildConcurrentPourBoardRenderState({board, anchors, presentatio
       destinationVialIndex: move.move.destinationVialIndex, direction: geometry.direction,
       destinationFill: destinationFillByIndex.get(move.move.destinationVialIndex) ?? (board[move.move.destinationVialIndex]?.length ?? 0),
       impactXNormalized: getDestinationImpactXNormalized(geometry.direction), widthScale: phase.streamWidthScale, surfaceActivity: phase.surfaceActivity,
+      flowProgress: phase.transferProgress,
       splashProgress: phase.splashProgress, splashOpacity: phase.splashOpacity, terminalDropletProgress: phase.terminalDropletProgress,
       terminalDropletOpacity: phase.terminalDropletOpacity, visualSeed: streamVisualSeed(move.move.sourceVialIndex, move.move.destinationVialIndex)} satisfies PourStreamRenderState];
   });
