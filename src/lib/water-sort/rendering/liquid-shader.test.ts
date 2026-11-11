@@ -63,7 +63,7 @@ test("scanline gel shear is sampled continuously before pigment-linked glitter",
 
 test("metallic flakes darken and brighten via pigment-relative soft-light rather than white overlays", () => {
   assert.match(liquidFragmentShader, /vec3 softLightPigment\(vec3 baseColor, vec3 blendColor\)/);
-  assert.match(liquidFragmentShader, /float sign = hash\(seed \+ vec2\(4\.73, 6\.11\)\) < 0\.48 \? -1\.0 : 1\.0;/);
+  assert.match(liquidFragmentShader, /float facetPolarity = hash\(seed \+ vec2\(4\.73, 6\.11\)\) < 0\.48 \? -1\.0 : 1\.0;/);
   assert.match(liquidFragmentShader, /float signedMetal = clamp\(deepMetal \* 0\.35 \+ nearMetal \* 0\.65, -1\.0, 1\.0\);/);
   assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, metallicBlend\), 0\.65\);/);
   assert.doesNotMatch(liquidFragmentShader, /color = mix\(color, vec3\(1\.0, 0\.96, 0\.79\), nearMetal/);
