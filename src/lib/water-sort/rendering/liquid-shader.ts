@@ -386,15 +386,11 @@ void main() {
     0.0, 1.0
   );
   float gelShift = gelScanlineShift(gelDepth);
-  vec2 gelUv = liquidPoint + vec2(gelShift, 0.38 * gelShift);
-  float deepMetal = metallicGlitter(gelUv, patternId, 0.0);
-  float nearMetal = metallicGlitter(gelUv, patternId, 1.0);
-  // Blend both positive and negative facets against the underlying pigment.
-  // Limited strength avoids bleaching bright colors into white confetti.
-  float signedMetal = clamp(deepMetal * 0.35 + nearMetal * 0.65, -1.0, 1.0);
-  vec3 metallicBlend = vec3(0.5 + signedMetal * 0.33);
-  color = mix(color, softLightPigment(color, metallicBlend), 0.65);
 
+  // A rising bubble displaces only neighboring embedded glitter. Use exactly
+  // the same bubble centers/radii as the visible bubbles below; the field
+  // falls off smoothly and vanishes as each bubble passes.
+  vec2 bubbleShift = vec2(0.0);
   float bubbleMask = 0.0;
   for (int index = 0; index < 7; index++) {
     float fi = float(index);
@@ -403,9 +399,33 @@ void main() {
     float bubbleY = 1.08 - fract(uTime * speed + fi * 0.173) * (uFill + 0.14);
     float radius = 0.018 + mod(fi, 2.0) * 0.008;
     vec2 bubbleDelta = vec2((vUV.x - bubbleX) * 0.72, vUV.y - bubbleY);
-    float bubble = 1.0 - smoothstep(radius * 0.70, radius, length(bubbleDelta));
+    float bubbleDistance = length(bubbleDelta);
+    float bubble = 1.0 - smoothstep(radius * 0.70, radius, bubbleDistance);
     bubbleMask = max(bubbleMask, bubble);
+
+    // A smooth local field instead of a rigid moving hole. Particles ahead
+    // of the bubble move sideways and slightly upward; away from its radius
+    // the influence tends quickly to zero, restoring their original pose.
+    float normalizedDistance = bubbleDistance / max(radius, 0.0001);
+    float influence = exp(-2.8 * normalizedDistance * normalizedDistance);
+    float lateral = bubbleDelta.x / max(radius, abs(bubbleDelta.x));
+    bubbleShift += vec2(
+      lateral * radius * 0.52,
+      -radius * 0.18
+    ) * influence;
   }
+
+  vec2 gelUv = liquidPoint + vec2(
+    gelShift + bubbleShift.x * uInteriorAspect,
+    0.38 * gelShift + bubbleShift.y
+  );
+  float deepMetal = metallicGlitter(gelUv, patternId, 0.0);
+  float nearMetal = metallicGlitter(gelUv, patternId, 1.0);
+  // Blend both positive and negative facets against the underlying pigment.
+  // Limited strength avoids bleaching bright colors into white confetti.
+  float signedMetal = clamp(deepMetal * 0.35 + nearMetal * 0.65, -1.0, 1.0);
+  vec3 metallicBlend = vec3(0.5 + signedMetal * 0.33);
+  color = mix(color, softLightPigment(color, metallicBlend), 0.65);
 
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);
