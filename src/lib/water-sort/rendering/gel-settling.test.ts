@@ -26,7 +26,7 @@ test("incoming pour triggers once and the gel continues settling after the strea
 });
 
 test("a disturbance is continuous across scanlines, delayed with depth and anchored at the bottom", () => {
-  const state = {elapsedSeconds: 0.34, strength: 1, receiving: false};
+  const state = {elapsedSeconds: 0.26, strength: 1, receiving: false};
   const surface = Math.abs(getGelScanlineDisplacement(0, state));
   const nearSurface = Math.abs(getGelScanlineDisplacement(0.08, state));
   const middle = Math.abs(getGelScanlineDisplacement(0.45, state));
