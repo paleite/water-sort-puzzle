@@ -54,7 +54,8 @@ export function getGelScanlineDisplacement(
 ): number {
   const depth = Math.max(0, Math.min(1, depthFromSurface));
   const delayedTime = Math.max(0, state.elapsedSeconds - depth * 0.70);
-  const arrived = Math.min(1, delayedTime / 0.18);
+  const arrivalProgress = Math.min(1, delayedTime / 0.18);
+  const arrived = arrivalProgress * arrivalProgress * (3 - 2 * arrivalProgress);
   const attenuation = Math.exp(-2.6 * depth) * Math.pow(1 - depth, 1.6);
   return 0.037 * state.strength * attenuation * arrived
     * Math.sin(delayedTime * 5.2);
