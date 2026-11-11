@@ -421,11 +421,16 @@ void main() {
   );
   float deepMetal = metallicGlitter(gelUv, patternId, 0.0);
   float nearMetal = metallicGlitter(gelUv, patternId, 1.0);
-  // Blend both positive and negative facets against the underlying pigment.
-  // Limited strength avoids bleaching bright colors into white confetti.
-  float signedMetal = clamp(deepMetal * 0.35 + nearMetal * 0.65, -1.0, 1.0);
-  vec3 metallicBlend = vec3(0.5 + signedMetal * 0.33);
-  color = mix(color, softLightPigment(color, metallicBlend), 0.65);
+  // Render the depth layers separately. Averaging signed facets made bright
+  // and dark flakes cancel each other, leaving virtually no visible glitter.
+  // Near flakes get stronger soft-light contrast; their output still derives
+  // from the pigment instead of being painted white or gold.
+  float deepCoverage = clamp(abs(deepMetal) * 1.15, 0.0, 1.0);
+  float nearCoverage = clamp(abs(nearMetal) * 1.35, 0.0, 1.0);
+  vec3 deepBlend = vec3(deepMetal < 0.0 ? 0.08 : 0.92);
+  vec3 nearBlend = vec3(nearMetal < 0.0 ? 0.04 : 0.96);
+  color = mix(color, softLightPigment(color, deepBlend), deepCoverage * 0.67);
+  color = mix(color, softLightPigment(color, nearBlend), nearCoverage * 0.91);
 
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);

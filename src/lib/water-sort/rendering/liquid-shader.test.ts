@@ -66,8 +66,11 @@ test("scanline gel shear is sampled continuously before pigment-linked glitter",
 test("metallic flakes darken and brighten via pigment-relative soft-light rather than white overlays", () => {
   assert.match(liquidFragmentShader, /vec3 softLightPigment\(vec3 baseColor, vec3 blendColor\)/);
   assert.match(liquidFragmentShader, /float facetPolarity = hash\(seed \+ vec2\(4\.73, 6\.11\)\) < 0\.48 \? -1\.0 : 1\.0;/);
-  assert.match(liquidFragmentShader, /float signedMetal = clamp\(deepMetal \* 0\.35 \+ nearMetal \* 0\.65, -1\.0, 1\.0\);/);
-  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, metallicBlend\), 0\.65\);/);
+  assert.match(liquidFragmentShader, /float deepCoverage = clamp\(abs\(deepMetal\) \* 1\.15, 0\.0, 1\.0\);/);
+  assert.match(liquidFragmentShader, /float nearCoverage = clamp\(abs\(nearMetal\) \* 1\.35, 0\.0, 1\.0\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, deepBlend\), deepCoverage \* 0\.67\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, nearBlend\), nearCoverage \* 0\.91\);/);
+  assert.doesNotMatch(liquidFragmentShader, /deepMetal \* 0\.35 \+ nearMetal \* 0\.65/);
   assert.doesNotMatch(liquidFragmentShader, /color = mix\(color, vec3\(1\.0, 0\.96, 0\.79\), nearMetal/);
   assert.doesNotMatch(liquidFragmentShader, /reactiveFlash/);
 });
@@ -125,4 +128,34 @@ test("soft light can darken and brighten midtone pigments without white replacem
     assert.ok(softLight(base, 0.83) > base);
     assert.ok(softLight(base, 0.83) < 1);
   }
+});
+
+test("full foreground facets retain a perceptible tonal change without bleaching pigment", () => {
+  const softLight = (baseColor: number, blendColor: number) =>
+    blendColor < 0.5
+      ? baseColor - (1 - 2 * blendColor) * baseColor * (1 - baseColor)
+      : baseColor + (2 * blendColor - 1) * (Math.sqrt(baseColor) - baseColor);
+
+  const nearOpacity = 0.91;
+  for (const baseColor of [0.2, 0.35, 0.55, 0.75]) {
+    const lighter = baseColor + nearOpacity * (softLight(baseColor, 0.96) - baseColor);
+    const darker = baseColor + nearOpacity * (softLight(baseColor, 0.04) - baseColor);
+
+    assert.ok(lighter - baseColor > 0.08, `Light fleck washed out at ${baseColor}`);
+    assert.ok(baseColor - darker > 0.08, `Dark fleck washed out at ${baseColor}`);
+    assert.ok(lighter < 1, "Highlights must not become pure white");
+    assert.ok(darker > 0, "Shadows must not become black pixels");
+  }
+});
+
+test("opposite-signed flakes are shaded independently rather than cancelling", () => {
+  const start = liquidFragmentShader.indexOf("float deepMetal = metallicGlitter(");
+  const end = liquidFragmentShader.indexOf("vec3 bubbleColor =", start);
+  const glitterShading = liquidFragmentShader.slice(start, end);
+
+  assert.match(glitterShading, /deepCoverage \* 0\.67/);
+  assert.match(glitterShading, /nearCoverage \* 0\.91/);
+  assert.ok(glitterShading.indexOf("deepCoverage * 0.67") < glitterShading.indexOf("nearCoverage * 0.91"));
+  assert.doesNotMatch(glitterShading, /signedMetal/);
+  assert.doesNotMatch(glitterShading, /reactiveFlash/);
 });
