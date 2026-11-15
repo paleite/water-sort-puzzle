@@ -359,7 +359,7 @@ void main() {
   vec3 darkPatternColor = color * 0.62;
   vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
   // Patterns remain linked to pigment IDs, but no longer dominate the gel.
-  color = mix(color, patternColor, pattern * 0.13);
+  color = mix(color, patternColor, pattern * 0.22);
 
   // Semi-transparent candy depth: rim shadow, creamy core, and a
   // curved pearlescent sheen below the actual front-glass artwork.
@@ -425,12 +425,12 @@ void main() {
   // and dark flakes cancel each other, leaving virtually no visible glitter.
   // Near flakes get stronger soft-light contrast; their output still derives
   // from the pigment instead of being painted white or gold.
-  float deepCoverage = clamp(abs(deepMetal) * 1.15, 0.0, 1.0);
-  float nearCoverage = clamp(abs(nearMetal) * 1.35, 0.0, 1.0);
-  vec3 deepBlend = vec3(deepMetal < 0.0 ? 0.08 : 0.92);
-  vec3 nearBlend = vec3(nearMetal < 0.0 ? 0.04 : 0.96);
-  color = mix(color, softLightPigment(color, deepBlend), deepCoverage * 0.67);
-  color = mix(color, softLightPigment(color, nearBlend), nearCoverage * 0.91);
+  float deepCoverage = clamp(abs(deepMetal) * 0.95, 0.0, 1.0);
+  float nearCoverage = clamp(abs(nearMetal) * 1.05, 0.0, 1.0);
+  vec3 deepBlend = vec3(deepMetal < 0.0 ? 0.12 : 0.88);
+  vec3 nearBlend = vec3(nearMetal < 0.0 ? 0.10 : 0.90);
+  color = mix(color, softLightPigment(color, deepBlend), deepCoverage * 0.42);
+  color = mix(color, softLightPigment(color, nearBlend), nearCoverage * 0.58);
 
   vec3 bubbleColor = mix(color * 1.13, vec3(1.0), 0.18);
   color = mix(color, bubbleColor, bubbleMask * 0.58);
