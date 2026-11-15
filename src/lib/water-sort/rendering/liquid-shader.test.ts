@@ -21,7 +21,7 @@ test("dense metallic glitter is clipped by the existing liquid surface and pigme
 test("color identity and CPU-owned fluid volumes remain independent of cosmetic glitter", () => {
   assert.match(liquidFragmentShader, /vec4 band = chooseBand\(liquidProjection\);/);
   assert.match(liquidFragmentShader, /float patternId = choosePattern\(liquidProjection\);/);
-  assert.match(liquidFragmentShader, /color = mix\(color, patternColor, pattern \* 0\\.22\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, patternColor, pattern \* 0\.22\);/);
   assert.match(liquidFragmentShader, /uniform vec4 uBandThresholds;/);
   assert.match(liquidFragmentShader, /uniform vec4 uBandVolumes;/);
   assert.match(liquidFragmentShader, /float liquidProjection = dot\(liquidPoint, surfaceNormal\);/);
@@ -43,7 +43,7 @@ test("visible mobile-scale material has curved specular highlights and faceted g
   assert.match(liquidFragmentShader, /0\.41 \* leftGloss \+ 0\.23 \* rightGloss/);
   assert.match(liquidFragmentShader, /float flare = 0\.0;/);
   assert.match(liquidFragmentShader, /float reachY = 1\.0 - smoothstep/);
-  assert.match(liquidFragmentShader, /pattern \* 0\\.22/);
+  assert.match(liquidFragmentShader, /pattern \* 0\.22/);
 });
 
 test("scanline gel shear is sampled continuously before pigment-linked glitter", () => {
@@ -66,10 +66,10 @@ test("scanline gel shear is sampled continuously before pigment-linked glitter",
 test("metallic flakes darken and brighten via pigment-relative soft-light rather than white overlays", () => {
   assert.match(liquidFragmentShader, /vec3 softLightPigment\(vec3 baseColor, vec3 blendColor\)/);
   assert.match(liquidFragmentShader, /float facetPolarity = hash\(seed \+ vec2\(4\.73, 6\.11\)\) < 0\.48 \? -1\.0 : 1\.0;/);
-  assert.match(liquidFragmentShader, /float deepCoverage = clamp\(abs\(deepMetal\) \* 0\\.95, 0\.0, 1\.0\);/);
-  assert.match(liquidFragmentShader, /float nearCoverage = clamp\(abs\(nearMetal\) \* 1\\.05, 0\.0, 1\.0\);/);
-  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, deepBlend\), deepCoverage \* 0\\.42\);/);
-  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, nearBlend\), nearCoverage \* 0\\.58\);/);
+  assert.match(liquidFragmentShader, /float deepCoverage = clamp\(abs\(deepMetal\) \* 0\.95, 0\.0, 1\.0\);/);
+  assert.match(liquidFragmentShader, /float nearCoverage = clamp\(abs\(nearMetal\) \* 1\.05, 0\.0, 1\.0\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, deepBlend\), deepCoverage \* 0\.42\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, nearBlend\), nearCoverage \* 0\.58\);/);
   assert.doesNotMatch(liquidFragmentShader, /deepMetal \* 0\.35 \+ nearMetal \* 0\.65/);
   assert.doesNotMatch(liquidFragmentShader, /color = mix\(color, vec3\(1\.0, 0\.96, 0\.79\), nearMetal/);
   assert.doesNotMatch(liquidFragmentShader, /reactiveFlash/);
@@ -153,9 +153,9 @@ test("opposite-signed flakes are shaded independently rather than cancelling", (
   const end = liquidFragmentShader.indexOf("vec3 bubbleColor =", start);
   const glitterShading = liquidFragmentShader.slice(start, end);
 
-  assert.match(glitterShading, /deepCoverage \* 0\\.42/);
-  assert.match(glitterShading, /nearCoverage \* 0\\.58/);
-  assert.ok(glitterShading.indexOf("deepCoverage * 0.67") < glitterShading.indexOf("nearCoverage * 0.91"));
+  assert.match(glitterShading, /deepCoverage \* 0\.42/);
+  assert.match(glitterShading, /nearCoverage \* 0\.58/);
+  assert.ok(glitterShading.indexOf("deepCoverage * 0.42") < glitterShading.indexOf("nearCoverage * 0.58"));
   assert.doesNotMatch(glitterShading, /signedMetal/);
   assert.doesNotMatch(glitterShading, /reactiveFlash/);
 });
@@ -171,7 +171,7 @@ test("patterns regain contrast while metallic coverage is deliberately reduced",
   assert.ok(patternContribution > previousPatternContribution);
   assert.ok(deepGlitterOpacity < previousDeepGlitterOpacity);
   assert.ok(nearGlitterOpacity < previousNearGlitterOpacity);
-  assert.match(liquidFragmentShader, /pattern \* 0\\.22/);
-  assert.match(liquidFragmentShader, /deepCoverage \* 0\\.42/);
-  assert.match(liquidFragmentShader, /nearCoverage \* 0\\.58/);
+  assert.match(liquidFragmentShader, /pattern \* 0\.22/);
+  assert.match(liquidFragmentShader, /deepCoverage \* 0\.42/);
+  assert.match(liquidFragmentShader, /nearCoverage \* 0\.58/);
 });
