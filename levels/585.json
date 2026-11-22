@@ -1,0 +1,33 @@
+{
+  "id": "585",
+  "capacity": 4,
+  "vials": [
+    ["rose", "cocoa", "teal", "magenta"],
+    ["lemon", "amber", "emerald", "teal"],
+    ["emerald", "magenta", "lime", "lemon"],
+    ["lime", "magenta", "cobalt", "emerald"],
+    ["amber", "amber", "teal", "violet"],
+    ["sky", "lemon", "violet", "sky"],
+    ["sky", "lime", "amber", "coral"],
+    ["sky", "violet", "cobalt", "rose"],
+    ["teal", "rose", "magenta", "coral"],
+    ["cocoa", "coral", "cocoa", "lime"],
+    ["cocoa", "rose", "emerald", "cobalt"],
+    ["cobalt", "lemon", "violet", "coral"],
+    [],
+    []
+  ],
+  "development": {
+    "optimalMoveCount": 39,
+    "exploredStateCount": 13730,
+    "maximumBranchingFactor": 24,
+    "meanVialEntropy": 1.875,
+    "boundaryRate": 0.9722222222222222,
+    "totalRunCount": 47,
+    "generator": "uniform-shuffle",
+    "generationSeed": 20261247,
+    "solverElapsedMilliseconds": 539.74,
+    "difficultyScore": 0.4892,
+    "difficultyScoreVersion": 1
+  }
+}
