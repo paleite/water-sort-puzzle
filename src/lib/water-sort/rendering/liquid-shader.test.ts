@@ -21,7 +21,7 @@ test("dense metallic glitter is clipped by the existing liquid surface and pigme
 test("color identity and CPU-owned fluid volumes remain independent of cosmetic glitter", () => {
   assert.match(liquidFragmentShader, /vec4 band = chooseBand\(liquidProjection\);/);
   assert.match(liquidFragmentShader, /float patternId = choosePattern\(liquidProjection\);/);
-  assert.match(liquidFragmentShader, /color = mix\(color, patternColor, pattern \* 0\.22\);/);
+  assert.match(liquidFragmentShader, /color = mix\(color, softLightPigment\(color, vec3\(0\.0\)\), pattern \* 0\.50\);/);
   assert.match(liquidFragmentShader, /uniform vec4 uBandThresholds;/);
   assert.match(liquidFragmentShader, /uniform vec4 uBandVolumes;/);
   assert.match(liquidFragmentShader, /float liquidProjection = dot\(liquidPoint, surfaceNormal\);/);
@@ -43,7 +43,7 @@ test("visible mobile-scale material has curved specular highlights and faceted g
   assert.match(liquidFragmentShader, /0\.41 \* leftGloss \+ 0\.23 \* rightGloss/);
   assert.match(liquidFragmentShader, /float flare = 0\.0;/);
   assert.match(liquidFragmentShader, /float reachY = 1\.0 - smoothstep/);
-  assert.match(liquidFragmentShader, /pattern \* 0\.22/);
+  assert.match(liquidFragmentShader, /pattern \* 0\.50/);
 });
 
 test("scanline gel shear is sampled continuously before pigment-linked glitter", () => {
@@ -160,18 +160,34 @@ test("opposite-signed flakes are shaded independently rather than cancelling", (
   assert.doesNotMatch(glitterShading, /reactiveFlash/);
 });
 
-test("patterns regain contrast while metallic coverage is deliberately reduced", () => {
-  const patternContribution = 0.22;
-  const previousPatternContribution = 0.13;
-  const deepGlitterOpacity = 0.42;
-  const previousDeepGlitterOpacity = 0.67;
-  const nearGlitterOpacity = 0.58;
-  const previousNearGlitterOpacity = 0.91;
+test("black motifs at half opacity are composited after gloss and before both glitter layers", () => {
+  const gloss = liquidFragmentShader.indexOf("color = mix(color, vec3(1.0, 0.98, 0.96), wetLight);");
+  const pattern = liquidFragmentShader.indexOf(
+    "color = mix(color, softLightPigment(color, vec3(0.0)), pattern * 0.50);",
+  );
+  const deepGlitter = liquidFragmentShader.indexOf("color = mix(color, softLightPigment(color, deepBlend)");
+  const nearGlitter = liquidFragmentShader.indexOf("color = mix(color, softLightPigment(color, nearBlend)");
+  assert.ok(gloss >= 0 && gloss < pattern && pattern < deepGlitter && deepGlitter < nearGlitter);
+  assert.doesNotMatch(liquidFragmentShader, /lightPatternColor|darkPatternColor|patternColor/);
+});
 
-  assert.ok(patternContribution > previousPatternContribution);
-  assert.ok(deepGlitterOpacity < previousDeepGlitterOpacity);
-  assert.ok(nearGlitterOpacity < previousNearGlitterOpacity);
-  assert.match(liquidFragmentShader, /pattern \* 0\.22/);
-  assert.match(liquidFragmentShader, /deepCoverage \* 0\.42/);
-  assert.match(liquidFragmentShader, /nearCoverage \* 0\.58/);
+test("black soft-light motifs preserve channel endpoints and darken midtones according to mask coverage", () => {
+  const applyPattern = (base: number, mask: number) =>
+    base - 0.50 * mask * base * (1 - base);
+
+  for (const base of [0, 0.2, 0.5, 0.8, 1]) {
+    assert.equal(applyPattern(base, 0), base);
+    assert.ok(applyPattern(base, 1) >= 0);
+    assert.ok(applyPattern(base, 1) <= base);
+    if (base > 0 && base < 1) {
+      assert.ok(applyPattern(base, 1) < applyPattern(base, 0.5));
+    }
+  }
+  assert.equal(applyPattern(0.5, 1), 0.375);
+  assert.equal(applyPattern(0.5, 0.5), 0.4375);
+});
+
+test("curved gloss is attenuated proportionally without changing its geometry", () => {
+  assert.match(liquidFragmentShader, /const float glossIntensityScale = 0\.20 \/ 0\.35;/);
+  assert.match(liquidFragmentShader, /float wetLight = glossVertical \* \(0\.41 \* leftGloss \+ 0\.23 \* rightGloss\)\s*\* glossIntensityScale;/);
 });
