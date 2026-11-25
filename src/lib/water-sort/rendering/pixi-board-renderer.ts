@@ -40,7 +40,7 @@ import type {
   VialRenderState,
 } from "./render-state";
 import {liquidFragmentShader, liquidVertexShader} from "./liquid-shader";
-import {getStreamParticleSamples} from "./stream-particles";
+import {getImpactRippleSample, getStreamParticleSamples} from "./stream-particles";
 
 interface VialVisual {
   liquidContainer: Container;
@@ -237,9 +237,11 @@ export class PixiBoardRenderer {
   private readonly liquidLayer = new Container();
   private readonly streamLayer = new Container();
   private readonly artworkLayer = new Container();
+  private readonly rippleLayer = new Container();
   private readonly movingVialLayer = new Container();
   private readonly visuals = new Map<number, VialVisual>();
   private readonly streams = new Map<number, Graphics>();
+  private readonly ripples = new Map<number, Graphics>();
   private pendingState: BoardRenderState | null = null;
   private vialTexture: Texture | null = null;
   private glassBackgroundTexture: Texture | null = null;
@@ -288,6 +290,7 @@ export class PixiBoardRenderer {
       this.liquidLayer,
       this.streamLayer,
       this.artworkLayer,
+      this.rippleLayer,
       this.movingVialLayer,
     );
     this.canvasHost.replaceChildren(this.app.canvas);
@@ -417,6 +420,7 @@ export class PixiBoardRenderer {
       this.liquidLayer,
       this.streamLayer,
       this.artworkLayer,
+      this.rippleLayer,
       this.movingVialLayer,
     ]) {
       layer.pivot.set(boardRect.width / 2, boardRect.height / 2);
@@ -451,6 +455,7 @@ export class PixiBoardRenderer {
 
     this.visuals.clear();
     this.streams.clear();
+    this.ripples.clear();
     if (this.app.canvas.parentElement === this.canvasHost) {
       this.app.canvas.remove();
     }
@@ -668,6 +673,14 @@ export class PixiBoardRenderer {
         this.streamLayer.addChild(graphics);
       }
 
+      let rippleGraphics = this.ripples.get(streamIndex);
+      if (rippleGraphics === undefined) {
+        rippleGraphics = new Graphics();
+        this.ripples.set(streamIndex, rippleGraphics);
+        this.rippleLayer.addChild(rippleGraphics);
+      }
+      rippleGraphics.clear();
+
       const sourceState = state.vials[streamState.sourceVialIndex];
       const destinationState = state.vials[streamState.destinationVialIndex];
       if (sourceState === undefined || destinationState === undefined) {
@@ -705,6 +718,24 @@ export class PixiBoardRenderer {
         + destinationState.translationY
         + destinationState.selectionOffsetY;
 
+      if (!this.prefersReducedMotion && streamState.destinationFill > 0) {
+        const wallDistance = VIAL_INNER_WIDTH * destinationScale * Math.min(
+          streamState.impactXNormalized,
+          1 - streamState.impactXNormalized,
+        );
+        const ripple = getImpactRippleSample(streamState.timeSeconds, wallDistance - 1.25);
+        if (ripple !== null) {
+          // Draw above the receiving vial's front artwork so the thin ring
+          // cannot disappear behind glass highlights. Keep it inside the walls.
+          rippleGraphics
+            .ellipse(destinationX, destinationY, ripple.radiusX, ripple.radiusY)
+            .stroke({color: 0x18243a, width: 2.2, alpha: ripple.opacity * 0.55});
+          rippleGraphics
+            .ellipse(destinationX, destinationY, ripple.radiusX, ripple.radiusY)
+            .stroke({color: 0xffffff, width: 1.3, alpha: ripple.opacity});
+        }
+      }
+
       this.drawStream(
         graphics,
         {
@@ -722,6 +753,9 @@ export class PixiBoardRenderer {
     });
 
     for (const [streamIndex, graphics] of this.streams) {
+      if (!activeStreamIndexes.has(streamIndex)) graphics.clear();
+    }
+    for (const [streamIndex, graphics] of this.ripples) {
       if (!activeStreamIndexes.has(streamIndex)) graphics.clear();
     }
   }
@@ -890,11 +924,6 @@ export class PixiBoardRenderer {
     }
 
     if (streamState.splashOpacity > 0.001) {
-      if (!this.prefersReducedMotion) {
-        graphics
-          .circle(destination.x, destination.y, 1.5 + streamState.splashProgress * 7)
-          .stroke({color: 0xffffff, width: 0.65, alpha: streamState.splashOpacity * 0.28});
-      }
       const splashTime = streamState.splashProgress * 0.24;
       for (let index = 0; index < 3; index += 1) {
         const horizontalRandom = deterministicUnit(streamState.visualSeed + index * 13 + 1);
