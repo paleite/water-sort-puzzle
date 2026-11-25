@@ -230,3 +230,25 @@ test("source squash/stretch affects only the moving vial, not the target liquid"
   assert.equal(state.vials[1]?.scaleX, undefined);
   assert.equal(state.vials[1]?.scaleY, undefined);
 });
+
+test("each visible pour gives its stream its own presentation clock", () => {
+  const initialBoard: Board = [["coral"], ["amber"], [], []];
+  const firstMove = applyMove(initialBoard, {sourceVialIndex: 0, destinationVialIndex: 2}, CAPACITY);
+  const secondMove = applyMove(firstMove.nextBoard, {sourceVialIndex: 1, destinationVialIndex: 3}, CAPACITY);
+
+  const firstPresentation = presentation(firstMove, 0.62, {started: true, contentCommitted: false});
+  const secondPresentation = presentation(secondMove, 0.91, {started: true, contentCommitted: false});
+  const state = buildConcurrentPourBoardRenderState({
+    board: initialBoard,
+    anchors: ANCHORS,
+    presentations: [
+      {...firstPresentation, presentation: snapshot(0.62, {streamOpacity: 0.8})},
+      {...secondPresentation, presentation: snapshot(0.91, {streamOpacity: 0.7})},
+    ],
+    selectedSourceVialIndex: null,
+    capacity: CAPACITY,
+  });
+
+  assert.deepEqual(state.streams.map(({timeSeconds}) => timeSeconds), [0.62, 0.91]);
+  assert.notEqual(state.streams[0]?.visualSeed, state.streams[1]?.visualSeed);
+});
