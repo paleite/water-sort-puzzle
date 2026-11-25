@@ -856,9 +856,6 @@ export class PixiBoardRenderer {
 
       // Glowing liquid beads flow along the existing ribbon; the same GSAP
       // timeline owns their positions, even during concurrent/seeked pours.
-    }
-
-    if (streamState.splashOpacity > 0.001) {
       if (!this.prefersReducedMotion) {
         const particles = getStreamParticleSamples({
           timeSeconds: streamState.timeSeconds,
@@ -890,6 +887,9 @@ export class PixiBoardRenderer {
             .fill({color: 0xffffff, alpha: particle.opacity * 0.4});
         }
       }
+    }
+
+    if (streamState.splashOpacity > 0.001) {
       if (!this.prefersReducedMotion) {
         graphics
           .circle(destination.x, destination.y, 1.5 + streamState.splashProgress * 7)
