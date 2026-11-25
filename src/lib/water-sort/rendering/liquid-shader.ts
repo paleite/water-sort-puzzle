@@ -353,14 +353,6 @@ void main() {
   vec3 color = band.rgb * depthTint * (1.06 - 0.43 * sideShadow + 0.07 * sideLight);
   color = mix(color, vec3(1.0), 0.08 * edgeShade);
 
-  float pattern = alchemistPattern(patternId);
-  float luminance = dot(color, vec3(0.2126, 0.7152, 0.0722));
-  vec3 lightPatternColor = mix(color, vec3(1.0), 0.38);
-  vec3 darkPatternColor = color * 0.62;
-  vec3 patternColor = mix(lightPatternColor, darkPatternColor, step(0.58, luminance));
-  // Patterns remain linked to pigment IDs, but no longer dominate the gel.
-  color = mix(color, patternColor, pattern * 0.22);
-
   // Semi-transparent candy depth: rim shadow, creamy core, and a
   // curved pearlescent sheen below the actual front-glass artwork.
   float rimDepth = smoothstep(0.01, 0.27, vUV.x)
@@ -376,8 +368,17 @@ void main() {
   float rightGloss = exp(-pow((vUV.x - rightCenter) / 0.029, 2.0));
   float glossVertical = smoothstep(0.015, 0.15, vUV.y)
     * (1.0 - smoothstep(0.88, 0.99, vUV.y));
-  float wetLight = glossVertical * (0.41 * leftGloss + 0.23 * rightGloss);
+  // Match the selected preview gloss (20%) relative to its baseline (35%).
+  // Preserve the highlight geometry and the relative left/right strengths.
+  const float glossIntensityScale = 0.20 / 0.35;
+  float wetLight = glossVertical * (0.41 * leftGloss + 0.23 * rightGloss)
+    * glossIntensityScale;
   color = mix(color, vec3(1.0, 0.98, 0.96), wetLight);
+
+  // Black motifs at 50% opacity, composited over gloss but beneath glitter.
+  // Keep the existing pigment-linked pattern mask and soft-light operator.
+  float pattern = alchemistPattern(patternId);
+  color = mix(color, softLightPigment(color, vec3(0.0)), pattern * 0.50);
 
   // Projected depth is measured from the actual angled surface to the
   // furthest interior vertex, not from a color slot or absolute screen Y.
