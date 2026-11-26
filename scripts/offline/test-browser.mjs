@@ -1,4 +1,4 @@
-/* global localStorage, performance, process, console, URL */
+/* global document, fetch, localStorage, performance, process, console, URL */
 
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
@@ -23,9 +23,17 @@ const mimeTypes = {
   ".txt": "text/plain; charset=utf-8",
 };
 const hits = [];
+let originUnavailable = false;
+const blocked = [];
 const server = createServer(async (request, response) => {
   const url = new URL(request.url ?? "/", "http://localhost");
   hits.push(url.pathname);
+  if (originUnavailable) {
+    blocked.push(url.pathname);
+    // No HTTP response can be served, even to a service worker's own fetch.
+    request.socket.destroy();
+    return;
+  }
   if (!url.pathname.startsWith(`${basePath}/`)) {
     response.writeHead(404).end();
     return;
@@ -93,16 +101,63 @@ function nearCompletion(board, capacity) {
   return { board: prepared, sourceIndex };
 }
 
+function assertNoApplicationRequests(start, label) {
+  const attempted = hits.slice(start);
+  // Browser-managed service worker update checks bypass its fetch handler.
+  // They may fail offline without affecting any application resource.
+  const unexpected = attempted.filter((path) => path !== `${basePath}/sw.js`);
+  assert.deepEqual(unexpected, [], `${label}: unexpected origin requests`);
+}
+
+function observePage(page, browserName) {
+  page.on("pageerror", (error) => console.error(`[${browserName}] page error:`, error));
+  page.on("console", (message) => {
+    if (message.type() === "error" || message.type() === "warning") {
+      console.log(`[${browserName}] ${message.type()}: ${message.text()}`);
+    }
+  });
+  page.on("requestfailed", (request) => {
+    console.log(`[${browserName}] failed request: ${request.url()} ${request.failure()?.errorText}`);
+  });
+  page.on("crash", () => console.error(`[${browserName}] page crashed`));
+}
+
 async function exercise(browserType) {
   const browser = await browserType.launch();
   try {
     const context = await browser.newContext({ serviceWorkers: "allow", viewport: { width: 900, height: 900 } });
     try {
       let page = await context.newPage();
+      observePage(page, browserType.name());
       page.setDefaultTimeout(30_000);
       await page.goto(root);
       await page.getByText("Ready to play offline", { exact: true }).waitFor({ timeout: 120_000 });
-      await context.setOffline(true);
+      const graphics = await page.evaluate(() => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
+        const supported = context !== null;
+        context?.getExtension("WEBGL_lose_context")?.loseContext();
+        return supported;
+      });
+      assert.ok(graphics, `${browserType.name()} requires a working WebGL test environment`);
+
+      // Fail the origin itself for both engines. WebKit's offline emulation can
+      // reject even responses synthesized by an active service worker.
+      originUnavailable = true;
+      if (browserType.name() === "chromium") await context.setOffline(true);
+      const probeFailed = await page.evaluate(async () => {
+        try {
+          await fetch("offline-network-probe", { cache: "no-store" });
+          return false;
+        } catch {
+          return true;
+        }
+      });
+      assert.ok(probeFailed, "uncached network probe must fail");
+      // On WebKit the origin must have refused the probe, not returned a 404.
+      if (browserType.name() === "webkit") {
+        assert.ok(blocked.includes(`${basePath}/offline-network-probe`));
+      }
       const beforeOffline = hits.length;
       const initialDocument = await page.evaluate(() => performance.timeOrigin);
       await page.locator(`a[href="${basePath}/?view=levels"]`).click();
@@ -114,7 +169,7 @@ async function exercise(browserType) {
       await page.getByRole("button", { name: new RegExp(`^Vial ${firstEmpty + 1},`) }).click();
       await page.waitForFunction((key) => JSON.parse(localStorage.getItem(key)).savedGame.history.length > 0, storageKey);
       assert.equal(await page.evaluate(() => performance.timeOrigin), initialDocument);
-      assert.equal(hits.length, beforeOffline, "offline gameplay contacted the server");
+      assertNoApplicationRequests(beforeOffline, "offline gameplay");
 
       // A real offline reload must preserve the move, not merely the URL.
       await page.reload();
@@ -155,14 +210,18 @@ async function exercise(browserType) {
       // A fresh document and an old deep link both work with the same installed cache.
       await page.close();
       page = await context.newPage();
+      observePage(page, browserType.name());
       await page.goto(root + "game/650");
       await waitForLevel(page, "650");
       assert.equal(new URL(page.url()).searchParams.get("level"), "650");
-      assert.equal(hits.length, beforeOffline, "offline navigation contacted the server");
+      assertNoApplicationRequests(beforeOffline, "offline navigation");
+      console.log(`Blocked origin requests: ${JSON.stringify(blocked)}`);
       await context.setOffline(false);
       console.log(`${browserType.name()} passed offline navigation, progress, reload and deep link checks.`);
     } finally {
       await context.close();
+      originUnavailable = false;
+      blocked.length = 0;
     }
   } finally {
     await browser.close();
@@ -170,7 +229,14 @@ async function exercise(browserType) {
 }
 
 try {
-  for (const browserType of [chromium, webkit]) await exercise(browserType);
+  const browserName = process.env.OFFLINE_BROWSER;
+  const browsers = { chromium, webkit };
+  if (browserName === undefined) {
+    for (const browserType of Object.values(browsers)) await exercise(browserType);
+  } else {
+    assert.ok(Object.hasOwn(browsers, browserName), `Unknown browser: ${browserName}`);
+    await exercise(browsers[browserName]);
+  }
 } finally {
   await new Promise((done, reject) => server.close((error) => error ? reject(error) : done()));
 }

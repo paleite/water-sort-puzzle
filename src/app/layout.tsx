@@ -13,6 +13,7 @@ export const metadata: Metadata = {
   title: "Water Sort",
   description: "A tactile color sorting puzzle game.",
   manifest: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/manifest.webmanifest`,
+  icons: { icon: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/offline-icon-192.png` },
 };
 
 export default function RootLayout({
