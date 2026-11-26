@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import {getStreamParticleSamples} from "./stream-particles";
+import {getImpactRippleSample, getStreamParticleSamples} from "./stream-particles";
 
 test("moving stream highlights are deterministic at any timeline position", () => {
   const options = {timeSeconds: 0.73, visualSeed: 167, opacity: 0.8};
@@ -32,4 +32,20 @@ test("stream particles remain in the ribbon interior with bounded opacity", () =
 test("stream highlights disappear when the real pouring ribbon is absent", () => {
   assert.deepEqual(getStreamParticleSamples({timeSeconds: 1, visualSeed: 2, opacity: 0}), []);
   assert.deepEqual(getStreamParticleSamples({timeSeconds: 1, visualSeed: 2, opacity: 0.001}), []);
+});
+
+test("impact ripple expands within the available surface and remains visible beyond the old splash", () => {
+  const early = getImpactRippleSample(0.43, 8);
+  const peak = getImpactRippleSample(0.575, 8);
+  const late = getImpactRippleSample(0.70, 8);
+  assert.ok(early && peak && late);
+  assert.ok(early.radiusX < peak.radiusX && peak.radiusX < late.radiusX);
+  assert.ok(late.radiusX <= 8);
+  assert.ok(peak.opacity > 0.7);
+  assert.ok(late.opacity > 0.25);
+  assert.equal(peak.radiusY, peak.radiusX * 0.34);
+  assert.equal(getImpactRippleSample(0.39, 8), null);
+  assert.equal(getImpactRippleSample(0.76, 8), null);
+  assert.equal(getImpactRippleSample(0.575, 0), null);
+  assert.ok((getImpactRippleSample(0.575, 0.5)?.radiusX ?? 1) <= 0.5);
 });
