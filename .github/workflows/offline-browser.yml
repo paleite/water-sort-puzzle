@@ -1,0 +1,33 @@
+name: Validate offline application
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        base_path: ["", "/water-sort-puzzle"]
+    env:
+      NEXT_PUBLIC_BASE_PATH: ${{ matrix.base_path }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      - name: Install isolated browser test tooling
+        run: |
+          npm install --prefix "$RUNNER_TEMP/water-sort-browser" --no-save --no-package-lock playwright@1.56.1
+          "$RUNNER_TEMP/water-sort-browser/node_modules/.bin/playwright" install --with-deps chromium webkit
+      - name: Exercise production export offline
+        run: PLAYWRIGHT_PACKAGE="$RUNNER_TEMP/water-sort-browser/node_modules/playwright" node scripts/offline/test-browser.mjs

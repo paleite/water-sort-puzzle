@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { AppLink } from "@/components/app/app-navigation";
 import {
   ArrowLeftIcon,
   ChevronLeftIcon,
@@ -119,11 +119,11 @@ export function GameHud({
 
       <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
         <div className="justify-self-start">
-          <Link href="/levels" aria-label="Choose level" className="rounded-xl">
+          <AppLink destination={{ kind: "levels" }} aria-label="Choose level" className="rounded-xl">
             <Button variant="ghost" size="icon-lg" tabIndex={-1}>
               <ArrowLeftIcon />
             </Button>
-          </Link>
+          </AppLink>
         </div>
 
         <div className="text-center">

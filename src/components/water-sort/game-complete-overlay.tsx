@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { AppLink, useAppNavigation } from "@/components/app/app-navigation";
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,7 @@ export function GameCompleteOverlay({
   nextLevelId: string | null;
   onReplay: () => void;
 }) {
-  const router = useRouter();
+  const navigate = useAppNavigation();
 
   useEffect(() => {
     const timeout = window.setTimeout(
@@ -36,16 +35,16 @@ export function GameCompleteOverlay({
         </div>
         <div className="grid gap-2">
           {nextLevelId !== null && (
-            <Button type="button" size="lg" className="w-full" onClick={() => router.replace(`/game/${nextLevelId}`)}>Next level</Button>
+            <Button type="button" size="lg" className="w-full" onClick={() => navigate({ kind: "game", levelId: nextLevelId }, true)}>Next level</Button>
           )}
           <Button type="button" variant="secondary" size="lg" onClick={onReplay}>
             Replay
           </Button>
-          <Link href="/levels">
+          <AppLink destination={{ kind: "levels" }}>
             <Button variant="ghost" size="lg" className="w-full" tabIndex={-1}>
               Level select
             </Button>
-          </Link>
+          </AppLink>
         </div>
       </section>
     </div>

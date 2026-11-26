@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { AppLink } from "@/components/app/app-navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -31,13 +31,13 @@ export function HomeScreen() {
         <HomeHero />
         <div className={styles.homeActions}>
           {continueLevelId !== null && (
-            <Link href={`/game/${continueLevelId}`} replace>
+            <AppLink destination={{ kind: "game", levelId: continueLevelId }} replace>
               <Button size="lg" className="h-12 w-full text-base" tabIndex={-1}>
                 Continue
               </Button>
-            </Link>
+            </AppLink>
           )}
-          <Link href="/levels">
+          <AppLink destination={{ kind: "levels" }}>
             <Button
               variant="secondary"
               size="lg"
@@ -46,7 +46,7 @@ export function HomeScreen() {
             >
               Level select
             </Button>
-          </Link>
+          </AppLink>
         </div>
       </div>
     </main>

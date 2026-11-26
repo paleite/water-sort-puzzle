@@ -1,0 +1,25 @@
+{
+  "id": "./",
+  "name": "Water Sort",
+  "short_name": "Water Sort",
+  "description": "A tactile color sorting puzzle game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#210d38",
+  "theme_color": "#210d38",
+  "icons": [
+    {
+      "src": "./offline-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./offline-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
