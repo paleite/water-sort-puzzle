@@ -26,6 +26,7 @@ import {
   VIAL_VIEWBOX_WIDTH,
 } from "../presentation/vial-geometry";
 import {
+  DEFAULT_VIAL_SKIN,
   MAD_ALCHEMIST_VIAL_SKIN,
   DEFAULT_VIAL_SKIN_ID,
   getVialSkin,
