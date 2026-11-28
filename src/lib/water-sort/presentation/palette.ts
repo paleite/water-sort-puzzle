@@ -117,7 +117,8 @@ export const LIQUID_PALETTES = [
 export type LiquidPaletteId = (typeof LIQUID_PALETTES)[number]["id"];
 export type LiquidPalette = (typeof LIQUID_PALETTES)[number];
 
-export const DEFAULT_LIQUID_PALETTE_ID: LiquidPaletteId = LIQUID_PALETTES[0].id;
+const DEFAULT_LIQUID_PALETTE = LIQUID_PALETTES[3];
+export const DEFAULT_LIQUID_PALETTE_ID: LiquidPaletteId = DEFAULT_LIQUID_PALETTE.id;
 
 function valuesToColorMap(values: readonly string[]): Record<ColorId, string> {
   return Object.fromEntries(
@@ -126,7 +127,7 @@ function valuesToColorMap(values: readonly string[]): Record<ColorId, string> {
 }
 
 export const LIQUID_COLORS: Record<ColorId, string> = valuesToColorMap(
-  LIQUID_PALETTES[0].values,
+  DEFAULT_LIQUID_PALETTE.values,
 );
 
 export function isLiquidPaletteId(value: string | null): value is LiquidPaletteId {
@@ -134,7 +135,7 @@ export function isLiquidPaletteId(value: string | null): value is LiquidPaletteI
 }
 
 export function getLiquidPalette(id: LiquidPaletteId): LiquidPalette {
-  return LIQUID_PALETTES.find((palette) => palette.id === id) ?? LIQUID_PALETTES[0];
+  return LIQUID_PALETTES.find((palette) => palette.id === id) ?? DEFAULT_LIQUID_PALETTE;
 }
 
 export function applyLiquidPalette(id: LiquidPaletteId): LiquidPalette {
