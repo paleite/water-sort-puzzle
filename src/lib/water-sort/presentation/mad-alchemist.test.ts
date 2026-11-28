@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { COLOR_IDS } from "../domain/colors";
+import { DEFAULT_APPEARANCE, readAppearance } from "./appearance";
 import {
   DEFAULT_GAME_BACKGROUND_ID,
   getGameBackground,
@@ -106,4 +107,36 @@ test("published compact PNG pack has exact 4x geometry and RGBA alpha channels",
     assert.equal(image.readUInt32BE(20), asset.height, asset.path);
     assert.equal(image[25], 6, `${asset.path}: expected RGBA PNG`);
   }
+});
+
+test("old automatically saved defaults migrate once; custom appearance is preserved", () => {
+  const values = new Map<string, string>([
+    ["water-sort-palette", "mad_alchemist"],
+    ["water-sort-background", "arcane"],
+    ["water-sort-vial-skin", "compact-alchemist"],
+  ]);
+  const storage = {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => { values.set(key, value); },
+    removeItem: (key: string) => { values.delete(key); },
+  };
+  assert.deepEqual(readAppearance(storage), DEFAULT_APPEARANCE);
+  assert.equal(values.has("water-sort-vial-skin"), false);
+  values.set("water-sort-palette", "mad_alchemist");
+  values.set("water-sort-background", "arcane");
+  values.set("water-sort-vial-skin", "compact-alchemist");
+  assert.deepEqual(readAppearance(storage), {
+    paletteId: "mad_alchemist",
+    backgroundId: "arcane",
+    vialSkinId: "compact-alchemist",
+  });
+  values.clear();
+  values.set("water-sort-palette", "mad_alchemist");
+  values.set("water-sort-background", "deep_teal");
+  values.set("water-sort-vial-skin", "classic");
+  assert.deepEqual(readAppearance(storage), {
+    paletteId: "mad_alchemist",
+    backgroundId: "deep_teal",
+    vialSkinId: "classic",
+  });
 });
