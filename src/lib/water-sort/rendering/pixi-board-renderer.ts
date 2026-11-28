@@ -27,6 +27,7 @@ import {
 } from "../presentation/vial-geometry";
 import {
   DEFAULT_VIAL_SKIN,
+  MAD_ALCHEMIST_VIAL_SKIN,
   DEFAULT_VIAL_SKIN_ID,
   getVialSkin,
   type VialSkinId,
@@ -347,7 +348,7 @@ export class PixiBoardRenderer {
     const skin = getVialSkin(skinId);
     const basePath = process.env["NEXT_PUBLIC_BASE_PATH"] ?? "";
     const stopperSources = skin.stopperSources
-      ?? (skinId === DEFAULT_VIAL_SKIN.id
+      ?? (skinId === MAD_ALCHEMIST_VIAL_SKIN.id
         ? STOPPER_VARIANTS.map((name) => `${basePath}/potions/stoppers/${name}.svg`)
         : []);
 

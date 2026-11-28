@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { isLevelId, LEVEL_IDS } from "@/lib/water-sort/levels/load-level";
 import { loadProgress } from "@/lib/water-sort/persistence/progress";
+import { DEFAULT_APPEARANCE, loadAppearance } from "@/lib/water-sort/presentation/appearance";
+import { getGameBackground } from "@/lib/water-sort/presentation/backgrounds";
 
 import styles from "@/components/water-sort/water-sort.module.css";
 import { HomeHero } from "./home-hero";
@@ -13,7 +15,10 @@ import { HomeHero } from "./home-hero";
 export function HomeScreen() {
   const [continueLevelId, setContinueLevelId] = useState<string | null>(null);
 
+  const [appearance, setAppearance] = useState(DEFAULT_APPEARANCE);
+
   useEffect(() => {
+    setAppearance(loadAppearance());
     const progress = loadProgress();
     const requested = progress.currentLevelId;
 
@@ -25,10 +30,10 @@ export function HomeScreen() {
   }, []);
 
   return (
-    <main className={styles.home}>
+    <main className={styles.home} style={{ background: getGameBackground(appearance.backgroundId).css }} data-background={appearance.backgroundId}>
       <div className={styles.homePanel}>
         <h1 className={styles.homeTitle}>Water<br />Sort</h1>
-        <HomeHero />
+        <HomeHero paletteId={appearance.paletteId} vialSkinId={appearance.vialSkinId} />
         <div className={styles.homeActions}>
           {continueLevelId !== null && (
             <AppLink destination={{ kind: "game", levelId: continueLevelId }} replace>

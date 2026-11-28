@@ -36,14 +36,15 @@ export const GAME_BACKGROUNDS = [
 export type GameBackgroundId = (typeof GAME_BACKGROUNDS)[number]["id"];
 export type GameBackground = (typeof GAME_BACKGROUNDS)[number];
 
-export const DEFAULT_GAME_BACKGROUND_ID: GameBackgroundId = GAME_BACKGROUNDS[0].id;
+const DEFAULT_GAME_BACKGROUND = GAME_BACKGROUNDS[2];
+export const DEFAULT_GAME_BACKGROUND_ID: GameBackgroundId = DEFAULT_GAME_BACKGROUND.id;
 
 export function isGameBackgroundId(value: string | null): value is GameBackgroundId {
   return GAME_BACKGROUNDS.some((background) => background.id === value);
 }
 
 export function getGameBackground(id: GameBackgroundId): GameBackground {
-  return GAME_BACKGROUNDS.find((background) => background.id === id) ?? GAME_BACKGROUNDS[0];
+  return GAME_BACKGROUNDS.find((background) => background.id === id) ?? DEFAULT_GAME_BACKGROUND;
 }
 
 export function getNextGameBackgroundId(currentId: GameBackgroundId): GameBackgroundId {

@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { COLOR_IDS } from "../domain/colors";
+import { DEFAULT_APPEARANCE, readAppearance } from "./appearance";
 import {
   DEFAULT_GAME_BACKGROUND_ID,
   getGameBackground,
@@ -13,12 +14,14 @@ import {
   CLASSIC_VIAL_SKIN,
   COMPACT_VIAL_SKIN,
   DEFAULT_VIAL_SKIN,
+  MAD_ALCHEMIST_VIAL_SKIN,
   DEFAULT_VIAL_SKIN_ID,
   getNextVialSkinId,
   getVialSkin,
 } from "./vial-skins";
 import {
   DEFAULT_LIQUID_PALETTE_ID,
+  LIQUID_COLORS,
   getLiquidPalette,
 } from "./palette";
 
@@ -34,7 +37,6 @@ test("all twelve potion colors retain unique patterns", () => {
 test("mad-alchemist palette gives every playable color a distinct pigment", () => {
   const palette = getLiquidPalette("mad_alchemist");
 
-  assert.equal(DEFAULT_LIQUID_PALETTE_ID, "mad_alchemist");
   assert.equal(palette.values.length, COLOR_IDS.length);
   assert.equal(new Set(palette.values).size, COLOR_IDS.length);
   for (const color of palette.values) {
@@ -42,18 +44,21 @@ test("mad-alchemist palette gives every playable color a distinct pigment", () =
   }
 });
 
-test("the fantasy theme defaults to a plain, not textured, background", () => {
+test("the default theme uses Classic, Midnight and Reoptimized CUE Balanced", () => {
   const background = getGameBackground(DEFAULT_GAME_BACKGROUND_ID);
 
-  assert.equal(background.id, "arcane");
-  assert.equal(background.css, "#210d38");
+  assert.equal(background.id, "midnight");
+  assert.equal(DEFAULT_VIAL_SKIN_ID, "classic");
+  assert.equal(DEFAULT_VIAL_SKIN, CLASSIC_VIAL_SKIN);
+  assert.equal(DEFAULT_LIQUID_PALETTE_ID, "reoptimized_cue_balanced");
+  assert.deepEqual(COLOR_IDS.map((color) => LIQUID_COLORS[color]), [...getLiquidPalette(DEFAULT_LIQUID_PALETTE_ID).values]);
 });
 
 test("both vial skins preserve fill and mouth geometry", () => {
-  assert.deepEqual(CLASSIC_VIAL_SKIN.liquidPolygon, DEFAULT_VIAL_SKIN.liquidPolygon);
-  assert.deepEqual(CLASSIC_VIAL_SKIN.mouth, DEFAULT_VIAL_SKIN.mouth);
-  assert.deepEqual(CLASSIC_VIAL_SKIN.viewBox, DEFAULT_VIAL_SKIN.viewBox);
-  assert.equal(getNextVialSkinId(DEFAULT_VIAL_SKIN.id), CLASSIC_VIAL_SKIN.id);
+  assert.deepEqual(CLASSIC_VIAL_SKIN.liquidPolygon, MAD_ALCHEMIST_VIAL_SKIN.liquidPolygon);
+  assert.deepEqual(CLASSIC_VIAL_SKIN.mouth, MAD_ALCHEMIST_VIAL_SKIN.mouth);
+  assert.deepEqual(CLASSIC_VIAL_SKIN.viewBox, MAD_ALCHEMIST_VIAL_SKIN.viewBox);
+  assert.equal(getNextVialSkinId(MAD_ALCHEMIST_VIAL_SKIN.id), CLASSIC_VIAL_SKIN.id);
   assert.equal(getVialSkin(CLASSIC_VIAL_SKIN.id).name, "Classic");
 });
 
@@ -68,7 +73,7 @@ test("the production sprite pack includes all twelve pigments and five stoppers"
 
 
 test("compact skin preserves liquid geometry without extending ornaments above the rim", () => {
-  assert.equal(DEFAULT_VIAL_SKIN_ID, COMPACT_VIAL_SKIN.id);
+  assert.equal(DEFAULT_VIAL_SKIN_ID, CLASSIC_VIAL_SKIN.id);
   assert.deepEqual(COMPACT_VIAL_SKIN.liquidPolygon, DEFAULT_VIAL_SKIN.liquidPolygon);
   assert.deepEqual(COMPACT_VIAL_SKIN.mouth, DEFAULT_VIAL_SKIN.mouth);
   assert.deepEqual(COMPACT_VIAL_SKIN.viewBox, {width: 100, height: 272});
@@ -102,4 +107,36 @@ test("published compact PNG pack has exact 4x geometry and RGBA alpha channels",
     assert.equal(image.readUInt32BE(20), asset.height, asset.path);
     assert.equal(image[25], 6, `${asset.path}: expected RGBA PNG`);
   }
+});
+
+test("old automatically saved defaults migrate once; custom appearance is preserved", () => {
+  const values = new Map<string, string>([
+    ["water-sort-palette", "mad_alchemist"],
+    ["water-sort-background", "arcane"],
+    ["water-sort-vial-skin", "compact-alchemist"],
+  ]);
+  const storage = {
+    getItem: (key: string) => values.get(key) ?? null,
+    setItem: (key: string, value: string) => { values.set(key, value); },
+    removeItem: (key: string) => { values.delete(key); },
+  };
+  assert.deepEqual(readAppearance(storage), DEFAULT_APPEARANCE);
+  assert.equal(values.has("water-sort-vial-skin"), false);
+  values.set("water-sort-palette", "mad_alchemist");
+  values.set("water-sort-background", "arcane");
+  values.set("water-sort-vial-skin", "compact-alchemist");
+  assert.deepEqual(readAppearance(storage), {
+    paletteId: "mad_alchemist",
+    backgroundId: "arcane",
+    vialSkinId: "compact-alchemist",
+  });
+  values.clear();
+  values.set("water-sort-palette", "mad_alchemist");
+  values.set("water-sort-background", "deep_teal");
+  values.set("water-sort-vial-skin", "classic");
+  assert.deepEqual(readAppearance(storage), {
+    paletteId: "mad_alchemist",
+    backgroundId: "deep_teal",
+    vialSkinId: "classic",
+  });
 });

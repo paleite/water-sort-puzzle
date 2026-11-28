@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { applyMove } from "../domain/moves";
-import { createPourTimeline } from "./timelines";
+import { createPourTimeline, createVialSelectionTimeline } from "./timelines";
 import { getQueuedSameSourceSuccessor } from "./presentation-scheduler";
 import { GAME_TIMING } from "./timing";
 
@@ -147,4 +147,23 @@ test("only the earliest queued interaction with the same vial can hand off its p
     getQueuedSameSourceSuccessor(firstPresentation, [firstPresentation, incoming, {id: 3, move: second}], runtimeStates),
     null,
   );
+});
+
+test("shared vial selection animation squashes, stretches and restores identity", () => {
+  let deformation = {scaleX: 1, scaleY: 1};
+  const timeline = createVialSelectionTimeline({
+    onFrame: (frame) => { deformation = {...frame}; },
+    onComplete: () => {},
+  });
+  try {
+    assert.ok(deformation.scaleX > 1);
+    assert.ok(deformation.scaleY < 1);
+    timeline.time(0.085, false);
+    assert.ok(deformation.scaleX < 1);
+    assert.ok(deformation.scaleY > 1);
+    timeline.time(timeline.duration(), false);
+    assert.deepEqual(deformation, {scaleX: 1, scaleY: 1});
+  } finally {
+    timeline.kill();
+  }
 });

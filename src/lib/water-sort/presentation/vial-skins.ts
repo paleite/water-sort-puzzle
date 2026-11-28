@@ -35,7 +35,7 @@ function publicPath(path: string): string {
   return `${process.env["NEXT_PUBLIC_BASE_PATH"] ?? ""}${path}`;
 }
 
-export const DEFAULT_VIAL_SKIN = {
+export const MAD_ALCHEMIST_VIAL_SKIN = {
   id: "mad-alchemist",
   name: "Mad Alchemist",
   svgSource: publicPath("/vials/mad-alchemist.svg"),
@@ -65,14 +65,14 @@ export const DEFAULT_VIAL_SKIN = {
 export const VIAL_SKIN_STORAGE_KEY = "water-sort-vial-skin";
 
 export const CLASSIC_VIAL_SKIN = {
-  ...DEFAULT_VIAL_SKIN,
+  ...MAD_ALCHEMIST_VIAL_SKIN,
   id: "classic",
   name: "Classic",
   svgSource: publicPath("/vials/classic.svg"),
 } as const satisfies VialSkinDefinition;
 
 export const COMPACT_VIAL_SKIN = {
-  ...DEFAULT_VIAL_SKIN,
+  ...MAD_ALCHEMIST_VIAL_SKIN,
   id: "compact-alchemist",
   name: "Compact Alchemist",
   svgSource: publicPath("/potions/compact/vial/glass_front.png"),
@@ -83,12 +83,13 @@ export const COMPACT_VIAL_SKIN = {
   stopperBounds: {x: 0, y: 0, width: 100, height: 18},
 } as const satisfies VialSkinDefinition;
 
-export const VIAL_SKINS = [COMPACT_VIAL_SKIN, DEFAULT_VIAL_SKIN, CLASSIC_VIAL_SKIN] as const;
-export const DEFAULT_VIAL_SKIN_ID = COMPACT_VIAL_SKIN.id;
+export const VIAL_SKINS = [COMPACT_VIAL_SKIN, MAD_ALCHEMIST_VIAL_SKIN, CLASSIC_VIAL_SKIN] as const;
+export const DEFAULT_VIAL_SKIN = CLASSIC_VIAL_SKIN;
+export const DEFAULT_VIAL_SKIN_ID = DEFAULT_VIAL_SKIN.id;
 export type VialSkinId = (typeof VIAL_SKINS)[number]["id"];
 
 export function getVialSkin(id: VialSkinId): VialSkinDefinition {
-  return VIAL_SKINS.find((skin) => skin.id === id) ?? COMPACT_VIAL_SKIN;
+  return VIAL_SKINS.find((skin) => skin.id === id) ?? DEFAULT_VIAL_SKIN;
 }
 
 export function isVialSkinId(value: string | null): value is VialSkinId {

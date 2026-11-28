@@ -180,6 +180,35 @@ export function createPourTimeline({geometry, move, sourceWidthPixels, onComplet
   };
 }
 
+export interface VialSelectionDeformation {
+  scaleX: number;
+  scaleY: number;
+}
+
+// Shared selection feedback for gameplay and the scripted home scene.
+export function createVialSelectionTimeline({
+  onFrame,
+  onComplete,
+}: {
+  onFrame: (deformation: VialSelectionDeformation) => void;
+  onComplete: () => void;
+}): gsap.core.Timeline {
+  const deformation: VialSelectionDeformation = {scaleX: 1.045, scaleY: 0.96};
+  // GSAP attaches internal cache metadata to its mutable tween target.
+  // Expose only the presentation values, not the target itself.
+  function emitFrame(): void {
+    onFrame({scaleX: deformation.scaleX, scaleY: deformation.scaleY});
+  }
+  emitFrame();
+  return gsap.timeline({
+    paused: true,
+    onUpdate: emitFrame,
+    onComplete,
+  })
+    .to(deformation, {scaleX: 0.975, scaleY: 1.03, duration: 0.085, ease: "power2.out"})
+    .to(deformation, {scaleX: 1, scaleY: 1, duration: 0.10, ease: "power2.inOut"});
+}
+
 export function createUndoTimeline(sourceElement: HTMLElement, destinationElement: HTMLElement, onComplete: () => void): gsap.core.Timeline {
   return gsap.timeline({onComplete})
     .to([sourceElement, destinationElement], {scale: 0.97, opacity: 0.72, duration: GAME_TIMING.undoSeconds / 2, ease: "power2.out"})

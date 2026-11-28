@@ -15,12 +15,12 @@ import {
   saveProgress,
   type SavedGame,
 } from "@/lib/water-sort/persistence/progress";
+import { loadAppearance } from "@/lib/water-sort/presentation/appearance";
 import {
   BACKGROUND_STORAGE_KEY,
   DEFAULT_GAME_BACKGROUND_ID,
   getGameBackground,
   getNextGameBackgroundId,
-  isGameBackgroundId,
   type GameBackgroundId,
 } from "@/lib/water-sort/presentation/backgrounds";
 import {
@@ -28,14 +28,12 @@ import {
   VIAL_SKIN_STORAGE_KEY,
   getNextVialSkinId,
   getVialSkin,
-  isVialSkinId,
   type VialSkinId,
 } from "@/lib/water-sort/presentation/vial-skins";
 import {
   applyLiquidPalette,
   DEFAULT_LIQUID_PALETTE_ID,
   getAdjacentPaletteId,
-  isLiquidPaletteId,
   PALETTE_STORAGE_KEY,
   type LiquidPaletteId,
 } from "@/lib/water-sort/presentation/palette";
@@ -208,39 +206,11 @@ function GameRuntime({
   }, [announceAppearance, backgroundId]);
 
   useEffect(() => {
-    let storedPaletteId: string | null = null;
-    let storedBackgroundId: string | null = null;
-    let storedVialSkinId: string | null = null;
-    try {
-      storedPaletteId = window.localStorage.getItem(PALETTE_STORAGE_KEY);
-      storedBackgroundId = window.localStorage.getItem(BACKGROUND_STORAGE_KEY);
-      storedVialSkinId = window.localStorage.getItem(VIAL_SKIN_STORAGE_KEY);
-    } catch {
-      // Fall back to defaults when storage is unavailable.
-    }
-
-    const resolvedPaletteId = isLiquidPaletteId(storedPaletteId)
-      ? storedPaletteId
-      : DEFAULT_LIQUID_PALETTE_ID;
-    const resolvedBackgroundId = isGameBackgroundId(storedBackgroundId)
-      ? storedBackgroundId
-      : DEFAULT_GAME_BACKGROUND_ID;
-    const resolvedVialSkinId = isVialSkinId(storedVialSkinId)
-      ? storedVialSkinId
-      : DEFAULT_VIAL_SKIN_ID;
-
-    applyLiquidPalette(resolvedPaletteId);
-    setPaletteId(resolvedPaletteId);
-    setBackgroundId(resolvedBackgroundId);
-    setVialSkinId(resolvedVialSkinId);
-
-    try {
-      window.localStorage.setItem(PALETTE_STORAGE_KEY, resolvedPaletteId);
-      window.localStorage.setItem(BACKGROUND_STORAGE_KEY, resolvedBackgroundId);
-      window.localStorage.setItem(VIAL_SKIN_STORAGE_KEY, resolvedVialSkinId);
-    } catch {
-      // Persistence is optional when storage is unavailable.
-    }
+    const appearance = loadAppearance();
+    applyLiquidPalette(appearance.paletteId);
+    setPaletteId(appearance.paletteId);
+    setBackgroundId(appearance.backgroundId);
+    setVialSkinId(appearance.vialSkinId);
 
     forceBoardRender();
 
@@ -293,7 +263,7 @@ function GameRuntime({
   ]);
 
   return (
-    <main className={styles.gameShell} style={{ background: background.css }}>
+    <main className={styles.gameShell} style={{ background: background.css }} data-vial-skin={vialSkinId} data-palette={paletteId} data-background={backgroundId}>
       <GameHud
         levelId={level.id}
         moveCount={game.context.history.length}

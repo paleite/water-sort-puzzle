@@ -146,6 +146,10 @@ async function exercise(browserType) {
       const homeCanvas = homeHero.locator("canvas");
       const initialProgress = await page.evaluate((key) => localStorage.getItem(key), storageKey);
       await homeCanvas.waitFor({ state: "visible" });
+      assert.equal(await homeHero.getAttribute("data-vial-skin"), "classic");
+      assert.equal(await homeHero.getAttribute("data-palette"), "reoptimized_cue_balanced");
+      assert.equal(await page.locator("main").getAttribute("data-background"), "midnight");
+      await page.locator('[data-home-hero][data-phase="selecting"]').waitFor();
       await page.locator('[data-home-hero][data-phase="pouring"]').waitFor();
       await page.locator('[data-home-hero][data-phase="settled"]').waitFor();
       await page.locator('[data-home-hero][data-phase="ready"]').waitFor();
@@ -191,6 +195,9 @@ async function exercise(browserType) {
       await page.locator(`a[href="${basePath}/?view=levels"]`).click();
       assert.equal(await homeCanvas.count(), 0);
       await chooseLevel(page, "001");
+      assert.equal(await page.locator("main").getAttribute("data-vial-skin"), "classic");
+      assert.equal(await page.locator("main").getAttribute("data-palette"), "reoptimized_cue_balanced");
+      assert.equal(await page.locator("main").getAttribute("data-background"), "midnight");
       const original = (await progress(page)).savedGame.board;
       const firstEmpty = original.findIndex((vial) => vial.length === 0);
       assert.ok(firstEmpty > 0);
