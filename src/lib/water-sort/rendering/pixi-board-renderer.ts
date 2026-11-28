@@ -270,8 +270,20 @@ export class PixiBoardRenderer {
       resizeTo: this.boardElement,
     });
 
+    if (this.destroyRequested) {
+      this.destroyApplication();
+      return;
+    }
+
     const initialSkinId = this.skinId;
-    const initialTextures = await this.loadSkinTextures(initialSkinId);
+    let initialTextures: VialArtTextures;
+    try {
+      initialTextures = await this.loadSkinTextures(initialSkinId);
+    } catch (error: unknown) {
+      // The application already owns a graphics context, even if textures fail.
+      this.destroyApplication();
+      throw error;
+    }
     this.vialTexture = initialTextures.front;
     this.glassBackgroundTexture = initialTextures.background;
     this.stopperTextures = initialTextures.stoppers;
@@ -398,6 +410,16 @@ export class PixiBoardRenderer {
     visual.stopper.position.set(bounds.x, bounds.y);
     visual.stopper.width = bounds.width;
     visual.stopper.height = bounds.height;
+  }
+
+  setAnimationPaused(isPaused: boolean): void {
+    if (this.initializationState !== "ready") return;
+    if (isPaused) {
+      this.app.stop();
+      this.app.render();
+    } else {
+      this.app.start();
+    }
   }
 
   destroy(): void {
