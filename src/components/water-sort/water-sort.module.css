@@ -237,8 +237,6 @@
   display: grid;
   place-items: center;
   padding: 32px 20px;
-  background:
-    radial-gradient(circle at 50% 20%, #303030, #262626 46%, #222 100%);
   color: #f1f5f9;
 }
 
@@ -262,7 +260,7 @@
 .homeHero {
   position: relative;
   width: min(100%, 340px);
-  height: 230px;
+  height: 256px;
   isolation: isolate;
   pointer-events: none;
 }
@@ -270,7 +268,7 @@
 .homeHeroAnchor {
   position: absolute;
   bottom: 20px;
-  width: min(44px, 14%);
+  width: min(52px, 15%);
   aspect-ratio: 1 / 2.72;
   transform: translateX(-50%);
 }

@@ -20,6 +20,7 @@ import {
 } from "@/lib/water-sort/animation/presentation-scheduler";
 import {
   createPourTimeline,
+  createVialSelectionTimeline,
   type PourPresentation,
   type PourPresentationSnapshot,
 } from "@/lib/water-sort/animation/timelines";
@@ -287,19 +288,17 @@ export function GameBoard({
 
     const vialIndex = selectedSourceVialIndex ?? previouslySelected;
     if (vialIndex === null) return;
-    const deformation = {scaleX: 1.045, scaleY: 0.96};
-    selectionDeformationsRef.current.set(vialIndex, deformation);
-
-    const timeline = gsap.timeline({
-      onUpdate: () => renderLatestRef.current(),
+    const timeline = createVialSelectionTimeline({
+      onFrame: (deformation) => {
+        selectionDeformationsRef.current.set(vialIndex, deformation);
+        renderLatestRef.current();
+      },
       onComplete: () => {
         selectionDeformationsRef.current.delete(vialIndex);
         renderLatestRef.current();
       },
     });
-    timeline
-      .to(deformation, {scaleX: 0.975, scaleY: 1.03, duration: 0.085, ease: "power2.out"})
-      .to(deformation, {scaleX: 1, scaleY: 1, duration: 0.10, ease: "power2.inOut"});
+    timeline.play(0);
 
     return () => {
       timeline.kill();

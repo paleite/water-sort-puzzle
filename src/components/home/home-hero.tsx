@@ -5,10 +5,14 @@ import { useEffect, useRef, useState } from "react";
 import { calculatePourGeometry } from "@/lib/water-sort/animation/pour-geometry";
 import {
   createPourTimeline,
+  createVialSelectionTimeline,
   type PourPresentation,
+  type VialSelectionDeformation,
 } from "@/lib/water-sort/animation/timelines";
 import { applyMove } from "@/lib/water-sort/domain/moves";
 import type { Board } from "@/lib/water-sort/domain/types";
+import { applyLiquidPalette, type LiquidPaletteId } from "@/lib/water-sort/presentation/palette";
+import type { VialSkinId } from "@/lib/water-sort/presentation/vial-skins";
 import { measureVialAnchors } from "@/lib/water-sort/rendering/dom-anchors";
 import type { PixiBoardRenderer } from "@/lib/water-sort/rendering/pixi-board-renderer";
 import {
@@ -20,9 +24,9 @@ import styles from "@/components/water-sort/water-sort.module.css";
 
 const CAPACITY = 4;
 const INITIAL_BOARD: Board = [
-  ["violet", "violet", "coral", "coral"],
+  ["sky", "sky", "coral", "coral"],
   ["coral", "coral"],
-  ["violet", "violet"],
+  ["sky", "sky"],
 ];
 const DEMO_MOVE = applyMove(
   INITIAL_BOARD,
@@ -32,9 +36,9 @@ const DEMO_MOVE = applyMove(
 const INITIAL_HOLD_MILLISECONDS = 900;
 const COMPLETION_HOLD_MILLISECONDS = 1300;
 
-type HeroPhase = "loading" | "ready" | "pouring" | "settled" | "still" | "fallback";
+type HeroPhase = "loading" | "ready" | "selecting" | "pouring" | "settled" | "still" | "fallback";
 
-export function HomeHero() {
+export function HomeHero({ paletteId, vialSkinId }: { paletteId: LiquidPaletteId; vialSkinId: VialSkinId }) {
   const boardRef = useRef<HTMLDivElement>(null);
   const canvasHostRef = useRef<HTMLDivElement>(null);
   const sourceRef = useRef<HTMLSpanElement>(null);
@@ -69,6 +73,7 @@ export function HomeHero() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let renderer: PixiBoardRenderer | null = null;
     let presentation: PourPresentation | null = null;
+    let selectionTimeline: ReturnType<typeof createVialSelectionTimeline> | null = null;
     let holdTimeout: number | undefined;
     let ready = false;
     let disposed = false;
@@ -76,6 +81,8 @@ export function HomeHero() {
     function stopDemo(): void {
       window.clearTimeout(holdTimeout);
       holdTimeout = undefined;
+      selectionTimeline?.kill();
+      selectionTimeline = null;
       presentation?.timeline.kill();
       presentation = null;
     }
@@ -99,7 +106,7 @@ export function HomeHero() {
       setPhase(isPaused ? "still" : "ready");
       if (isPaused) return;
 
-      holdTimeout = window.setTimeout(() => {
+      function startPour(): void {
         if (disposed || document.hidden || reducedMotion.matches) return;
         const anchors = measureVialAnchors(boardElement, vialElements, INITIAL_BOARD.length);
         const geometry = calculatePourGeometry(
@@ -136,6 +143,34 @@ export function HomeHero() {
           },
         });
         presentation.timeline.play(0);
+      }
+
+      holdTimeout = window.setTimeout(() => {
+        if (disposed || document.hidden || reducedMotion.matches) return;
+        setPhase("selecting");
+        const renderSelection = (deformation: VialSelectionDeformation): void => {
+          const state = buildStaticBoardRenderState({
+            board: INITIAL_BOARD,
+            anchors: measureVialAnchors(boardElement, vialElements, INITIAL_BOARD.length),
+            selectedSourceVialIndex: DEMO_MOVE.move.sourceVialIndex,
+            capacity: CAPACITY,
+          });
+          activeRenderer.render({
+            ...state,
+            vials: state.vials.map((vial) =>
+              vial.vialIndex === DEMO_MOVE.move.sourceVialIndex
+                ? {...vial, ...deformation}
+                : vial,
+            ),
+          });
+        };
+        selectionTimeline = createVialSelectionTimeline({
+          onFrame: renderSelection,
+          onComplete: () => {
+            holdTimeout = window.setTimeout(startPour, 180);
+          },
+        });
+        selectionTimeline.play(0);
       }, INITIAL_HOLD_MILLISECONDS);
     }
 
@@ -154,6 +189,9 @@ export function HomeHero() {
         if (disposed) return;
         const activeRenderer = new Renderer({ boardElement: boardElement, canvasHost: canvasHost });
         renderer = activeRenderer;
+        applyLiquidPalette(paletteId);
+        await activeRenderer.setVialSkin(vialSkinId);
+        if (disposed) return;
         await activeRenderer.initialize();
         if (disposed) return;
         ready = true;
@@ -179,7 +217,7 @@ export function HomeHero() {
       reducedMotion.removeEventListener("change", resetDemo);
       renderer?.destroy();
     };
-  }, []);
+  }, [paletteId, vialSkinId]);
 
   return (
     <div
@@ -187,11 +225,13 @@ export function HomeHero() {
       className={styles.homeHero}
       data-home-hero=""
       data-phase={phase}
+      data-vial-skin={vialSkinId}
+      data-palette={paletteId}
       aria-hidden="true"
     >
-      <span ref={sourceRef} className={styles.homeHeroAnchor} style={{ left: "20%" }} />
-      <span ref={destinationRef} className={styles.homeHeroAnchor} style={{ left: "60%" }} />
-      <span ref={thirdVialRef} className={styles.homeHeroAnchor} style={{ left: "85%" }} />
+      <span ref={sourceRef} className={styles.homeHeroAnchor} style={{ left: "16%" }} />
+      <span ref={destinationRef} className={styles.homeHeroAnchor} style={{ left: "59%" }} />
+      <span ref={thirdVialRef} className={styles.homeHeroAnchor} style={{ left: "86%" }} />
       {(phase === "loading" || phase === "fallback") && (
         <div
           className={styles.homeHeroFallback}
