@@ -194,10 +194,15 @@ export function createVialSelectionTimeline({
   onComplete: () => void;
 }): gsap.core.Timeline {
   const deformation: VialSelectionDeformation = {scaleX: 1.045, scaleY: 0.96};
-  onFrame(deformation);
+  // GSAP attaches internal cache metadata to its mutable tween target.
+  // Expose only the presentation values, not the target itself.
+  function emitFrame(): void {
+    onFrame({scaleX: deformation.scaleX, scaleY: deformation.scaleY});
+  }
+  emitFrame();
   return gsap.timeline({
     paused: true,
-    onUpdate: () => onFrame(deformation),
+    onUpdate: emitFrame,
     onComplete,
   })
     .to(deformation, {scaleX: 0.975, scaleY: 1.03, duration: 0.085, ease: "power2.out"})
