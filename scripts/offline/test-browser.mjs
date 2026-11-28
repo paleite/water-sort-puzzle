@@ -141,6 +141,29 @@ async function exercise(browserType) {
       });
       assert.ok(graphics, `${browserType.name()} requires a working WebGL test environment`);
 
+      // The decorative home scene must use the real renderer without altering progress.
+      const homeHero = page.locator("[data-home-hero]");
+      const homeCanvas = homeHero.locator("canvas");
+      const initialProgress = await page.evaluate((key) => localStorage.getItem(key), storageKey);
+      await homeCanvas.waitFor({ state: "visible" });
+      await page.locator('[data-home-hero][data-phase="pouring"]').waitFor();
+      await page.locator('[data-home-hero][data-phase="settled"]').waitFor();
+      await page.locator('[data-home-hero][data-phase="ready"]').waitFor();
+      assert.equal(await homeCanvas.count(), 1);
+      assert.equal(await page.evaluate((key) => localStorage.getItem(key), storageKey), initialProgress);
+
+      // A mobile resize restarts the scene, and reduced motion stops its timeline.
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      await page.locator('[data-home-hero][data-phase="still"]').waitFor();
+      const stillImage = await homeCanvas.screenshot();
+      await page.waitForTimeout(1500);
+      assert.equal(await homeHero.getAttribute("data-phase"), "still");
+      assert.deepEqual(await homeCanvas.screenshot(), stillImage);
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await page.setViewportSize({ width: 900, height: 900 });
+      await page.locator('[data-home-hero][data-phase="pouring"]').waitFor();
+
       // Fail the origin itself for both engines. WebKit's offline emulation can
       // reject even responses synthesized by an active service worker.
       originUnavailable = true;
@@ -161,6 +184,12 @@ async function exercise(browserType) {
       const beforeOffline = hits.length;
       const initialDocument = await page.evaluate(() => performance.timeOrigin);
       await page.locator(`a[href="${basePath}/?view=levels"]`).click();
+      assert.equal(await homeCanvas.count(), 0);
+      await page.goBack();
+      await homeCanvas.waitFor({ state: "visible" });
+      await page.locator('[data-home-hero][data-phase="settled"]').waitFor();
+      await page.locator(`a[href="${basePath}/?view=levels"]`).click();
+      assert.equal(await homeCanvas.count(), 0);
       await chooseLevel(page, "001");
       const original = (await progress(page)).savedGame.board;
       const firstEmpty = original.findIndex((vial) => vial.length === 0);
