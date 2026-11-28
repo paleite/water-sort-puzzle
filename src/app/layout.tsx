@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { OfflineRegistration } from "@/components/app/offline-registration";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -11,6 +12,8 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: "Water Sort",
   description: "A tactile color sorting puzzle game.",
+  manifest: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/manifest.webmanifest`,
+  icons: { icon: `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/offline-icon-192.png` },
 };
 
 export default function RootLayout({
@@ -18,7 +21,7 @@ export default function RootLayout({
 }: Readonly<{children: React.ReactNode}>) {
   return (
     <html className={`${geist.variable} dark`} lang="en">
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">{children}<OfflineRegistration /></body>
     </html>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { AppLink } from "@/components/app/app-navigation";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -65,11 +65,11 @@ export function LevelSelect({
   return (
     <main className="mx-auto min-h-dvh w-full max-w-3xl p-5">
       <header className="mb-7 flex items-center gap-3">
-        <Link href="/" aria-label="Home">
+        <AppLink destination={{ kind: "home" }} aria-label="Home">
           <Button variant="ghost" size="icon-lg" tabIndex={-1}>
             <ArrowLeftIcon />
           </Button>
-        </Link>
+        </AppLink>
         <h1 className="text-2xl font-bold">Levels</h1>
       </header>
 
@@ -80,7 +80,7 @@ export function LevelSelect({
 
           return (
             <div key={level.id} className="grid gap-1.5">
-              <Link href={`/game/${level.id}`}>
+              <AppLink destination={{ kind: "game", levelId: level.id }}>
                 <Button
                   variant={completed.has(level.id) ? "secondary" : "outline"}
                   className="h-auto min-h-20 w-full flex-col gap-1 py-3"
@@ -93,7 +93,7 @@ export function LevelSelect({
                     </span>
                   )}
                 </Button>
-              </Link>
+              </AppLink>
               <div
                 aria-label={`Level ${level.id} difficulty`}
                 aria-valuemax={100}
